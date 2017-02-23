@@ -80,6 +80,10 @@ public abstract class Tools {
     }
     //endregion
 
+    //region Miscellaneous
+    // ================================================================================= //
+    // Miscellaneous
+    // ================================================================================= //
     /**
      * Returns the computer name. Used for runonce.
      *
@@ -110,4 +114,5 @@ public abstract class Tools {
         Optional<ButtonType> result = alert.showAndWait();
         return result.isPresent() && result.get() == ButtonType.OK;
     }
+    //endregion
 }

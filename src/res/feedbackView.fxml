@@ -140,17 +140,17 @@
                               <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                            </rowConstraints>
                            <children>
-                              <Label minWidth="-Infinity" text="#Feedback:" GridPane.rowIndex="2">
+                              <Label minWidth="-Infinity" text="#Total:" GridPane.rowIndex="2">
                                  <font>
                                     <Font name="System Bold" size="12.0" />
                                  </font>
                               </Label>
-                              <Label minWidth="-Infinity" text="#Done:" GridPane.rowIndex="3">
+                              <Label minWidth="-Infinity" text="#Complete:" GridPane.rowIndex="3">
                                  <font>
                                     <Font name="System Bold" size="12.0" />
                                  </font>
                               </Label>
-                              <Label minWidth="-Infinity" text="#Not done:" GridPane.rowIndex="4">
+                              <Label minWidth="-Infinity" text="#Remaining" GridPane.rowIndex="4">
                                  <font>
                                     <Font name="System Bold" size="12.0" />
                                  </font>
@@ -191,7 +191,7 @@
                               </VBox>
                               <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
                                  <children>
-                                    <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="Incomplete" VBox.vgrow="NEVER">
+                                    <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="Remaining" VBox.vgrow="NEVER">
                                        <font>
                                           <Font name="System Bold" size="12.0" />
                                        </font>

@@ -1,0 +1,70 @@
+/**
+ * @author Richard Sundqvist
+ * @group 31
+ */
+
+Frågor att besvara:
+----------------------------------------------------------------------------------------------------------------------------------------------
+*Vad är skillnaden på GoldModel och GameModel, och hur är de relaterade till varandra?
+----------------------------------------------------------------------------------------------------------------------------------------------
+	GameModel är en absrakt klass - den kan inte instansieras. GoldModel utökar GameModel
+	och nyttjar dess metoder för att köra spelet.
+----------------------------------------------------------------------------------------------------------------------------------------------
+*Vilken klass utför själva ritandet av 'Gold coins' i spelet 'Gold game'?
+----------------------------------------------------------------------------------------------------------------------------------------------
+	RoundTile klassen, som i sin tur nyttjar Javas Graphics och Graphics2D paket.
+----------------------------------------------------------------------------------------------------------------------------------------------
+*Vilken klass är det som anropar (=anropas?) för detta ritande?
+----------------------------------------------------------------------------------------------------------------------------------------------
+	Graphics(.fillOval(..)) anropas av RoundTile.
+	GoldModel anropar RoundTile.
+----------------------------------------------------------------------------------------------------------------------------------------------
+*Vad är syftet med GameFactory och hur kan den utvidgas för att få med Snake game? ( Endast ett kort svar behövs.)
+----------------------------------------------------------------------------------------------------------------------------------------------
+	Håller reda på vilka spel som kan skapas. Utöka createGame(..) och getGameNames() med kopior av Gold där "Gold" ersatts av t.ex. "Snake".
+----------------------------------------------------------------------------------------------------------------------------------------------
+*Var återfinns beräkningen och kontrollen av 'gold eaters' rörelser?
+----------------------------------------------------------------------------------------------------------------------------------------------
+	Rörselseriktningarna definieras och beräknas i GoldModel(.updateDirection(..)). Själva tangentenbordstryckningen fångas upp i 
+	GameController klassen, som skickar en enda tangent (den senaste) till spelets update metod.
+----------------------------------------------------------------------------------------------------------------------------------------------
+*Hur lagras ett spelbräde och i vilken klass?
+----------------------------------------------------------------------------------------------------------------------------------------------
+	I GameModel, som ett 2D-fält (gameboardState).
+----------------------------------------------------------------------------------------------------------------------------------------------
+*Beskriv arbetsflödet av programmet. Detta kan göras genom att skissa på hur kontrollen flödar genom olika klasser och metoder.
+----------------------------------------------------------------------------------------------------------------------------------------------
+	Main: 			En ny JFrame skapas, som bara visar en GUIView.
+	GUIView:		Knappar etc skapas och placeras i botten. Spelet tilldelas en kontroller och själva spelet
+					placeras ovanför. Lyssnare placeras på "Start Game" knappen. När användaren trycket på knappen anropas
+					StartGameListener, som skapar en helt ny instans av spelet (icke-statisk highscore etc. alltså inte
+					möjligt om man lagrar den i t.ex GoldModel.)
+	GameFactory:	Håller en lista med spel och skapar+returnerar ett spel som väljs med en sträng. Borde inte denna
+					klass vara final? Den behöver väl inte instansieras?
+	(GameModel:		Innehåller "brädet" och funktioner för att ändra utseendet på rutorna.)
+	GoldModel:		Definierar och placerar mynt och myntjägare mha GameTile.
+	GameController:	run metoden håller spelet igång till dess att isRunning sätts till false (spelet slut) eller till dess att spelet
+					stängs av. gameModel's ( i detta fall GoldModel) update metod anropas och skickar med den senaste tangenten, GoldModel
+					ansvarar sedan för att jägaren rör sig åt rätt håll, slumpning av nya myntpositioner och kontroll av kollision mellan
+					mynt och jägare. Tangentbordslyssnaren ligger och kör samt uppdaterar lastKeyPress hela tiden, det är bara den senaste
+					tangenten som trycktes som skickas vidare till spelet var updateInterval:e millisekund.
+----------------------------------------------------------------------------------------------------------------------------------------------
+*Ge en plan för hur du tänker fortsätta med deluppgift 2. Vilka klasser kommer du att skriva
+ och vad kan du återanvända.
+----------------------------------------------------------------------------------------------------------------------------------------------
+	Jag ska försöka skriva Tetris och bör ha nytta av allt utom RoundTile. Man ska kunna rotera formerna med z och x, flytta dem i
+	sidled med pilarna samt få den att falla x ggr så fort med nedpil. Det kommer inte gå att se vilken(a) bitar som kommer näst.
+	
+	P.g.a. av hur GameController är utformad kommer man bara kunna göra en sak åt gången, t.ex. rotera och flytta i sidled men inte
+	både och samtidigt. Jag måste skriva en metoder för att kontrollera om formen i	rörelse ligger mot en annan i y-led, samt leta fulla
+	rader och skapa en ny form när ovanstående metod returnerar true.
+	
+	På något sätt måste	jag också få raderna ovan att falla när en tas bort, lyckligtvis behöver jag inte kontrollera bit för bit utan jag
+	kan låta allt falla	som ett enda block. Kanske är tetris utformat så för att de hade problem med att få de indivudella bitarna att falla
+	för sig när spelet skapades	från början?
+	
+	Att rotera bitarna kan bli svårt, har tänkt försöka detta med rotationsmatriser då jag inte tycker det vore snyggt att rotera delarna
+	"för hand", vilket jag tror jag måste göra när jag först skapar biten.
+	
+	Jag tänker dessutom fastna på en massa problem jag inte förutspått.
+----------------------------------------------------------------------------------------------------------------------------------------------

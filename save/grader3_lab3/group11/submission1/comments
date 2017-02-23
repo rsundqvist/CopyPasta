@@ -1,0 +1,57 @@
+Hej
+Kommentarerna som vi ger är försedda med ett prefix i form av ett tecken:
+Förstår du inte vad rättaren menar? Maila och fråga - vi bits inte :-)
+
+Alla kommentarer skall du rätta. Inga felanmärkningar skall naturligtvis 
+upprepas i senare labbar.
+
+"-"   markerar en allvarlig kommentar som antagligen har resulterat i en retur.
+"="   markerar en allvarlig kommentar som *inte* har resulterat i en retur utan
+	  enbart poängavdrag. Många "=" kan också resultera i en retur.
+"#"   markerar en mindre allvarlig kommentar.
+"*"   kommentar, behöver ej åtgärdas.
+"+"   extra bra
+-------------------------------------------------------------------------------
+Poäng och returpolicy finns beskrivet under "assignments->Lab acceptance rules".
+accept på labben innebär att man inte kan lämna in igen 
+(men inte att det är "godkänd")
+reject på labben att man kan eller måste lämna in igen och kan ev. få 1p till.
+Om du får retur på bara en uppgift, lämna bara in den uppgiften nästa gång.
+-------------------------------------------------------------------------------
+
+Hej
+Lab 3 kan ge max 6p.
+
+Grupp: 11, inlämning 1
+Poäng: 0, retur (inom 7 dagar)
+
+Bra, här är mina kommentar(er):
+
+allmänt: 
+= Ni har varken public eller private på de flesta klasser och metoder och klasser,
+vilket innebär att de är package-private. Är det verkligen önskvärt? 
+
+Steg3:
+- Den här klassen bör bara skapa en JFrame och sedan lägga en CrystalControl
+till denna, sen är den färdig. Ni ska ha timer och liknande i CrystalControl.
+
+# Den här klassen behöver inte några fält. Fälten ni har skapat nu bör ligga i
+CrystalControl, även om ni naturligtvis kan spara t.ex. default värde för
+hastigheten som en konstant ("public static final int DEFAULT_SPEED = x;").
+
+CrystalControl: 
+- Knapparna skall absolut inte fungera genom att de ändrar statiska variabler (!)
+i en annan klass (Steg3). Lägg dem som privata instansvariabler i CrystalControl.
+CrystalControl bör antagligen bara ta in en int som parameter i konstruktorn för
+att sedan skapa det den behöver själv.
+
+CrystalView:
+# Uppdateringen bör göras med t.ex. drawLine(i,j,i,j). Det är snabbare
+än drawImage. Dock inget som ni måste ändra. Kan däremot inte lova att det kommer
+vara OK att lösa Swing-uppgifter såhär på tentan.
+
+CrystalModel:
++ En av de snyggare implementationerna av crystallizeOneIon() vi sett.
+
+Richard Sundqvist
+

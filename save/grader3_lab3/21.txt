@@ -1,0 +1,49 @@
+Kommentarerna som vi ger är försedda med ett prefix i form av ett tecken:
+Förstår du inte vad rättaren menar? Maila och fråga - vi bits inte :-)
+
+Alla kommentarer skall du rätta. Inga felanmärkningar skall naturligtvis 
+upprepas i senare labbar.
+
+"-"   markerar en allvarlig kommentar som antagligen har resulterat i en retur.
+"="   markerar en allvarlig kommentar som *inte* har resulterat i en retur utan
+	  enbart poängavdrag. Många "=" kan också resultera i en retur.
+"#"   markerar en mindre allvarlig kommentar.
+"*"   kommentar, behöver ej åtgärdas.
+"+"   extra bra
+-------------------------------------------------------------------------------
+Poäng och returpolicy finns beskrivet under "assignments->Lab acceptance rules".
+accept på labben innebär att man inte kan lämna in igen 
+(men inte att det är "godkänd")
+reject på labben att man kan eller måste lämna in igen och kan ev. få 1p till.
+Om du får retur på bara en uppgift, lämna bara in den uppgiften nästa gång.
+-------------------------------------------------------------------------------
+
+Lab 3 kan ge max 6p.
+
+Grupp: 21, inlämning 1
+Poäng: 0, retur (inom 7 dagar)
+
+Bra, här är mina kommentar(er):
+
+allmänt: 
+- Kraven under "Specialla krav" är krav, inte förslag:
+"Simuleringen startas med java Steg3 size däre size är bredden och höjden på badet"
+
+Det är helt OK att ha extra finesser såsom sliders men programmet ska fortfarande
+delas upp på ett vettigt sätt.
+
+Skapa klasserna i separata filer (undantag t.ex. action listeners, inte relevant
+i ert fall när ni använder lamba notation) och lämna in igen. Hela tanken med
+MVC är just att saker såsom GUI inte ska ligga i modellen.
+
+Ni bör (ska) ha separata klasser för Model, View samt Control i egna filer.
+
+Steg3:
+
+CrystalControl: 
+
+CrystalView:
+
+CrystalModel:
+
+Richard Sundqvist

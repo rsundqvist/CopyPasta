@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
+      prefWidth="450.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <TextArea editable="false" prefHeight="281.0" prefWidth="412.0" style="-fx-bor: 0;"
+                  text="Copy Pasta is a program developed to aid in grading lab exercises. Common feedback (Pasta) can be created and categorized to speed up the process. Wildcards and templates are used to reduce the risk of mistakes, and to reduce clutter. The program will automatically load/store the most recent data (feedback and Pasta) when starting/exiting.&#10;&#10;Typical workflow&#10;    1. Setup (JSON-files received from course owner)&#10;        i. Import feedback template  &#9;&#9;&#10;        ii. Import Pasta&#10;    2. Enter group numbers, then click &quot;Create Feedback&quot;.&#10;        e.g. \3 5, 6  9, potato\ for groups {3, 5, 6, 9, potato}.&#10;    3. Write feedback.  &#9;&#9;&#10;        i. Save common feedback with the Pasta Editor (Ctrl-G).&#10;        ii. Share common feedback (RMB -&gt; Export)&#10;    4. Export the feedback to .txt (Ctrl-E)  "
+                  wrapText="true"/>
+        <GridPane>
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="223.33331298828125" minWidth="10.0" prefWidth="92.0"/>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="406.3333435058594" minWidth="10.0" prefWidth="363.0"/>
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+            </rowConstraints>
+            <children>
+                <Label text="E-mail:" GridPane.rowIndex="1"/>
+                <Hyperlink text="richard.sundqvist@live.se" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                <Label text="Creator:"/>
+                <Label text="Git repo:" GridPane.rowIndex="2"/>
+                <Label text="Version:" GridPane.rowIndex="3"/>
+                <Label fx:id="versionLabel" text="PRERELEASE" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                    <GridPane.margin>
+                        <Insets left="5.0"/>
+                    </GridPane.margin>
+                </Label>
+                <Hyperlink text="https://github.com/whisp91/CopyPasta" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+                <Label text="Richard Sundqvist" GridPane.columnIndex="1">
+                    <GridPane.margin>
+                        <Insets left="5.0"/>
+                    </GridPane.margin>
+                </Label>
+            </children>
+            <VBox.margin>
+                <Insets left="5.0"/>
+            </VBox.margin>
+        </GridPane>
+    </children>
+</VBox>

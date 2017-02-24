@@ -9,6 +9,8 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.FlowPane;
 import model.IO;
 import model.Pasta;
@@ -16,6 +18,7 @@ import model.PastaManager;
 import model.UniqueArrayList;
 
 import java.io.File;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,6 +34,8 @@ public class PastaViewController {
     private TextArea previewTextArea = null;
     @FXML
     private FlowPane filterFlowPane;
+    @FXML
+    private TextField searchField;
 
     private PastaManager pastaManager = new PastaManager();
     //endregion
@@ -48,6 +53,14 @@ public class PastaViewController {
     public void initialize () {
         //Called after FXML injection
         listView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        searchField.textProperty().addListener(event -> searchPasta());
+    }
+
+    private void searchPasta () {
+        String searchString = searchField.getText();
+        List<String> searchTerms = Arrays.asList(searchString.split(","));
+        pastaManager.search(searchTerms);
+        updateFilteredList();
     }
 
     public void initialize (PastaControllerListener listener) {
@@ -136,12 +149,8 @@ public class PastaViewController {
 
     public void clearAllPasta () {
         int numItems = pastaManager.getPastaList().size();
-        String contentText = "Really delete all pasta? There are currently " + numItems + " items.";
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, contentText, ButtonType.OK, ButtonType.CANCEL);
-        alert.setHeaderText("Really delete all pasta?");
 
-        Optional<ButtonType> result = alert.showAndWait();
-        if (result.isPresent() && result.get() == ButtonType.OK) {
+        if (Tools.confirmDelete(numItems)) {
             pastaManager.clear();
             filterFlowPane.getChildren().clear();
             listView.getItems().clear();
@@ -232,11 +241,41 @@ public class PastaViewController {
         return pastaManager;
     }
 
+    public void toggleCurrentAssignmentOnly (Event event) {
+        if (listener == null)
+            return;
+
+        ToggleButton toggleButton = (ToggleButton) event.getSource();
+
+        if (toggleButton.isSelected()) {
+            String assignment = listener.getAssignment();
+            pastaManager.setAssignment(assignment);
+        } else {
+            pastaManager.setAssignment(null);
+        }
+        updateFilteredList();
+    }
+
     // ====================================================
     // Interface declaration
     // ====================================================
 
+    /**
+     * Listener interface for the controller.
+     */
     public interface PastaControllerListener {
+        /**
+         * Called when an item is selected.
+         *
+         * @param pasta The selected item.
+         */
         void select (Pasta pasta);
+
+        /**
+         * Called when {@link #toggleCurrentAssignmentOnly} is called by the GUI.
+         *
+         * @return The assignment to filter for.
+         */
+        String getAssignment ();
     }
 }

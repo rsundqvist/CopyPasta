@@ -1,6 +1,6 @@
 # About Copy Pasta
 
-Copy Pasta is a program developed to aid in grading lab exercises. Common feedback ("Pasta") can be created and categorized to speed up the process. Wildcards and templates are used to reduce the risk of mistakes, and to reduce clutter. The program will automatically load/store the most recent data (feedback and Pasta) when starting/exiting.  
+Copy Pasta is a program developed to aid in grading assignment exercises. Common feedback ("Pasta") can be created and categorized to speed up the process. Wildcards and templates are used to reduce the risk of mistakes, and to reduce clutter. The program will automatically load/store the most recent data (feedback and Pasta) when starting/exiting.
  
 ## Typical workflow
 

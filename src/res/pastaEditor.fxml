@@ -7,6 +7,7 @@
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
@@ -18,27 +19,38 @@
         <fx:include fx:id="pastaView" source="pastaView.fxml" />
     </left>
     <right>
-        <VBox prefHeight="375.0" prefWidth="130.0" BorderPane.alignment="CENTER">
+        <VBox prefHeight="375.0" prefWidth="150.0" BorderPane.alignment="CENTER">
             <children>
                 <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#createNewPasta" text="Create Pasta" />
                 <HBox>
                     <children>
                         <Label text="Title" />
                         <Pane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="0.0" prefWidth="0.0" HBox.hgrow="ALWAYS" />
-                        <CheckBox mnemonicParsing="false" onAction="#toggleAutoTitle" selected="true" text="Auto" />
+                        <CheckBox fx:id="autoToggleCheckBox" mnemonicParsing="false" onAction="#toggleAutoTitle" selected="true" text="Auto" />
                     </children>
                 </HBox>
                 <TextField fx:id="titleField" disable="true" maxWidth="1.7976931348623157E308" promptText="Enter a concise title." />
                 <Pane maxWidth="1.7976931348623157E308" minHeight="0.0" prefHeight="0.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
                 <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#savePastaChanges" text="Save Changes" />
-                <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="Pasta tags">
+            <HBox>
+               <children>
+                  <Label text="Asgn:">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="assignmentLabel" alignment="TOP_RIGHT" maxWidth="1.7976931348623157E308" text="ASSIGNMENT" HBox.hgrow="ALWAYS" />
+               </children>
+            </HBox>
+            <ToggleButton fx:id="assignmentToggleButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#toggleAssignmentTag" text="Assignment Tag" />
+                <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="Current Content Tags">
                     <font>
                         <Font name="System Bold" size="12.0" />
                     </font>
                 </Label>
                 <ListView fx:id="currentPastaTagListView" onMouseClicked="#removePastaTag" prefHeight="200.0" prefWidth="200.0" />
                 <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#createNewTag" text="New Tag" />
-                <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="All available tags">
+                <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="All Content Tags">
                     <font>
                         <Font name="System Bold" size="12.0" />
                     </font>

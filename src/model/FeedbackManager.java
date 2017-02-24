@@ -31,7 +31,8 @@ public class FeedbackManager {
      */
     public static void preview (Feedback feedback) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Feedback Preview");
+        String assignment = feedback.getAssignment() == null ? "" : ": \"" + feedback.getAssignment() + "\"";
+        alert.setTitle("Feedback Preview" + assignment);
         alert.setHeaderText("Feedback preview for group \"" + feedback.getGroup() + "\"");
         alert.setContentText("Output when exporting as a .txt-file:");
 
@@ -79,18 +80,20 @@ public class FeedbackManager {
      */
     public List<Feedback> generateFeedback (List<String> groupList) {
         if (template == null)
-            throw new IllegalStateException("Template not set.");
+            throw new IllegalStateException("Feedback not set.");
         ArrayList<Feedback> newFeedbackList = new ArrayList<>(groupList.size());
 
         String header = template.getHeader();
         String content = template.getContent();
         String teacher = template.getTeacher();
+        String assignment = template.getAssignment();
         for (String group : groupList) {
             Feedback feedback = new Feedback();
             feedback.setHeader(header);
             feedback.setContent(content);
             feedback.setTeacher(teacher);
             feedback.setGroup(group);
+            feedback.setAssignment(assignment);
             newFeedbackList.add(feedback);
         }
 
@@ -206,6 +209,23 @@ public class FeedbackManager {
         UniqueArrayList<String> groups = new UniqueArrayList<>();
         groups.addAll(Arrays.asList(s.split(" ")));
         return groups;
+    }
+
+    /**
+     * Parse an assignment string. This string is almost never visible to the user but rather as a member of
+     * {@link Pasta#assignmentTags}. Will return all whitespace and convert to lower case.
+     *
+     * @param assignment The string to parse.
+     * @return A parsed assignment string.
+     */
+    public static String parseAssignmentString (String assignment) {
+        if (assignment == null)
+            return null;
+
+        assignment = assignment.replaceAll("\\s+", "");
+        assignment = assignment.toLowerCase();
+
+        return assignment;
     }
 
     /**

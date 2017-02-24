@@ -12,10 +12,8 @@ import model.UniqueArrayList;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
-import java.util.Properties;
 
 public class Controller implements PastaViewController.PastaControllerListener {
 
@@ -30,8 +28,6 @@ public class Controller implements PastaViewController.PastaControllerListener {
 
     public void initialize () {
         pastaViewController.initialize(this);
-        //feedbackViewController.initialize();
-        Properties properties = new Properties();
     }
 
     public void parseFIREFolder () {
@@ -52,6 +48,11 @@ public class Controller implements PastaViewController.PastaControllerListener {
         //TODO - do something
     }
 
+    @Override
+    public String getAssignment () {
+        return feedbackViewController.getAssignment();
+    }
+
     public void shutdown () {
         pastaViewController.shutdown();
         feedbackViewController.shutdown();
@@ -61,7 +62,7 @@ public class Controller implements PastaViewController.PastaControllerListener {
         UniqueArrayList<Pasta> pastaList = pastaViewController.getPastaList();
 
         List<Pasta> copy = Pasta.copy(pastaList);
-        PastaEditor pastaEditor = new PastaEditor(copy);
+        PastaEditor pastaEditor = new PastaEditor(copy, feedbackViewController.getAssignment());
         UniqueArrayList<Pasta> editorPastaList = pastaEditor.showAndWait();
 
         System.out.println(editorPastaList.equals(pastaList));

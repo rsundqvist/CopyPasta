@@ -45,7 +45,7 @@ public class FeedbackViewController {
     // Field
     // ================================================================================= //
     @FXML
-    private TextField studentGroupField, teacherField;
+    private TextField studentGroupField, assignmentField, teacherField;
     @FXML
     private TabPane feedbackTabPane;
     @FXML
@@ -133,6 +133,7 @@ public class FeedbackViewController {
         template.setContent(templateTextArea.getText());
         template.setHeader(templateHeaderTextArea.getText());
         template.setTeacher(teacherField.getText());
+        template.setAssignment(getAssignment());
         feedbackManager.setTemplate(template);
     }
 
@@ -315,7 +316,7 @@ public class FeedbackViewController {
         doneListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         notDoneListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
-        //Template
+        //Feedback
         Feedback template;
         template = Tools.importSavedFeedbackTemplate();
         if (template == null)
@@ -335,6 +336,7 @@ public class FeedbackViewController {
 
         feedbackManager.setTemplate(template);
         teacherField.setText((template.getTeacher()));
+        assignmentField.setText(template.getAssignment());
         templateTextArea.setText(template.getContent());
         templateHeaderTextArea.setText(template.getHeader());
     }
@@ -391,11 +393,12 @@ public class FeedbackViewController {
     public void shutdown () {
         Tools.exportSavedFeedback(feedbackManager.getFeedbackList());
 
-        //Template
+        //Feedback
         Feedback template = new Feedback();
         template.setTeacher(teacherField.getText());
         template.setContent(templateTextArea.getText());
         template.setHeader(templateHeaderTextArea.getText());
+        template.setAssignment(getAssignment());
         Tools.exportSavedFeedbackTemplate(template);
     }
 
@@ -584,6 +587,15 @@ public class FeedbackViewController {
             updateStatusLists();
             removeFeedbackTabs(feedbackList);
         }
+    }
+
+    public String getAssignment () {
+        String assignment = assignmentField.getText();
+
+        if (assignment != null)
+            assignment = assignment.replaceAll("\\s+", "");
+
+        return assignment;
     }
     //endregion
 }

@@ -11,8 +11,8 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 
-import java.awt.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -27,6 +27,7 @@ public class PastaManager {
     private UniqueArrayList<Pasta> filteredPastaList = new UniqueArrayList<>();
     private UniqueArrayList<String> tagList = new UniqueArrayList<>();
     private UniqueArrayList<String> activeTagList = new UniqueArrayList<>();
+    private String assignment = null;
 
     private boolean anyTag = true; //Determines if UNION or INTERSECT filtering is used.
     private boolean negate = false; //Exclude all items which match (negation/complement).
@@ -105,15 +106,50 @@ public class PastaManager {
         addFilters(pastaList);
     }
 
+    /**
+     * Update the filtered list. Will search {@link Pasta#content}, {@link Pasta#title}, {@link Pasta#contentTags} and
+     * {@link Pasta#assignmentTags}, ignoring tag settings.
+     */
+    public void search (List<String> searchTerms) {
+        filteredPastaList.clear();
+
+        if (searchTerms == null || searchTerms.isEmpty() ||
+                (searchTerms.size() == 1 && searchTerms.get(0).isEmpty())) {
+            filteredPastaList.addAll(pastaList);
+        } else {
+            List<Pasta> filteredList = PastaFilter.search(pastaList, searchTerms);
+            filteredPastaList.addAll(filteredList);
+        }
+    }
+
+    /**
+     * Update the filtered lists. If {@link #assignment} is set, all items which do not match the current assignment
+     * will be excluded from the filtered list as well.
+     */
     public void updateFilteredList () {
         filteredPastaList.clear();
 
-        if (!activeTagList.isEmpty()) {
-            List<Pasta> filteredPastaList = PastaFilter.filter(pastaList, activeTagList, anyTag, negate);
-            this.filteredPastaList.addAll(filteredPastaList);
-        } else {
+        if (activeTagList.isEmpty() && assignment == null) {
             filteredPastaList.addAll(pastaList);
+            return;
         }
+
+        List<Pasta> filteredPastaList;
+
+        if (!activeTagList.isEmpty()) {
+            filteredPastaList = new ArrayList<>();
+            List<Pasta> list = PastaFilter.filter(pastaList, activeTagList, anyTag, negate);
+            filteredPastaList.addAll(list);
+        } else {
+            filteredPastaList = new ArrayList<>(pastaList);
+        }
+
+        if (assignment != null) {
+            List<Pasta> list = PastaFilter.filter(pastaList, assignment, true);
+            filteredPastaList.removeAll(list);
+        }
+
+        this.filteredPastaList.addAll(filteredPastaList);
     }
 
     /**
@@ -180,8 +216,9 @@ public class PastaManager {
         GridPane.setVgrow(textArea, Priority.ALWAYS);
         GridPane.setHgrow(textArea, Priority.ALWAYS);
 
-        Label label = new Label("Tags: ");
-        label.setMaxHeight(Double.MAX_VALUE);
+        //Content tags
+        Label contentLabel = new Label("Content tags:         ");
+        contentLabel.setMaxHeight(Double.MAX_VALUE);
 
         String pastaContentTags;
         if (pasta.getContentTags().isEmpty()) {
@@ -190,18 +227,39 @@ public class PastaManager {
             pastaContentTags = pasta.getContentTags().toString();
             pastaContentTags = pastaContentTags.substring(1, pastaContentTags.length() - 1);
         }
-        TextField textField = new TextField(pastaContentTags);
-        textField.setEditable(false);
-        textField.setMaxWidth(Double.MAX_VALUE);
+        TextField contentTagsTextField = new TextField(pastaContentTags);
+        contentTagsTextField.setEditable(false);
+        contentTagsTextField.setMaxWidth(Double.MAX_VALUE);
 
-        HBox hBox = new HBox();
-        hBox.getChildren().addAll(label, textField);
-        HBox.setHgrow(textField, Priority.ALWAYS);
+        HBox contentTagsHBox = new HBox();
+        contentTagsHBox.getChildren().addAll(contentLabel, contentTagsTextField);
+        HBox.setHgrow(contentTagsTextField, Priority.ALWAYS);
 
+        //Assignment tags
+        Label assignmentLabel = new Label("Assignment tags:   ");
+        assignmentLabel.setMaxHeight(Double.MAX_VALUE);
+
+        String pastaAssignmentTags;
+        if (pasta.getAssignmentTags().isEmpty()) {
+            pastaAssignmentTags = "<no tags>";
+        } else {
+            pastaAssignmentTags = pasta.getAssignmentTags().toString();
+            pastaAssignmentTags = pastaAssignmentTags.substring(1, pastaAssignmentTags.length() - 1);
+        }
+        TextField assignmentTagsTextField = new TextField(pastaAssignmentTags);
+        assignmentTagsTextField.setEditable(false);
+        assignmentTagsTextField.setMaxWidth(Double.MAX_VALUE);
+
+        HBox assignmentTagsHBox = new HBox();
+        assignmentTagsHBox.getChildren().addAll(assignmentLabel, assignmentTagsTextField);
+        HBox.setHgrow(assignmentTagsTextField, Priority.ALWAYS);
+
+        //Add children
         GridPane expContent = new GridPane();
         expContent.setMaxWidth(Double.MAX_VALUE);
         expContent.add(textArea, 0, 0);
-        expContent.add(hBox, 0, 1);
+        expContent.add(contentTagsHBox, 0, 1);
+        expContent.add(assignmentTagsHBox, 0, 2);
 
         // Set expandable Exception into the dialog pane.
         alert.getDialogPane().setExpandableContent(expContent);
@@ -279,6 +337,7 @@ public class PastaManager {
         pastaList.addAll(importedPastaList);
         addFilters(importedPastaList);
         updateFilteredList();
+        Collections.sort(pastaList);
         return importedPastaList;
     }
 
@@ -367,6 +426,7 @@ public class PastaManager {
         activeTagList.clear();
 
         this.pastaList = pastaList;
+        Collections.sort(pastaList);
         addFilters(pastaList);
     }
 
@@ -413,6 +473,25 @@ public class PastaManager {
             this.negate = negate;
             updateFilteredList();
         }
+    }
+
+    /**
+     * Returns the assignment.
+     *
+     * @return The assignment.
+     */
+    public String getAssignment () {
+        return assignment;
+    }
+
+    /**
+     * Set the associated assignment and calls {@link #updateFilteredList()}.
+     *
+     * @param assignment The new assignment.
+     */
+    public void setAssignment (String assignment) {
+        this.assignment = assignment;
+        updateFilteredList();
     }
     //endregion
 }

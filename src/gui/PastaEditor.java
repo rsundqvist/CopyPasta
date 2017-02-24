@@ -21,7 +21,7 @@ public class PastaEditor {
     private final Stage stage;
     private final PastaEditorController controller;
 
-    public PastaEditor (List<Pasta> pastaList) {
+    public PastaEditor (List<Pasta> pastaList, String assignment) {
 
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/res/pastaEditor.fxml"));
         Parent root = null;
@@ -44,7 +44,7 @@ public class PastaEditor {
         stage.initModality(Modality.APPLICATION_MODAL);
 
         controller = fxmlLoader.getController();
-        controller.initialize(pastaList);
+        controller.initialize(pastaList, assignment);
     }
 
     public UniqueArrayList<Pasta> showAndWait () {

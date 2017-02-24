@@ -26,6 +26,7 @@ public class Feedback implements Comparable<Feedback> {
     private String header;
     private String teacher;
     private String group;
+    private String assignment;
     private boolean done;
     //endregion
 
@@ -39,6 +40,7 @@ public class Feedback implements Comparable<Feedback> {
         header = HEADER;
         teacher = TEACHER;
         group = GROUP;
+        assignment = null;
         done = false;
     }
 
@@ -214,6 +216,24 @@ public class Feedback implements Comparable<Feedback> {
     @Override
     public int compareTo (Feedback other) {
         return group.compareTo(other.group);
+    }
+
+    /**
+     * Returns the assignment with which this Feedback is associated.
+     *
+     * @return The associated assignment assignment.
+     */
+    public String getAssignment () {
+        return assignment;
+    }
+
+    /**
+     * Set the assignment with which this Feedback is associated.
+     *
+     * @param assignment The new associated assignment assignment.
+     */
+    public void setAssignment (String assignment) {
+        this.assignment = assignment;
     }
     //endregion
 }

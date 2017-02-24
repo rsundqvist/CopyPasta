@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * @author Richard Sundqvist
  */
-public class Pasta {
+public class Pasta implements Comparable<Pasta> {
 
     //region Constant
     // ================================================================================= //
@@ -25,8 +25,8 @@ public class Pasta {
     // ================================================================================= //
     private final Date creationDate;
     private Date lastModificationDate;
-
-    private List<String> contentTags;
+    private final List<String> contentTags;
+    private final List<String> assignmentTags;
     private String title;
     private String content;
     //endregion
@@ -43,6 +43,7 @@ public class Pasta {
         creationDate = Calendar.getInstance().getTime();
         lastModificationDate = Calendar.getInstance().getTime();
         contentTags = new UniqueArrayList<>();
+        assignmentTags = new UniqueArrayList<>();
 
         title = null;
         content = null;
@@ -58,6 +59,9 @@ public class Pasta {
         lastModificationDate = orig.lastModificationDate;
         contentTags = new UniqueArrayList<>();
         contentTags.addAll(orig.contentTags);
+
+        assignmentTags = new UniqueArrayList<>();
+        assignmentTags.addAll(orig.assignmentTags);
 
         title = orig.title;
         content = orig.content;
@@ -136,12 +140,21 @@ public class Pasta {
     }
 
     /**
+     * Returns the assignment tags.
+     *
+     * @return The assignment tags.
+     */
+    public List<String> getAssignmentTags () {
+        return assignmentTags;
+    }
+
+    /**
      * Returns the title string, or part of the content if there is no title.
      *
      * @return The title string.
      */
     public String getTitle () {
-        if (title != null && title.length() > 0)
+        if (!isAutomaticTitle())
             return title;
 
         if (content != null) {
@@ -150,8 +163,16 @@ public class Pasta {
             return content.substring(0, Math.min(CONTENT_SNIPPET_LENGTH, Math.max(0, content.length())));
         }
 
+        return "NULL"; //Should never happen.
+    }
 
-        return "NULL";
+    /**
+     * Returns the automatic title setting of this Pasta. Automatic content is enabled when the tittle is null or empty.
+     *
+     * @return The automatic title setting.
+     */
+    public boolean isAutomaticTitle () {
+        return title == null || title.length() == 0;
     }
 
     /**
@@ -193,22 +214,24 @@ public class Pasta {
     //endregion
 
     /**
-     * Compares tags and content.
+     * Compares: {@link #content}, {@link #contentTags}, {@link #title}
      *
      * @param other The object to compare to.
      * @return {@code true} if the given object represents a {@code Pasta}
      * equivalent to this pasta, {@code false} otherwise
      */
     public boolean equals (Object other) {
-        if (this == other) return true;
+        if (this == other)
+            return true;
 
         //Derived types may equal
         if (other instanceof Pasta) { //null instanceof AnyClass is false
-            Pasta otherPasta = (Pasta) other;
+            Pasta rhs = (Pasta) other;
 
-            return content.equals(otherPasta.content) &&
-                    contentTags.equals(otherPasta.contentTags) &&
-                    title.equals(otherPasta.title);
+            return content.equals(rhs.content) &&
+                    contentTags.equals(rhs.contentTags) &&
+                    assignmentTags.equals(rhs.assignmentTags) &&
+                    (title == rhs.title || title.equals(rhs.title)); //title may be null
         }
 
         return false;
@@ -262,5 +285,13 @@ public class Pasta {
         System.out.println(test1);
         test1.addAll(test2);
         System.out.println(test1);
+    }
+
+    @Override
+    /**
+     * Compares titles.
+     */
+    public int compareTo (Pasta o) {
+        return getTitle().compareTo(o.getTitle());
     }
 }

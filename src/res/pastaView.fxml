@@ -11,6 +11,8 @@
 <?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.input.KeyCodeCombination?>
@@ -70,7 +72,7 @@
                      <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                      </columnConstraints>
                      <rowConstraints>
                         <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
@@ -89,6 +91,17 @@
                               <Insets left="5.0" />
                            </GridPane.margin>
                         </Button>
+                        <ToggleButton mnemonicParsing="false" onAction="#toggleCurrentAssignmentOnly" text="Assignment" GridPane.columnIndex="2">
+                           <GridPane.margin>
+                              <Insets right="5.0" />
+                           </GridPane.margin>
+                           <font>
+                              <Font size="9.0" />
+                           </font>
+                           <tooltip>
+                              <Tooltip text="If selected, any items associated with solely with other assignments are hidden." />
+                           </tooltip>
+                        </ToggleButton>
                      </children>
                   </GridPane>
                         <FlowPane fx:id="filterFlowPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="5.0" VBox.vgrow="ALWAYS">
@@ -102,12 +115,13 @@
                     <children>
                         <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="Pasta" VBox.vgrow="NEVER">
                             <font>
-                                <Font name="System Bold" size="12.0" />
+                                <Font name="System Bold" size="14.0" />
                             </font>
                             <tooltip>
                                 <Tooltip text="Availabile (filtered) pasta. Using Ctrl+C on an item here will copy the content of the pasta to the clipboard." />
                             </tooltip>
                         </Label>
+                  <TextField fx:id="searchField" promptText="Search on comma separated content, tags, title, ..." />
                         <ListView fx:id="listView" editable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="30.0" minWidth="0.0" onMouseClicked="#onMouseClicked" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                             <opaqueInsets>
                                 <Insets />

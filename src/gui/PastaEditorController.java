@@ -5,10 +5,13 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
+import javafx.scene.control.ToggleButton;
+import model.FeedbackManager;
 import model.Pasta;
 import model.UniqueArrayList;
 
@@ -24,10 +27,14 @@ public class PastaEditorController implements PastaViewController.PastaControlle
     @FXML
     private TextArea pastaEditingTextArea;
     @FXML
-    private ListView currentPastaTagListView;
+    private ListView currentPastaTagListView, availablePastaTagListView;
     @FXML
-    private ListView availablePastaTagListView;
-
+    private Label assignmentLabel;
+    @FXML
+    private CheckBox autoToggleCheckBox;
+    @FXML
+    private ToggleButton assignmentToggleButton;
+    private String assignment;
     private Pasta selectedPastaActual = null;
     private Pasta selectedPastaClone = null;
     private boolean autoTitle = true;
@@ -35,15 +42,15 @@ public class PastaEditorController implements PastaViewController.PastaControlle
     @FXML
     private PastaViewController pastaViewController = null;
 
-    public void initialize (List<Pasta> pastaList) {
+    public void initialize (List<Pasta> pastaList, String assignment) {
         pastaViewController.importPasta(pastaList);
         pastaViewController.setListener(this);
-        pastaEditingTextArea.textProperty().addListener(event -> textChanged());
+        System.out.println(assignment);
+        assignment = FeedbackManager.parseAssignmentString(assignment);
+        System.out.println(assignment);
+        assignmentLabel.setText(assignment);
+        this.assignment = assignment;
         update();
-    }
-
-    private void textChanged () {
-        //TODO
     }
 
     private void update () {
@@ -134,6 +141,8 @@ public class PastaEditorController implements PastaViewController.PastaControlle
         selectedPastaActual.setLastModificationDate();
         selectedPastaActual.getContentTags().clear();
         selectedPastaActual.getContentTags().addAll(selectedPastaClone.getContentTags());
+        selectedPastaActual.getAssignmentTags().clear();
+        selectedPastaActual.getAssignmentTags().addAll(selectedPastaClone.getAssignmentTags());
 
         if (autoTitle)
             selectedPastaActual.setTitle(null);
@@ -152,12 +161,31 @@ public class PastaEditorController implements PastaViewController.PastaControlle
         selectedPastaActual = pasta;
         selectedPastaClone = new Pasta(pasta);
 
-        if (!autoTitle)
+        autoTitle = pasta.isAutomaticTitle();
+        titleField.setDisable(autoTitle);
+        if (autoTitle)
+            titleField.setText(null);
+        else
             titleField.setText(selectedPastaClone.getTitle());
+
+        assignmentToggleButton.setSelected(pasta.getAssignmentTags().contains(assignment));
+        autoToggleCheckBox.setSelected(pasta.isAutomaticTitle());
 
         pastaEditingTextArea.setText(selectedPastaClone.getContent());
         currentPastaTagListView.getItems().clear();
         currentPastaTagListView.getItems().addAll(selectedPastaClone.getContentTags());
+    }
+
+    public void toggleAssignmentTag () {
+        if (assignmentToggleButton.isSelected())
+            selectedPastaClone.getAssignmentTags().add(assignment);
+        else
+            selectedPastaClone.getAssignmentTags().remove(assignment);
+    }
+
+    @Override
+    public String getAssignment () {
+        return assignment;
     }
 
     public void importPasta () {

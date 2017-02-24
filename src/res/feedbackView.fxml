@@ -46,7 +46,13 @@
                                         <Font name="System Bold" size="12.0" />
                                     </font>
                                 </Label>
-                                <TextField fx:id="studentGroupField" promptText="E.g.: 3 5, 6  9, potato" />
+                                <TextField fx:id="studentGroupField" maxWidth="1.7976931348623157E308" promptText="E.g.: 3 5, 6  9, potato" VBox.vgrow="NEVER" />
+                        <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="Assignment">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="assignmentField" maxWidth="1.7976931348623157E308" promptText="Current assignment." VBox.vgrow="NEVER" />
                                 <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#exportTemplate" text="Export Template" />
                                 <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#importTemplate" text="Import Template" />
                                 <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="Teacher">

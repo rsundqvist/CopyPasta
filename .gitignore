@@ -1,3 +1,6 @@
+# Project specific
+/save/
+
 
 # Created by https://www.gitignore.io/api/java,intellij
 
@@ -34,6 +37,7 @@
 
 # IntelliJ
 /out/
+/target/
 
 # mpeltonen/sbt-idea plugin
 .idea_modules/

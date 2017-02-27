@@ -1,6 +1,9 @@
 # About Copy Pasta
 
+>***Download "CopyPasta.zip" and run "CopyPasta.jar" to get started.***
+
 Copy Pasta is a program developed to aid in grading assignment exercises. Common feedback ("Pasta") can be created and categorized to speed up the process. Wildcards and templates are used to reduce the risk of mistakes, and to reduce clutter. The program will automatically load/store the most recent data (feedback and Pasta) when starting/exiting.
+
  
 ## Typical workflow
 
@@ -25,3 +28,5 @@ Under the "Setup" panel, click the "Export All" button (Ctrl-E) to select a targ
 ## Creator
 
 Richard Sundqvist (richard.sundqvist@live.se)
+
+Git repo: https://github.com/whisp91/CopyPasta

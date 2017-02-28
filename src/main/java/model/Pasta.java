@@ -16,7 +16,7 @@ public class Pasta implements Comparable<Pasta> {
     // Constant
     // ================================================================================= //
 
-    public static final int CONTENT_SNIPPET_LENGTH = 45;
+    public transient static final int CONTENT_SNIPPET_LENGTH = 45;
     //endregion
 
     //region Field

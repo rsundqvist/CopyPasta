@@ -10,6 +10,7 @@ import javafx.scene.layout.Priority;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -302,18 +303,18 @@ public class FeedbackManager {
      * @return A list of Feedback whose group were present in {@code groups}.
      */
     public List<Feedback> getByGroup (List<String> groups) {
-        groups = new ArrayList<>(groups);
+        groups = new LinkedList<>(groups);
+        List<Feedback> feedbackList = new LinkedList<>(this.feedbackList);
         List<Feedback> found = new ArrayList<>(groups.size());
-        List<Feedback> feedbackList = new ArrayList<>(this.feedbackList);
 
         int i = 0;
         while (!groups.isEmpty() && i < feedbackList.size()) {
             Feedback feedback = feedbackList.get(i);
 
-            String feedbackGroup = feedback.getGroup();
-            if (groups.contains(feedbackGroup)) {
+            String group = feedback.getGroup();
+            if (groups.contains(group)) {
                 feedbackList.remove(i);
-                groups.remove(feedbackGroup);
+                groups.remove(group);
                 found.add(feedback);
                 i = 0;
             } else {

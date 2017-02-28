@@ -7,89 +7,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="362bce97-9194-426c-8801-fa3630ee9c12" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/CopyPasta.zip" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/icon.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/knug.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/README.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/artifacts/CopyPasta.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/compiler.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_google_code_gson_gson_2_8_0.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/gson_2_8_0.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/artifact_structure/examples/feedback.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/artifact_structure/examples/pasta.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/artifact_structure/examples/template.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/artifact_structure/save/auto/feedback.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/artifact_structure/save/auto/pasta.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/artifact_structure/save/auto/template.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pom.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/save/auto/feedback.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/save/auto/pasta.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/save/auto/template.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/model/PastaFilter.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/resources/META-INF/MANIFEST.MF" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/resources/feedbackView.fxml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/resources/pastaEditor.fxml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/resources/pastaView.fxml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/META-INF/MANIFEST.MF" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/about.fxml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/feedbackView.fxml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/main.fxml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/pastaEditor.fxml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/pastaView.fxml" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/save/grader3_lab3/test.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/gui/FeedbackViewController.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/model/Feedback.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/model/FeedbackManager.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/model/PastaManager.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/res/feedback/defaultTemplate.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/res/pasta/default.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/res/pasta/saved.json" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/save/grader3_lab3/11.txt" afterPath="$PROJECT_DIR$/artifact_structure/examples/grader3_lab3/11.txt" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/save/grader3_lab3/136.txt" afterPath="$PROJECT_DIR$/artifact_structure/examples/grader3_lab3/136.txt" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/save/grader3_lab3/137.txt" afterPath="$PROJECT_DIR$/artifact_structure/examples/grader3_lab3/137.txt" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/save/grader3_lab3/143.txt" afterPath="$PROJECT_DIR$/artifact_structure/examples/grader3_lab3/143.txt" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/save/grader3_lab3/21.txt" afterPath="$PROJECT_DIR$/artifact_structure/examples/grader3_lab3/21.txt" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/save/grader3_lab3/26.txt" afterPath="$PROJECT_DIR$/artifact_structure/examples/grader3_lab3/26.txt" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/save/grader3_lab3/67.txt" afterPath="$PROJECT_DIR$/artifact_structure/examples/grader3_lab3/67.txt" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/save/grader3_lab3/69.txt" afterPath="$PROJECT_DIR$/artifact_structure/examples/grader3_lab3/69.txt" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/save/grader3_lab3/group11/comments.txt" afterPath="$PROJECT_DIR$/artifact_structure/examples/grader3_lab3/group11/comments.txt" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/save/grader3_lab3/group11/submission1/comments" afterPath="$PROJECT_DIR$/artifact_structure/examples/grader3_lab3/group11/submission1/comments" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/save/grader3_lab3/group137/comments.txt" afterPath="$PROJECT_DIR$/artifact_structure/examples/grader3_lab3/group137/comments.txt" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/save/grader3_lab3/group143/comments.txt" afterPath="$PROJECT_DIR$/artifact_structure/examples/grader3_lab3/group143/comments.txt" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/save/grader3_lab3/group143/submission2/comments" afterPath="$PROJECT_DIR$/artifact_structure/examples/grader3_lab3/group143/submission2/comments" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/save/grader3_lab3/group21/comments.txt" afterPath="$PROJECT_DIR$/artifact_structure/examples/grader3_lab3/group21/comments.txt" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/save/grader3_lab3/group21/lab3.24.tar" afterPath="$PROJECT_DIR$/artifact_structure/examples/grader3_lab3/group21/lab3.24.tar" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/save/grader3_lab3/group26/comments.txt" afterPath="$PROJECT_DIR$/artifact_structure/examples/grader3_lab3/group26/comments.txt" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/save/grader3_lab3/group67/67.lab3.tar" afterPath="$PROJECT_DIR$/artifact_structure/examples/grader3_lab3/group67/67.lab3.tar" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/save/grader3_lab3/group67/comments.txt" afterPath="$PROJECT_DIR$/artifact_structure/examples/grader3_lab3/group67/comments.txt" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/save/grader3_lab3/group69/comments.txt" afterPath="$PROJECT_DIR$/artifact_structure/examples/grader3_lab3/group69/comments.txt" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/gui/Controller.java" afterPath="$PROJECT_DIR$/src/main/java/gui/Controller.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/gui/FeedbackTab.java" afterPath="$PROJECT_DIR$/src/main/java/gui/FeedbackTab.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/gui/Main.java" afterPath="$PROJECT_DIR$/src/main/java/gui/Main.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/gui/PastaEditor.java" afterPath="$PROJECT_DIR$/src/main/java/gui/PastaEditor.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/gui/PastaEditorController.java" afterPath="$PROJECT_DIR$/src/main/java/gui/PastaEditorController.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/gui/PastaViewController.java" afterPath="$PROJECT_DIR$/src/main/java/gui/PastaViewController.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/gui/Tools.java" afterPath="$PROJECT_DIR$/src/main/java/gui/Tools.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/model/Environment.java" afterPath="$PROJECT_DIR$/src/main/java/model/Environment.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/model/IO.java" afterPath="$PROJECT_DIR$/src/main/java/model/IO.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/model/Pasta.java" afterPath="$PROJECT_DIR$/src/main/java/model/Pasta.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/model/UniqueArrayList.java" afterPath="$PROJECT_DIR$/src/main/java/model/UniqueArrayList.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/res/about.fxml" afterPath="$PROJECT_DIR$/src/main/resources/about.fxml" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/res/icon.png" afterPath="$PROJECT_DIR$/src/main/resources/icon.png" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/res/knug.jpg" afterPath="$PROJECT_DIR$/src/main/resources/knug.jpg" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/res/main.fxml" afterPath="$PROJECT_DIR$/src/main/resources/main.fxml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CopyPasta.zip" afterPath="$PROJECT_DIR$/CopyPasta.zip" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/README.txt" afterPath="$PROJECT_DIR$/.idea/README.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/VERSION.md" afterPath="$PROJECT_DIR$/VERSION.md" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/save/auto/pasta.json" afterPath="$PROJECT_DIR$/save/auto/pasta.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/save/auto/template.json" afterPath="$PROJECT_DIR$/save/auto/template.json" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/gui/FeedbackViewController.java" afterPath="$PROJECT_DIR$/src/main/java/gui/FeedbackViewController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/gui/Main.java" afterPath="$PROJECT_DIR$/src/main/java/gui/Main.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/model/Feedback.java" afterPath="$PROJECT_DIR$/src/main/java/model/Feedback.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/model/FeedbackManager.java" afterPath="$PROJECT_DIR$/src/main/java/model/FeedbackManager.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/model/PastaManager.java" afterPath="$PROJECT_DIR$/src/main/java/model/PastaManager.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/model/IO.java" afterPath="$PROJECT_DIR$/src/main/java/model/IO.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/model/Pasta.java" afterPath="$PROJECT_DIR$/src/main/java/model/Pasta.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/model/PastaFilter.java" afterPath="$PROJECT_DIR$/src/model/PastaFilter.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/res/feedback/savedFeedback.json" afterPath="$PROJECT_DIR$/src/res/feedback/savedFeedback.json" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/res/feedback/savedTemplate.json" afterPath="$PROJECT_DIR$/src/res/feedback/savedTemplate.json" />
@@ -111,7 +41,40 @@
   </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
-    <leaf />
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
+      <file leaf-file-name="IO.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/model/IO.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="286">
+              <caret line="34" column="0" lean-forward="false" selection-start-line="34" selection-start-column="0" selection-end-line="34" selection-end-column="0" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Main.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/gui/Main.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="330">
+              <caret line="24" column="42" lean-forward="false" selection-start-line="24" selection-start-column="42" selection-end-line="24" selection-end-column="42" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Pasta.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/model/Pasta.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="220">
+              <caret line="14" column="9" lean-forward="false" selection-start-line="14" selection-start-column="9" selection-end-line="14" selection-end-column="9" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -124,26 +87,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>assignment</find>
-      <find>&quot;intro&quot;</find>
-      <find>pastamanager.import</find>
-      <find>saved</find>
-      <find>importf</find>
-      <find>importsaved</find>
-      <find>IO.save</find>
-      <find>txt</find>
-      <find>default</find>
-      <find>template =</find>
-      <find>setTemplate</find>
-      <find>tabpane</find>
-      <find>importFeed</find>
-      <find>setContent</find>
-      <find>initialize</find>
-      <find>feedbackList</find>
-      <find>importfeed</find>
-      <find>addFeed</find>
-      <find>compraeto</find>
-      <find>sout</find>
       <find>out.pr</find>
       <find>fire</find>
       <find>import</find>
@@ -154,6 +97,26 @@
       <find>templt</find>
       <find>updateTemplate</find>
       <find>export</find>
+      <find>menuitem</find>
+      <find>createFeedbackTabContextMenu</find>
+      <find>feed</find>
+      <find>feedbackTabPane.gettabs().add</find>
+      <find>onMouseClicked</find>
+      <find>toggledone</find>
+      <find>toggle         updateFeedbackTabLockStatus();</find>
+      <find>new feedbackt</find>
+      <find>oolean addAll(int index, Collect</find>
+      <find>clone</find>
+      <find>gson.</find>
+      <find>utf</find>
+      <find>gson             OutputStreamWriter writer = new OutputStreamWriter(                     new FileOutputStream(file),                     Charset.forName(&quot;UTF-8&quot;).newEncoder()             );</find>
+      <find>fromJso</find>
+      <find>inputstr</find>
+      <find>fromjson</find>
+      <find>forname</find>
+      <find>forName</find>
+      <find>filereader</find>
+      <find>filewrt</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -205,9 +168,7 @@
         <option value="$PROJECT_DIR$/src/main/java/gui/Foo.java" />
         <option value="$PROJECT_DIR$/src/main/resources/autosave/pasta.json" />
         <option value="$PROJECT_DIR$/src/main/java/gui/PastaViewController.java" />
-        <option value="$PROJECT_DIR$/src/main/java/model/IO.java" />
         <option value="$PROJECT_DIR$/src/main/java/gui/Controller.java" />
-        <option value="$PROJECT_DIR$/src/main/java/gui/Main.java" />
         <option value="$PROJECT_DIR$/src/main/java/gui/Tools.java" />
         <option value="$PROJECT_DIR$/artifact_structure/save/auto/template.json" />
         <option value="$PROJECT_DIR$/artifact_structure/save/auto/feedback.json" />
@@ -216,10 +177,13 @@
         <option value="$PROJECT_DIR$/save/auto/feedback.json" />
         <option value="$PROJECT_DIR$/save/auto/pasta.json" />
         <option value="$PROJECT_DIR$/save/auto/template.json" />
-        <option value="$PROJECT_DIR$/src/main/java/model/Feedback.java" />
-        <option value="$PROJECT_DIR$/src/main/java/model/FeedbackManager.java" />
-        <option value="$PROJECT_DIR$/src/main/java/gui/FeedbackViewController.java" />
         <option value="$PROJECT_DIR$/src/main/java/model/PastaManager.java" />
+        <option value="$PROJECT_DIR$/src/main/java/gui/FeedbackViewController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/model/FeedbackManager.java" />
+        <option value="$PROJECT_DIR$/src/main/java/model/Feedback.java" />
+        <option value="$PROJECT_DIR$/src/main/java/model/Pasta.java" />
+        <option value="$PROJECT_DIR$/src/main/java/gui/Main.java" />
+        <option value="$PROJECT_DIR$/src/main/java/model/IO.java" />
       </list>
     </option>
   </component>
@@ -283,10 +247,10 @@
     </treeState>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-11" />
-    <option name="y" value="-11" />
-    <option name="width" value="1942" />
-    <option name="height" value="1042" />
+    <option name="x" value="341" />
+    <option name="y" value="56" />
+    <option name="width" value="1229" />
+    <option name="height" value="814" />
   </component>
   <component name="ProjectView">
     <navigator currentView="ProjectPane" proportions="" version="1">
@@ -303,6 +267,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scratches" />
       <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
@@ -400,42 +365,9 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="CopyPasta" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="CopyPasta" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="save" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="CopyPasta" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="CopyPasta" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="save" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="auto" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
         </subPane>
       </pane>
       <pane id="PackagesPane" />
-      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -445,16 +377,14 @@
     <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.15078124" />
     <property name="project.structure.side.proportion" value="0.18399264" />
+    <property name="GenerateAntBuildDialog.enableUiFormCompile" value="true" />
+    <property name="GenerateAntBuildDialog.forceTargetJdk" value="true" />
+    <property name="GenerateAntBuildDialog.backupFiles" value="true" />
+    <property name="GenerateAntBuildDialog.outputFileNameProperty" value="copypasta" />
   </component>
   <component name="RecentsManager">
     <key name="MoveMembersDialog.RECENTS_KEY">
       <recent name="gui.Tools" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\Richard Sundqvist\IdeaProjects\CopyPasta\src\main\resources\autosave" />
-      <recent name="C:\Users\Richard Sundqvist\IdeaProjects\CopyPasta\src\res\pasta" />
-      <recent name="C:\Users\Richard Sundqvist\IdeaProjects\CopyPasta\src\res" />
-      <recent name="C:\Users\Richard Sundqvist\IdeaProjects\CopyPasta\out\production\CopyPasta\res\feedback" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Richard Sundqvist\IdeaProjects\CopyPasta\src\main\resources\autosave" />
@@ -462,6 +392,12 @@
       <recent name="C:\Users\Richard Sundqvist\IdeaProjects\CopyPasta\src\main\resources\save\auto" />
       <recent name="C:\Users\Richard Sundqvist\IdeaProjects\CopyPasta\src\main\resources\save" />
       <recent name="C:\Users\Richard Sundqvist\IdeaProjects\CopyPasta\src\main" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Richard Sundqvist\IdeaProjects\CopyPasta\src\main\resources\autosave" />
+      <recent name="C:\Users\Richard Sundqvist\IdeaProjects\CopyPasta\src\res\pasta" />
+      <recent name="C:\Users\Richard Sundqvist\IdeaProjects\CopyPasta\src\res" />
+      <recent name="C:\Users\Richard Sundqvist\IdeaProjects\CopyPasta\out\production\CopyPasta\res\feedback" />
     </key>
   </component>
   <component name="RunManager" selected="Application.Main">
@@ -765,26 +701,25 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-11" y="-11" width="1942" height="1042" extended-state="6" />
-    <editor active="false" />
+    <frame x="341" y="56" width="1229" height="814" extended-state="0" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3298731" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Nl-Palette" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32678983" sideWeight="0.47109208" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32641292" sideWeight="0.47109208" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24221453" sideWeight="0.3977516" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.19004282" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3298731" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25981525" sideWeight="0.6022484" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25821596" sideWeight="0.6022484" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Properties" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3298731" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2414347" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3290993" sideWeight="0.49357602" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.43030304" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -797,6 +732,7 @@
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Thumbnails" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3298731" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32871974" sideWeight="0.49357602" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="VcsContentAnnotationSettings">
@@ -804,7 +740,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="6" />
+      <option name="time" value="7" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -813,8 +749,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/out/production/CopyPasta/res/feedback/defaultTemplate.json" />
-    <entry file="file://$PROJECT_DIR$/out/production/CopyPasta/res/feedback/savedTemplate.json" />
     <entry file="file://$PROJECT_DIR$/out/production/CopyPasta/res/feedback/savedFeedback.json" />
     <entry file="jar://C:/Program Files/Java/jdk1.8.0_111/src.zip!/java/lang/String.java">
       <provider selected="true" editor-type-id="text-editor">
@@ -877,13 +811,6 @@
     <entry file="file://$PROJECT_DIR$/src/package-info.java" />
     <entry file="file://$PROJECT_DIR$/src/gfd.java" />
     <entry file="file://$PROJECT_DIR$/META-INF/MANIFEST.MF" />
-    <entry file="file://$PROJECT_DIR$/src/main/java/model/Pasta.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="759">
-          <caret line="173" column="37" lean-forward="false" selection-start-line="173" selection-start-column="37" selection-end-line="173" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/main.fxml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="410">
@@ -913,18 +840,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-29">
           <caret line="105" column="41" lean-forward="true" selection-start-line="105" selection-start-column="41" selection-end-line="105" selection-end-column="41" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/gui/MyClass.java" />
-    <entry file="file://$PROJECT_DIR$/src/main/java/model/UniqueArrayList.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="16" column="5" lean-forward="false" selection-start-line="16" selection-start-column="5" selection-end-line="16" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/gui/PastaEditor.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="385">
@@ -934,46 +853,14 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/gui/Foo.java" />
-    <entry file="file://$PROJECT_DIR$/src/main/resources/autosave/feedback.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="396">
-          <caret line="0" column="1970" lean-forward="false" selection-start-line="0" selection-start-column="1970" selection-end-line="0" selection-end-column="1970" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/target/classes/autosave/pasta.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="7074" lean-forward="false" selection-start-line="0" selection-start-column="7074" selection-end-line="0" selection-end-column="7074" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/autosave/pasta.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="7598" lean-forward="false" selection-start-line="0" selection-start-column="7598" selection-end-line="0" selection-end-column="7598" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/examples/pasta.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="3344" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="7598" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/autosave/feedback.json" />
+    <entry file="file://$PROJECT_DIR$/target/classes/autosave/pasta.json" />
+    <entry file="file://$PROJECT_DIR$/src/main/resources/autosave/pasta.json" />
+    <entry file="file://$PROJECT_DIR$/examples/pasta.json" />
     <entry file="file://$PROJECT_DIR$/src/main/java/gui/PastaViewController.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="148">
           <caret line="119" column="0" lean-forward="true" selection-start-line="119" selection-start-column="0" selection-end-line="119" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/model/IO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="129">
-          <caret line="177" column="7" lean-forward="true" selection-start-line="177" selection-start-column="7" selection-end-line="177" selection-end-column="7" />
           <folding />
         </state>
       </provider>
@@ -986,19 +873,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/gui/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="214">
-          <caret line="26" column="0" lean-forward="false" selection-start-line="26" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/META-INF/MANIFEST.MF">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="88">
           <caret line="4" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1014,7 +892,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1022,7 +899,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1030,7 +906,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1042,19 +917,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/save/1.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="477">
-          <caret line="37" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="37" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/save/1.txt" />
     <entry file="file://$PROJECT_DIR$/src/main/java/gui/PastaEditorController.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="100">
           <caret line="48" column="38" lean-forward="true" selection-start-line="48" selection-start-column="38" selection-end-line="48" selection-end-column="38" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1066,37 +933,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/gui/FeedbackViewController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="126">
-          <caret line="251" column="7" lean-forward="true" selection-start-line="251" selection-start-column="7" selection-end-line="251" selection-end-column="7" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/model/Feedback.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-117">
-          <caret line="92" column="36" lean-forward="true" selection-start-line="92" selection-start-column="36" selection-end-line="92" selection-end-column="36" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/model/FeedbackManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1136">
-          <caret line="37" column="30" lean-forward="false" selection-start-line="37" selection-start-column="30" selection-end-line="37" selection-end-column="30" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/save/auto/template.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="40" lean-forward="false" selection-start-line="0" selection-start-column="39" selection-end-line="0" selection-end-column="40" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1104,7 +944,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1112,23 +951,86 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="2" lean-forward="true" selection-start-line="0" selection-start-column="2" selection-end-line="0" selection-end-column="2" />
-          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/save/pasta.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="28" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="7283" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/save/pasta.json" />
     <entry file="file://$PROJECT_DIR$/src/main/java/model/PastaManager.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="390">
-          <caret line="229" column="55" lean-forward="true" selection-start-line="229" selection-start-column="55" selection-end-line="229" selection-end-column="55" />
+        <state relative-caret-position="610">
+          <caret line="245" column="38" lean-forward="false" selection-start-line="245" selection-start-column="38" selection-end-line="245" selection-end-column="38" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/model/UniqueArrayList.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="440">
+          <caret line="21" column="29" lean-forward="false" selection-start-line="21" selection-start-column="29" selection-end-line="21" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_111/src.zip!/java/util/LinkedList.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="390">
+          <caret line="1257" column="34" lean-forward="true" selection-start-line="1257" selection-start-column="34" selection-end-line="1257" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/model/FeedbackManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="93">
+          <caret line="306" column="49" lean-forward="true" selection-start-line="306" selection-start-column="49" selection-end-line="306" selection-end-column="49" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/gui/FeedbackViewController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="302">
+          <caret line="291" column="41" lean-forward="true" selection-start-line="291" selection-start-column="41" selection-end-line="291" selection-end-column="41" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/model/Feedback.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="594">
+          <caret line="29" column="35" lean-forward="false" selection-start-line="29" selection-start-column="35" selection-end-line="29" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/model/Pasta.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="220">
+          <caret line="14" column="9" lean-forward="false" selection-start-line="14" selection-start-column="9" selection-end-line="14" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/gui/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="330">
+          <caret line="24" column="42" lean-forward="false" selection-start-line="24" selection-start-column="42" selection-end-line="24" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/com/google/code/gson/gson/2.8.0/gson-2.8.0.jar!/com/google/gson/Gson.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="203">
+          <caret line="87" column="17" lean-forward="false" selection-start-line="87" selection-start-column="17" selection-end-line="87" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/model/IO.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="286">
+          <caret line="34" column="0" lean-forward="false" selection-start-line="34" selection-start-column="0" selection-end-line="34" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

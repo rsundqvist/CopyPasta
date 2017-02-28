@@ -13,9 +13,9 @@ public class Feedback implements Comparable<Feedback> {
     // ================================================================================= //
     // Constant
     // ================================================================================= //
-    public static final String HEADER = "%HEADER%";
-    public static final String TEACHER = "%TEACHER%";
-    public static final String GROUP = "%GROUP%";
+    public transient static final String HEADER = "%HEADER%";
+    public transient static final String TEACHER = "%TEACHER%";
+    public transient static final String GROUP = "%GROUP%";
     //endregion
 
     //region Field
@@ -27,7 +27,7 @@ public class Feedback implements Comparable<Feedback> {
     private String teacher;
     private String group;
     private String assignment;
-    private boolean done;
+    private transient boolean done;
     //endregion
 
 

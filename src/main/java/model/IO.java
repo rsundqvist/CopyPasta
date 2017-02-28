@@ -1,6 +1,7 @@
 package model;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import gui.Tools;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
@@ -11,22 +12,30 @@ import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
 public abstract class IO {
-    private static final Gson gson = new Gson();
+    private static final Gson gson = build();
+    public static final String ENCODING = "UTF-8";
+
+    private static Gson build () {
+        return new GsonBuilder().disableHtmlEscaping().create();
+    }
 
     private IO () {
     }
@@ -91,7 +100,11 @@ public abstract class IO {
     public static List<Pasta> importPasta (File file) {
         if (file != null) {
             try {
-                Pasta pastaArray[] = gson.fromJson(new FileReader(file), Pasta[].class);
+                InputStreamReader reader = new InputStreamReader(
+                        new FileInputStream(file),
+                        Charset.forName(ENCODING).newDecoder()
+                );
+                Pasta pastaArray[] = gson.fromJson(reader, Pasta[].class);
                 return pastaArray == null ? null : Arrays.asList(pastaArray);
             } catch (FileNotFoundException e) {
                 showExceptionAlert(e);
@@ -110,7 +123,11 @@ public abstract class IO {
     public static Feedback importFeedbackSingle (File file) {
         if (file != null) {
             try {
-                Feedback feedback = gson.fromJson(new FileReader(file), Feedback.class);
+                InputStreamReader reader = new InputStreamReader(
+                        new FileInputStream(file),
+                        Charset.forName(ENCODING).newDecoder()
+                );
+                Feedback feedback = gson.fromJson(reader, Feedback.class);
                 return feedback;
             } catch (FileNotFoundException e) {
                 showExceptionAlert(e);
@@ -357,9 +374,12 @@ public abstract class IO {
 
         try {
             ensureAccess(file);
-            FileWriter fileWriter = new FileWriter(file);
-            fileWriter.write(content);
-            fileWriter.close();
+            OutputStreamWriter writer = new OutputStreamWriter(
+                    new FileOutputStream(file),
+                    Charset.forName(ENCODING).newEncoder()
+            );
+            writer.write(content);
+            writer.close();
         } catch (IOException ex) {
             ex.printStackTrace();
             showExceptionAlert(ex);
@@ -385,7 +405,11 @@ public abstract class IO {
     public static List<Feedback> importFeedback (File file) {
         if (file != null) {
             try {
-                Feedback feedbackArray[] = gson.fromJson(new FileReader(file), Feedback[].class);
+                InputStreamReader reader = new InputStreamReader(
+                        new FileInputStream(file),
+                        Charset.forName(ENCODING).newDecoder()
+                );
+                Feedback feedbackArray[] = gson.fromJson(reader, Feedback[].class);
                 return feedbackArray == null ? null : Arrays.asList(feedbackArray);
             } catch (FileNotFoundException e) {
                 showExceptionAlert(e);

@@ -59,6 +59,13 @@ public class FeedbackViewController {
     private boolean hideDoneItems;
     //endregion
 
+    public void updateFeedbackTabLockStatus () {
+        boolean empty = feedbackTabPane.getTabs().isEmpty();
+        feedbackTab.setDisable(empty);
+        if (empty)
+            feedbackOverviewTabPane.getSelectionModel().select(setupTab);
+    }
+
     public void createFeedbackItems (List<String> groups) {
         //Groups exist already? Modified?
 
@@ -94,7 +101,6 @@ public class FeedbackViewController {
             } else {
                 throw new IllegalStateException("Unhandled case: " + result.get());
             }
-
         }
         List<Feedback> newFeedbackList = feedbackManager.generateFeedback(groups);
 
@@ -106,7 +112,7 @@ public class FeedbackViewController {
                 feedbackOverviewTabPane.getSelectionModel().select(feedbackTab);
         }
 
-
+        updateFeedbackTabLockStatus();
     }
 
     /**
@@ -124,6 +130,7 @@ public class FeedbackViewController {
         feedbackTabListView.getItems().removeAll(removedFeedbackTabs);
         feedbackTabPane.getTabs().removeAll(removedFeedbackTabs);
         feedbackTabs.removeAll(removedFeedbackTabs);
+        updateFeedbackTabLockStatus();
     }
 
     private List<FeedbackTab> getFeedbackTabs (List<Feedback> feedbackList) {
@@ -147,6 +154,7 @@ public class FeedbackViewController {
     private void createFeedbackTab (Feedback feedback) {
         FeedbackTab tab = new FeedbackTab(feedback);
         tab.setContextMenu(createFeedbackTabContextMenu(tab));
+        tab.setOnClosed(event -> updateFeedbackTabLockStatus());
         feedbackTabPane.getTabs().add(tab);
         feedbackTabListView.getItems().add(tab);
         feedbackTabs.add(tab);
@@ -252,7 +260,7 @@ public class FeedbackViewController {
     /**
      * Extract feedback from {@link #feedbackTabListView}, or copy the list from the manager.
      *
-     * @param selectedOnly If {@code true}, extract selection only. Otherwise extract everything in them manager.
+     * @param selectedOnly If {@true}, extract selection only. Otherwise extract everything in them manager.
      * @return A list of feedback.
      */
     private List<Feedback> extractFeedback (boolean selectedOnly) {
@@ -296,15 +304,18 @@ public class FeedbackViewController {
 
         for (Object o : selectedItems)
             deleteFeedback((FeedbackTab) o);
+
+        updateFeedbackTabLockStatus();
     }
 
     private void deleteFeedback (FeedbackTab tab) {
-        if (tab != null) {
-            feedbackTabPane.getTabs().remove(tab);
-            feedbackTabListView.getItems().remove(tab);
-            feedbackTabs.remove(tab);
-            feedbackManager.removeFeedback(tab.getFeedback());
-        }
+        if (tab == null) return;
+
+        feedbackTabPane.getTabs().remove(tab);
+        feedbackTabListView.getItems().remove(tab);
+        feedbackTabs.remove(tab);
+        feedbackManager.removeFeedback(tab.getFeedback());
+        updateFeedbackTabLockStatus();
     }
 
     public void importFeedback () {
@@ -315,6 +326,7 @@ public class FeedbackViewController {
                 createFeedbackTab(feedback);
 
         feedbackOverviewTabPane.getSelectionModel().select(feedbackTab);
+        updateFeedbackTabLockStatus();
     }
 
     public void initialize () {
@@ -338,6 +350,8 @@ public class FeedbackViewController {
 
         if (feedbackManager.getFeedbackList().isEmpty())
             feedbackOverviewTabPane.getSelectionModel().select(setupTab);
+
+        updateFeedbackTabLockStatus();
     }
 
     public void setFeedbackTemplate (Feedback template) {
@@ -358,6 +372,7 @@ public class FeedbackViewController {
             else
                 feedbackTabPane.getTabs().add(tab);
         }
+        updateFeedbackTabLockStatus();
     }
 
     public void clear () {
@@ -372,6 +387,7 @@ public class FeedbackViewController {
             feedbackTabListView.getItems().clear();
             feedbackManager.clear();
             feedbackTabs.clear();
+            updateFeedbackTabLockStatus();
         }
     }
 
@@ -409,7 +425,6 @@ public class FeedbackViewController {
         template.setHeader(templateHeaderTextArea.getText());
         template.setAssignment(getAssignment());
         Tools.exportSavedTemplate(template);
-
     }
 
     public void preview () {
@@ -431,7 +446,6 @@ public class FeedbackViewController {
      */
     public void toggleDoneTab () {
         Tab tab = feedbackTabPane.getSelectionModel().getSelectedItem();
-        //feedbackTabPane.isFocused()
         toggleDone((FeedbackTab) tab, true);
     }
 
@@ -439,14 +453,17 @@ public class FeedbackViewController {
      * Toggle done for the list.
      */
     public void toggleDone () {
-        if (!feedbackTabListView.isFocused()) return;
+        if (!feedbackTabListView.isFocused())
+            return;
         List<Object> selectedItems = feedbackTabListView.getSelectionModel().getSelectedItems();
 
-        for (Object o : selectedItems)
-            toggleDone((FeedbackTab) o, false);
+        if (!selectedItems.isEmpty()) {
+            for (Object o : selectedItems)
+                toggleDone((FeedbackTab) o, false);
 
-        if (feedbackManager.isAllFeedbackDone())
-            allFeedbackDone();
+            if (feedbackManager.isAllFeedbackDone())
+                allFeedbackDone();
+        }
     }
 
     public void toggleDone (FeedbackTab tab, boolean checkAllDone) {
@@ -465,10 +482,12 @@ public class FeedbackViewController {
 
         if (checkAllDone && feedbackManager.isAllFeedbackDone())
             allFeedbackDone();
+
+        updateFeedbackTabLockStatus();
     }
 
     private void allFeedbackDone () {
-        String contentText = "All feedback is done! Export feedback to .txt-files?";
+        String contentText = "All feedback is done! Export to .txt-files?";
         Alert alert = new Alert(Alert.AlertType.INFORMATION, contentText, ButtonType.YES, ButtonType.NO);
         alert.setHeaderText("All feedback done!");
 
@@ -499,8 +518,9 @@ public class FeedbackViewController {
             feedbackTabListView.getItems().clear();
             feedbackTabListView.getItems().addAll(feedbackTabs);
         }
-    }
 
+        updateFeedbackTabLockStatus();
+    }
 
     public void feedbackKeyTyped (KeyEvent event) {
         if (!feedbackTabPane.isFocused()) return;

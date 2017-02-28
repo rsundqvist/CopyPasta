@@ -1,1 +1,1 @@
-The .idea folder content is specifict to the IntelliJ IDEA IDE. It contains among other things, artifacts (build configurations).
+The .idea folder content is specific to IntelliJ IDEA. It contains among other things, artifacts (build configurations).

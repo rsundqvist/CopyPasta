@@ -3,6 +3,7 @@ package gui;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
@@ -10,7 +11,6 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
-import javafx.scene.control.ToggleButton;
 import model.FeedbackManager;
 import model.Pasta;
 import model.UniqueArrayList;
@@ -27,40 +27,58 @@ public class PastaEditorController implements PastaViewController.PastaControlle
     @FXML
     private TextArea pastaEditingTextArea;
     @FXML
-    private ListView currentPastaTagListView, availablePastaTagListView;
+    private ListView currentContentTagView, allContentTagView, currentAssignTagView, allAssignTagView;
+    @FXML
+    private CheckBox autoTitleCheckBox;
+    @FXML
+    private Button saveChangesButton;
     @FXML
     private Label assignmentLabel;
-    @FXML
-    private CheckBox autoToggleCheckBox;
-    @FXML
-    private ToggleButton assignmentToggleButton;
-    private String assignment;
+    private String currentAssignment;
     private Pasta selectedPastaActual = null;
     private Pasta selectedPastaClone = null;
     private boolean autoTitle = true;
+    private boolean autoSave = true;
 
     @FXML
     private PastaViewController pastaViewController = null;
 
-    public void initialize (List<Pasta> pastaList, String assignment) {
+    public void initialize (List<Pasta> pastaList, String currentAssignment) {
         pastaViewController.importPasta(pastaList);
         pastaViewController.setListener(this);
-        System.out.println(assignment);
-        assignment = FeedbackManager.parseAssignmentString(assignment);
-        System.out.println(assignment);
-        assignmentLabel.setText(assignment);
-        this.assignment = assignment;
+        System.out.println(currentAssignment);
+        currentAssignment = FeedbackManager.parseAssignmentString(currentAssignment);
+        currentAssignment = currentAssignment.length() == 0 ? "<None>" : currentAssignment;
+        this.currentAssignment = currentAssignment;
+        assignmentLabel.setText(currentAssignment);
+        titleField.textProperty().addListener(event -> titleChanged());
+        pastaEditingTextArea.textProperty().addListener(event -> contentChanged());
         update();
+    }
+
+    private void titleChanged () {
+        if (autoSave)
+            savePastaChanges();
+    }
+
+    private void contentChanged () {
+        if (autoSave)
+            savePastaChanges();
     }
 
     private void update () {
         clear();
-        availablePastaTagListView.getItems().addAll(pastaViewController.getPastaManager().getTagList());
+        allContentTagView.getItems().addAll(pastaViewController.getPastaManager().getTagList());
+        allAssignTagView.getItems().addAll(pastaViewController.getPastaManager().getAssignmentTagList());
+        if (!allAssignTagView.getItems().contains(currentAssignment))
+            allAssignTagView.getItems().add(currentAssignment);
     }
 
     private void clear () {
-        availablePastaTagListView.getItems().clear();
-        currentPastaTagListView.getItems().clear();
+        allContentTagView.getItems().clear();
+        currentContentTagView.getItems().clear();
+        allAssignTagView.getItems().clear();
+        currentAssignTagView.getItems().clear();
         titleField.clear();
         pastaEditingTextArea.clear();
         selectedPastaClone = null;
@@ -79,35 +97,87 @@ public class PastaEditorController implements PastaViewController.PastaControlle
         }
     }
 
-    public void addPastaTag () {
-        String selectedItem = (String) availablePastaTagListView.getSelectionModel().getSelectedItem();
+    public void toggleAutoSave (Event e) {
+        CheckBox cb = (CheckBox) e.getSource();
+        autoSave = cb.isSelected();
+        saveChangesButton.setDisable(autoSave);
+    }
+
+    public void addContentTag () {
+        String selectedItem = (String) allContentTagView.getSelectionModel().getSelectedItem();
 
         if (selectedPastaClone != null && selectedItem != null)
             if (selectedPastaClone.getContentTags().add(selectedItem)) {
-                currentPastaTagListView.getItems().add(selectedItem);
+                currentContentTagView.getItems().add(selectedItem);
+                if (autoSave)
+                    savePastaChanges();
             }
     }
 
-    public void removePastaTag () {
-        String selectedItem = (String) currentPastaTagListView.getSelectionModel().getSelectedItem();
+    public void removeContentTag () {
+        String selectedItem = (String) currentContentTagView.getSelectionModel().getSelectedItem();
         if (selectedPastaClone != null && selectedItem != null) {
             selectedPastaClone.getContentTags().remove(selectedItem);
-            currentPastaTagListView.getItems().remove(selectedItem);
+            currentContentTagView.getItems().remove(selectedItem);
+            if (autoSave)
+                savePastaChanges();
         }
     }
 
-    public void createNewTag () {
-        TextInputDialog dialog = new TextInputDialog("New tag");
+    public void addAssignTag () {
+        String selectedItem = (String) allAssignTagView.getSelectionModel().getSelectedItem();
+
+        if (selectedPastaClone != null && selectedItem != null)
+            if (selectedPastaClone.getAssignmentTags().add(selectedItem)) {
+                currentAssignTagView.getItems().add(selectedItem);
+                if (autoSave)
+                    savePastaChanges();
+            }
+    }
+
+    public void removeAssignTag () {
+        String selectedItem = (String) currentAssignTagView.getSelectionModel().getSelectedItem();
+        if (selectedPastaClone != null && selectedItem != null) {
+            selectedPastaClone.getAssignmentTags().remove(selectedItem);
+            currentAssignTagView.getItems().remove(selectedItem);
+            if (autoSave)
+                savePastaChanges();
+        }
+    }
+
+    public void newContentTag () {
+        TextInputDialog dialog = new TextInputDialog("New content tag");
         dialog.setTitle("Create new tag.");
-        dialog.setHeaderText("Create new tag.");
+        dialog.setHeaderText("Create new content tag.");
         dialog.setContentText("Enter new tag: ");
         Optional<String> result = dialog.showAndWait();
 
         if (result.isPresent() && result.get() != null) {
             String newTag = result.get();
             newTag = newTag.toLowerCase().trim();
-            if (!availablePastaTagListView.getItems().contains(newTag)) {
-                availablePastaTagListView.getItems().add(0, newTag);
+            if (!allContentTagView.getItems().contains(newTag)) {
+                allContentTagView.getItems().add(0, newTag);
+            } else {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION, "The tag \"" + newTag + "\" already exists.", ButtonType.OK);
+                alert.setHeaderText("Tag already exists.");
+                alert.setTitle("Duplicate found");
+                alert.show();
+            }
+        }
+    }
+
+    public void newAssignTag () {
+        TextInputDialog dialog = new TextInputDialog("New assignment tag");
+        dialog.setTitle("Create new tag.");
+        dialog.setHeaderText("Create new assignment tag.");
+        dialog.setContentText("Enter new tag: ");
+        Optional<String> result = dialog.showAndWait();
+
+        if (result.isPresent() && result.get() != null) {
+            String newTag = result.get();
+            newTag = newTag.toLowerCase().trim();
+            if (!allAssignTagView.getItems().contains(newTag)) {
+                allAssignTagView.getItems().add(0, newTag);
             } else {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION, "The tag \"" + newTag + "\" already exists.", ButtonType.OK);
                 alert.setHeaderText("Tag already exists.");
@@ -120,11 +190,11 @@ public class PastaEditorController implements PastaViewController.PastaControlle
     public void createNewPasta () {
         Pasta newPasta = new Pasta();
         newPasta.setContent("New");
-        select(newPasta);
 
         List<Pasta> pastaList = new UniqueArrayList<>();
         pastaList.add(newPasta);
         pastaViewController.importPasta(pastaList);
+        select(newPasta);
     }
 
     public void exportAllPasta () {
@@ -137,6 +207,8 @@ public class PastaEditorController implements PastaViewController.PastaControlle
     }
 
     public void savePastaChanges () {
+        if (selectedPastaActual == null) return;
+
         selectedPastaActual.setContent(pastaEditingTextArea.getText());
         selectedPastaActual.setLastModificationDate();
         selectedPastaActual.getContentTags().clear();
@@ -149,7 +221,7 @@ public class PastaEditorController implements PastaViewController.PastaControlle
         else
             selectedPastaActual.setTitle(titleField.getText());
 
-        pastaViewController.getPastaManager().updateFilters();
+        pastaViewController.getPastaManager().updateTags();
         pastaViewController.updateFilters();
         pastaViewController.refreshListView();
     }
@@ -168,24 +240,17 @@ public class PastaEditorController implements PastaViewController.PastaControlle
         else
             titleField.setText(selectedPastaClone.getTitle());
 
-        assignmentToggleButton.setSelected(pasta.getAssignmentTags().contains(assignment));
-        autoToggleCheckBox.setSelected(pasta.isAutomaticTitle());
+        autoTitleCheckBox.setSelected(pasta.isAutomaticTitle());
 
         pastaEditingTextArea.setText(selectedPastaClone.getContent());
-        currentPastaTagListView.getItems().clear();
-        currentPastaTagListView.getItems().addAll(selectedPastaClone.getContentTags());
+        currentContentTagView.getItems().clear();
+        currentAssignTagView.getItems().clear();
+        currentContentTagView.getItems().addAll(selectedPastaClone.getContentTags());
+        currentAssignTagView.getItems().addAll(selectedPastaClone.getAssignmentTags());
     }
 
-    public void toggleAssignmentTag () {
-        if (assignmentToggleButton.isSelected())
-            selectedPastaClone.getAssignmentTags().add(assignment);
-        else
-            selectedPastaClone.getAssignmentTags().remove(assignment);
-    }
-
-    @Override
-    public String getAssignment () {
-        return assignment;
+    public String getCurrentAssignment () {
+        return currentAssignment;
     }
 
     public void importPasta () {

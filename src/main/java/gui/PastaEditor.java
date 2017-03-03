@@ -23,7 +23,7 @@ public class PastaEditor {
 
     public PastaEditor (List<Pasta> pastaList, String assignment) {
 
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/pastaEditor.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/pastaEditor.fxml"));
         Parent root = null;
         try {
             root = fxmlLoader.load();

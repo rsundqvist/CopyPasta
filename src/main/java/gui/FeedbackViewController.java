@@ -19,6 +19,7 @@ import javafx.scene.control.TabPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
+import javafx.scene.control.TitledPane;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
@@ -49,11 +50,13 @@ public class FeedbackViewController {
     @FXML
     private TextField studentGroupField, assignmentField, teacherField;
     @FXML
-    private TabPane feedbackTabPane, feedbackOverviewTabPane;
+    private TabPane feedbackTabPane, rootTabPane;
     @FXML
     private TextArea templateTextArea, templateHeaderTextArea;
     @FXML
     private ListView feedbackTabListView; //Contains FeedbackTabs
+    @FXML
+    private TitledPane bodyPane;
     private FeedbackManager feedbackManager = new FeedbackManager();
     private List<FeedbackTab> feedbackTabs = new ArrayList<>();
     private boolean hideDoneItems;
@@ -63,7 +66,7 @@ public class FeedbackViewController {
         boolean empty = feedbackTabPane.getTabs().isEmpty();
         feedbackTab.setDisable(empty);
         if (empty)
-            feedbackOverviewTabPane.getSelectionModel().select(setupTab);
+            rootTabPane.getSelectionModel().select(setupTab);
     }
 
     public void createFeedbackItems (List<String> groups) {
@@ -109,7 +112,7 @@ public class FeedbackViewController {
                 createFeedbackTab(feedback);
 
             if (newFeedbackList.size() > 1)
-                feedbackOverviewTabPane.getSelectionModel().select(feedbackTab);
+                rootTabPane.getSelectionModel().select(feedbackTab);
         }
 
         updateFeedbackTabLockStatus();
@@ -201,6 +204,7 @@ public class FeedbackViewController {
     public void importTemplate () {
         File file = IO.showJSONOpenDialog();
         Feedback template = IO.importFeedbackSingle(file);
+        bodyPane.setExpanded(true);
         setFeedbackTemplate(template);
     }
 
@@ -325,7 +329,7 @@ public class FeedbackViewController {
             for (Feedback feedback : feedbackList)
                 createFeedbackTab(feedback);
 
-        feedbackOverviewTabPane.getSelectionModel().select(feedbackTab);
+        rootTabPane.getSelectionModel().select(feedbackTab);
         updateFeedbackTabLockStatus();
     }
 
@@ -349,8 +353,9 @@ public class FeedbackViewController {
                 createFeedbackTab(feedback);
 
         if (feedbackManager.getFeedbackList().isEmpty())
-            feedbackOverviewTabPane.getSelectionModel().select(setupTab);
+            rootTabPane.getSelectionModel().select(setupTab);
 
+        bodyPane.setExpanded(true);
         updateFeedbackTabLockStatus();
     }
 

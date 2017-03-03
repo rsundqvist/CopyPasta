@@ -1,5 +1,5 @@
 # Project specific
-/save/
+save/*
 
 
 # Created by https://www.gitignore.io/api/java,intellij

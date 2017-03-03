@@ -48,8 +48,7 @@ public class Controller implements PastaViewController.PastaControllerListener {
         //TODO - do something
     }
 
-    @Override
-    public String getAssignment () {
+    public String getCurrentAssignment () {
         return feedbackViewController.getAssignment();
     }
 
@@ -150,7 +149,7 @@ public class Controller implements PastaViewController.PastaControllerListener {
         alert.setTitle("About Program");
         alert.setHeaderText("About Copy Pasta");
 
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/about.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/fxml/about.fxml"));
         Parent root = null;
         try {
             root = fxmlLoader.load();

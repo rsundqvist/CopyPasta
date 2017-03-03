@@ -28,7 +28,8 @@ public class PastaManager {
     private UniqueArrayList<Pasta> filteredPastaList = new UniqueArrayList<>();
     private UniqueArrayList<String> tagList = new UniqueArrayList<>();
     private UniqueArrayList<String> activeTagList = new UniqueArrayList<>();
-    private String assignment = null;
+    private UniqueArrayList<String> assignmentTagList = new UniqueArrayList<>();
+    private String currentAssignment = null;
 
     private boolean anyTag = true; //Determines if UNION or INTERSECT filtering is used.
     private boolean negate = false; //Exclude all items which match (negation/complement).
@@ -46,6 +47,7 @@ public class PastaManager {
         pastaList.clear();
         filteredPastaList.clear();
         tagList.clear();
+        assignmentTagList.clear();
         activeTagList.clear();
     }
 
@@ -87,7 +89,7 @@ public class PastaManager {
      * @param pastaList A list of Pasta.
      * @return {@code true} if filters were added.
      */
-    public boolean addFilters (List<Pasta> pastaList) {
+    public boolean addContentTags (List<Pasta> pastaList) {
         boolean changed = false;
 
         for (Pasta pasta : pastaList)
@@ -98,13 +100,31 @@ public class PastaManager {
     }
 
     /**
+     * Adds new filters from the list to the manager.
+     *
+     * @param pastaList A list of Pasta.
+     * @return {@code true} if filters were added.
+     */
+    public boolean addAssignmentTags (List<Pasta> pastaList) {
+        boolean changed = false;
+
+        for (Pasta pasta : pastaList)
+            if (assignmentTagList.addAll(pasta.getAssignmentTags()))
+                changed = true;
+
+        return changed;
+    }
+
+    /**
      * Force updating of filters of items contained in {@link #pastaList}
      */
-    public void updateFilters () {
+    public void updateTags () {
         tagList.clear();
+        assignmentTagList.clear();
         filteredPastaList.clear();
 
-        addFilters(pastaList);
+        addContentTags(pastaList);
+        addAssignmentTags(pastaList);
     }
 
     /**
@@ -124,13 +144,13 @@ public class PastaManager {
     }
 
     /**
-     * Update the filtered lists. If {@link #assignment} is set, all items which do not match the current assignment
+     * Update the filtered lists. If {@link #currentAssignment} is set, all items which do not match the current currentAssignment
      * will be excluded from the filtered list as well.
      */
     public void updateFilteredList () {
         filteredPastaList.clear();
 
-        if (activeTagList.isEmpty() && assignment == null) {
+        if (activeTagList.isEmpty() && currentAssignment == null) {
             filteredPastaList.addAll(pastaList);
             return;
         }
@@ -145,29 +165,12 @@ public class PastaManager {
             filteredPastaList = new ArrayList<>(pastaList);
         }
 
-        if (assignment != null) {
-            List<Pasta> list = PastaFilter.filter(pastaList, assignment, true);
+        if (currentAssignment != null) {
+            List<Pasta> list = PastaFilter.filter(pastaList, currentAssignment, true);
             filteredPastaList.removeAll(list);
         }
 
         this.filteredPastaList.addAll(filteredPastaList);
-    }
-
-    /**
-     * Removes Pasta from the manager
-     *
-     * @return {@code true} if Pasta was removed.
-     */
-    public boolean removePasta (Pasta pasta) {
-        boolean changed = pastaList.remove(pasta);
-
-        if (changed) {
-            List<Pasta> pastaList = new ArrayList<>(1);
-            pastaList.add(pasta);
-            removeFilters(pastaList);
-        }
-
-        return changed;
     }
 
     /**
@@ -179,22 +182,36 @@ public class PastaManager {
     public boolean removePasta (List<Pasta> pastaList) {
         boolean changed = this.pastaList.removeAll(pastaList);
 
-        if (changed)
-            removeFilters(pastaList);
+        if (changed){
+            removeContentTags(pastaList);
+            removeAssignmentTags(pastaList);
+        }
 
         return changed;
     }
 
-    private void removeFilters (List<Pasta> removedPastaList) {
-        UniqueArrayList<String> unwantedFilterList = new UniqueArrayList<>();
+    private void removeContentTags (List<Pasta> removedPastaList) {
+        UniqueArrayList<String> rejectedItems = new UniqueArrayList<>();
 
         for (Pasta pasta : removedPastaList)
-            unwantedFilterList.addAll(pasta.getContentTags());
+            rejectedItems.addAll(pasta.getContentTags());
 
         for (Pasta pasta : pastaList)
-            unwantedFilterList.removeAll(pasta.getContentTags());
+            rejectedItems.removeAll(pasta.getContentTags());
 
-        tagList.removeAll(unwantedFilterList);
+        tagList.removeAll(rejectedItems);
+    }
+
+    private void removeAssignmentTags (List<Pasta> removedPastaList) {
+        UniqueArrayList<String> rejectedItems = new UniqueArrayList<>();
+
+        for (Pasta pasta : removedPastaList)
+            rejectedItems.addAll(pasta.getAssignmentTags());
+
+        for (Pasta pasta : pastaList)
+            rejectedItems.removeAll(pasta.getAssignmentTags());
+
+        tagList.removeAll(rejectedItems);
     }
 
     /**
@@ -206,8 +223,8 @@ public class PastaManager {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.getButtonTypes().clear();
         alert.getButtonTypes().add(ButtonType.CLOSE);
-        alert.setTitle("Feedback Preview");
-        alert.setHeaderText("Feedback preview");
+        alert.setTitle("Pasta Preview");
+        alert.setHeaderText("Pasta preview");
         alert.setContentText("Output when exporting as a .txt-file:");
 
         TextArea textArea = new TextArea(pasta.getContent());
@@ -328,7 +345,8 @@ public class PastaManager {
         importedPastaList = new ArrayList<>(importedPastaList);
         importedPastaList.removeAll(pastaList);
         pastaList.addAll(importedPastaList);
-        addFilters(importedPastaList);
+        addContentTags(importedPastaList);
+        addAssignmentTags(importedPastaList);
         updateFilteredList();
         Collections.sort(pastaList);
         return importedPastaList;
@@ -414,23 +432,40 @@ public class PastaManager {
     }
 
     public void setPastaList (UniqueArrayList<Pasta> pastaList) {
-        filteredPastaList.clear();
-        tagList.clear();
-        activeTagList.clear();
-
+        clear();
         this.pastaList = pastaList;
         Collections.sort(pastaList);
-        addFilters(pastaList);
+        addContentTags(pastaList);
+        addAssignmentTags(pastaList);
     }
 
-    public UniqueArrayList<String> getTagList () {
-        return tagList;
+    /**
+     * Returns the list of content tags for the manager.
+     * @return A list of content tags.
+     */
+    public List<String> getTagList () {
+        return Collections.unmodifiableList(tagList);
+    }
+    /**
+     * Returns the list of assignment tags for the manager.
+     * @return A list of assignment tags.
+     */
+    public List<String> getAssignmentTagList () {
+        return Collections.unmodifiableList(assignmentTagList);
     }
 
-    public UniqueArrayList<Pasta> getFilteredPastaList () {
-        return filteredPastaList;
+    /**
+     * Returns the list of filtered items, updated whenever {@link #updateFilteredList} is called.
+     * @return The filtered list.
+     */
+    public List<Pasta> getFilteredPastaList () {
+        return Collections.unmodifiableList(filteredPastaList);
     }
 
+    /**
+     * Returns the filtering mode for the manager (UNION or INTERSECT).
+     * @return {@code true} if using union filtering, {@code false} otherwise.
+     */
     public boolean isAnyTag () {
         return anyTag;
     }
@@ -469,21 +504,21 @@ public class PastaManager {
     }
 
     /**
-     * Returns the assignment.
+     * Returns the currentAssignment.
      *
-     * @return The assignment.
+     * @return The currentAssignment.
      */
     public String getAssignment () {
-        return assignment;
+        return currentAssignment;
     }
 
     /**
-     * Set the associated assignment and calls {@link #updateFilteredList()}.
+     * Set the associated currentAssignment and calls {@link #updateFilteredList()}.
      *
-     * @param assignment The new assignment.
+     * @param assignment The new currentAssignment.
      */
     public void setAssignment (String assignment) {
-        this.assignment = assignment;
+        this.currentAssignment = assignment;
         updateFilteredList();
     }
     //endregion

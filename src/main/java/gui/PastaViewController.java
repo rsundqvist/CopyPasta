@@ -46,7 +46,7 @@ public class PastaViewController {
 
     public void setPastaManager (PastaManager pastaManager) {
         this.pastaManager = pastaManager;
-        pastaManager.updateFilters();
+        pastaManager.updateTags();
         pastaManager.updateFilteredList();
     }
 
@@ -246,7 +246,7 @@ public class PastaViewController {
         ToggleButton toggleButton = (ToggleButton) event.getSource();
 
         if (toggleButton.isSelected()) {
-            String assignment = listener.getAssignment();
+            String assignment = listener.getCurrentAssignment();
             pastaManager.setAssignment(assignment);
         } else {
             pastaManager.setAssignment(null);
@@ -274,6 +274,6 @@ public class PastaViewController {
          *
          * @return The assignment to filter for.
          */
-        String getAssignment ();
+        String getCurrentAssignment ();
     }
 }

@@ -15,7 +15,7 @@ public class Main extends Application {
 
     @Override
     public void start (Stage primaryStage) throws Exception {
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/main.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/fxml/main.fxml"));
         Parent root = fxmlLoader.load();
 
         primaryStage.setTitle("Copy Pasta \u00a9 Richard Sundqvist");

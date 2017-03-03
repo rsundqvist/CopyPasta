@@ -56,7 +56,7 @@
                         <Font name="System Bold" size="12.0"/>
                     </font>
                 </Label>
-                <ListView fx:id="currentPastaTagListView" onMouseClicked="#removePastaTag" prefHeight="200.0"
+                <ListView fx:id="currentContentTagView" onMouseClicked="#removePastaTag" prefHeight="200.0"
                           prefWidth="200.0"/>
                 <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#createNewTag"
                         text="New Tag"/>
@@ -65,7 +65,7 @@
                         <Font name="System Bold" size="12.0"/>
                     </font>
                 </Label>
-                <ListView fx:id="availablePastaTagListView" onMouseClicked="#addPastaTag" prefHeight="250.0"
+                <ListView fx:id="allContentTagView" onMouseClicked="#addPastaTag" prefHeight="250.0"
                           prefWidth="200.0"/>
                 <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#exportAllPasta"
                         text="Export All"/>

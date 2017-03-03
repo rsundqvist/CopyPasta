@@ -25,7 +25,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<TabPane fx:id="feedbackOverviewTabPane" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.FeedbackViewController">
+<TabPane fx:id="rootTabPane" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.FeedbackViewController">
     <tabs>
         <Tab fx:id="feedbackTab" closable="false" text="Student Feedback">
             <content>
@@ -114,7 +114,7 @@
                                         <TextArea fx:id="templateHeaderTextArea" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" promptText="Template header goes here (optional)." />
                                     </content>
                                 </TitledPane>
-                                <TitledPane animated="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" text="Template Body">
+                                <TitledPane fx:id="bodyPane" animated="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" text="Template Body">
                                     <content>
                                         <TextArea fx:id="templateTextArea" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="371.0" prefWidth="261.0" promptText="\%HEADER% will be replaced by the contents of the pane above. You may use wildcards in the header as well. %GROUP% will be replaced by the student group number. %TEACHER% will be replaced by the teacher's name." />
                                     </content>

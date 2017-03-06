@@ -19,11 +19,13 @@ Enter the group numbers, "3 5, 6  9, potato" for groups {3, 5, 6, 9, potato}. To
 
 ### 3. Write feedback.  
 
-Pasta items can be categorized using tags. Tags are automatically converted to lower case, and any leading or trailing whitespace will be removed. Commonly used phrases can be saved using the Pasta Editor (Ctrl-G), then exported (RMB -> Export) and shared.
+Commonly used phrases can be saved using the Pasta Editor (Ctrl-G), then exported (RMB -> Export) and shared. Pasta items can be categorized using tags. Tags are automatically converted to lower case, and any leading or trailing whitespace will be removed.
 
 ### 4. Export the feedback
 
 Under the "Setup" panel, click the "Export All" button (Ctrl-E) to select a target folder. All feedback items will be exported as individal .txt-files for each group in the list, and a single .json-file containing all of them (used for later import, or simply discarded).
+
+Some content may contain a %MANUAL% tag, indicating that some part of the content (typically Pasta) should be changed manually by the teacher. The program will warn the user when trying to export feedback with this tag present.
  
 ## Creator
 

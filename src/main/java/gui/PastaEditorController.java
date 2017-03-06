@@ -48,8 +48,8 @@ public class PastaEditorController implements PastaViewController.PastaControlle
         pastaViewController.setListener(this);
         System.out.println(currentAssignment);
         currentAssignment = FeedbackManager.parseAssignmentString(currentAssignment);
-        currentAssignment = currentAssignment.length() == 0 ? "<None>" : currentAssignment;
         this.currentAssignment = currentAssignment;
+        currentAssignment = currentAssignment.length() == 0 ? "<None>" : currentAssignment;
         assignmentLabel.setText(currentAssignment);
         titleField.textProperty().addListener(event -> titleChanged());
         pastaEditingTextArea.textProperty().addListener(event -> contentChanged());
@@ -70,7 +70,9 @@ public class PastaEditorController implements PastaViewController.PastaControlle
         clear();
         allContentTagView.getItems().addAll(pastaViewController.getPastaManager().getTagList());
         allAssignTagView.getItems().addAll(pastaViewController.getPastaManager().getAssignmentTagList());
-        if (!allAssignTagView.getItems().contains(currentAssignment))
+        //Make sure the current assignment tag is available.
+        if (currentAssignment != null && !currentAssignment.isEmpty()
+                && !allAssignTagView.getItems().contains(currentAssignment))
             allAssignTagView.getItems().add(currentAssignment);
     }
 
@@ -188,12 +190,7 @@ public class PastaEditorController implements PastaViewController.PastaControlle
     }
 
     public void createNewPasta () {
-        Pasta newPasta = new Pasta();
-        newPasta.setContent("New");
-
-        List<Pasta> pastaList = new UniqueArrayList<>();
-        pastaList.add(newPasta);
-        pastaViewController.importPasta(pastaList);
+        Pasta newPasta = pastaViewController.createNew();
         select(newPasta);
     }
 

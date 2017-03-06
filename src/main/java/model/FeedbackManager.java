@@ -68,6 +68,52 @@ public class FeedbackManager {
     // ================================================================================= //
 
     /**
+     * Parse a group string, splitting on ',' and spaces (including consecutive spaces. Doubles are removed.
+     *
+     * @param s The string to parse.
+     * @return An array of parsed group designations.
+     */
+    public static UniqueArrayList<String> parseGroupString (String s) {
+        s = s.replaceAll(",", " ");
+        s = s.replaceAll("\\s+", " ");
+        UniqueArrayList<String> groups = new UniqueArrayList<>();
+        groups.addAll(Arrays.asList(s.split(" ")));
+        return groups;
+    }
+
+    /**
+     * Parse an assignment string. This string is almost never visible to the user but rather as a member of
+     * {@link Pasta#assignmentTags}. Will return all whitespace and convert to lower case.
+     *
+     * @param assignment The string to parse.
+     * @return A parsed assignment string.
+     */
+    public static String parseAssignmentString (String assignment) {
+        if (assignment == null)
+            return null;
+
+        assignment = assignment.replaceAll("\\s+", "");
+        assignment = assignment.toLowerCase();
+
+        return assignment;
+    }
+
+    /**
+     * Returns a list of all the groups contained in the list. The list may be altered at will.
+     *
+     * @param feedbackList A group of feedback.
+     * @return A list of the groups contained in the list.
+     */
+    public static List<String> getGroups (List<Feedback> feedbackList) {
+        List<String> groups = new UniqueArrayList<>();
+
+        for (Feedback feedback : feedbackList)
+            groups.add(feedback.getGroup());
+
+        return groups;
+    }
+
+    /**
      * Clear all feedback from the manager.
      */
     public void clear () {
@@ -105,6 +151,15 @@ public class FeedbackManager {
         feedbackList.addAll(newFeedbackList);
         notDoneFeedbackList.addAll(newFeedbackList);
         return newFeedbackList;
+    }
+
+    /**
+     * Check whether there are any %MANUAL% tags present.
+     *
+     * @return A list of feedback contain the %MANUAL% tag.
+     */
+    public List<Feedback> checkManual () {
+        return Feedback.checkManual(feedbackList);
     }
 
     /**
@@ -218,37 +273,12 @@ public class FeedbackManager {
         if (feedbackList.add(feedback))
             updateDoneUndoneLists(feedback, feedback.isDone());
     }
+    //endregion
 
-    /**
-     * Parse a group string, splitting on ',' and spaces (including consecutive spaces. Doubles are removed.
-     *
-     * @param s The string to parse.
-     * @return An array of parsed group designations.
-     */
-    public static UniqueArrayList<String> parseGroupString (String s) {
-        s = s.replaceAll(",", " ");
-        s = s.replaceAll("\\s+", " ");
-        UniqueArrayList<String> groups = new UniqueArrayList<>();
-        groups.addAll(Arrays.asList(s.split(" ")));
-        return groups;
-    }
-
-    /**
-     * Parse an assignment string. This string is almost never visible to the user but rather as a member of
-     * {@link Pasta#assignmentTags}. Will return all whitespace and convert to lower case.
-     *
-     * @param assignment The string to parse.
-     * @return A parsed assignment string.
-     */
-    public static String parseAssignmentString (String assignment) {
-        if (assignment == null)
-            return null;
-
-        assignment = assignment.replaceAll("\\s+", "");
-        assignment = assignment.toLowerCase();
-
-        return assignment;
-    }
+    //region Getters and Setters
+    // ================================================================================= //
+    // Getters and Setters
+    // ================================================================================= //
 
     /**
      * Opens a file chooser dialog and returns a list of Feedback. Will return {@code null} if the import failed.
@@ -263,12 +293,6 @@ public class FeedbackManager {
 
         return feedbackList;
     }
-    //endregion
-
-    //region Getters and Setters
-    // ================================================================================= //
-    // Getters and Setters
-    // ================================================================================= //
 
     /**
      * Returns {@code true} if the content of this Feedback differs from the template ( {@link #getTemplate()} ).
@@ -362,20 +386,6 @@ public class FeedbackManager {
      */
     public List<String> getGroups () {
         return getGroups(feedbackList);
-    }
-
-    /**
-     * Returns a list of all the groups contained in the list. The list may be altered at will.
-     *
-     * @param feedbackList A group of feedback.
-     * @return A list of the groups contained in the list.
-     */
-    public static List<String> getGroups (List<Feedback> feedbackList) {
-        List<String> groups = new UniqueArrayList<>();
-
-        for (Feedback feedback : feedbackList)
-            groups.add(feedback.getGroup());
-        return groups;
     }
 
     public List<Feedback> getDoneFeedbackList () {

@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * @author Richard Sundqvist
  */
-public class Pasta implements Comparable<Pasta> {
+public class Pasta implements Comparable<Pasta>, Cloneable {
 
     //region Constant
     // ================================================================================= //
@@ -17,6 +17,10 @@ public class Pasta implements Comparable<Pasta> {
     // ================================================================================= //
 
     public transient static final int CONTENT_SNIPPET_LENGTH = 45;
+    /**
+     * Tag indicating that the pasta is incomplete and should be modified by the teacher.
+     */
+    public transient static final String MANUAL = "%MANUAL%";
     //endregion
 
     //region Field
@@ -24,9 +28,9 @@ public class Pasta implements Comparable<Pasta> {
     // Field
     // ================================================================================= //
     private final Date creationDate;
-    private Date lastModificationDate;
     private final List<String> contentTags;
     private final List<String> assignmentTags;
+    private Date lastModificationDate;
     private String title;
     private String content;
     //endregion
@@ -68,13 +72,6 @@ public class Pasta implements Comparable<Pasta> {
     }
 
     /**
-     * Returns a copy of this pasta.
-     */
-    public Pasta copy () {
-        return new Pasta(this);
-    }
-
-    /**
      * Copy a {@link Collection} of pasta.
      *
      * @param c The original collection.
@@ -89,12 +86,73 @@ public class Pasta implements Comparable<Pasta> {
         return copy;
     }
 
+    public static void main (String[] args) {
+
+        //Setup
+        List<String> contentTags1 = new ArrayList();
+        contentTags1.add("tag1");
+        contentTags1.add("tag2");
+        String content1 = "content1";
+        Pasta pasta1 = new Pasta(); //Create pasta
+        pasta1.getContentTags().addAll(contentTags1);
+        pasta1.setContent(content1);
+
+        List<String> contentTags2 = new ArrayList(contentTags1);
+        String content2 = content1;
+        Pasta pasta2 = new Pasta(); //Create pasta
+        pasta2.getContentTags().addAll(contentTags2);
+        pasta2.setContent(content2);
+
+        Pasta pasta3 = new Pasta(); //Create pasta
+        pasta3.getContentTags().add("tag3");
+        pasta3.setContent("content3");
+
+        //Basic equals
+        System.out.println("pasta1 == pasta2: " + pasta1.equals(pasta2));
+        System.out.println("pasta1 == pasta3: " + pasta1.equals(pasta3));
+        System.out.println("pasta2 == pasta3: " + pasta2.equals(pasta3));
+
+        //Test with collections
+        //Lists - add
+        UniqueArrayList<Pasta> test1 = new UniqueArrayList<>();
+        test1.add(pasta1);
+
+        System.out.println("test.contains(pasta1): " + test1.contains(pasta1));
+        System.out.println("test.contains(pasta2): " + test1.contains(pasta2));
+
+        test1.add(pasta1);
+        System.out.println("test.size() after test.add(pasta1): " + test1.size());
+        test1.add(pasta2);
+        System.out.println("test.size() after test.add(pasta2): " + test1.size());
+
+        //Lists - addAll
+        UniqueArrayList<Pasta> test2 = new UniqueArrayList<>();
+        test2.add(pasta1);
+        test2.add(pasta2);
+        test2.add(pasta3);
+
+        System.out.println(test1);
+        test1.addAll(test2);
+        System.out.println(test1);
+    }
+
     //endregion
 
     //region Getters and setters
     // ================================================================================= //
     // Getters and setters
     // ================================================================================= //
+
+    public static boolean checkManual (String content) {
+        return content.contains(MANUAL);
+    }
+
+    /**
+     * Returns a copy of this pasta.
+     */
+    public Pasta copy () {
+        return new Pasta(this);
+    }
 
     /**
      * Returns the creation date.
@@ -157,22 +215,14 @@ public class Pasta implements Comparable<Pasta> {
         if (!isAutomaticTitle())
             return title;
 
-        if (content != null) {
+        //TODO improve regex \n\r into single expression
+        if (content != null && !content.isEmpty()) {
             String content = this.content;
             content = content.replaceAll("\n", "").replaceAll("\r", "").replaceAll("\\s+", " ").trim();
             return content.substring(0, Math.min(CONTENT_SNIPPET_LENGTH, Math.max(0, content.length())));
+        } else {
+            return "<No content>";
         }
-
-        return "NULL"; //Should never happen.
-    }
-
-    /**
-     * Returns the automatic title setting of this Pasta. Automatic content is enabled when the tittle is null or empty.
-     *
-     * @return The automatic title setting.
-     */
-    public boolean isAutomaticTitle () {
-        return title == null || title.length() == 0;
     }
 
     /**
@@ -185,6 +235,15 @@ public class Pasta implements Comparable<Pasta> {
     }
 
     /**
+     * Returns the automatic title setting of this Pasta. Automatic content is enabled when the tittle is null or empty.
+     *
+     * @return The automatic title setting.
+     */
+    public boolean isAutomaticTitle () {
+        return title == null || title.length() == 0;
+    }
+
+    /**
      * Returns the content of this model.Pasta.
      *
      * @return The content of this model.Pasta.
@@ -192,6 +251,7 @@ public class Pasta implements Comparable<Pasta> {
     public String getContent () {
         return content;
     }
+    //endregion
 
     /**
      * Sets the content of this model.Pasta.
@@ -202,7 +262,6 @@ public class Pasta implements Comparable<Pasta> {
         this.content = content;
     }
 
-
     /**
      * Calls {@link #getTitle()}.
      *
@@ -211,7 +270,6 @@ public class Pasta implements Comparable<Pasta> {
     public String toString () {
         return getTitle();
     }
-    //endregion
 
     /**
      * Compares: {@link #content}, {@link #contentTags}, {@link #title}
@@ -225,73 +283,27 @@ public class Pasta implements Comparable<Pasta> {
             return true;
 
         //Derived types may equal
-        if (other instanceof Pasta) { //null instanceof AnyClass is false
+        if (other instanceof Pasta) { //"null instanceof class" evaluates to false
             Pasta rhs = (Pasta) other;
 
-            return content.equals(rhs.content) &&
+            return (content == null && rhs.content == null || content != null && content.equals(rhs.content)) &&
+                    (title == null && rhs.title == null || title != null && title.equals(rhs.title)) &&
                     contentTags.equals(rhs.contentTags) &&
-                    assignmentTags.equals(rhs.assignmentTags) &&
-                    (title == rhs.title || title.equals(rhs.title)); //title may be null
+                    assignmentTags.equals(rhs.assignmentTags);
         }
 
         return false;
     }
 
-    public static void main (String[] args) {
-
-        //Setup
-        List<String> contentTags1 = new ArrayList();
-        contentTags1.add("tag1");
-        contentTags1.add("tag2");
-        String content1 = "content1";
-        Pasta pasta1 = new Pasta(); //Create pasta
-        pasta1.getContentTags().addAll(contentTags1);
-        pasta1.setContent(content1);
-
-        List<String> contentTags2 = new ArrayList(contentTags1);
-        String content2 = content1;
-        Pasta pasta2 = new Pasta(); //Create pasta
-        pasta2.getContentTags().addAll(contentTags2);
-        pasta2.setContent(content2);
-
-        Pasta pasta3 = new Pasta(); //Create pasta
-        pasta3.getContentTags().add("tag3");
-        pasta3.setContent("content3");
-
-        //Basic equals
-        System.out.println("pasta1 == pasta2: " + pasta1.equals(pasta2));
-        System.out.println("pasta1 == pasta3: " + pasta1.equals(pasta3));
-        System.out.println("pasta2 == pasta3: " + pasta2.equals(pasta3));
-
-        //Test with collections
-        //Lists - add
-        UniqueArrayList<Pasta> test1 = new UniqueArrayList<>();
-        test1.add(pasta1);
-
-        System.out.println("test.contains(pasta1): " + test1.contains(pasta1));
-        System.out.println("test.contains(pasta2): " + test1.contains(pasta2));
-
-        test1.add(pasta1);
-        System.out.println("test.size() after test.add(pasta1): " + test1.size());
-        test1.add(pasta2);
-        System.out.println("test.size() after test.add(pasta2): " + test1.size());
-
-        //Lists - addAll
-        UniqueArrayList<Pasta> test2 = new UniqueArrayList<>();
-        test2.add(pasta1);
-        test2.add(pasta2);
-        test2.add(pasta3);
-
-        System.out.println(test1);
-        test1.addAll(test2);
-        System.out.println(test1);
-    }
-
-    @Override
     /**
-     * Compares titles.
+     * Compares titles only.
      */
+    @Override
     public int compareTo (Pasta o) {
         return getTitle().compareTo(o.getTitle());
+    }
+
+    public Pasta clone () {
+        return new Pasta(this);
     }
 }

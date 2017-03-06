@@ -40,18 +40,13 @@ public class PastaViewController {
     private PastaManager pastaManager = new PastaManager();
     //endregion
 
-    public PastaViewController () {
-        //Called before FXML injection - not used
-    }
-
-    public void setPastaManager (PastaManager pastaManager) {
-        this.pastaManager = pastaManager;
-        pastaManager.updateTags();
-        pastaManager.updateFilteredList();
+    private static void exportPastaTXT (List<Pasta> pastaList) {
+        String gatheredContent = PastaManager.gatherContent(pastaList);
+        File file = IO.showTXTSaveDialog(Tools.SAVE_FOLDER, "pasta");
+        IO.printStringToFile(gatheredContent, file);
     }
 
     public void initialize () {
-        //Called after FXML injection
         listView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         searchField.textProperty().addListener(event -> searchPasta());
     }
@@ -77,17 +72,6 @@ public class PastaViewController {
 
     public void setListener (PastaControllerListener listener) {
         this.listener = listener;
-    }
-
-    protected void setPastaList (UniqueArrayList<Pasta> pastaList) {
-        pastaManager.clear();
-        filterFlowPane.getChildren().clear();
-        listView.getItems().clear();
-
-        pastaManager.setPastaList(pastaList);
-        listView.getItems().clear();
-        listView.getItems().addAll(pastaList);
-        updateFilters();
     }
 
     public void onMouseClicked () {
@@ -118,12 +102,6 @@ public class PastaViewController {
         exportPastaTXT(pastaList);
     }
 
-    private static void exportPastaTXT (List<Pasta> pastaList) {
-        String gatheredContent = PastaManager.gatherContent(pastaList);
-        File file = IO.showTXTSaveDialog(Tools.SAVE_FOLDER, "pasta");
-        IO.printStringToFile(gatheredContent, file);
-    }
-
     public void importPasta () {
         List<Pasta> importedPastaList = IO.importPasta();
         importPasta(importedPastaList);
@@ -133,7 +111,7 @@ public class PastaViewController {
         importedPastaList = pastaManager.importPasta(importedPastaList);
         if (importedPastaList != null) {
             updateFilters();
-            listView.getItems().addAll(importedPastaList); //TODO
+            listView.getItems().addAll(importedPastaList);
         }
     }
 
@@ -143,6 +121,17 @@ public class PastaViewController {
 
     public UniqueArrayList<Pasta> getPastaList () {
         return pastaManager.getPastaList();
+    }
+
+    protected void setPastaList (UniqueArrayList<Pasta> pastaList) {
+        pastaManager.clear();
+        filterFlowPane.getChildren().clear();
+        listView.getItems().clear();
+
+        pastaManager.setPastaList(pastaList);
+        listView.getItems().clear();
+        listView.getItems().addAll(pastaList);
+        updateFilters();
     }
 
     public void clearAllPasta () {
@@ -240,9 +229,6 @@ public class PastaViewController {
     }
 
     public void toggleCurrentAssignmentOnly (Event event) {
-        if (listener == null)
-            return;
-
         ToggleButton toggleButton = (ToggleButton) event.getSource();
 
         if (toggleButton.isSelected()) {
@@ -252,6 +238,15 @@ public class PastaViewController {
             pastaManager.setAssignment(null);
         }
         updateFilteredList();
+    }
+
+    public Pasta createNew () {
+        Pasta newPasta = pastaManager.createNew();
+        listView.getItems().remove(newPasta);
+        listView.getItems().add(0, newPasta);
+        listView.getSelectionModel().clearAndSelect(0);
+        previewTextArea.clear();
+        return newPasta;
     }
 
     // ====================================================
@@ -270,7 +265,7 @@ public class PastaViewController {
         void select (Pasta pasta);
 
         /**
-         * Called when {@link #toggleCurrentAssignmentOnly} is called by the GUI.
+         * Called {@link #toggleCurrentAssignmentOnly} invocation.
          *
          * @return The assignment to filter for.
          */

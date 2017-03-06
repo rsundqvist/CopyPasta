@@ -41,6 +41,134 @@ public class PastaManager {
     // ================================================================================= //
 
     /**
+     * Gather all the contents of the list as a single string.
+     *
+     * @param pastaList The list to gather from.
+     * @return A single string of content.
+     */
+    public static String gatherContent (List<Pasta> pastaList) {
+        StringBuilder sb = new StringBuilder();
+
+        for (Pasta pasta : pastaList)
+            sb.append(pasta.getContent().trim() + "\n\n");
+
+        return sb.toString();
+    }
+
+    /**
+     * Produce a preview of a Pasta item, displayed in an Alert dialog.
+     *
+     * @param pasta The Pasta to preview.
+     */
+    public static void preview (Pasta pasta) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.getButtonTypes().clear();
+        alert.getButtonTypes().add(ButtonType.CLOSE);
+        alert.setTitle("Pasta Preview");
+        alert.setHeaderText("Pasta preview");
+        alert.setContentText("Output when exporting as a .txt-file:");
+
+        TextArea textArea = new TextArea(pasta.getContent());
+        textArea.setEditable(false);
+        textArea.setWrapText(true);
+
+        textArea.setMaxWidth(Double.MAX_VALUE);
+        textArea.setMaxHeight(Double.MAX_VALUE);
+        GridPane.setVgrow(textArea, Priority.ALWAYS);
+        GridPane.setHgrow(textArea, Priority.ALWAYS);
+
+        //Content tags
+        Label contentLabel = new Label("Content tags:         ");
+        contentLabel.setMaxHeight(Double.MAX_VALUE);
+
+        String pastaContentTags;
+        if (pasta.getContentTags().isEmpty()) {
+            pastaContentTags = "<no tags>";
+        } else {
+            pastaContentTags = pasta.getContentTags().toString();
+            pastaContentTags = pastaContentTags.substring(1, pastaContentTags.length() - 1);
+        }
+        TextField contentTagsTextField = new TextField(pastaContentTags);
+        contentTagsTextField.setEditable(false);
+        contentTagsTextField.setMaxWidth(Double.MAX_VALUE);
+
+        HBox contentTagsHBox = new HBox();
+        contentTagsHBox.getChildren().addAll(contentLabel, contentTagsTextField);
+        HBox.setHgrow(contentTagsTextField, Priority.ALWAYS);
+
+        //Assignment tags
+        Label assignmentLabel = new Label("Assignment tags:   ");
+        assignmentLabel.setMaxHeight(Double.MAX_VALUE);
+
+        String pastaAssignmentTags;
+        if (pasta.getAssignmentTags().isEmpty()) {
+            pastaAssignmentTags = "<no tags>";
+        } else {
+            pastaAssignmentTags = pasta.getAssignmentTags().toString();
+            pastaAssignmentTags = pastaAssignmentTags.substring(1, pastaAssignmentTags.length() - 1);
+        }
+        TextField assignmentTagsTextField = new TextField(pastaAssignmentTags);
+        assignmentTagsTextField.setEditable(false);
+        assignmentTagsTextField.setMaxWidth(Double.MAX_VALUE);
+
+        HBox assignmentTagsHBox = new HBox();
+        assignmentTagsHBox.getChildren().addAll(assignmentLabel, assignmentTagsTextField);
+        HBox.setHgrow(assignmentTagsTextField, Priority.ALWAYS);
+
+        //Add children
+        GridPane expContent = new GridPane();
+        expContent.setMaxWidth(Double.MAX_VALUE);
+        expContent.add(textArea, 0, 0);
+        expContent.add(contentTagsHBox, 0, 1);
+        expContent.add(assignmentTagsHBox, 0, 2);
+
+        // Set expandable Exception into the dialog pane.
+        alert.getDialogPane().setExpandableContent(expContent);
+        alert.getDialogPane().setExpanded(true);
+
+        alert.showAndWait();
+    }
+
+    /**
+     * Copy the contents of a Pasta object to the system clipboard.
+     *
+     * @param pasta The pasta to copy.
+     * @return {@code true} if content was copied to clipboard.
+     */
+    public static boolean copyPastaContentsToClipboard (Pasta pasta) {
+        if (pasta == null) return false;
+
+        String content = pasta.getContent();
+        if (content == null || content.isEmpty())
+            return false;
+
+        Clipboard clipboard = Clipboard.getSystemClipboard();
+        ClipboardContent clipboardContent = new ClipboardContent();
+        clipboardContent.putString(content);
+        clipboard.setContent(clipboardContent);
+
+        return true;
+    }
+
+    /**
+     * Displays a dialog and attempts to export the pasta contained in the list.
+     *
+     * @param exportPastaList The list to export.
+     */
+    public static void exportPasta (List<Pasta> exportPastaList) {
+        IO.exportPastaJSON(Tools.SAVE_FOLDER, exportPastaList);
+    }
+
+    /**
+     * Shows a file choice dialog and exports a single Pasta item, wrapped in a list.
+     *
+     * @param pasta The pasta item to export.
+     */
+    public static void exportPasta (Pasta pasta) {
+        IO.exportPastaJSON(Tools.SAVE_FOLDER, pasta);
+    }
+
+    /**
      * Clear the manager.
      */
     public void clear () {
@@ -66,21 +194,6 @@ public class PastaManager {
      */
     public String gatherContent () {
         return gatherContent(pastaList);
-    }
-
-    /**
-     * Gather all the contents of the list as a single string.
-     *
-     * @param pastaList The list to gather from.
-     * @return A single string of content.
-     */
-    public static String gatherContent (List<Pasta> pastaList) {
-        StringBuilder sb = new StringBuilder();
-
-        for (Pasta pasta : pastaList)
-            sb.append(pasta.getContent().trim() + "\n\n");
-
-        return sb.toString();
     }
 
     /**
@@ -172,6 +285,12 @@ public class PastaManager {
 
         this.filteredPastaList.addAll(filteredPastaList);
     }
+    //endregion
+
+    //region Import/export
+    // ================================================================================= //
+    // Import/export
+    // ================================================================================= //
 
     /**
      * Remove all selected pasta from the manager.
@@ -182,7 +301,7 @@ public class PastaManager {
     public boolean removePasta (List<Pasta> pastaList) {
         boolean changed = this.pastaList.removeAll(pastaList);
 
-        if (changed){
+        if (changed) {
             removeContentTags(pastaList);
             removeAssignmentTags(pastaList);
         }
@@ -212,107 +331,6 @@ public class PastaManager {
             rejectedItems.removeAll(pasta.getAssignmentTags());
 
         tagList.removeAll(rejectedItems);
-    }
-
-    /**
-     * Produce a preview of a Pasta item, displayed in an Alert dialog.
-     *
-     * @param pasta The Pasta to preview.
-     */
-    public static void preview (Pasta pasta) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.getButtonTypes().clear();
-        alert.getButtonTypes().add(ButtonType.CLOSE);
-        alert.setTitle("Pasta Preview");
-        alert.setHeaderText("Pasta preview");
-        alert.setContentText("Output when exporting as a .txt-file:");
-
-        TextArea textArea = new TextArea(pasta.getContent());
-        textArea.setEditable(false);
-        textArea.setWrapText(true);
-
-        textArea.setMaxWidth(Double.MAX_VALUE);
-        textArea.setMaxHeight(Double.MAX_VALUE);
-        GridPane.setVgrow(textArea, Priority.ALWAYS);
-        GridPane.setHgrow(textArea, Priority.ALWAYS);
-
-        //Content tags
-        Label contentLabel = new Label("Content tags:         ");
-        contentLabel.setMaxHeight(Double.MAX_VALUE);
-
-        String pastaContentTags;
-        if (pasta.getContentTags().isEmpty()) {
-            pastaContentTags = "<no tags>";
-        } else {
-            pastaContentTags = pasta.getContentTags().toString();
-            pastaContentTags = pastaContentTags.substring(1, pastaContentTags.length() - 1);
-        }
-        TextField contentTagsTextField = new TextField(pastaContentTags);
-        contentTagsTextField.setEditable(false);
-        contentTagsTextField.setMaxWidth(Double.MAX_VALUE);
-
-        HBox contentTagsHBox = new HBox();
-        contentTagsHBox.getChildren().addAll(contentLabel, contentTagsTextField);
-        HBox.setHgrow(contentTagsTextField, Priority.ALWAYS);
-
-        //Assignment tags
-        Label assignmentLabel = new Label("Assignment tags:   ");
-        assignmentLabel.setMaxHeight(Double.MAX_VALUE);
-
-        String pastaAssignmentTags;
-        if (pasta.getAssignmentTags().isEmpty()) {
-            pastaAssignmentTags = "<no tags>";
-        } else {
-            pastaAssignmentTags = pasta.getAssignmentTags().toString();
-            pastaAssignmentTags = pastaAssignmentTags.substring(1, pastaAssignmentTags.length() - 1);
-        }
-        TextField assignmentTagsTextField = new TextField(pastaAssignmentTags);
-        assignmentTagsTextField.setEditable(false);
-        assignmentTagsTextField.setMaxWidth(Double.MAX_VALUE);
-
-        HBox assignmentTagsHBox = new HBox();
-        assignmentTagsHBox.getChildren().addAll(assignmentLabel, assignmentTagsTextField);
-        HBox.setHgrow(assignmentTagsTextField, Priority.ALWAYS);
-
-        //Add children
-        GridPane expContent = new GridPane();
-        expContent.setMaxWidth(Double.MAX_VALUE);
-        expContent.add(textArea, 0, 0);
-        expContent.add(contentTagsHBox, 0, 1);
-        expContent.add(assignmentTagsHBox, 0, 2);
-
-        // Set expandable Exception into the dialog pane.
-        alert.getDialogPane().setExpandableContent(expContent);
-        alert.getDialogPane().setExpanded(true);
-
-        alert.showAndWait();
-    }
-    //endregion
-
-    //region Import/export
-    // ================================================================================= //
-    // Import/export
-    // ================================================================================= //
-
-    /**
-     * Copy the contents of a Pasta object to the system clipboard.
-     *
-     * @param pasta The pasta to copy.
-     * @return {@code true} if content was copied to clipboard.
-     */
-    public static boolean copyPastaContentsToClipboard (Pasta pasta) {
-        if (pasta == null) return false;
-
-        String content = pasta.getContent();
-        if (content == null || content.isEmpty())
-            return false;
-
-        Clipboard clipboard = Clipboard.getSystemClipboard();
-        ClipboardContent clipboardContent = new ClipboardContent();
-        clipboardContent.putString(content);
-        clipboard.setContent(clipboardContent);
-
-        return true;
     }
 
     /**
@@ -363,24 +381,6 @@ public class PastaManager {
     }
 
     /**
-     * Displays a dialog and attempts to export the pasta contained in the list.
-     *
-     * @param exportPastaList The list to export.
-     */
-    public static void exportPasta (List<Pasta> exportPastaList) {
-        IO.exportPastaJSON(Tools.SAVE_FOLDER, exportPastaList);
-    }
-
-    /**
-     * Shows a file choice dialog and exports a single Pasta item, wrapped in a list.
-     *
-     * @param pasta The pasta item to export.
-     */
-    public static void exportPasta (Pasta pasta) {
-        IO.exportPastaJSON(Tools.SAVE_FOLDER, pasta);
-    }
-
-    /**
      * Displays a dialog and attempts to export the pasta maintained by the manager.
      */
     public void exportPasta () {
@@ -413,6 +413,23 @@ public class PastaManager {
     }
 
     /**
+     * Create a new Pasta item.
+     *
+     * @return A new Pasta item.
+     */
+    public Pasta createNew () {
+        Pasta newPasta = new Pasta();
+
+        List<Pasta> newList = new ArrayList<>(1);
+        newList.add(newPasta);
+
+        pastaList.remove(newPasta); //Ensure that the newly created item is the contained in pastaList
+        importPasta(newList);
+
+        return newPasta;
+    }
+
+    /**
      * Remove a tag from the list of active filter tags.
      *
      * @param tag The tag to add.
@@ -441,13 +458,16 @@ public class PastaManager {
 
     /**
      * Returns the list of content tags for the manager.
+     *
      * @return A list of content tags.
      */
     public List<String> getTagList () {
         return Collections.unmodifiableList(tagList);
     }
+
     /**
      * Returns the list of assignment tags for the manager.
+     *
      * @return A list of assignment tags.
      */
     public List<String> getAssignmentTagList () {
@@ -456,6 +476,7 @@ public class PastaManager {
 
     /**
      * Returns the list of filtered items, updated whenever {@link #updateFilteredList} is called.
+     *
      * @return The filtered list.
      */
     public List<Pasta> getFilteredPastaList () {
@@ -464,6 +485,7 @@ public class PastaManager {
 
     /**
      * Returns the filtering mode for the manager (UNION or INTERSECT).
+     *
      * @return {@code true} if using union filtering, {@code false} otherwise.
      */
     public boolean isAnyTag () {
@@ -518,6 +540,8 @@ public class PastaManager {
      * @param assignment The new currentAssignment.
      */
     public void setAssignment (String assignment) {
+        if (assignment == null || assignment.isEmpty())
+            assignment = null;
         this.currentAssignment = assignment;
         updateFilteredList();
     }

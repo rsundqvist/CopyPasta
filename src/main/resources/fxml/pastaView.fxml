@@ -24,8 +24,8 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<VBox maxHeight="1.7976931348623157E308" maxWidth="300.0" minHeight="0.0" minWidth="20.0" prefHeight="375.0"
-      prefWidth="300.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1"
+<VBox xmlns:fx="http://javafx.com/fxml/1" maxHeight="1.7976931348623157E308" maxWidth="300.0" minHeight="0.0" minWidth="20.0"
+      prefHeight="375.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/8.0.111"
       fx:controller="gui.PastaViewController">
     <children>
         <SplitPane dividerPositions="0.25, 0.75" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
@@ -192,7 +192,7 @@
                         </Label>
                         <TextArea fx:id="previewTextArea" editable="false" maxHeight="1.7976931348623157E308"
                                   maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="200.0"
-                                  prefWidth="200.0" promptText="previewTextArea" VBox.vgrow="ALWAYS"/>
+                                  prefWidth="200.0" promptText="No item selected." VBox.vgrow="ALWAYS"/>
                     </children>
                 </VBox>
             </items>

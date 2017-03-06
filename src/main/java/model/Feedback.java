@@ -58,13 +58,6 @@ public class Feedback implements Comparable<Feedback> {
     }
 
     /**
-     * Returns a copy of this pasta.
-     */
-    public Feedback copy () {
-        return new Feedback(this);
-    }
-
-    /**
      * Copy a {@link Collection} of pasta.
      *
      * @param c The original collection.
@@ -79,6 +72,22 @@ public class Feedback implements Comparable<Feedback> {
         return copy;
     }
 
+    /**
+     * Check whether there are any %MANUAL% tags present.
+     *
+     * @param feedbackList A list of Feedback.
+     * @return A list of feedback contain the %MANUAL% tag.
+     */
+    public static List<Feedback> checkManual (List<Feedback> feedbackList) {
+        List<Feedback> containsTag = new ArrayList<>(feedbackList.size());
+
+        for (Feedback feedback : feedbackList)
+            if (Pasta.checkManual(feedback.content))
+                containsTag.add(feedback);
+
+        return containsTag;
+    }
+
     //endregion
 
 
@@ -86,6 +95,13 @@ public class Feedback implements Comparable<Feedback> {
     // ================================================================================= //
     // Getters and setters
     // ================================================================================= //
+
+    /**
+     * Returns a copy of this pasta.
+     */
+    public Feedback copy () {
+        return new Feedback(this);
+    }
 
     /**
      * Calls {@link #getStylizedContent()}.

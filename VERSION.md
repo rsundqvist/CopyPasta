@@ -1,7 +1,11 @@
 # Copy Pasta: Version History
 ___
-#### Current Version: `PRERELEASE Rev3`
+#### Current Version: `PRERELEASE Rev4`
 ## Patch Notes
+
+### `PRERELEASE Rev4`
+05-03-2018
+* Added the %MANUAL% tag, used to mark content which should be changed by the teacher before export. The program will warn the user when trying to export items with this tag present.
 
 ### `PRERELEASE Rev3`
 03-03-2018

@@ -34,7 +34,7 @@ public class PastaEditor {
 
         stage = new Stage();
         stage.setTitle("Pasta Editor \u00a9 Richard Sundqvist");
-        stage.getIcons().add(new Image(PastaEditor.class.getResourceAsStream("/icon.png")));
+        stage.getIcons().add(new Image(PastaEditor.class.getResourceAsStream("/icon2.png")));
 
         Rectangle2D screenSize = Screen.getPrimary().getVisualBounds();
         double windowWidth = screenSize.getWidth() * .8;

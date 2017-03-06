@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<BorderPane minWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1"
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" minWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111"
             fx:controller="gui.PastaEditorController">
     <left>
         <fx:include fx:id="pastaView" source="pastaView.fxml"/>

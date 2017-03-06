@@ -45,7 +45,7 @@ public class Controller implements PastaViewController.PastaControllerListener {
 
     @Override
     public void select (Pasta pasta) {
-        //TODO - do something
+
     }
 
     public String getCurrentAssignment () {

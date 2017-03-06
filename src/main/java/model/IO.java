@@ -30,14 +30,14 @@ import java.util.Collection;
 import java.util.List;
 
 public abstract class IO {
-    private static final Gson gson = build();
     public static final String ENCODING = "UTF-8";
+    private static final Gson gson = build();
+
+    private IO () {
+    }
 
     private static Gson build () {
         return new GsonBuilder().disableHtmlEscaping().create();
-    }
-
-    private IO () {
     }
 
     /**
@@ -204,7 +204,7 @@ public abstract class IO {
 
         try {
             File jsonFile;
-            jsonFile = new File(new URI(file.toURI().toString() + "/test.json"));
+            jsonFile = new File(new URI(file.toURI().toString() + "/feedback.json"));
             printStringToFile(json, jsonFile);
 
             exportFeedbackAsTxt(tempList, file);

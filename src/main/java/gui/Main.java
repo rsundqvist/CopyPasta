@@ -13,13 +13,17 @@ import java.util.Arrays;
 
 public class Main extends Application {
 
+    public static void main (String[] args) {
+        launch(args);
+    }
+
     @Override
     public void start (Stage primaryStage) throws Exception {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/fxml/main.fxml"));
         Parent root = fxmlLoader.load();
 
         primaryStage.setTitle("Copy Pasta \u00a9 Richard Sundqvist");
-        primaryStage.getIcons().add(new Image(Main.class.getResourceAsStream("/icon.png")));
+        primaryStage.getIcons().add(new Image(Main.class.getResourceAsStream("/icon2.png")));
 
         Rectangle2D screenSize = Screen.getPrimary().getVisualBounds();
         double windowWidth = screenSize.getWidth() * .9;
@@ -30,18 +34,10 @@ public class Main extends Application {
         primaryStage.show();
 
         final Controller controller = fxmlLoader.getController();
-        //controller.initialize(); //Initialize w/o args is called by FXML.
-
-        System.out.println("Computer name: " + Tools.getComputerName());
         Runtime.getRuntime().addShutdownHook(new Thread(() -> shutdown(controller)));
     }
 
     public void shutdown (Controller controller) {
         controller.shutdown();
-    }
-
-    public static void main (String[] args) {
-        System.out.println("Launch args: " + Arrays.toString(args));
-        launch(args);
     }
 }

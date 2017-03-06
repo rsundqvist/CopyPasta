@@ -26,10 +26,13 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.util.Duration;
 import model.Feedback;
 import model.FeedbackManager;
 import model.IO;
+import model.Pasta;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -41,6 +44,7 @@ import java.util.Optional;
  */
 public class FeedbackViewController {
 
+    private static final int SUPPRESS_CONFIRMATION_DURATION = 90; //in seconds
     //region Field
     // ================================================================================= //
     // Field
@@ -54,13 +58,24 @@ public class FeedbackViewController {
     @FXML
     private TextArea templateTextArea, templateHeaderTextArea;
     @FXML
-    private ListView feedbackTabListView; //Contains FeedbackTabs
+    /**
+     * Container for the actual feedback tabs.
+     */
+    private ListView feedbackTabListView;
     @FXML
     private TitledPane bodyPane;
     private FeedbackManager feedbackManager = new FeedbackManager();
     private List<FeedbackTab> feedbackTabs = new ArrayList<>();
-    private boolean hideDoneItems;
     //endregion
+    private boolean hideDoneItems;
+    @FXML
+    private Label numFeedback, numDone, numNotDone;
+    @FXML
+    private ProgressBar progressBar;
+    @FXML
+    private ListView doneListView, notDoneListView;
+    private boolean suppressClearDoneDialog = false;
+    private boolean suppressClearNotDoneDialog = false;
 
     public void updateFeedbackTabLockStatus () {
         boolean empty = feedbackTabPane.getTabs().isEmpty();
@@ -166,7 +181,6 @@ public class FeedbackViewController {
     private ContextMenu createFeedbackTabContextMenu (FeedbackTab tab) {
         ContextMenu contextMenu = new ContextMenu();
 
-        //TODO ContextMenu on feedback - better way to do this?
         MenuItem changeGroup = new MenuItem("Change group");
         changeGroup.setOnAction(event -> changeFeedbackGroup(tab));
 
@@ -238,17 +252,18 @@ public class FeedbackViewController {
         updateTemplate();
         feedbackManager.updateFeedback();
 
+        if (checkManualTags(feedbackList))
+            return;
+
         if (asTxt && asJson) {
             IO.exportFeedbackAsTxtAndJson(null, feedbackList);
         } else if (feedbackList.size() == 1) { //Only one item
             Feedback feedback = feedbackList.get(0);
             String initialFileName = feedback.getGroup();
-            System.out.println(initialFileName);
-            String content = feedback.getStylizedContent();
             File file = IO.showSaveDialog(Tools.SAVE_FOLDER, initialFileName, asTxt ? "txt" : "json");
 
             if (asTxt)
-                IO.printStringToFile(content, file);
+                IO.printStringToFile(feedback.getStylizedContent(), file);
             else
                 IO.exportFeedbackAsJson(feedbackList, file);
         } else {
@@ -260,6 +275,65 @@ public class FeedbackViewController {
         }
     }
 
+    /**
+     * Returns true if the user wishes to abort.
+     */
+    public boolean checkManualTags (List<Feedback> feedbackList) {
+        List<Feedback> badFeedbackList = Feedback.checkManual(feedbackList);
+
+        if (badFeedbackList.isEmpty())
+            return false;
+
+        List<String> groups = FeedbackManager.getGroups(badFeedbackList);
+        System.out.println(badFeedbackList.size());
+        System.out.println(groups);
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.getButtonTypes().clear();
+        alert.getButtonTypes().addAll(ButtonType.YES, ButtonType.NO);
+        alert.setTitle("Incomplete items found");
+        alert.setHeaderText("Incomplete items found: " + badFeedbackList.size() + "/" + feedbackList.size());
+        alert.setContentText("It looks like you're trying to export items with the " + Pasta.MANUAL + " tag present, " +
+                "indicating that some items have content not meant for the student. Rectify before exporting?");
+
+        //Content tags
+        Label contentLabel = new Label("Groups: ");
+        contentLabel.setMaxHeight(Double.MAX_VALUE);
+
+        String badGroups = groups.toString();
+        badGroups = badGroups.substring(1, badGroups.length() - 1);
+
+        TextField badGroupsTextField = new TextField(badGroups);
+        badGroupsTextField.setEditable(false);
+        badGroupsTextField.setMaxWidth(Double.MAX_VALUE);
+        HBox.setHgrow(badGroupsTextField, Priority.ALWAYS);
+
+        HBox contentTagsHBox = new HBox();
+        contentTagsHBox.getChildren().addAll(contentLabel, badGroupsTextField);
+        HBox.setHgrow(badGroupsTextField, Priority.ALWAYS);
+
+        // Set expandable Exception into the dialog pane.
+        alert.getDialogPane().setExpandableContent(contentTagsHBox);
+        alert.getDialogPane().setExpanded(true);
+
+        Optional<ButtonType> result = alert.showAndWait();
+
+        if (!result.isPresent() || result.get() != ButtonType.NO) { //Default to assuming user wants to fix content.
+            List<FeedbackTab> badFeedbackTabs = getFeedbackTabs(badFeedbackList);
+            for (FeedbackTab feedbackTab : badFeedbackTabs) {
+                feedbackTab.getFeedback().setDone(true);
+                toggleDone(feedbackTab, false);
+            }
+            feedbackTabPane.getTabs().removeAll(badFeedbackTabs);
+            feedbackTabPane.getTabs().addAll(0, badFeedbackTabs);
+            feedbackTabPane.getSelectionModel().select(0);
+            rootTabPane.getSelectionModel().select(feedbackTab);
+            updateFeedbackTabLockStatus();
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     /**
      * Extract feedback from {@link #feedbackTabListView}, or copy the list from the manager.
@@ -446,6 +520,11 @@ public class FeedbackViewController {
         FeedbackManager.preview(feedback);
     }
 
+    //region Status
+    // ================================================================================= //
+    // Status
+    // ================================================================================= //
+
     /**
      * Called from main controller.
      */
@@ -537,11 +616,6 @@ public class FeedbackViewController {
         }
     }
 
-    //region Status
-    // ================================================================================= //
-    // Status
-    // ================================================================================= //
-
     public void onSelectionChanged (Event event) {
         Tab statisticsTab = (Tab) event.getSource();
         if (!statisticsTab.isSelected()) return;
@@ -571,17 +645,6 @@ public class FeedbackViewController {
         notDoneListView.getItems().addAll(getFeedbackTabs(notDone));
     }
 
-    @FXML
-    private Label numFeedback, numDone, numNotDone;
-    @FXML
-    private ProgressBar progressBar;
-    @FXML
-    private ListView doneListView, notDoneListView;
-
-    private boolean suppressClearDoneDialog = false;
-    private boolean suppressClearNotDoneDialog = false;
-    private final int suppressConfirmationDuration = 90; //in seconds
-
     public void exportAllDone () {
         List<Feedback> feedbackList = feedbackManager.getDoneFeedbackList();
         exportFeedback(feedbackList, true, true);
@@ -589,7 +652,7 @@ public class FeedbackViewController {
 
         //Reset after a little while
         Timeline timeline = new Timeline(new KeyFrame(
-                Duration.seconds(suppressConfirmationDuration),
+                Duration.seconds(SUPPRESS_CONFIRMATION_DURATION),
                 ae -> suppressClearDoneDialog = false));
         timeline.play();
     }
@@ -610,7 +673,7 @@ public class FeedbackViewController {
 
         //Reset after a little while
         Timeline timeline = new Timeline(new KeyFrame(
-                Duration.seconds(suppressConfirmationDuration),
+                Duration.seconds(SUPPRESS_CONFIRMATION_DURATION),
                 ae -> suppressClearNotDoneDialog = false));
         timeline.play();
     }

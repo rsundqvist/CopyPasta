@@ -16,18 +16,18 @@ public class Feedback implements Comparable<Feedback> {
     public transient static final String HEADER = "%HEADER%";
     public transient static final String TEACHER = "%TEACHER%";
     public transient static final String GROUP = "%GROUP%";
+    /**
+     * Tag indicating that the pasta is incomplete and should be modified by the teacher.
+     */
+    public transient static final String MANUAL = "%MANUAL%";
     //endregion
 
     //region Field
     // ================================================================================= //
     // Field
     // ================================================================================= //
-    private String content;
-    private String header;
-    private String teacher;
-    private String group;
-    private String assignment;
-    private transient boolean done;
+    private String content, header, teacher, group, assignment;
+    private boolean done;
     //endregion
 
 
@@ -82,10 +82,21 @@ public class Feedback implements Comparable<Feedback> {
         List<Feedback> containsTag = new ArrayList<>(feedbackList.size());
 
         for (Feedback feedback : feedbackList)
-            if (Pasta.checkManual(feedback.content))
+            if (checkManual(feedback.content))
                 containsTag.add(feedback);
 
         return containsTag;
+    }
+
+    /**
+     * Check a string for the {@link #MANUAL} tag.
+     *
+     * @param s a string
+     * @return {@code true} if the string contains the manual tag. {@code false} if it doesn't, or if {@code s} is
+     * {@code null}.
+     */
+    public static boolean checkManual (String s) {
+        return s == null ? false : s.contains(MANUAL);
     }
 
     //endregion

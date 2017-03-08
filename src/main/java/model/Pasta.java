@@ -17,10 +17,6 @@ public class Pasta implements Comparable<Pasta>, Cloneable {
     // ================================================================================= //
 
     public transient static final int CONTENT_SNIPPET_LENGTH = 45;
-    /**
-     * Tag indicating that the pasta is incomplete and should be modified by the teacher.
-     */
-    public transient static final String MANUAL = "%MANUAL%";
     //endregion
 
     //region Field
@@ -142,10 +138,6 @@ public class Pasta implements Comparable<Pasta>, Cloneable {
     // ================================================================================= //
     // Getters and setters
     // ================================================================================= //
-
-    public static boolean checkManual (String content) {
-        return content.contains(MANUAL);
-    }
 
     /**
      * Returns a copy of this pasta.

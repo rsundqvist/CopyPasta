@@ -32,7 +32,6 @@ import javafx.util.Duration;
 import model.Feedback;
 import model.FeedbackManager;
 import model.IO;
-import model.Pasta;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -186,7 +185,7 @@ public class FeedbackViewController {
 
         MenuItem toggleDone = new MenuItem("Toggle done");
         toggleDone.setAccelerator(new KeyCodeCombination(KeyCode.D, KeyCombination.CONTROL_DOWN));
-        //toggleDone.setOnAction(event -> toggleDoneTab());
+        toggleDone.setOnAction(event -> toggleDone(tab, true));
 
         MenuItem preview = new MenuItem("Preview");
         preview.setOnAction(event -> preview(tab));
@@ -293,7 +292,7 @@ public class FeedbackViewController {
         alert.getButtonTypes().addAll(ButtonType.YES, ButtonType.NO);
         alert.setTitle("Incomplete items found");
         alert.setHeaderText("Incomplete items found: " + badFeedbackList.size() + "/" + feedbackList.size());
-        alert.setContentText("It looks like you're trying to export items with the " + Pasta.MANUAL + " tag present, " +
+        alert.setContentText("It looks like you're trying to export items with the " + Feedback.MANUAL + " tag present, " +
                 "indicating that some items have content not meant for the student. Rectify before exporting?");
 
         //Content tags
@@ -586,12 +585,8 @@ public class FeedbackViewController {
         hideDoneItems = cb.isSelected();
 
         if (hideDoneItems) {
-            List<FeedbackTab> doneFeedbackTabs = new ArrayList<>();
             List<Feedback> doneFeedbackList = feedbackManager.getDoneFeedbackList();
-
-            for (FeedbackTab tab : feedbackTabs)
-                if (doneFeedbackList.contains(tab.getFeedback()))
-                    doneFeedbackTabs.add(tab);
+            List<FeedbackTab> doneFeedbackTabs = getFeedbackTabs(doneFeedbackList);
 
             feedbackTabPane.getTabs().removeAll(doneFeedbackTabs);
             feedbackTabListView.getItems().removeAll(doneFeedbackTabs);

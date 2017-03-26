@@ -245,33 +245,36 @@ public class FeedbackViewController {
         exportFeedback(extractFeedback(true), false, true);
     }
 
-    private void exportFeedback (List<Feedback> feedbackList, boolean asTxt, boolean asJson) {
-        if (feedbackList == null || feedbackList.isEmpty() || !(asTxt || asJson)) return;
+    private boolean exportFeedback (List<Feedback> feedbackList, boolean asTxt, boolean asJson) {
+        if (feedbackList == null || feedbackList.isEmpty() || !(asTxt || asJson)) return false;
 
         updateTemplate();
         feedbackManager.updateFeedback();
 
         if (checkManualTags(feedbackList))
-            return;
+            return false;
 
+        boolean exportSuccessful;
         if (asTxt && asJson) {
-            IO.exportFeedbackAsTxtAndJson(null, feedbackList);
+            exportSuccessful = IO.exportFeedbackAsTxtAndJson(null, feedbackList);
         } else if (feedbackList.size() == 1) { //Only one item
             Feedback feedback = feedbackList.get(0);
             String initialFileName = feedback.getGroup();
             File file = IO.showSaveDialog(Tools.SAVE_FOLDER, initialFileName, asTxt ? "txt" : "json");
 
             if (asTxt)
-                IO.printStringToFile(feedback.getStylizedContent(), file);
+                exportSuccessful = IO.printStringToFile(feedback.getStylizedContent(), file);
             else
-                IO.exportFeedbackAsJson(feedbackList, file);
+                exportSuccessful = IO.exportFeedbackAsJson(feedbackList, file);
         } else {
             if (asTxt) {
-                IO.exportFeedbackAsTxt(null, feedbackList);
+                exportSuccessful = IO.exportFeedbackAsTxt(null, feedbackList);
             } else {
-                IO.exportFeedbackAsJson(Tools.SAVE_FOLDER, feedbackList);
+                exportSuccessful = IO.exportFeedbackAsJson(Tools.SAVE_FOLDER, feedbackList);
             }
         }
+
+        return exportSuccessful;
     }
 
     /**
@@ -663,8 +666,7 @@ public class FeedbackViewController {
 
     public void exportAllNotDone () {
         List<Feedback> feedbackList = feedbackManager.getNotDoneFeedbackList();
-        exportFeedback(feedbackList, true, true);
-        suppressClearNotDoneDialog = true;
+        suppressClearNotDoneDialog = exportFeedback(feedbackList, true, true);
 
         //Reset after a little while
         Timeline timeline = new Timeline(new KeyFrame(

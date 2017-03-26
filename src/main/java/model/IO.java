@@ -142,10 +142,11 @@ public abstract class IO {
      *
      * @param dir The initial directory.
      * @param feedbackList The list of Feedback to export.
+     * @return {@code true} if export was successful, {@code false} otherwise.
      */
-    public static void exportFeedbackAsJson (File dir, List<Feedback> feedbackList) {
+    public static boolean exportFeedbackAsJson (File dir, List<Feedback> feedbackList) {
         File file = showJSSONSaveDialog(dir, "feedback");
-        exportFeedbackAsJson(feedbackList, file);
+        return exportFeedbackAsJson(feedbackList, file);
     }
 
     /**
@@ -153,14 +154,15 @@ public abstract class IO {
      *
      * @param feedbackList The list of Feedback to export.
      * @param file The file to export to.
+     * @return {@code true} if export was successful, {@code false} otherwise.
      */
-    public static void exportFeedbackAsJson (List<Feedback> feedbackList, File file) {
-        if (file == null) return;
+    public static boolean exportFeedbackAsJson (List<Feedback> feedbackList, File file) {
+        if (file == null) return false;
 
         ArrayList<Feedback> tempList = new ArrayList<>();
         tempList.addAll(feedbackList);
         String json = gson.toJson(tempList);
-        printStringToFile(json, file);
+        return printStringToFile(json, file);
     }
 
     /**
@@ -192,24 +194,28 @@ public abstract class IO {
      *
      * @param dir Initial directory.
      * @param feedbackList A list of Feedback to export as individual .txt and a single .json
+     * @return {@code true} if export was successful, {@code false} otherwise.
      */
-    public static void exportFeedbackAsTxtAndJson (File dir, List<Feedback> feedbackList) {
+    public static boolean exportFeedbackAsTxtAndJson (File dir, List<Feedback> feedbackList) {
         //Should strip out any weird stuff from derived list types/concurrency issues.
         ArrayList<Feedback> tempList = new ArrayList<>();
         tempList.addAll(feedbackList);
 
         File file = showDirectoryChooser(dir);
-        if (file == null) return;
+        if (file == null) return false;
         String json = gson.toJson(tempList);
 
         try {
             File jsonFile;
             jsonFile = new File(new URI(file.toURI().toString() + "/feedback.json"));
-            printStringToFile(json, jsonFile);
+            boolean exportSuccessful = printStringToFile(json, jsonFile);
 
-            exportFeedbackAsTxt(tempList, file);
+            exportSuccessful = exportFeedbackAsTxt(tempList, file) && exportSuccessful;
+
+            return exportSuccessful;
         } catch (Exception e) {
             showExceptionAlert(e);
+            return false;
         }
     }
 
@@ -219,8 +225,10 @@ public abstract class IO {
      *
      * @param c The collection of feedback.
      * @param directory The target directory.
+     * @return {@code true} if export was successful, {@code false} otherwise.
      */
-    public static void exportFeedbackAsTxt (Collection<Feedback> c, File directory) {
+    public static boolean exportFeedbackAsTxt (Collection<Feedback> c, File directory) {
+        boolean exportSuccessful = true;
         for (Feedback feedback : c) {
             String filename = feedback.getGroup() + ".txt";
             File txtFile;
@@ -229,10 +237,12 @@ public abstract class IO {
             } catch (URISyntaxException e) {
                 showExceptionAlert(e);
                 e.printStackTrace();
-                return;
+                return false;
             }
-            printStringToFile(feedback.getStylizedContent(), txtFile);
+            exportSuccessful = exportSuccessful && printStringToFile(feedback.getStylizedContent(), txtFile);
         }
+
+        return exportSuccessful;
     }
 
     /**
@@ -241,11 +251,13 @@ public abstract class IO {
      *
      * @param dir The initial directory.
      * @param c The collection of feedback.
+     * @return {@code true} if export was successful, {@code false} otherwise.
      */
-    public static void exportFeedbackAsTxt (File dir, Collection<Feedback> c) {
+    public static boolean exportFeedbackAsTxt (File dir, Collection<Feedback> c) {
         File directory = showDirectoryChooser(dir);
-        if (directory == null) return;
+        if (directory == null) return false;
 
+        boolean exportSuccessful = true;
         for (Feedback feedback : c) {
             String filename = feedback.getGroup() + ".txt";
             File txtFile;
@@ -254,10 +266,12 @@ public abstract class IO {
             } catch (URISyntaxException e) {
                 showExceptionAlert(e);
                 e.printStackTrace();
-                return;
+                return false;
             }
-            printStringToFile(feedback.getStylizedContent(), txtFile);
+            exportSuccessful = exportSuccessful && printStringToFile(feedback.getStylizedContent(), txtFile);
         }
+
+        return exportSuccessful;
     }
 
     private static File getFileInDirectory (File directory, String filename) throws URISyntaxException {
@@ -368,9 +382,10 @@ public abstract class IO {
      *
      * @param content The content to print.
      * @param file The file to print to.
+     * @return {@code true} if export was successful, {@code false} otherwise.
      */
-    public static void printStringToFile (String content, File file) {
-        if (file == null || content == null) return;
+    public static boolean printStringToFile (String content, File file) {
+        if (file == null || content == null) return false;
 
         try {
             ensureAccess(file);
@@ -380,9 +395,11 @@ public abstract class IO {
             );
             writer.write(content);
             writer.close();
+            return true;
         } catch (IOException ex) {
             ex.printStackTrace();
             showExceptionAlert(ex);
+            return false;
         }
     }
 

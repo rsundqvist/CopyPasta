@@ -11,12 +11,14 @@ import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
 import model.IO;
 import model.Pasta;
 import model.PastaManager;
 import model.UniqueArrayList;
 
+import java.awt.event.KeyEvent;
 import java.io.File;
 import java.util.Arrays;
 import java.util.List;
@@ -29,9 +31,9 @@ public class PastaViewController {
     // ================================================================================= //
     private PastaControllerListener listener;
     @FXML
-    private ListView listView = null;
+    private ListView listView;
     @FXML
-    private TextArea previewTextArea = null;
+    private TextArea previewTextArea;
     @FXML
     private FlowPane filterFlowPane;
     @FXML
@@ -74,12 +76,15 @@ public class PastaViewController {
         this.listener = listener;
     }
 
-    public void onMouseClicked () {
+    public void onMouseClicked (MouseEvent event) {
         Pasta pasta = (Pasta) listView.getSelectionModel().getSelectedItem();
         if (pasta != null) {
             previewTextArea.setText(pasta.getContent());
             if (listener != null)
                 listener.select(pasta);
+
+            if(event.getClickCount() > 1)
+                preview();
         }
     }
 

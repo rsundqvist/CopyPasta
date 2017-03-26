@@ -645,14 +645,15 @@ public class FeedbackViewController {
 
     public void exportAllDone () {
         List<Feedback> feedbackList = feedbackManager.getDoneFeedbackList();
-        exportFeedback(feedbackList, true, true);
-        suppressClearDoneDialog = true;
+        suppressClearDoneDialog = exportFeedback(feedbackList, true, true);
 
-        //Reset after a little while
-        Timeline timeline = new Timeline(new KeyFrame(
-                Duration.seconds(SUPPRESS_CONFIRMATION_DURATION),
-                ae -> suppressClearDoneDialog = false));
-        timeline.play();
+        if (suppressClearDoneDialog) {
+            //Reset after a little while
+            Timeline timeline = new Timeline(new KeyFrame(
+                    Duration.seconds(SUPPRESS_CONFIRMATION_DURATION),
+                    ae -> suppressClearDoneDialog = false));
+            timeline.play();
+        }
     }
 
     public void clearDone () {
@@ -669,10 +670,12 @@ public class FeedbackViewController {
         suppressClearNotDoneDialog = exportFeedback(feedbackList, true, true);
 
         //Reset after a little while
-        Timeline timeline = new Timeline(new KeyFrame(
-                Duration.seconds(SUPPRESS_CONFIRMATION_DURATION),
-                ae -> suppressClearNotDoneDialog = false));
-        timeline.play();
+        if (suppressClearNotDoneDialog) {
+            Timeline timeline = new Timeline(new KeyFrame(
+                    Duration.seconds(SUPPRESS_CONFIRMATION_DURATION),
+                    ae -> suppressClearNotDoneDialog = false));
+            timeline.play();
+        }
     }
 
     public void clearAllNotDone () {

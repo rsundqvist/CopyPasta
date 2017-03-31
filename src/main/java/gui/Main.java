@@ -9,8 +9,6 @@ import javafx.scene.image.Image;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
-import java.util.Arrays;
-
 public class Main extends Application {
 
     public static void main (String[] args) {

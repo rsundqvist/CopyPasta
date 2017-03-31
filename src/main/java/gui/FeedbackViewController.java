@@ -445,13 +445,17 @@ public class FeedbackViewController {
         templateHeaderTextArea.setText(template.getHeader());
     }
 
-    public void onMouseClicked (MouseEvent mouseEvent) {
+    public void onMouseClicked (MouseEvent event) {
         FeedbackTab tab = (FeedbackTab) feedbackTabListView.getSelectionModel().getSelectedItem();
-        if (mouseEvent.getButton().equals(MouseButton.PRIMARY) && tab != null) {//mouseEvent.isPrimaryButtonDown()
+        if (event.getButton().equals(MouseButton.PRIMARY) && tab != null) {//mouseEvent.isPrimaryButtonDown()
             if (feedbackTabPane.getTabs().contains(tab))
                 feedbackTabPane.getSelectionModel().select(tab);
             else
                 feedbackTabPane.getTabs().add(tab);
+
+
+            if(event.getClickCount() > 1)
+                preview();
         }
         updateFeedbackTabLockStatus();
     }

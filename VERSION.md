@@ -1,20 +1,24 @@
 # Copy Pasta: Version History
 ___
-#### Current Version: `PRERELEASE Rev4`
+#### Current Version: `PRERELEASE Rev5`
 ## Patch Notes
 
+### `PRERELEASE Rev5`
+13-04-2017
+* Added file view. Student files may be imported, with Java syntax highlightning. Feedback back be added in reference to the file by using the Feedback (Ctrl+F) button. Also added a tag: %FILE:<filename>% to help placing feedback related to a specific file.
+
 ### `PRERELEASE Rev4`
-05-03-2018
+05-03-2017
 * Added the %MANUAL% tag, used to mark content which should be changed by the teacher before export. The program will warn the user when trying to export items with this tag present.
 
 ### `PRERELEASE Rev3`
-03-03-2018
+03-03-2017
 * Updated Pasta Editor.
     * Extended assignment tag handling 
     * Added auto save
 
 ### `PRERELEASE Rev2.1`
-28-02-2018
+28-02-2017
 * Force UTF-8 encoding for import/export of .json-files
 
 ### `PRERELEASE Rev2`

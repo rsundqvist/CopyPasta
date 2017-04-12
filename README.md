@@ -21,6 +21,8 @@ Enter the group numbers, "3 5, 6  9, potato" for groups {3, 5, 6, 9, potato}. To
 
 Commonly used phrases can be saved using the Pasta Editor (Ctrl-G), then exported (RMB -> Export) and shared. Pasta items can be categorized using tags. Tags are automatically converted to lower case, and any leading or trailing whitespace will be removed.
 
+From the Files view, feedback may be added directly (Ctrl+F) with a reference to the file and caret position. If there is a %FILE:<filename>% tag present, the program will automatically insert the feedback stub at an appropriate location.
+
 ### 4. Export the feedback
 
 Under the "Setup" panel, click the "Export All" button (Ctrl-E) to select a target folder. All feedback items will be exported as individal .txt-files for each group in the list, and a single .json-file containing all of them (used for later import, or simply discarded).

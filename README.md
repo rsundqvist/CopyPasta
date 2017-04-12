@@ -1,8 +1,8 @@
 # About Copy Pasta
 
->***Download "CopyPasta.zip" and run "CopyPasta.jar" to get started [***(link)***]***(https://github.com/whisp91/CopyPasta/raw/master/CopyPasta.zip)***.***
+>Download "CopyPasta.zip" and run "CopyPasta.jar" to get started  [(link)](https://github.com/whisp91/CopyPasta/raw/master/CopyPasta.zip).
 
-Copy Pasta is a program developed to aid in grading assignment exercises. Common feedback ***("Pasta")*** can be created and categorized to speed up the process. Wildcards and templates are used to reduce the risk of mistakes, and to reduce clutter. The program will automatically load/store the most recent data ***(feedback and Pasta)*** when starting/exiting.
+Copy Pasta is a program developed to aid in grading assignment exercises. Common feedback ("Pasta") can be created and categorized to speed up the process. Wildcards and templates are used to reduce the risk of mistakes, and to reduce clutter. The program will automatically load/store the most recent data (feedback and Pasta) when starting/exiting.
 
  
 ## Typical workflow
@@ -25,12 +25,12 @@ From the Files view, feedback may be added directly ***(Ctrl+F)*** with a refere
 
 ### 4. Export the feedback
 
-Under the "Setup" panel, click the "Export All" button ***(Ctrl-E)*** to select a target folder. All feedback items will be exported as individal .txt-files for each group in the list, and a single .json-file containing all of them ***(used for later import, or simply discarded)***.
+Under the "Setup" panel, click the "Export All" button ***(Ctrl-E)*** to select a target folder. All feedback items will be exported as individal .txt-files for each group in the list, and a single .json-file containing all of them (used for later import, or simply discarded).
 
-Some content may contain a %MANUAL% tag, indicating that some part of the content ***(typically Pasta)*** should be changed manually by the teacher. The program will warn the user when trying to export feedback with this tag present.
+Some content may contain a %MANUAL% tag, indicating that some part of the content (typically Pasta) should be changed manually by the teacher. The program will warn the user when trying to export feedback with this tag present.
  
 ## Creator
 
-Richard Sundqvist ***(richard.sundqvist@live.se)***
+Richard Sundqvist (richard.sundqvist@live.se)
 
 Git repo: https://github.com/whisp91/CopyPasta

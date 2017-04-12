@@ -37,7 +37,7 @@ public abstract class IO {
     }
 
     private static Gson build () {
-        return new GsonBuilder().disableHtmlEscaping().create();
+        return new GsonBuilder().disableHtmlEscaping().setPrettyPrinting().create();
     }
 
     /**

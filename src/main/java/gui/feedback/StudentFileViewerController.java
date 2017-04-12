@@ -15,6 +15,7 @@ import model.IO;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.util.Map;
 
 /**
  * Created by Richard Sundqvist on 26/03/2017.
@@ -33,10 +34,15 @@ public class StudentFileViewerController {
     public StudentFileViewerController (FileFeedbackListener listener, Feedback feedback) {
         this.listener = listener;
         this.feedback = feedback;
+
     }
 
     @FXML
     private void initialize () {
+        Map<String, String> files = feedback.getFiles();
+        for(String key : files.keySet())
+            sourceTabs.getTabs().add(new FileTab(key, files.get(key)));
+
         sourceTabs.getSelectionModel().selectedItemProperty().addListener(event -> {
             System.out.println("");
 

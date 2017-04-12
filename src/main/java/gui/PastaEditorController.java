@@ -149,7 +149,7 @@ public class PastaEditorController implements PastaViewController.PastaControlle
 
     public void newContentTag () {
         TextInputDialog dialog = new TextInputDialog("New content tag");
-        dialog.setTitle("Create new tag.");
+        dialog.setTitle("New Tag");
         dialog.setHeaderText("Create new content tag.");
         dialog.setContentText("Enter new tag: ");
         Optional<String> result = dialog.showAndWait();
@@ -170,7 +170,7 @@ public class PastaEditorController implements PastaViewController.PastaControlle
 
     public void newAssignTag () {
         TextInputDialog dialog = new TextInputDialog("New assignment tag");
-        dialog.setTitle("Create new tag.");
+        dialog.setTitle("New Tag");
         dialog.setHeaderText("Create new assignment tag.");
         dialog.setContentText("Enter new tag: ");
         Optional<String> result = dialog.showAndWait();

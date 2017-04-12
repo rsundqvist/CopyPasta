@@ -2,7 +2,9 @@ package model;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Richard Sundqvist
@@ -16,6 +18,12 @@ public class Feedback implements Comparable<Feedback> {
     public transient static final String HEADER = "%HEADER%";
     public transient static final String TEACHER = "%TEACHER%";
     public transient static final String GROUP = "%GROUP%";
+    public transient static final String FILE = "%FILE:<file>%";
+
+    public static String getFileTag (String file) {
+        return FILE.replace("<file>", file);
+    }
+
     /**
      * Tag indicating that the pasta is incomplete and should be modified by the teacher.
      */
@@ -27,6 +35,7 @@ public class Feedback implements Comparable<Feedback> {
     // Field
     // ================================================================================= //
     private String content, header, teacher, group, assignment;
+    private Map<String, String> files = new HashMap<>();
     private boolean done;
     //endregion
 
@@ -151,6 +160,21 @@ public class Feedback implements Comparable<Feedback> {
     }
 
     /**
+     * Looks for the {@link #FILE} tag, ant returns the position <it>after</it> the final '%'. For example, if this
+     * function were called with arg {@code file = "main.cpp"}, the it would return the index after the string
+     * "{@code %FILE: main.cpp%}". Whitespace is not permitted.
+     *
+     * @param file The file to look for.
+     * @return The position after the sought tag, or -1 if it could not be found.
+     */
+    public int getFilePosition (String file) {
+        //Very inefficient...
+        String s = getFileTag(file);
+        int i = content.indexOf(s);
+        return i + (i < 0 ? 0 : s.length());
+    }
+
+    /**
      * Gets the Content for this Feedback.
      *
      * @return The content of this Feedback.
@@ -261,6 +285,31 @@ public class Feedback implements Comparable<Feedback> {
      */
     public void setAssignment (String assignment) {
         this.assignment = assignment;
+    }
+
+    /**
+     * Add a file to the file-map of this Feedback.
+     * @param fileName The filename, used as key.
+     * @param content The content, used as value.
+     */
+    public void addFile(String fileName, String content) {
+        files.put(fileName, content);
+    }
+
+    /**
+     * Remove a file from the Feedback, if it exists.
+     * @param fileName The file to remove.
+     */
+    public void removeFile(String fileName) {
+        files.remove(fileName);
+    }
+
+    /**
+     * Return the map of file for this Feedback, with file names as keys and content as values.
+     * @return A map of files.
+     */
+    public Map<String, String> getFiles () {
+        return files;
     }
     //endregion
 }

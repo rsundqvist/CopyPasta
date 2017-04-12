@@ -18,7 +18,6 @@ import model.Pasta;
 import model.PastaManager;
 import model.UniqueArrayList;
 
-import java.awt.event.KeyEvent;
 import java.io.File;
 import java.util.Arrays;
 import java.util.List;
@@ -83,7 +82,7 @@ public class PastaViewController {
             if (listener != null)
                 listener.select(pasta);
 
-            if(event.getClickCount() > 1)
+            if (event.getClickCount() > 1)
                 preview();
         }
     }

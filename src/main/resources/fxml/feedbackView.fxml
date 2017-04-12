@@ -25,7 +25,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <TabPane xmlns:fx="http://javafx.com/fxml/1" fx:id="rootTabPane" xmlns="http://javafx.com/javafx/8.0.111"
-         fx:controller="gui.FeedbackViewController">
+         fx:controller="gui.feedback.FeedbackViewController">
     <tabs>
         <Tab fx:id="feedbackTab" closable="false" text="Student Feedback">
             <content>

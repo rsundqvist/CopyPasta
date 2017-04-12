@@ -1,5 +1,6 @@
-package gui;
+package gui.feedback;
 
+import gui.Tools;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.Event;
@@ -267,11 +268,10 @@ public class FeedbackViewController {
             else
                 exportSuccessful = IO.exportFeedbackAsJson(feedbackList, file);
         } else {
-            if (asTxt) {
+            if (asTxt)
                 exportSuccessful = IO.exportFeedbackAsTxt(null, feedbackList);
-            } else {
+            else
                 exportSuccessful = IO.exportFeedbackAsJson(Tools.SAVE_FOLDER, feedbackList);
-            }
         }
 
         return exportSuccessful;
@@ -454,7 +454,7 @@ public class FeedbackViewController {
                 feedbackTabPane.getTabs().add(tab);
 
 
-            if(event.getClickCount() > 1)
+            if (event.getClickCount() > 1)
                 preview();
         }
         updateFeedbackTabLockStatus();

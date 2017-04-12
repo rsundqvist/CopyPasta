@@ -1,5 +1,6 @@
 package gui;
 
+import gui.feedback.FeedbackViewController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

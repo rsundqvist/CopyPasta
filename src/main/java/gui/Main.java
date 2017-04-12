@@ -27,6 +27,7 @@ public class Main extends Application {
         double windowWidth = screenSize.getWidth() * .9;
         double windowHeight = screenSize.getHeight() * .9;
         Scene scene = new Scene(root, windowWidth, windowHeight);
+        scene.getStylesheets().add(Main.class.getResource("/java-keywords.css").toExternalForm()); //Syntax highlighting
         primaryStage.setScene(scene);
 
         primaryStage.show();

@@ -18,39 +18,36 @@ import java.util.Optional;
  */
 public abstract class Tools {
 
-    public static final File SAVE_FOLDER = createAuto("save", null);
-    public static final File AUTO_SAVE_PASTA_FILE = createAuto("save/auto", "pasta.json");
-    public static final File AUTO_SAVED_TEMPLATE_FILE = createAuto("save/auto", "template.json");
-    public static final File AUTO_SAVED_FEEDBACK_FILE = createAuto("save/auto", "feedback.json");
+    public static final File SAVE_FOLDER = create("save", null);
+    public static final File AUTO_SAVE_PASTA_FILE = create("save/auto", "pasta.json");
+    public static final File AUTO_SAVE_TEMPLATE_FILE = create("save/auto", "template.json");
+    public static final File AUTO_SAVE_FEEDBACK_FILE = create("save/auto", "feedback.json");
 
     public static final String VERSION = "PRERELEASE";
 
     private Tools () {
     }
 
-    //region Pasta
-    // ================================================================================= //
-    // Pasta
-    // ================================================================================= //
-    private static final File createAuto (String dir, String file) {
+    private static File create (String dir, String file) {
         File userDir = new File(System.getProperty("user.dir"));
-        File _dir = new File(userDir, dir);
-        if (!_dir.exists())
-            _dir.mkdirs();
+        File d = new File(userDir, dir);
+        if (!d.exists())
+            d.mkdirs();
 
-        File _file;
+        File f;
         if (file != null) {
-            _file = new File(_dir, file);
-            if (_file.exists())
+            f = new File(d, file);
+            if (!f.exists()) {
                 try {
-                    boolean result = _file.createNewFile();
+                    f.createNewFile();
                 } catch (IOException e) {
                     IO.showExceptionAlert(e);
                     e.printStackTrace();
                 }
-            return _file;
+            }
+            return f;
         } else {
-            return _dir;
+            return d;
         }
     }
     //Files and directories
@@ -75,19 +72,19 @@ public abstract class Tools {
     // Feedback
     // ================================================================================= //
     public static void exportSavedFeedback (List<Feedback> feedbackList) {
-        IO.exportFeedbackAsJson(feedbackList, AUTO_SAVED_FEEDBACK_FILE);
+        IO.exportFeedbackAsJson(feedbackList, AUTO_SAVE_FEEDBACK_FILE);
     }
 
     public static List<Feedback> importSavedFeedback () {
-        return IO.importFeedback(AUTO_SAVED_FEEDBACK_FILE);
+        return IO.importFeedback(AUTO_SAVE_FEEDBACK_FILE);
     }
 
     public static void exportSavedTemplate (Feedback template) {
-        IO.exportSingleFeedbackAsJson(template, AUTO_SAVED_TEMPLATE_FILE);
+        IO.exportSingleFeedbackAsJson(template, AUTO_SAVE_TEMPLATE_FILE);
     }
 
     public static Feedback importSavedTemplate () {
-        return IO.importFeedbackSingle(AUTO_SAVED_TEMPLATE_FILE);
+        return IO.importFeedbackSingle(AUTO_SAVE_TEMPLATE_FILE);
     }
     //endregion
 

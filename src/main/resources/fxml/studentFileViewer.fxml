@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.input.*?>
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+    <top>
+        <GridPane maxWidth="1.7976931348623157E308" BorderPane.alignment="CENTER">
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+            </rowConstraints>
+            <children>
+                <Label fx:id="fileLabel" alignment="CENTER" maxWidth="1.7976931348623157E308" prefHeight="7.0" prefWidth="600.0" text="Drag and drop to add files!">
+                    <padding>
+                        <Insets left="5.0" />
+                    </padding>
+                    <font>
+                        <Font name="System Bold" size="17.0" />
+                    </font>
+                </Label>
+                <HBox maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="200.0" GridPane.columnSpan="2147483647" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1">
+                    <children>
+                        <Button maxHeight="1.7976931348623157E308" mnemonicParsing="false" onAction="#onFeedback" prefWidth="80.0" text="Feedback">
+                            <HBox.margin>
+                                <Insets right="5.0" />
+                            </HBox.margin>
+                            <tooltip>
+                                <Tooltip text="Create feedback at the caret. The program will attempt to find the file in the feedback by looking for the %FILE:&lt;filename&gt;% tag." />
+                            </tooltip>
+                        </Button>
+                        <VBox prefHeight="200.0">
+                            <children>
+                                <CheckBox mnemonicParsing="false" onAction="#toggleFeedbackLine" selected="true" text="Line" />
+                                <CheckBox mnemonicParsing="false" onAction="#toggleFeedbackColumn" selected="true" text="Column" />
+                            </children>
+                        </VBox>
+                        <Pane maxHeight="0.0" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="0.0" HBox.hgrow="ALWAYS" />
+                        <Button maxHeight="1.7976931348623157E308" mnemonicParsing="false" onAction="#onDelete" prefWidth="80.0" text="Delete">
+                            <tooltip>
+                                <Tooltip text="Delete the file from the feedback. The original file will not be altered." />
+                            </tooltip>
+                        </Button>
+                    </children>
+                    <padding>
+                        <Insets top="1.0" />
+                    </padding>
+                    <GridPane.margin>
+                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                    </GridPane.margin>
+                </HBox>
+            </children>
+        </GridPane>
+    </top>
+    <center>
+        <TabPane fx:id="sourceTabs" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onDragDropped="#onDragDropped" onDragOver="#onDragOver" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #123456;" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+         <contextMenu>
+            <ContextMenu>
+              <items>
+                <MenuItem mnemonicParsing="false" text="Copy">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="C" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator>
+                  </MenuItem>
+                  <MenuItem mnemonicParsing="false" onAction="#onFeedback" text="Feedback">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="F" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator>
+                  </MenuItem>
+              </items>
+            </ContextMenu>
+         </contextMenu></TabPane>
+    </center>
+</BorderPane>

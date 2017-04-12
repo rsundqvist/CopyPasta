@@ -5,6 +5,8 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Richard Sundqvist
@@ -155,6 +157,8 @@ public class Feedback implements Comparable<Feedback> {
 
         s = s.replace(TEACHER, teacher);
         s = s.replace(GROUP, group);
+
+        //TODO: Regex pattern matching for FILE tags.
 
         return s;
     }

@@ -30,7 +30,8 @@ public class FileTab extends Tab {
             "new", "package", "private", "protected", "public",
             "return", "short", "static", "strictfp", "super",
             "switch", "synchronized", "this", "throw", "throws",
-            "transient", "try", "void", "volatile", "while"
+            "transient", "try", "void", "volatile", "while", "null",
+            "->"
     };
 
     private static final String KEYWORD_PATTERN = "\\b(" + String.join("|", KEYWORDS) + ")\\b";
@@ -71,6 +72,7 @@ public class FileTab extends Tab {
         setClosable(false);
 
         codeArea = new CodeArea();
+        codeArea.setStyle("-fx-background-color: #ffeaea;");
         codeArea.setEditable(false);
         codeArea.setShowCaret(ViewActions.CaretVisibility.ON);
         codeArea.setParagraphGraphicFactory(LineNumberFactory.get(codeArea));

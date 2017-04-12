@@ -41,6 +41,7 @@ public class FeedbackTab extends Tab implements StudentFileViewerController.File
         updateTitle();
     }
 
+
     private void updateFeedback () {
         feedback.setContent(textArea.getText()); //TODO Too many calls?
     }
@@ -79,15 +80,14 @@ public class FeedbackTab extends Tab implements StudentFileViewerController.File
 
     @Override
     public void feedbackAt (String file, int caretLine, int caretColumn, int caretPosition) {
-        System.out.println(file);
         int pos = feedback.getFilePosition(file);
 
-        String caretInfo = "(" + caretString(caretLine, caretColumn) + ")";
+        String caretInfo = caretString(caretLine, caretColumn);
         if (pos < 0) {
-            textArea.appendText("\nIn \"" + file + "\" at " + caretInfo + ":\n\t");
+            textArea.appendText("\nIn \"" + file + "\" at " + caretInfo + ":  \n");
             textArea.positionCaret(Integer.MAX_VALUE);
         } else {
-            String text = "\nAt" + caretInfo + ":\n\t";
+            String text = "\nAt " + caretInfo + ":  \n";
             textArea.insertText(pos, text);
             textArea.positionCaret(pos + text.length());
         }

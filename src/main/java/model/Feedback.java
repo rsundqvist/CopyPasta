@@ -5,8 +5,6 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * @author Richard Sundqvist
@@ -140,16 +138,17 @@ public class Feedback implements Comparable<Feedback> {
      * @return A String representation of this Feedback.
      */
     public String getStylizedContent () {
-        return getStylizedContent(true);
+        return getStylizedContent(true, true);
     }
 
     /**
      * Returns a String representation of this Feedback, with wildcards replaced by actual values.
      *
      * @param changeHeader If {@code true}, the header will be changed as well.
+     * @param replaceTabs If {@code true}, tabs will be replaced by 4 spaces.
      * @return A String representation of this Feedback.
      */
-    public String getStylizedContent (boolean changeHeader) {
+    public String getStylizedContent (boolean changeHeader, boolean replaceTabs) {
         String s = content;
 
         if (changeHeader)
@@ -157,6 +156,7 @@ public class Feedback implements Comparable<Feedback> {
 
         s = s.replace(TEACHER, teacher);
         s = s.replace(GROUP, group);
+        s = s.replace("\t", "    ");
 
         //TODO: Regex pattern matching for FILE tags.
 
@@ -293,23 +293,26 @@ public class Feedback implements Comparable<Feedback> {
 
     /**
      * Add a file to the file-map of this Feedback.
+     *
      * @param fileName The filename, used as key.
      * @param content The content, used as value.
      */
-    public void addFile(String fileName, String content) {
+    public void addFile (String fileName, String content) {
         files.put(fileName, content);
     }
 
     /**
      * Remove a file from the Feedback, if it exists.
+     *
      * @param fileName The file to remove.
      */
-    public void removeFile(String fileName) {
+    public void removeFile (String fileName) {
         files.remove(fileName);
     }
 
     /**
      * Return the map of file for this Feedback, with file names as keys and content as values.
+     *
      * @return A map of files.
      */
     public Map<String, String> getFiles () {

@@ -3,7 +3,6 @@ package gui.feedback;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
-import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.control.TabPane;
 import javafx.scene.input.DragEvent;
@@ -27,7 +26,7 @@ public class StudentFileViewerController {
     private TabPane sourceTabs;
 
     private FileTab currentFileTab = null;
-    private boolean feedbackLine = true, feedbackColumn = true;
+    private boolean feedbackLine = true, feedbackColumn = false;
     private final FileFeedbackListener listener;
     private final Feedback feedback;
 
@@ -39,13 +38,7 @@ public class StudentFileViewerController {
 
     @FXML
     private void initialize () {
-        Map<String, String> files = feedback.getFiles();
-        for(String key : files.keySet())
-            sourceTabs.getTabs().add(new FileTab(key, files.get(key)));
-
         sourceTabs.getSelectionModel().selectedItemProperty().addListener(event -> {
-            System.out.println("");
-
             currentFileTab = (FileTab) sourceTabs.getSelectionModel().getSelectedItem();
 
             if (currentFileTab == null)
@@ -53,6 +46,10 @@ public class StudentFileViewerController {
             else
                 fileLabel.setText(currentFileTab.getText());
         });
+
+        Map<String, String> files = feedback.getFiles();
+        for (String key : files.keySet())
+            sourceTabs.getTabs().add(new FileTab(key, files.get(key)));
     }
 
     public void onFeedback () {
@@ -91,6 +88,7 @@ public class StudentFileViewerController {
                         stringBuilder.append(line + "\n");
 
                     addFile(file.getName(), stringBuilder.toString());
+                    bufferedReader.close();
                 } catch (Exception e) {
                     IO.showExceptionAlert(e);
                     e.printStackTrace();
@@ -111,7 +109,7 @@ public class StudentFileViewerController {
     }
 
     public void onDelete () {
-        if (currentFileTab!= null) {
+        if (currentFileTab != null) {
             feedback.removeFile(currentFileTab.getFileName());
             sourceTabs.getTabs().remove(currentFileTab);
         }

@@ -74,7 +74,7 @@ public class StudentFileViewerController {
         boolean success = false;
         if (db.hasFiles()) {
             success = true;
-            String filePath = null;
+            String filePath;
 
             for (File file : db.getFiles()) {
                 filePath = file.getAbsolutePath();

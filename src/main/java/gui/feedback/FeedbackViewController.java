@@ -50,7 +50,7 @@ public class FeedbackViewController {
     // Field
     // ================================================================================= //
     @FXML
-    private Tab feedbackTab, setupTab, progressTab;
+    private Tab groupTab, setupTab, progressTab;
     @FXML
     private TextField studentGroupField, assignmentField, teacherField;
     @FXML
@@ -65,7 +65,7 @@ public class FeedbackViewController {
     @FXML
     private TitledPane bodyPane;
     private FeedbackManager feedbackManager = new FeedbackManager();
-    private List<FeedbackTab> feedbackTabs = new ArrayList<>();
+    private List<GroupTab> groupTabs = new ArrayList<>();
     //endregion
     private boolean hideDoneItems;
     @FXML
@@ -79,7 +79,7 @@ public class FeedbackViewController {
 
     public void updateFeedbackTabLockStatus () {
         boolean empty = feedbackTabPane.getTabs().isEmpty();
-        feedbackTab.setDisable(empty);
+        groupTab.setDisable(empty);
         if (empty)
             rootTabPane.getSelectionModel().select(setupTab);
     }
@@ -127,7 +127,7 @@ public class FeedbackViewController {
                 createFeedbackTab(feedback);
 
             if (newFeedbackList.size() > 1)
-                rootTabPane.getSelectionModel().select(feedbackTab);
+                rootTabPane.getSelectionModel().select(groupTab);
         }
 
         updateFeedbackTabLockStatus();
@@ -143,21 +143,21 @@ public class FeedbackViewController {
     }
 
     private void removeFeedbackTabs (List<Feedback> feedbackList) {
-        List<FeedbackTab> removedFeedbackTabs = getFeedbackTabs(feedbackList);
+        List<GroupTab> removedGroupTabs = getFeedbackTabs(feedbackList);
 
-        feedbackTabListView.getItems().removeAll(removedFeedbackTabs);
-        feedbackTabPane.getTabs().removeAll(removedFeedbackTabs);
-        feedbackTabs.removeAll(removedFeedbackTabs);
+        feedbackTabListView.getItems().removeAll(removedGroupTabs);
+        feedbackTabPane.getTabs().removeAll(removedGroupTabs);
+        groupTabs.removeAll(removedGroupTabs);
         updateFeedbackTabLockStatus();
     }
 
-    private List<FeedbackTab> getFeedbackTabs (List<Feedback> feedbackList) {
-        List<FeedbackTab> removedFeedbackTabs = new ArrayList<>();
+    private List<GroupTab> getFeedbackTabs (List<Feedback> feedbackList) {
+        List<GroupTab> removedGroupTabs = new ArrayList<>();
 
-        for (FeedbackTab tab : feedbackTabs)
+        for (GroupTab tab : groupTabs)
             if (feedbackList.contains(tab.getFeedback()))
-                removedFeedbackTabs.add(tab);
-        return removedFeedbackTabs;
+                removedGroupTabs.add(tab);
+        return removedGroupTabs;
     }
 
     private void updateTemplate () {
@@ -170,15 +170,15 @@ public class FeedbackViewController {
     }
 
     private void createFeedbackTab (Feedback feedback) {
-        FeedbackTab tab = new FeedbackTab(feedback);
+        GroupTab tab = new GroupTab(feedback);
         tab.setContextMenu(createFeedbackTabContextMenu(tab));
         tab.setOnClosed(event -> updateFeedbackTabLockStatus());
         feedbackTabPane.getTabs().add(tab);
         feedbackTabListView.getItems().add(tab);
-        feedbackTabs.add(tab);
+        groupTabs.add(tab);
     }
 
-    private ContextMenu createFeedbackTabContextMenu (FeedbackTab tab) {
+    private ContextMenu createFeedbackTabContextMenu (GroupTab tab) {
         ContextMenu contextMenu = new ContextMenu();
 
         MenuItem changeGroup = new MenuItem("Change group");
@@ -321,15 +321,15 @@ public class FeedbackViewController {
         Optional<ButtonType> result = alert.showAndWait();
 
         if (!result.isPresent() || result.get() != ButtonType.NO) { //Default to assuming user wants to fix content.
-            List<FeedbackTab> badFeedbackTabs = getFeedbackTabs(badFeedbackList);
-            for (FeedbackTab feedbackTab : badFeedbackTabs) {
-                feedbackTab.getFeedback().setDone(true);
-                toggleDone(feedbackTab, false);
+            List<GroupTab> badGroupTabs = getFeedbackTabs(badFeedbackList);
+            for (GroupTab groupTab : badGroupTabs) {
+                groupTab.getFeedback().setDone(true);
+                toggleDone(groupTab, false);
             }
-            feedbackTabPane.getTabs().removeAll(badFeedbackTabs);
-            feedbackTabPane.getTabs().addAll(0, badFeedbackTabs);
+            feedbackTabPane.getTabs().removeAll(badGroupTabs);
+            feedbackTabPane.getTabs().addAll(0, badGroupTabs);
             feedbackTabPane.getSelectionModel().select(0);
-            rootTabPane.getSelectionModel().select(feedbackTab);
+            rootTabPane.getSelectionModel().select(groupTab);
             updateFeedbackTabLockStatus();
             return true;
         } else {
@@ -347,8 +347,8 @@ public class FeedbackViewController {
         List<Feedback> feedbackList = new ArrayList<>();
 
         if (selectedOnly) {
-            List<FeedbackTab> tabs = feedbackTabListView.getSelectionModel().getSelectedItems();
-            for (FeedbackTab tab : tabs)
+            List<GroupTab> tabs = feedbackTabListView.getSelectionModel().getSelectedItems();
+            for (GroupTab tab : tabs)
                 feedbackList.add(tab.getFeedback());
         } else {
             feedbackList.addAll(feedbackManager.getFeedbackList());
@@ -367,7 +367,7 @@ public class FeedbackViewController {
         if (numberOfItems > 1 && !Tools.confirmDelete(numberOfItems)) return;
 
         if (numberOfItems == 1) {
-            FeedbackTab tab = ((FeedbackTab) selectedItems.get(0));
+            GroupTab tab = ((GroupTab) selectedItems.get(0));
             updateTemplate();
             if (feedbackManager.isContentModified(tab.getFeedback())) {
 
@@ -383,17 +383,17 @@ public class FeedbackViewController {
         }
 
         for (Object o : selectedItems)
-            deleteFeedback((FeedbackTab) o);
+            deleteFeedback((GroupTab) o);
 
         updateFeedbackTabLockStatus();
     }
 
-    private void deleteFeedback (FeedbackTab tab) {
+    private void deleteFeedback (GroupTab tab) {
         if (tab == null) return;
 
         feedbackTabPane.getTabs().remove(tab);
         feedbackTabListView.getItems().remove(tab);
-        feedbackTabs.remove(tab);
+        groupTabs.remove(tab);
         feedbackManager.removeFeedback(tab.getFeedback());
         updateFeedbackTabLockStatus();
     }
@@ -405,7 +405,7 @@ public class FeedbackViewController {
             for (Feedback feedback : feedbackList)
                 createFeedbackTab(feedback);
 
-        rootTabPane.getSelectionModel().select(feedbackTab);
+        rootTabPane.getSelectionModel().select(groupTab);
         updateFeedbackTabLockStatus();
     }
 
@@ -446,7 +446,7 @@ public class FeedbackViewController {
     }
 
     public void onMouseClicked (MouseEvent event) {
-        FeedbackTab tab = (FeedbackTab) feedbackTabListView.getSelectionModel().getSelectedItem();
+        GroupTab tab = (GroupTab) feedbackTabListView.getSelectionModel().getSelectedItem();
         if (event.getButton().equals(MouseButton.PRIMARY) && tab != null) {//mouseEvent.isPrimaryButtonDown()
             if (feedbackTabPane.getTabs().contains(tab))
                 feedbackTabPane.getSelectionModel().select(tab);
@@ -468,22 +468,22 @@ public class FeedbackViewController {
 
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {
-            feedbackTabPane.getTabs().removeAll(feedbackTabs);
+            feedbackTabPane.getTabs().removeAll(groupTabs);
             feedbackTabListView.getItems().clear();
             feedbackManager.clear();
-            feedbackTabs.clear();
+            groupTabs.clear();
             updateFeedbackTabLockStatus();
         }
     }
 
     public void changeFeedbackGroup () {
-        FeedbackTab tab = (FeedbackTab) feedbackTabListView.getSelectionModel().getSelectedItem();
+        GroupTab tab = (GroupTab) feedbackTabListView.getSelectionModel().getSelectedItem();
         if (tab == null) return;
 
         changeFeedbackGroup(tab);
     }
 
-    private void changeFeedbackGroup (FeedbackTab tab) {
+    private void changeFeedbackGroup (GroupTab tab) {
         Feedback feedback = tab.getFeedback();
 
         TextInputDialog dialog = new TextInputDialog(feedback.getGroup());
@@ -513,11 +513,11 @@ public class FeedbackViewController {
     }
 
     public void preview () {
-        FeedbackTab tab = (FeedbackTab) feedbackTabListView.getSelectionModel().getSelectedItem();
+        GroupTab tab = (GroupTab) feedbackTabListView.getSelectionModel().getSelectedItem();
         preview(tab);
     }
 
-    private void preview (FeedbackTab tab) {
+    private void preview (GroupTab tab) {
         if (tab == null) return;
 
         Feedback feedback = tab.getFeedback();
@@ -536,7 +536,7 @@ public class FeedbackViewController {
      */
     public void toggleDoneTab () {
         Tab tab = feedbackTabPane.getSelectionModel().getSelectedItem();
-        toggleDone((FeedbackTab) tab, true);
+        toggleDone((GroupTab) tab, true);
     }
 
     /**
@@ -549,14 +549,14 @@ public class FeedbackViewController {
 
         if (!selectedItems.isEmpty()) {
             for (Object o : selectedItems)
-                toggleDone((FeedbackTab) o, false);
+                toggleDone((GroupTab) o, false);
 
             if (feedbackManager.isAllFeedbackDone())
                 allFeedbackDone();
         }
     }
 
-    public void toggleDone (FeedbackTab tab, boolean checkAllDone) {
+    public void toggleDone (GroupTab tab, boolean checkAllDone) {
         if (tab == null) return;
 
         Feedback feedback = tab.getFeedback();
@@ -593,16 +593,16 @@ public class FeedbackViewController {
 
         if (hideDoneItems) {
             List<Feedback> doneFeedbackList = feedbackManager.getDoneFeedbackList();
-            List<FeedbackTab> doneFeedbackTabs = getFeedbackTabs(doneFeedbackList);
+            List<GroupTab> doneGroupTabs = getFeedbackTabs(doneFeedbackList);
 
-            feedbackTabPane.getTabs().removeAll(doneFeedbackTabs);
-            feedbackTabListView.getItems().removeAll(doneFeedbackTabs);
+            feedbackTabPane.getTabs().removeAll(doneGroupTabs);
+            feedbackTabListView.getItems().removeAll(doneGroupTabs);
 
             if (feedbackManager.isAllFeedbackDone())
                 allFeedbackDone();
         } else {
             feedbackTabListView.getItems().clear();
-            feedbackTabListView.getItems().addAll(feedbackTabs);
+            feedbackTabListView.getItems().addAll(groupTabs);
         }
 
         updateFeedbackTabLockStatus();
@@ -613,7 +613,7 @@ public class FeedbackViewController {
 
         Tab tab = feedbackTabPane.getSelectionModel().getSelectedItem();
         if (tab != null && event.isControlDown() && event.getCode() == KeyCode.D) {
-            toggleDone((FeedbackTab) tab, true);
+            toggleDone((GroupTab) tab, true);
             event.consume();
         }
     }

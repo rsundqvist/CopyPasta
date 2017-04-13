@@ -24,6 +24,10 @@
 .comment {
 	-fx-fill: green;
 }
+.tag {
+    -fx-fill: purple;
+    -fx-font-weight: bold;
+}
 
 .paragraph-box:has-caret {
     -fx-background-color: #f2f9fc;

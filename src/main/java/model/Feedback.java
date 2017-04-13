@@ -16,7 +16,7 @@ public class Feedback implements Comparable<Feedback> {
     // Constant
     // ================================================================================= //
     public transient static final String HEADER = "%HEADER%";
-    public transient static final String TEACHER = "%TEACHER%";
+    public transient static final String NAME = "%NAME%";
     public transient static final String GROUP = "%GROUP%";
     public transient static final String FILE = "%FILE:<file>%";
 
@@ -35,7 +35,7 @@ public class Feedback implements Comparable<Feedback> {
     // Field
     // ================================================================================= //
     private String content, header, teacher, group, assignment;
-    private Map<String, String> files = new HashMap<>();
+    private final Map<String, String> files;
     private boolean done;
     //endregion
 
@@ -50,6 +50,7 @@ public class Feedback implements Comparable<Feedback> {
         teacher = "";
         group = "";
         assignment = "";
+        files = new HashMap<>();
         done = false;
     }
 
@@ -63,6 +64,7 @@ public class Feedback implements Comparable<Feedback> {
         header = orig.header;
         teacher = orig.teacher;
         group = orig.group;
+        files = new HashMap<>(orig.files); //Shallow copy
         done = orig.done;
     }
 
@@ -154,7 +156,7 @@ public class Feedback implements Comparable<Feedback> {
         if (changeHeader)
             s = s.replace(HEADER, header); //Should be done first!
 
-        s = s.replace(TEACHER, teacher);
+        s = s.replace(NAME, teacher);
         s = s.replace(GROUP, group);
         s = s.replace("\t", "    ");
 
@@ -215,7 +217,7 @@ public class Feedback implements Comparable<Feedback> {
     }
 
     /**
-     * Gets the teacher name value, which will replace the {@link #TEACHER} wildcard.
+     * Gets the teacher name value, which will replace the {@link #NAME} wildcard.
      *
      * @return new teacher name.
      */
@@ -224,7 +226,7 @@ public class Feedback implements Comparable<Feedback> {
     }
 
     /**
-     * Sets the teacher name value, which will replace the {@link #TEACHER} wildcard.
+     * Sets the teacher name value, which will replace the {@link #NAME} wildcard.
      *
      * @param teacher The new teacher name.
      */

@@ -72,7 +72,7 @@ public class FileTab extends Tab {
         setClosable(false);
 
         codeArea = new CodeArea();
-        codeArea.setStyle("-fx-background-color: #ffeaea;");
+        codeArea.setStyle("-fx-background-color: #dddddd;");
         codeArea.setEditable(false);
         codeArea.setShowCaret(ViewActions.CaretVisibility.ON);
         codeArea.setParagraphGraphicFactory(LineNumberFactory.get(codeArea));

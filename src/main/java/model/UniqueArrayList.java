@@ -40,30 +40,4 @@ public class UniqueArrayList<E> extends ArrayList<E> {
                 uniqueList.add(e);
         return uniqueList;
     }
-
-    /*
-    public static void main (String[] args) {
-        ArrayList<String> orig = new ArrayList<>();
-        orig.add("foo");
-        orig.add("foo");
-        orig.add("bar");
-        orig.add("bar");
-
-        UniqueArrayList addAll = new UniqueArrayList();
-        addAll.addAll(orig);
-
-        UniqueArrayList add = new UniqueArrayList();
-        for (Object o : orig)
-            add.add(o);
-
-        UniqueArrayList ual = new UniqueArrayList();
-        ual.addAll(addAll);
-
-
-        System.out.println(orig);
-        System.out.println(addAll);
-        System.out.println(add);
-        System.out.println(ual);
-    }
-    */
 }

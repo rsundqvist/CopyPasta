@@ -1,12 +1,11 @@
 package gui.feedback;
 
-import javafx.scene.control.ContextMenu;
-import javafx.scene.control.MenuItem;
 import javafx.scene.layout.BorderPane;
 import model.Feedback;
 import org.fxmisc.flowless.VirtualizedScrollPane;
 import org.fxmisc.richtext.CodeArea;
 import org.fxmisc.richtext.LineNumberFactory;
+import org.fxmisc.richtext.ViewActions;
 import org.fxmisc.richtext.model.StyleSpans;
 import org.fxmisc.richtext.model.StyleSpansBuilder;
 
@@ -33,6 +32,7 @@ public class FeedbackText extends BorderPane implements StudentFileViewerControl
         this.feedback = feedback;
         codeArea = new CodeArea();
         codeArea.setParagraphGraphicFactory(LineNumberFactory.get(codeArea));
+        codeArea.setShowCaret(ViewActions.CaretVisibility.ON);
         codeArea.textProperty().addListener(event -> {
             feedback.setContent(codeArea.getText());
         });
@@ -44,16 +44,7 @@ public class FeedbackText extends BorderPane implements StudentFileViewerControl
                 });
         setCenter(new VirtualizedScrollPane<>(codeArea));
         codeArea.replaceText(0, 0, feedback.getContent());
-        codeArea.setContextMenu(createContextMenu());
         updateColor();
-    }
-
-    private ContextMenu createContextMenu () {
-        ContextMenu contextMenu = new ContextMenu();
-
-        MenuItem menuItem = new MenuItem();
-
-        return contextMenu;
     }
 
     private static StyleSpans<Collection<String>> computeHighlighting (String text) {
@@ -80,7 +71,7 @@ public class FeedbackText extends BorderPane implements StudentFileViewerControl
         if (feedback.isDone())
             codeArea.setStyle("-fx-font-family: Arial; -fx-font-size: 10pt; -fx-background-color: #55e055;");
         else
-            codeArea.setStyle("-fx-font-family: Arial; -fx-font-size: 10pt; -fx-background-color: #ffeaea;");
+            codeArea.setStyle("-fx-font-family: Arial; -fx-font-size: 10pt; -fx-background-color: #dddddd;");
     }
 
     private static String caretString (int caretLine, int caretColumn) {
@@ -113,8 +104,12 @@ public class FeedbackText extends BorderPane implements StudentFileViewerControl
     public void feedbackAt (String file, String content, int caretLine, int caretColumn, int caretPosition) {
         int pos = feedback.getFilePosition(file);
 
-        String caretInfo = caretString(caretLine, caretColumn);
-        String text = "\nAt " + caretInfo + ":  \n";
+        String text;
+        if (caretLine < 0 && caretColumn < 0)
+            text = "\n";
+        else
+            text = "\nAt " + caretString(caretLine, caretColumn) + ":  \n";
+
         if (pos < 0) {
             text = "\n\n" + Feedback.getFileTag(file) + text;
             pos = feedback.getContent().length();

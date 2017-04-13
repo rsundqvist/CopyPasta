@@ -1,5 +1,6 @@
-package gui;
+package gui.pasta;
 
+import gui.Tools;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
@@ -133,7 +134,7 @@ public class PastaViewController {
         return pastaManager.getPastaList();
     }
 
-    protected void setPastaList (UniqueArrayList<Pasta> pastaList) {
+    public void setPastaList (UniqueArrayList<Pasta> pastaList) {
         pastaManager.clear();
         filterFlowPane.getChildren().clear();
         listView.getItems().clear();

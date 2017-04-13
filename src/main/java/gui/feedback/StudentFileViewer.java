@@ -6,7 +6,6 @@ package gui.feedback;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.BorderPane;
-import javafx.util.Pair;
 import model.Feedback;
 import model.IO;
 

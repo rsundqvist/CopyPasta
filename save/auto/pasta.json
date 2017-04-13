@@ -49,7 +49,7 @@
       "oop"
     ],
     "assignmentTags": [],
-    "lastModificationDate": "Apr 13, 2017 11:56:42 AM",
+    "lastModificationDate": "Apr 13, 2017 6:56:37 PM",
     "content": "#/= Variabler existerar bara i det block där de deklareras. Block är t.ex. klasser,\nloopar, if-satser och metoder. Alltså:\n\n\tpublic class MyClass {\n\t\tprivate int myField = 0;\n\n\t\t//Här existerar bara \"myField\".\n\t\tpublic boolean myMethod (int arg) {\n\t\t\t//Här existerar \"myField\" och \"arg\".\n\t\t\tif (x > 0) {\n\t\t\t\tint myInt = arg + 1;\n\t\t\t\t//Här existerar \"myField\", \"arg\", och \"myInt\"\n\t\t\t}\n\t\t\t//Här existerar \"myField\" och \"arg\".\n\t\t}\n\t\t//Här existerar bara \"myField\".\n\t}\n"
   },
   {
@@ -123,8 +123,8 @@
       "style"
     ],
     "assignmentTags": [],
-    "lastModificationDate": "Apr 13, 2017 11:57:05 AM",
-    "content": "= IndexOutOfBoundsException förhindras  if-satser (i >= 0 && i < a.length). De ska i princip aldrig fångas.\n"
+    "lastModificationDate": "Apr 13, 2017 6:56:38 PM",
+    "content": "= IndexOutOfBoundsException förhindras med if-satser (i >= 0 && i < a.length). De ska i princip aldrig fångas.\n"
   },
   {
     "creationDate": "Feb 22, 2017 5:56:00 PM",
@@ -152,7 +152,7 @@
       "style"
     ],
     "assignmentTags": [],
-    "lastModificationDate": "Apr 13, 2017 11:57:12 AM",
+    "lastModificationDate": "Apr 13, 2017 6:56:39 PM",
     "content": "= NullPointerException förhindras med if-satser (arg != null). De ska i princip aldrig fångas.\n"
   },
   {
@@ -171,9 +171,9 @@
     "assignmentTags": [
       "intro"
     ],
-    "lastModificationDate": "Apr 13, 2017 11:57:17 AM",
+    "lastModificationDate": "Apr 13, 2017 12:57:01 PM",
     "title": "Måsvingar { }",
-    "content": "Ni måste ha lika många öppnande vingar '{' som stängande vingar '}'. Beakta följande program:\n    public class MyClass {\n        public void myMethod (int someArg) {\n            // Do something neat.\n        // '}' missing!\n    } // (1)\nVilket block avslutar den sista måsvinge (1)? Vilket block borde den avlusta?\n"
+    "content": "Ni måste ha lika många öppnande vingar '{' som stängande vingar '}'. Beakta följande program:\n    public class MyClass {\n        public void myMethod (int someArg) {\n            // Do something neat.\n        // '}' missing!\n    } // (1)\nVilket block avslutar den sista måsvingen (1)? Vilket block borde den avlusta?\n"
   },
   {
     "creationDate": "Feb 22, 2017 5:54:41 PM",

@@ -17,7 +17,7 @@
 <?import javafx.scene.text.Font?>
 <SplitPane xmlns:fx="http://javafx.com/fxml/1" dividerPositions="0.5, 0.85" maxHeight="1.7976931348623157E308"
            maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" xmlns="http://javafx.com/javafx/8.0.111"
-           fx:controller="gui.PastaEditorController">
+           fx:controller="gui.pasta.PastaEditorController">
     <items>
         <fx:include fx:id="pastaView" source="pastaView.fxml"/>
         <VBox prefHeight="200.0" prefWidth="100.0">

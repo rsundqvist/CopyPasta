@@ -1,7 +1,7 @@
 package model;
 
-import gui.PastaViewController;
 import gui.feedback.FeedbackViewController;
+import gui.pasta.PastaViewController;
 
 /**
  * Created by Richard Sundqvist on 23/02/2017.

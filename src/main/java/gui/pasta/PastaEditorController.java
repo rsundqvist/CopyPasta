@@ -1,4 +1,4 @@
-package gui;
+package gui.pasta;
 
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -247,7 +247,7 @@ public class PastaEditorController implements PastaViewController.PastaControlle
     }
 
     @Override
-    public void quickInsert(Pasta pasta) {
+    public void quickInsert (Pasta pasta) {
         // Do nothing
     }
 

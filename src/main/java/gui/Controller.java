@@ -46,7 +46,11 @@ public class Controller implements PastaViewController.PastaControllerListener {
 
     @Override
     public void select (Pasta pasta) {
+    }
 
+    @Override
+    public void quickInsert (Pasta pasta) {
+        feedbackViewController.quickInsert(pasta);
     }
 
     public String getCurrentAssignment () {
@@ -128,7 +132,7 @@ public class Controller implements PastaViewController.PastaControllerListener {
                 "       ii. Share common feedback (RMB -> Export) \n" +
                 "   4. Export the feedback to .txt (Ctrl+E) \n" +
                 "\n" +
-                "Creator:      Richard Sundqvist\n" +
+                "Author:       Richard Sundqvist\n" +
                 "E-mail:        richard.sundqvist@live.se\n" +
                 "Git repo:     https://github.com/whisp91/CopyPasta\n" +
                 "Version:      " + Tools.VERSION + "\n" +

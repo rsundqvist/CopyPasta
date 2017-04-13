@@ -6,6 +6,7 @@ package gui.feedback;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.BorderPane;
+import javafx.util.Pair;
 import model.Feedback;
 import model.IO;
 
@@ -38,6 +39,10 @@ public class StudentFileViewer extends BorderPane {
 
     public void addFile (String fileName, String content) {
         controller.addFile(fileName, content);
+    }
+
+    public StudentFileViewerController getController () {
+        return controller;
     }
 }
 

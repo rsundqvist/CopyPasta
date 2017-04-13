@@ -33,6 +33,7 @@ import javafx.util.Duration;
 import model.Feedback;
 import model.FeedbackManager;
 import model.IO;
+import model.Pasta;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -526,6 +527,12 @@ public class FeedbackViewController {
         FeedbackManager.preview(feedback);
     }
 
+    public void quickInsert (Pasta pasta) {
+        GroupTab tab = (GroupTab) feedbackTabPane.getSelectionModel().getSelectedItem();
+        if (tab == null) return;
+        tab.quickInsert(pasta);
+    }
+
     //region Status
     // ================================================================================= //
     // Status
@@ -543,8 +550,10 @@ public class FeedbackViewController {
      * Toggle done for the list.
      */
     public void toggleDone () {
-        if (!feedbackTabListView.isFocused())
-            return;
+        //TODO focus
+        //if (!feedbackTabListView.isFocused())
+        //    return;
+
         List<Object> selectedItems = feedbackTabListView.getSelectionModel().getSelectedItems();
 
         if (!selectedItems.isEmpty()) {

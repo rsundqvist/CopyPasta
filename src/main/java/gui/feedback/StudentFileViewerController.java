@@ -8,6 +8,7 @@ import javafx.scene.control.TabPane;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
+import javafx.util.Pair;
 import model.Feedback;
 import model.IO;
 
@@ -54,11 +55,19 @@ public class StudentFileViewerController {
 
     public void onFeedback () {
         if (currentFileTab != null) {
-            int line = feedbackLine ? currentFileTab.getCaretLine() : -1;
-            int column = feedbackColumn ? currentFileTab.getCaretColumn() : -1;
+            int line = getCaretLine();
+            int column = getCaretColumn();
             int pos = currentFileTab.getCaretPosition();
             listener.feedbackAt(currentFileTab.getText(), line, column, pos);
         }
+    }
+
+    public int getCaretLine () {
+        return feedbackLine ? currentFileTab.getCaretLine() : -1;
+    }
+
+    public int getCaretColumn () {
+        return feedbackColumn ? currentFileTab.getCaretColumn() : -1;
     }
 
     public void toggleFeedbackLine (Event event) {
@@ -74,11 +83,8 @@ public class StudentFileViewerController {
         boolean success = false;
         if (db.hasFiles()) {
             success = true;
-            String filePath;
 
             for (File file : db.getFiles()) {
-                filePath = file.getAbsolutePath();
-
                 try {
                     BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
 
@@ -120,7 +126,19 @@ public class StudentFileViewerController {
         sourceTabs.getTabs().add(new FileTab(fileName, content));
     }
 
+    public Pair<String, Integer> getCurrentFileAndCaretPos () {
+        String file = currentFileTab == null ? null : currentFileTab.getText();
+        int pos = currentFileTab.getCaretPosition();
+        return new Pair(file, pos);
+    }
+
+    public FileTab getCurrentFileTab () {
+        return currentFileTab;
+    }
+
     public interface FileFeedbackListener {
         void feedbackAt (String file, int caretLine, int caretColumn, int caretPosition);
+
+        void feedbackAt (String file, String content, int caretLine, int caretColumn, int caretPosition);
     }
 }

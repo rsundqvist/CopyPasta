@@ -90,7 +90,7 @@ public class JavaKeywords extends Application {
         codeArea.replaceText(0, 0, sampleCode);
 
         Scene scene = new Scene(new StackPane(new VirtualizedScrollPane<>(codeArea)), 600, 400);
-        scene.getStylesheets().add(Main.class.getResource("/java-keywords.css").toExternalForm());
+        scene.getStylesheets().add(Main.class.getResource("/highlighting.css").toExternalForm());
         primaryStage.setScene(scene);
         primaryStage.setTitle("Java Keywords Demo");
         primaryStage.show();

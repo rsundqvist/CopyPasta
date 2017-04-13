@@ -108,8 +108,8 @@ public class JavaKeywordsAsync extends Application {
         codeArea.replaceText(0, 0, sampleCode);
 
         Scene scene = new Scene(new StackPane(new VirtualizedScrollPane<>(codeArea)), 600, 400);
-        System.out.println("path = " + Main.class.getResource("/java-keywords.css"));
-        scene.getStylesheets().add(Main.class.getResource("/java-keywords.css").toExternalForm());
+        System.out.println("path = " + Main.class.getResource("/highlighting.css"));
+        scene.getStylesheets().add(Main.class.getResource("/highlighting.css").toExternalForm());
         primaryStage.setScene(scene);
         primaryStage.setTitle("Java Keywords Async Demo");
         primaryStage.show();

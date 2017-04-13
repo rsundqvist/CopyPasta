@@ -150,12 +150,12 @@
                                         <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                                     </rowConstraints>
                                     <children>
-                                        <Label minWidth="-Infinity" text="#Total:" GridPane.rowIndex="2">
+                                        <Label minWidth="-Infinity" text="#Total" GridPane.rowIndex="2">
                                             <font>
                                                 <Font name="System Bold" size="12.0" />
                                             </font>
                                         </Label>
-                                        <Label minWidth="-Infinity" text="#Complete:" GridPane.rowIndex="3">
+                                        <Label minWidth="-Infinity" text="#Complete" GridPane.rowIndex="3">
                                             <font>
                                                 <Font name="System Bold" size="12.0" />
                                             </font>

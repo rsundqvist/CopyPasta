@@ -75,6 +75,11 @@ public class PastaViewController {
         this.listener = listener;
     }
 
+    public void quickInsert () {
+        Pasta pasta = (Pasta) listView.getSelectionModel().getSelectedItem();
+        listener.quickInsert(pasta);
+    }
+
     public void onMouseClicked (MouseEvent event) {
         Pasta pasta = (Pasta) listView.getSelectionModel().getSelectedItem();
         if (pasta != null) {
@@ -89,7 +94,8 @@ public class PastaViewController {
 
     public void copyItem () {
         Pasta pasta = (Pasta) listView.getSelectionModel().getSelectedItem();
-        PastaManager.copyPastaContentsToClipboard(pasta);
+        if (pasta != null)
+            PastaManager.copyPastaContentsToClipboard(pasta);
     }
 
     public void exportAllPasta () {
@@ -267,6 +273,13 @@ public class PastaViewController {
          * @param pasta The selected item.
          */
         void select (Pasta pasta);
+
+        /**
+         * Called to quick insert an item.
+         *
+         * @param pasta The selected item
+         */
+        void quickInsert (Pasta pasta);
 
         /**
          * Called {@link #toggleCurrentAssignmentOnly} invocation.

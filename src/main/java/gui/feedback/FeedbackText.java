@@ -1,6 +1,7 @@
 package gui.feedback;
 
-import javafx.geometry.Insets;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.MenuItem;
 import javafx.scene.layout.BorderPane;
 import model.Feedback;
 import org.fxmisc.flowless.VirtualizedScrollPane;
@@ -43,7 +44,16 @@ public class FeedbackText extends BorderPane implements StudentFileViewerControl
                 });
         setCenter(new VirtualizedScrollPane<>(codeArea));
         codeArea.replaceText(0, 0, feedback.getContent());
+        codeArea.setContextMenu(createContextMenu());
         updateColor();
+    }
+
+    private ContextMenu createContextMenu () {
+        ContextMenu contextMenu = new ContextMenu();
+
+        MenuItem menuItem = new MenuItem();
+
+        return contextMenu;
     }
 
     private static StyleSpans<Collection<String>> computeHighlighting (String text) {
@@ -92,11 +102,31 @@ public class FeedbackText extends BorderPane implements StudentFileViewerControl
         int pos = feedback.getFilePosition(file);
 
         String caretInfo = caretString(caretLine, caretColumn);
+        String text = "\nAt " + caretInfo + ":  \n";
         if (pos < 0) {
-            codeArea.appendText("\nIn \"" + file + "\" at " + caretInfo + ":  \n\n");
-        } else {
-            String text = "\nAt " + caretInfo + ":  \n";
-            codeArea.insertText(pos, text);
+            text = "\n\n" + Feedback.getFileTag(file) + text;
+            pos = feedback.getContent().length();
         }
+        insertText(pos, text);
+    }
+
+    public void feedbackAt (String file, String content, int caretLine, int caretColumn, int caretPosition) {
+        int pos = feedback.getFilePosition(file);
+
+        String caretInfo = caretString(caretLine, caretColumn);
+        String text = "\nAt " + caretInfo + ":  \n";
+        if (pos < 0) {
+            text = "\n\n" + Feedback.getFileTag(file) + text;
+            pos = feedback.getContent().length();
+        }
+        insertText(pos, text + content);
+    }
+
+    public void insertText (int pos, String s) {
+        codeArea.insertText(pos, s);
+    }
+
+    public void insertText (String s) {
+        insertText(codeArea.getCaretPosition(), s);
     }
 }

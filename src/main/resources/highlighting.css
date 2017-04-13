@@ -20,7 +20,6 @@
 .string {
     -fx-fill: blue;
 }
-
 .comment {
 	-fx-fill: green;
 }
@@ -28,7 +27,9 @@
     -fx-fill: purple;
     -fx-font-weight: bold;
 }
-
+.tagarg {
+    -fx-fill: red;
+}
 .paragraph-box:has-caret {
     -fx-background-color: #f2f9fc;
 }

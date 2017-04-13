@@ -7,9 +7,9 @@
     "assignmentTags": [
       "ratnum"
     ],
-    "lastModificationDate": "Mar 5, 2017 7:19:06 PM",
+    "lastModificationDate": "Apr 13, 2017 11:56:31 AM",
     "title": "# Getter/Setter med krav",
-    "content": "# När man har instansvariabler som måste uppfylla vissa krav (såsom numerator\noch denominator) måste man se till att de stämmer även efter att settern\nanvänts. Som de ser ut nu kan man sätta 0 i nämnaren eller skapa ett bråka som\ninte är på minimal form."
+    "content": "# När man har instansvariabler som måste uppfylla vissa krav (såsom numerator\noch denominator) måste man se till att de stämmer även efter att settern\nanvänts. Som de ser ut nu kan man sätta 0 i nämnaren eller skapa ett bråka som\ninte är på minimal form.\n"
   },
   {
     "creationDate": "Feb 20, 2017 8:29:55 PM",
@@ -18,32 +18,8 @@
       "style"
     ],
     "assignmentTags": [],
-    "lastModificationDate": "Mar 5, 2017 7:19:07 PM",
+    "lastModificationDate": "Apr 13, 2017 11:57:23 AM",
     "content": "# Kod på formen:\n    if (a < b) {\n        return true;\n    } else {\n       return false;\n    }\nKan och bör skrivas:\n    return a < b;\n"
-  },
-  {
-    "creationDate": "Mar 5, 2017 7:10:48 PM",
-    "contentTags": [
-      "performance",
-      "style",
-      "%manual%"
-    ],
-    "assignmentTags": [],
-    "lastModificationDate": "Mar 6, 2017 8:39:06 PM",
-    "title": "# Upprepade metodanrop",
-    "content": "# Upprepade metodanrop där svaret inte ändras mellan anropen, såsom ni\ngjort med %MANUAL%, bör unvikas. Det är 1) inte snyggt och 2) kan kraftigt\nsänka prestandaden på programmet, beroende på metoden i fråga."
-  },
-  {
-    "creationDate": "Feb 22, 2017 12:14:43 PM",
-    "contentTags": [
-      "scope",
-      "general",
-      "oop",
-      "style"
-    ],
-    "assignmentTags": [],
-    "lastModificationDate": "Mar 5, 2017 7:10:17 PM",
-    "content": "#/= Använd inte fält som lokala variabler. Behöver ni en variabel som\nendast används lokalt så ska den skapas där den används."
   },
   {
     "creationDate": "Feb 22, 2017 11:58:24 AM",
@@ -52,8 +28,8 @@
       "style"
     ],
     "assignmentTags": [],
-    "lastModificationDate": "Mar 5, 2017 7:09:56 PM",
-    "content": "#/= Följ konvention för namn av variabler och parametrar i Java.\n\tKONSTANT:   \tpublic static final int MY_INTEGER_CONSTANT = 0;\n\tFÄLT\t:\t\tprivate int myIntegerField = 0;\n\tPARAMETER:   public void myMethod (int myIntegerParameter)"
+    "lastModificationDate": "Apr 13, 2017 11:56:36 AM",
+    "content": "#/= Följ konvention för namn av variabler och parametrar i Java.\n\tKONSTANT:   \tpublic static final int MY_INTEGER_CONSTANT = 0;\n\tFÄLT\t:\t\tprivate int myIntegerField = 0;\n\tPARAMETER:   public void myMethod (int myIntegerParameter)\n"
   },
   {
     "creationDate": "Feb 22, 2017 11:55:49 AM",
@@ -62,18 +38,8 @@
       "general"
     ],
     "assignmentTags": [],
-    "lastModificationDate": "Mar 6, 2017 8:18:03 AM",
-    "content": "#/= Metoder som inte beror av t.ex. instansvariabler bör vara \"static\"."
-  },
-  {
-    "creationDate": "Feb 22, 2017 11:56:30 AM",
-    "contentTags": [
-      "general",
-      "oop"
-    ],
-    "assignmentTags": [],
-    "lastModificationDate": "Mar 6, 2017 8:18:04 AM",
-    "content": "#/= Metoder som inte är menade att användas utifrån bör vara \"protected\" eller \"private\"."
+    "lastModificationDate": "Apr 13, 2017 11:56:39 AM",
+    "content": "#/= Metoder som inte beror av t.ex. instansvariabler bör vara \"static\".\n"
   },
   {
     "creationDate": "Feb 22, 2017 12:15:59 PM",
@@ -83,8 +49,8 @@
       "oop"
     ],
     "assignmentTags": [],
-    "lastModificationDate": "Mar 5, 2017 7:10:30 PM",
-    "content": "#/= Variabler existerar bara i det block där de deklareras. Block är t.ex. klasser,\nloopar, if-satser och metoder. Alltså:\n\n\tpublic class MyClass {\n\t\tprivate int myField = 0;\n\n\t\t//Här existerar bara \"myField\".\n\t\tpublic boolean myMethod (int arg) {\n\t\t\t//Här existerar \"myField\" och \"arg\".\n\t\t\tif (x > 0) {\n\t\t\t\tint myInt = arg + 1;\n\t\t\t\t//Här existerar \"myField\", \"arg\", och \"myInt\"\n\t\t\t}\n\t\t\t//Här existerar \"myField\" och \"arg\".\n\t\t}\n\t\t//Här existerar bara \"myField\".\n\t}"
+    "lastModificationDate": "Apr 13, 2017 11:56:42 AM",
+    "content": "#/= Variabler existerar bara i det block där de deklareras. Block är t.ex. klasser,\nloopar, if-satser och metoder. Alltså:\n\n\tpublic class MyClass {\n\t\tprivate int myField = 0;\n\n\t\t//Här existerar bara \"myField\".\n\t\tpublic boolean myMethod (int arg) {\n\t\t\t//Här existerar \"myField\" och \"arg\".\n\t\t\tif (x > 0) {\n\t\t\t\tint myInt = arg + 1;\n\t\t\t\t//Här existerar \"myField\", \"arg\", och \"myInt\"\n\t\t\t}\n\t\t\t//Här existerar \"myField\" och \"arg\".\n\t\t}\n\t\t//Här existerar bara \"myField\".\n\t}\n"
   },
   {
     "creationDate": "Feb 20, 2017 8:34:50 PM",
@@ -93,8 +59,8 @@
       "style"
     ],
     "assignmentTags": [],
-    "lastModificationDate": "Feb 27, 2017 1:28:22 AM",
-    "content": "* Ni behöver inte skriva this. Normalt gör man bara det när man\nmåste, dvs. när kan har en namnkonflikt mellan en lokal variabel/metodparameter\noch en instansvariabel. Exempel: \n\tpublic class Example {\n    \t\tprivate int x, previousX; //Instansvariabler\n\n    \t\tpublic void setX (int x) {\n        \t\tpreviousX = this.x; //Det finns bara en \"previousX\"\n        \t\tthis.x = x; //Peka ut instansvariabeln med \"this\"\n    \t\t}\n\t}"
+    "lastModificationDate": "Apr 13, 2017 11:56:46 AM",
+    "content": "* Ni behöver inte skriva this. Normalt gör man bara det när man\nmåste, dvs. när kan har en namnkonflikt mellan en lokal variabel/metodparameter\noch en instansvariabel. Exempel: \n\tpublic class Example {\n    \t\tprivate int x, previousX; //Instansvariabler\n\n    \t\tpublic void setX (int x) {\n        \t\tpreviousX = this.x; //Det finns bara en \"previousX\"\n        \t\tthis.x = x; //Peka ut instansvariabeln med \"this\"\n    \t\t}\n\t}\n"
   },
   {
     "creationDate": "Feb 22, 2017 5:54:05 PM",
@@ -102,8 +68,8 @@
     "assignmentTags": [
       "intro"
     ],
-    "lastModificationDate": "Mar 5, 2017 7:09:36 PM",
-    "content": "- Ni har inte gjort någon tar-boll eller gjort en felaktig tar-boll \ndvs inte lämnat in på korrekt sätt."
+    "lastModificationDate": "Apr 13, 2017 11:57:22 AM",
+    "content": "- Ni har inte gjort någon tar-boll eller gjort en felaktig tar-boll \ndvs inte lämnat in på korrekt sätt.\n"
   },
   {
     "creationDate": "Feb 22, 2017 5:54:26 PM",
@@ -111,8 +77,8 @@
     "assignmentTags": [
       "intro"
     ],
-    "lastModificationDate": "Mar 5, 2017 7:09:36 PM",
-    "content": "- Ni läser inte instruktionerna riktigt noga. Ni skall skapa en \nbiblioteksstruktur och tar-kommandot skall köras i ett av de biblioteken."
+    "lastModificationDate": "Apr 13, 2017 11:56:51 AM",
+    "content": "- Ni läser inte instruktionerna riktigt noga. Ni skall skapa en \nbiblioteksstruktur och tar-kommandot skall köras i ett av de biblioteken.\n"
   },
   {
     "creationDate": "Feb 22, 2017 12:10:37 PM",
@@ -120,7 +86,7 @@
     "assignmentTags": [
       "ratnum"
     ],
-    "lastModificationDate": "Mar 6, 2017 8:17:37 AM",
+    "lastModificationDate": "Apr 13, 2017 11:56:53 AM",
     "content": "- public RatNum(RatNum orig): Denna konstruktor har ni uppenbarligen inte testat. Ni\nmåste fånga RatNum:en som returneras av parse() och kopiera värdena.\n"
   },
   {
@@ -129,7 +95,7 @@
     "assignmentTags": [
       "kristallbildning"
     ],
-    "lastModificationDate": "Mar 5, 2017 7:09:37 PM",
+    "lastModificationDate": "Apr 13, 2017 11:57:21 AM",
     "content": "-/= crystallizeOneIon() garanterar inte att en jon faktiskt kristalliseras, vilket\nju gör metodnamnet direkt felaktigt. Ni måste använda dropNewIon() igen i loopen\nom den går utanför flyktcirkeln.\n"
   },
   {
@@ -138,7 +104,7 @@
       "advanced"
     ],
     "assignmentTags": [],
-    "lastModificationDate": "Feb 22, 2017 12:09:26 PM",
+    "lastModificationDate": "Apr 13, 2017 11:56:59 AM",
     "content": "= Använder ni regex måste ni skriva noggranna kommentarer för att visa att ni\nförstår vad de faktiskt gör.\n"
   },
   {
@@ -147,8 +113,8 @@
       "general"
     ],
     "assignmentTags": [],
-    "lastModificationDate": "Feb 22, 2017 11:47:51 AM",
-    "content": "= Exceptions ska inte användas som en del av det normala programflödet.\nEn metod ska inte under några omständigheter kasta ett exception som\nden sedan själv fångar."
+    "lastModificationDate": "Apr 13, 2017 11:57:22 AM",
+    "content": "= Exceptions ska inte användas som en del av det normala programflödet.\nEn metod ska inte under några omständigheter kasta ett exception som\nden sedan själv fångar.\n"
   },
   {
     "creationDate": "Feb 22, 2017 11:47:54 AM",
@@ -157,8 +123,8 @@
       "style"
     ],
     "assignmentTags": [],
-    "lastModificationDate": "Mar 5, 2017 7:09:42 PM",
-    "content": "= IndexOutOfBoundsException förhindras  if-satser (i >= 0 && i < a.length). De ska i princip aldrig fångas."
+    "lastModificationDate": "Apr 13, 2017 11:57:05 AM",
+    "content": "= IndexOutOfBoundsException förhindras  if-satser (i >= 0 && i < a.length). De ska i princip aldrig fångas.\n"
   },
   {
     "creationDate": "Feb 22, 2017 5:56:00 PM",
@@ -166,8 +132,8 @@
     "assignmentTags": [
       "intro"
     ],
-    "lastModificationDate": "Mar 5, 2017 7:09:41 PM",
-    "content": "= Inga onödiga filer får skickas in tex tilde(~)-filer eller .class-filer."
+    "lastModificationDate": "Apr 13, 2017 11:57:07 AM",
+    "content": "= Inga onödiga filer får skickas in tex tilde(~)-filer eller .class-filer.\n"
   },
   {
     "creationDate": "Feb 20, 2017 8:34:14 PM",
@@ -176,7 +142,7 @@
       "oop"
     ],
     "assignmentTags": [],
-    "lastModificationDate": "Mar 5, 2017 7:09:43 PM",
+    "lastModificationDate": "Apr 13, 2017 11:57:10 AM",
     "content": "= Instansvariabler är ej privata.\n"
   },
   {
@@ -186,8 +152,8 @@
       "style"
     ],
     "assignmentTags": [],
-    "lastModificationDate": "Feb 22, 2017 11:53:53 AM",
-    "content": "= NullPointerException förhindras med if-satser (arg != null). De ska i princip aldrig fångas."
+    "lastModificationDate": "Apr 13, 2017 11:57:12 AM",
+    "content": "= NullPointerException förhindras med if-satser (arg != null). De ska i princip aldrig fångas.\n"
   },
   {
     "creationDate": "Feb 20, 2017 8:35:40 PM",
@@ -196,7 +162,7 @@
       "style"
     ],
     "assignmentTags": [],
-    "lastModificationDate": "Mar 6, 2017 8:18:06 AM",
+    "lastModificationDate": "Apr 13, 2017 11:57:15 AM",
     "content": "=/# Indenteringen är inte korrekt. Möjligtvis blandar ni spaces och tabbar. Titta\ngärna på automatisk indentering i IDE:er såsom IntelliJ IDEA (Ctrl+Alt+L).\n"
   },
   {
@@ -205,9 +171,9 @@
     "assignmentTags": [
       "intro"
     ],
-    "lastModificationDate": "Mar 6, 2017 8:18:15 AM",
+    "lastModificationDate": "Apr 13, 2017 11:57:17 AM",
     "title": "Måsvingar { }",
-    "content": "Ni måste ha lika många öppnande vingar '{' som stängande vingar '}'. Beakta följande program:\n    public class MyClass {\n        public void myMethod (int someArg) {\n            // Do something neat.\n        // '}' missing!\n    } // (1)\nVilket block avslutar den sista måsvinge (1)? Vilket block borde den avlusta?"
+    "content": "Ni måste ha lika många öppnande vingar '{' som stängande vingar '}'. Beakta följande program:\n    public class MyClass {\n        public void myMethod (int someArg) {\n            // Do something neat.\n        // '}' missing!\n    } // (1)\nVilket block avslutar den sista måsvinge (1)? Vilket block borde den avlusta?\n"
   },
   {
     "creationDate": "Feb 22, 2017 5:54:41 PM",
@@ -215,7 +181,7 @@
     "assignmentTags": [
       "intro"
     ],
-    "lastModificationDate": "Mar 6, 2017 8:18:16 AM",
-    "content": "Vad innebär det att klassen inte är public? Vem får skapa \"HelloWorld\"-objekt?\nBeakta följande program:\n    public class MyClass {\n        private int myInt = 0;\n        \n        public int getMyInt(){\n            return myInt;\n        }\n        \n        public static void sayHello(){\n            System.out.println(\"Hello, World!\");\n        }\n    }\nKan man anropa getMyInt() utan ett MyClass-objekt? Kan man anropa sayHello()?"
+    "lastModificationDate": "Apr 13, 2017 11:57:19 AM",
+    "content": "Vad innebär det att klassen inte är public? Vem får skapa \"HelloWorld\"-objekt?\nBeakta följande program:\n    public class MyClass {\n        private int myInt = 0;\n        \n        public int getMyInt(){\n            return myInt;\n        }\n        \n        public static void sayHello(){\n            System.out.println(\"Hello, World!\");\n        }\n    }\nKan man anropa getMyInt() utan ett MyClass-objekt? Kan man anropa sayHello()?\n"
   }
 ]

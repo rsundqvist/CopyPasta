@@ -2,7 +2,9 @@ package gui.feedback;
 
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.util.Pair;
 import model.Feedback;
+import model.Pasta;
 
 /**
  * Created by Richard Sundqvist on 19/02/2017.
@@ -80,5 +82,25 @@ public class GroupTab extends Tab implements StudentFileViewerController.FileFee
     public void feedbackAt (String file, int caretLine, int caretColumn, int caretPosition) {
         feedbackText.feedbackAt(file, caretLine, caretColumn, caretPosition);
         viewsPane.getSelectionModel().select(feedbackView);
+    }
+
+    public void feedbackAt (String file, String content, int caretLine, int caretColumn, int caretPosition) {
+        feedbackText.feedbackAt(file, content, caretLine, caretColumn, caretPosition);
+        viewsPane.getSelectionModel().select(feedbackView);
+    }
+
+    public void quickInsert (Pasta pasta) {
+        Tab tab = viewsPane.getSelectionModel().getSelectedItem();
+        if (tab == null || pasta == null) return;
+
+        if (tab == feedbackView)
+            feedbackText.insertText(pasta.getContent());
+        else if (tab == fileView) {
+            Pair<String, Integer> fileAndCaretPos = studentFileViewer.getController().getCurrentFileAndCaretPos();
+            StudentFileViewerController ctrl = studentFileViewer.getController();
+
+            feedbackText.feedbackAt(fileAndCaretPos.getKey(), pasta.getContent(), ctrl.getCaretLine(), ctrl.getCaretColumn(), -1);
+            viewsPane.getSelectionModel().select(feedbackView);
+        }
     }
 }

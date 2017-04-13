@@ -246,6 +246,11 @@ public class PastaEditorController implements PastaViewController.PastaControlle
         currentAssignTagView.getItems().addAll(selectedPastaClone.getAssignmentTags());
     }
 
+    @Override
+    public void quickInsert(Pasta pasta) {
+        // Do nothing
+    }
+
     public String getCurrentAssignment () {
         return currentAssignment;
     }

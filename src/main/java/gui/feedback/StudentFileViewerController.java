@@ -64,9 +64,21 @@ public class StudentFileViewerController {
     }
 
     public void toggleEditable (Event e) {
+
         if (!sourceTabs.getTabs().isEmpty()) {
-            editable = ((ToggleButton) e.getSource()).isSelected();
-            sourceTabs.getTabs().forEach(tab -> ((FileTab) tab).setEditable(editable));
+            ToggleButton toggleButton = (ToggleButton) e.getSource();
+            editable = toggleButton.isSelected();
+
+            if (editable) {
+                toggleButton.setText("Save");
+                sourceTabs.getTabs().forEach(tab -> ((FileTab) tab).setEditable(editable));
+            } else {
+                toggleButton.setText("Edit");
+                sourceTabs.getTabs().forEach(tab -> {
+                    FileTab fileTab = (FileTab) tab;
+                    feedback.addFile(fileTab.getText(), fileTab.getCodeAreaContent());
+                });
+            }
         }
     }
 

@@ -2,7 +2,6 @@ package zip;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
@@ -48,11 +47,11 @@ public class ArchiveTest {
         //get the zipped file list entry
         ZipEntry zipEntry;
 
-        while ((zipEntry = zis.getNextEntry()) != null){
+        while ((zipEntry = zis.getNextEntry()) != null) {
             String fileName = zipEntry.getName();
             File newFile = new File(outDirectory.getPath() + File.separator + fileName);
 
-            System.out.println("\tfile unzip : "+ newFile.getAbsoluteFile());
+            System.out.println("\tfile unzip : " + newFile.getAbsoluteFile());
 
             //create all non exists folders
             //else you will hit FileNotFoundException for compressed folder

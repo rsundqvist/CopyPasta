@@ -82,8 +82,8 @@ public class FileTab extends Tab {
                 .subscribe(change -> {
                     codeArea.setStyleSpans(0, computeHighlighting(codeArea.getText()));
                 });
-        setContent(new VirtualizedScrollPane<>(codeArea));
         codeArea.replaceText(0, 0, content);
+        setContent(new VirtualizedScrollPane<>(codeArea));
     }
 
     public String getFileName () {
@@ -96,6 +96,10 @@ public class FileTab extends Tab {
         return pos.getMajor() + firstNumber;
     }
 
+    public String getCodeAreaContent () {
+        return codeArea.getText();
+    }
+
     public int getCaretColumn () {
         int offset = codeArea.getCaretPosition();
         TwoDimensional.Position pos = codeArea.offsetToPosition(offset, TwoDimensional.Bias.Forward);
@@ -106,7 +110,7 @@ public class FileTab extends Tab {
         return codeArea.getCaretPosition();
     }
 
-    public void setEditable(boolean value) {
+    public void setEditable (boolean value) {
         codeArea.setEditable(value);
     }
 

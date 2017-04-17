@@ -106,6 +106,10 @@ public class FileTab extends Tab {
         return codeArea.getCaretPosition();
     }
 
+    public void setEditable(boolean value) {
+        codeArea.setEditable(value);
+    }
+
     // @formatter:off
     private static StyleSpans<Collection<String>> computeHighlighting (String text) {
         Matcher matcher = PATTERN.matcher(text);

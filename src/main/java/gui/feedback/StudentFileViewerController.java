@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TabPane;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
@@ -30,11 +31,11 @@ public class StudentFileViewerController {
     private boolean feedbackLine = true, feedbackColumn = false;
     private final FileFeedbackListener listener;
     private final Feedback feedback;
+    private boolean editable = false;
 
     public StudentFileViewerController (FileFeedbackListener listener, Feedback feedback) {
         this.listener = listener;
         this.feedback = feedback;
-
     }
 
     @FXML
@@ -59,6 +60,13 @@ public class StudentFileViewerController {
             int column = getCaretColumn();
             int pos = currentFileTab.getCaretPosition();
             listener.feedbackAt(currentFileTab.getText(), line, column, pos);
+        }
+    }
+
+    public void toggleEditable (Event e) {
+        if (!sourceTabs.getTabs().isEmpty()) {
+            editable = ((ToggleButton) e.getSource()).isSelected();
+            sourceTabs.getTabs().forEach(tab -> ((FileTab) tab).setEditable(editable));
         }
     }
 
@@ -123,7 +131,9 @@ public class StudentFileViewerController {
 
     public void addFile (String fileName, String content) {
         feedback.addFile(fileName, content);
-        sourceTabs.getTabs().add(new FileTab(fileName, content));
+        FileTab fileTab = new FileTab(fileName, content);
+        fileTab.setEditable(editable);
+        sourceTabs.getTabs().add(fileTab);
     }
 
     public Pair<String, Integer> getCurrentFileAndCaretPos () {

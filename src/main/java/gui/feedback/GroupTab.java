@@ -99,7 +99,8 @@ public class GroupTab extends Tab implements StudentFileViewerController.FileFee
             Pair<String, Integer> fileAndCaretPos = studentFileViewer.getController().getCurrentFileAndCaretPos();
             StudentFileViewerController ctrl = studentFileViewer.getController();
 
-            feedbackText.feedbackAt(fileAndCaretPos.getKey(), pasta.getContent(), ctrl.getCaretLine(), ctrl.getCaretColumn(), -1);
+            feedbackText.feedbackAt(fileAndCaretPos.getKey(), pasta.getContent(),
+                    ctrl.getCaretLine(), ctrl.getCaretColumn(), -1);
             viewsPane.getSelectionModel().select(feedbackView);
         }
     }

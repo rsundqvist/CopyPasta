@@ -11,6 +11,7 @@ import javafx.scene.control.ButtonType;
 import model.IO;
 import model.Pasta;
 import model.UniqueArrayList;
+import zip.GroupImporter;
 
 import java.io.File;
 import java.io.IOException;
@@ -82,6 +83,11 @@ public class Controller implements PastaViewController.PastaControllerListener {
             if (result.isPresent() && result.get() == ButtonType.YES)
                 pastaViewController.setPastaList(pastaList);
         }
+    }
+
+    public void openGroupImporter () {
+        GroupImporter groupImporter = new GroupImporter();
+        groupImporter.showAndWait();
     }
 
     public void importPasta () {

@@ -52,6 +52,7 @@
     </build>
 
     <dependencies>
+
         <!-- JSON parser -->
         <!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
         <dependency>
@@ -68,8 +69,17 @@
             <version>0.7-M5</version>
         </dependency>
 
-        <!-- https://github.com/giancosta86/OmniEditor -->
-        <!-- https://bintray.com/giancosta86/Hephaestus/OmniEditor -->
+        <!-- https://sourceforge.net/projects/sevenzipjbind/files/7-Zip-JBinding/ -->
+        <dependency>
+            <groupId>net.sf.sevenzipjbinding</groupId>
+            <artifactId>sevenzipjbinding</artifactId>
+            <version>9.20-2.00beta</version>
+        </dependency>
+        <dependency>
+            <groupId>net.sf.sevenzipjbinding</groupId>
+            <artifactId>sevenzipjbinding-all-platforms</artifactId>
+            <version>9.20-2.00beta</version>
+        </dependency>
     </dependencies>
 
 

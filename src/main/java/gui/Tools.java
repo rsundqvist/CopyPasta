@@ -18,7 +18,7 @@ import java.util.Optional;
  */
 public abstract class Tools {
 
-    public static final File TEMP_FOLDER = create("temp", null);
+    public static final File IMPORT_TEMP_FOLDER = create("import-temp", null);
     public static final File SAVE_FOLDER = create("save", null);
     public static final File AUTO_SAVE_PASTA_FILE = create("save/auto", "pasta.json");
     public static final File AUTO_SAVE_TEMPLATE_FILE = create("save/auto", "template.json");

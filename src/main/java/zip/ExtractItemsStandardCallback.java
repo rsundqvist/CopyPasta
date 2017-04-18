@@ -1,9 +1,5 @@
 package zip;
 
-import java.io.IOException;
-import java.io.RandomAccessFile;
-import java.util.Arrays;
-
 import net.sf.sevenzipjbinding.ExtractAskMode;
 import net.sf.sevenzipjbinding.ExtractOperationResult;
 import net.sf.sevenzipjbinding.IArchiveExtractCallback;
@@ -14,6 +10,10 @@ import net.sf.sevenzipjbinding.SevenZip;
 import net.sf.sevenzipjbinding.SevenZipException;
 import net.sf.sevenzipjbinding.impl.RandomAccessFileInStream;
 
+import java.io.IOException;
+import java.io.RandomAccessFile;
+import java.util.Arrays;
+
 public class ExtractItemsStandardCallback {
     public static class MyExtractCallback implements IArchiveExtractCallback {
         private int hash = 0;
@@ -22,20 +22,19 @@ public class ExtractItemsStandardCallback {
         private boolean skipExtraction;
         private IInArchive inArchive;
 
-        public MyExtractCallback(IInArchive inArchive) {
+        public MyExtractCallback (IInArchive inArchive) {
             this.inArchive = inArchive;
         }
 
-        public ISequentialOutStream getStream(int index,
-                                              ExtractAskMode extractAskMode) throws SevenZipException {
+        public ISequentialOutStream getStream (int index,
+                                               ExtractAskMode extractAskMode) throws SevenZipException {
             this.index = index;
-            skipExtraction = (Boolean) inArchive
-                    .getProperty(index, PropID.IS_FOLDER);
+            skipExtraction = (Boolean) inArchive.getProperty(index, PropID.IS_FOLDER);
             if (skipExtraction || extractAskMode != ExtractAskMode.EXTRACT) {
                 return null;
             }
             return new ISequentialOutStream() {
-                public int write(byte[] data) throws SevenZipException {
+                public int write (byte[] data) throws SevenZipException {
                     hash ^= Arrays.hashCode(data);
                     size += data.length;
                     return data.length; // Return amount of proceed data
@@ -43,12 +42,12 @@ public class ExtractItemsStandardCallback {
             };
         }
 
-        public void prepareOperation(ExtractAskMode extractAskMode)
+        public void prepareOperation (ExtractAskMode extractAskMode)
                 throws SevenZipException {
         }
 
-        public void setOperationResult(ExtractOperationResult
-                                               extractOperationResult) throws SevenZipException {
+        public void setOperationResult (ExtractOperationResult
+                                                extractOperationResult) throws SevenZipException {
             if (skipExtraction) {
                 return;
             }
@@ -62,17 +61,17 @@ public class ExtractItemsStandardCallback {
             }
         }
 
-        public void setCompleted(long completeValue) throws SevenZipException {
+        public void setCompleted (long completeValue) throws SevenZipException {
         }
 
-        public void setTotal(long total) throws SevenZipException {
+        public void setTotal (long total) throws SevenZipException {
         }
     }
 
-    public static void main(String[] args) {
+    public static void main (String[] args) {
         if (args.length == 0) {
-            System.out.println("Usage: java ExtractItemsStandard <arch-name>");
-            args = new String[]{ "C:\\Users\\Richard Sundqvist\\Desktop\\ziptest.zip"};
+            System.out.println("Usage: java ExtractItemsStandard <archive-name>");
+            args = new String[]{"C:\\Users\\Richard Sundqvist\\Desktop\\ziptest.zip"};
         }
         RandomAccessFile randomAccessFile = null;
         IInArchive inArchive = null;

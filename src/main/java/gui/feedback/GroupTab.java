@@ -11,6 +11,7 @@ import model.Pasta;
  */
 public class GroupTab extends Tab implements StudentFileViewerController.FileFeedbackListener {
     public static final int MIN_TITLE_LENGTH = 4;
+    public static final boolean SWITCH_TO_FEEDBACK_ON_QUICKINSERT = false;
 
     private final Feedback feedback;
     private final FeedbackText feedbackText;
@@ -101,7 +102,10 @@ public class GroupTab extends Tab implements StudentFileViewerController.FileFee
 
             feedbackText.feedbackAt(fileAndCaretPos.getKey(), pasta.getContent(),
                     ctrl.getCaretLine(), ctrl.getCaretColumn(), -1);
-            viewsPane.getSelectionModel().select(feedbackView);
+
+            studentFileViewer.getController().flashCopiedLabel();
+            if (SWITCH_TO_FEEDBACK_ON_QUICKINSERT)
+                viewsPane.getSelectionModel().select(feedbackView);
         }
     }
 }

@@ -40,7 +40,9 @@ public class FeedbackText extends BorderPane implements StudentFileViewerControl
         codeArea.richChanges()
                 .filter(ch -> !ch.getInserted().equals(ch.getRemoved()))
                 .subscribe(change -> {
-                    codeArea.setStyleSpans(0, computeHighlighting(codeArea.getText()));
+                    String text = codeArea.getText();
+                    if (text != null && !text.isEmpty()) //Prevent exception
+                        codeArea.setStyleSpans(0, computeHighlighting(text));
                 });
         setCenter(new VirtualizedScrollPane<>(codeArea));
         codeArea.replaceText(0, 0, feedback.getContent());

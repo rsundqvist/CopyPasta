@@ -72,14 +72,14 @@ public class GroupImporterController {
         if (dir != null) {
             try {
                 crawl(dir);
-            } catch(Exception e) {
+            } catch (Exception e) {
                 IO.showExceptionAlert(e);
                 e.printStackTrace();
             }
         }
     }
 
-    private void crawl(File root) throws Exception {
+    private void crawl (File root) throws Exception {
         RandomAccessFile randomAccessFile = new RandomAccessFile(root, "r"); //Read only
         IInArchive inArchive = SevenZip.openInArchive(null, // autodetect archive type
                 new RandomAccessFileInStream(randomAccessFile));

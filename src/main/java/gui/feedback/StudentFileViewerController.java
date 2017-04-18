@@ -1,5 +1,8 @@
 package gui.feedback;
 
+import javafx.animation.FadeTransition;
+import javafx.animation.ParallelTransition;
+import javafx.animation.ScaleTransition;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
@@ -9,6 +12,7 @@ import javafx.scene.control.ToggleButton;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
+import javafx.util.Duration;
 import javafx.util.Pair;
 import model.Feedback;
 import model.IO;
@@ -26,6 +30,8 @@ public class StudentFileViewerController {
     private Label fileLabel;
     @FXML
     private TabPane sourceTabs;
+    @FXML
+    private Label copiedLabel;
 
     private FileTab currentFileTab = null;
     private boolean feedbackLine = true, feedbackColumn = false;
@@ -40,6 +46,7 @@ public class StudentFileViewerController {
 
     @FXML
     private void initialize () {
+        copiedLabel.setOpacity(0);
         sourceTabs.getSelectionModel().selectedItemProperty().addListener(event -> {
             currentFileTab = (FileTab) sourceTabs.getSelectionModel().getSelectedItem();
 
@@ -162,5 +169,20 @@ public class StudentFileViewerController {
         void feedbackAt (String file, int caretLine, int caretColumn, int caretPosition);
 
         void feedbackAt (String file, String content, int caretLine, int caretColumn, int caretPosition);
+    }
+
+    public void flashCopiedLabel () {
+        FadeTransition ft = new FadeTransition(Duration.millis(2000), copiedLabel);
+        ft.setFromValue(1.0);
+        ft.setToValue(0.0);
+
+        ScaleTransition st = new ScaleTransition(Duration.millis(2000), copiedLabel);
+        st.setFromX(1.5);
+        st.setToX(0.5);
+        st.setFromY(1.5);
+        st.setToY(0.5);
+
+        ParallelTransition pt = new ParallelTransition(ft, st);
+        pt.play();
     }
 }

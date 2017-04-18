@@ -79,6 +79,7 @@ public class PastaViewController {
     public void quickInsert () {
         Pasta pasta = (Pasta) listView.getSelectionModel().getSelectedItem();
         listener.quickInsert(pasta);
+        listView.getSelectionModel().clearSelection();
     }
 
     public void onMouseClicked (MouseEvent event) {

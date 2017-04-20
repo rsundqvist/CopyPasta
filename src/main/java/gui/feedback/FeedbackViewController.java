@@ -288,14 +288,11 @@ public class FeedbackViewController {
             return false;
 
         List<String> groups = FeedbackManager.getGroups(badFeedbackList);
-        System.out.println(badFeedbackList.size());
-        System.out.println(groups);
-
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.getButtonTypes().clear();
         alert.getButtonTypes().addAll(ButtonType.YES, ButtonType.NO);
         alert.setTitle("Incomplete items found");
-        alert.setHeaderText("Incomplete items found: " + badFeedbackList.size() + "/" + feedbackList.size());
+        alert.setHeaderText("Found " + badFeedbackList.size() + " incomplete items (of " + feedbackList.size() + " items total)");
         alert.setContentText("It looks like you're trying to export items with the " + Feedback.MANUAL + " tag present, " +
                 "indicating that some items have content not meant for the student. Rectify before exporting?");
 
@@ -333,9 +330,9 @@ public class FeedbackViewController {
             rootTabPane.getSelectionModel().select(groupTab);
             updateFeedbackTabLockStatus();
             return true;
-        } else {
-            return false;
         }
+
+        return false;
     }
 
     /**

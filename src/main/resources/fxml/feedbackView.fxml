@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.input.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Accordion?>
 <?import javafx.scene.control.Button?>
@@ -24,14 +30,12 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<TabPane fx:id="rootTabPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-         fx:controller="gui.feedback.FeedbackViewController">
+
+<TabPane fx:id="rootTabPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.feedback.FeedbackViewController">
     <tabs>
         <Tab fx:id="groupTab" closable="false" text="Student Feedback">
             <content>
-                <TabPane fx:id="feedbackTabPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
-                         minHeight="0.0" minWidth="0.0" onKeyPressed="#feedbackKeyTyped" prefHeight="400.0"
-                         prefWidth="600.0" tabClosingPolicy="ALL_TABS"/>
+                <TabPane fx:id="feedbackTabPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" onKeyPressed="#feedbackKeyTyped" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="ALL_TABS" />
             </content>
         </Tab>
         <Tab fx:id="setupTab" closable="false" text="Setup">
@@ -40,114 +44,85 @@
                     <right>
                         <VBox prefHeight="371.0" prefWidth="150.0" BorderPane.alignment="CENTER">
                             <children>
-                                <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false"
-                                        onAction="#createFeedbackItems" text="Create Feedback" VBox.vgrow="ALWAYS"/>
+                                <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#createFeedbackItems" text="Create Feedback" VBox.vgrow="ALWAYS" />
                                 <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="Student Group(s)">
                                     <font>
-                                        <Font name="System Bold" size="12.0"/>
+                                        <Font name="System Bold" size="12.0" />
                                     </font>
                                 </Label>
-                                <TextField fx:id="studentGroupField" maxWidth="1.7976931348623157E308"
-                                           promptText="E.g.: 3 5, 6  9, potato" VBox.vgrow="NEVER"/>
+                                <TextField fx:id="studentGroupField" maxWidth="1.7976931348623157E308" promptText="E.g.: 3 5, 6  9, potato" VBox.vgrow="NEVER" />
                                 <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="Assignment">
                                     <font>
-                                        <Font name="System Bold" size="12.0"/>
+                                        <Font name="System Bold" size="12.0" />
                                     </font>
                                 </Label>
-                                <TextField fx:id="assignmentField" maxWidth="1.7976931348623157E308"
-                                           promptText="Current assignment." VBox.vgrow="NEVER"/>
-                                <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false"
-                                        onAction="#exportTemplate" text="Export Template"/>
-                                <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false"
-                                        onAction="#importTemplate" text="Import Template"/>
+                                <TextField fx:id="assignmentField" maxWidth="1.7976931348623157E308" promptText="Current assignment." VBox.vgrow="NEVER" />
+                                <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#exportTemplate" text="Export Template" />
+                                <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#importTemplate" text="Import Template" />
                                 <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="Name">
                                     <font>
-                                        <Font name="System Bold" size="12.0"/>
+                                        <Font name="System Bold" size="12.0" />
                                     </font>
                                 </Label>
                                 <TextField fx:id="teacherField" promptText="E.g.: Richard Sundqvist">
                                     <VBox.margin>
-                                        <Insets/>
+                                        <Insets />
                                     </VBox.margin>
                                 </TextField>
                                 <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="All Feedback">
                                     <font>
-                                        <Font name="System Bold" size="12.0"/>
+                                        <Font name="System Bold" size="12.0" />
                                     </font>
                                 </Label>
-                                <CheckBox mnemonicParsing="false" onAction="#toggleHideDoneItems"
-                                          text="Hide done items">
+                                <CheckBox mnemonicParsing="false" onAction="#toggleHideDoneItems" text="Hide done items">
                                     <VBox.margin>
-                                        <Insets/>
+                                        <Insets />
                                     </VBox.margin>
                                 </CheckBox>
-                                <ListView fx:id="feedbackTabListView" maxHeight="1.7976931348623157E308"
-                                          maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0"
-                                          onMouseClicked="#onMouseClicked" prefHeight="200.0" prefWidth="200.0"
-                                          VBox.vgrow="ALWAYS">
+                                <ListView fx:id="feedbackTabListView" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" onMouseClicked="#onMouseClicked" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                                     <contextMenu>
                                         <ContextMenu>
                                             <items>
-                                                <MenuItem mnemonicParsing="false" onAction="#changeFeedbackGroup"
-                                                          text="Change group"/>
-                                                <MenuItem mnemonicParsing="false" onAction="#toggleDone"
-                                                          text="Toggle done"/>
-                                                <MenuItem mnemonicParsing="false" onAction="#preview" text="Preview"/>
-                                                <SeparatorMenuItem mnemonicParsing="false"/>
-                                                <MenuItem mnemonicParsing="false" onAction="#exportFeedbackAsTxt"
-                                                          text="Export .txt"/>
-                                                <MenuItem mnemonicParsing="false" onAction="#exportFeedbackAsJson"
-                                                          text="Export .json"/>
-                                                <SeparatorMenuItem mnemonicParsing="false"/>
-                                                <MenuItem mnemonicParsing="false" onAction="#deleteFeedback"
-                                                          text="Delete">
+                                                <MenuItem mnemonicParsing="false" onAction="#changeFeedbackGroup" text="Change group" />
+                                                <MenuItem mnemonicParsing="false" onAction="#toggleDone" text="Toggle done" />
+                                                <MenuItem mnemonicParsing="false" onAction="#preview" text="Preview" />
+                                                <SeparatorMenuItem mnemonicParsing="false" />
+                                                <MenuItem mnemonicParsing="false" onAction="#exportFeedbackAsTxt" text="Export .txt" />
+                                                <MenuItem mnemonicParsing="false" onAction="#exportFeedbackAsJson" text="Export .json" />
+                                                <SeparatorMenuItem mnemonicParsing="false" />
+                                                <MenuItem mnemonicParsing="false" onAction="#deleteFeedback" text="Delete">
                                                     <accelerator>
-                                                        <KeyCodeCombination alt="UP" code="DELETE" control="ANY"
-                                                                            meta="UP" shift="UP" shortcut="UP"/>
+                                                        <KeyCodeCombination alt="UP" code="DELETE" control="ANY" meta="UP" shift="UP" shortcut="UP" />
                                                     </accelerator>
                                                 </MenuItem>
                                             </items>
                                         </ContextMenu>
                                     </contextMenu>
                                 </ListView>
-                                <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false"
-                                        onAction="#exportAllFeedback" text="Export All">
+                                <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#exportAllFeedback" text="Export All">
                                     <tooltip>
-                                        <Tooltip
-                                                text="Export the feedback of all currently open tabs, as a human-readable .txt file for each group and as a single file feedback.json for import."/>
+                                        <Tooltip text="Export the feedback of all currently open tabs, as a human-readable .txt file for each group and as a single file feedback.json for import." />
                                     </tooltip>
                                 </Button>
-                                <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false"
-                                        onAction="#importFeedback" text="Import"/>
-                                <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#clear"
-                                        text="Clear All"/>
+                                <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#importFeedback" text="Import" />
+                                <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#clear" text="Clear All" />
                             </children>
                             <BorderPane.margin>
-                                <Insets bottom="2.0" left="2.0" right="2.0"/>
+                                <Insets bottom="2.0" left="2.0" right="2.0" />
                             </BorderPane.margin>
                         </VBox>
                     </right>
                     <center>
                         <Accordion BorderPane.alignment="CENTER">
                             <panes>
-                                <TitledPane animated="false" expanded="false" maxHeight="1.7976931348623157E308"
-                                            maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0"
-                                            text="Template Header">
+                                <TitledPane animated="false" expanded="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" text="Template Header">
                                     <content>
-                                        <TextArea fx:id="templateHeaderTextArea" maxHeight="1.7976931348623157E308"
-                                                  maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0"
-                                                  prefHeight="200.0" prefWidth="200.0"
-                                                  promptText="Template header goes here (optional)."/>
+                                        <TextArea fx:id="templateHeaderTextArea" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" promptText="Template header goes here (optional)." />
                                     </content>
                                 </TitledPane>
-                                <TitledPane fx:id="bodyPane" animated="false" maxHeight="1.7976931348623157E308"
-                                            maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0"
-                                            text="Template Body">
+                                <TitledPane fx:id="bodyPane" animated="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" text="Template Body">
                                     <content>
-                                        <TextArea fx:id="templateTextArea" maxHeight="1.7976931348623157E308"
-                                                  maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0"
-                                                  prefHeight="371.0" prefWidth="261.0"
-                                                  promptText="\%HEADER% will be replaced by the contents of the pane above. You may use wildcards in the header as well. %GROUP% will be replaced by the student group number. %TEACHER% will be replaced by the teacher's name."/>
+                                        <TextArea fx:id="templateTextArea" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="371.0" prefWidth="261.0" promptText="\%HEADER% will be replaced by the contents of the pane above. You may use wildcards in the header as well. %GROUP% will be replaced by the student group number. %TEACHER% will be replaced by the teacher's name." />
                                     </content>
                                 </TitledPane>
                             </panes>
@@ -159,119 +134,100 @@
         <Tab fx:id="progressTab" closable="false" onSelectionChanged="#onSelectionChanged" text="Progress">
             <content>
                 <BorderPane>
-                    <right>
-                        <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="300.0"
-                              BorderPane.alignment="CENTER">
+               <center>
+                        <VBox maxHeight="1.7976931348623157E308" maxWidth="-Infinity" minWidth="300.0" BorderPane.alignment="CENTER">
                             <children>
                                 <GridPane maxWidth="1.7976931348623157E308">
                                     <columnConstraints>
-                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0"/>
-                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0"/>
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
                                     </columnConstraints>
                                     <rowConstraints>
-                                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
-                                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
-                                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
-                                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
-                                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
+                                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                                     </rowConstraints>
                                     <children>
                                         <Label minWidth="-Infinity" text="#Total" GridPane.rowIndex="2">
                                             <font>
-                                                <Font name="System Bold" size="12.0"/>
+                                                <Font name="System Bold" size="12.0" />
                                             </font>
                                         </Label>
                                         <Label minWidth="-Infinity" text="#Complete" GridPane.rowIndex="3">
                                             <font>
-                                                <Font name="System Bold" size="12.0"/>
+                                                <Font name="System Bold" size="12.0" />
                                             </font>
                                         </Label>
                                         <Label minWidth="-Infinity" text="#Remaining" GridPane.rowIndex="4">
                                             <font>
-                                                <Font name="System Bold" size="12.0"/>
+                                                <Font name="System Bold" size="12.0" />
                                             </font>
                                         </Label>
-                                        <Label fx:id="numFeedback" alignment="CENTER_RIGHT"
-                                               maxWidth="1.7976931348623157E308" minWidth="-Infinity" text="Label"
-                                               GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                        <Label fx:id="numFeedback" alignment="CENTER_RIGHT" maxWidth="1.7976931348623157E308" minWidth="-Infinity" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                             <GridPane.margin>
-                                                <Insets right="2.0"/>
+                                                <Insets right="2.0" />
                                             </GridPane.margin>
                                         </Label>
-                                        <Label fx:id="numDone" alignment="CENTER_RIGHT"
-                                               maxWidth="1.7976931348623157E308" minWidth="-Infinity" text="Label"
-                                               GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                        <Label fx:id="numDone" alignment="CENTER_RIGHT" maxWidth="1.7976931348623157E308" minWidth="-Infinity" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3">
                                             <GridPane.margin>
-                                                <Insets right="2.0"/>
+                                                <Insets right="2.0" />
                                             </GridPane.margin>
                                         </Label>
-                                        <Label fx:id="numNotDone" alignment="CENTER_RIGHT"
-                                               maxWidth="1.7976931348623157E308" minWidth="-Infinity" text="Label"
-                                               GridPane.columnIndex="1" GridPane.rowIndex="4">
+                                        <Label fx:id="numNotDone" alignment="CENTER_RIGHT" maxWidth="1.7976931348623157E308" minWidth="-Infinity" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="4">
                                             <GridPane.margin>
-                                                <Insets right="2.0"/>
+                                                <Insets right="2.0" />
                                             </GridPane.margin>
                                         </Label>
-                                        <Label alignment="CENTER" maxWidth="1.7976931348623157E308"
-                                               text="Feedback Status" GridPane.columnSpan="2147483647">
+                                        <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="Feedback Status" GridPane.columnSpan="2147483647">
                                             <font>
-                                                <Font name="System Bold" size="14.0"/>
+                                                <Font name="System Bold" size="14.0" />
                                             </font>
                                         </Label>
-                                        <ProgressBar fx:id="progressBar" maxWidth="1.7976931348623157E308"
-                                                     minHeight="-Infinity" prefHeight="15.0" prefWidth="138.0"
-                                                     progress="0.0" GridPane.columnSpan="2147483647"
-                                                     GridPane.hgrow="ALWAYS" GridPane.rowIndex="1"/>
+                                        <ProgressBar fx:id="progressBar" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="15.0" prefWidth="138.0" progress="0.0" GridPane.columnSpan="2147483647" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" />
                                     </children>
                                 </GridPane>
                                 <HBox VBox.vgrow="ALWAYS">
                                     <children>
                                         <VBox prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
                                             <children>
-                                                <Label alignment="CENTER" maxWidth="1.7976931348623157E308"
-                                                       text="Complete" VBox.vgrow="NEVER">
+                                                <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="Complete" VBox.vgrow="NEVER">
                                                     <font>
-                                                        <Font name="System Bold" size="12.0"/>
+                                                        <Font name="System Bold" size="12.0" />
                                                     </font>
                                                 </Label>
-                                                <ListView fx:id="doneListView" maxHeight="1.7976931348623157E308"
-                                                          maxWidth="1.7976931348623157E308" minHeight="0.0"
-                                                          minWidth="0.0" prefHeight="200.0" prefWidth="200.0"
-                                                          VBox.vgrow="ALWAYS"/>
-                                                <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false"
-                                                        onAction="#exportAllDone" text="Export All" VBox.vgrow="NEVER"/>
-                                                <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false"
-                                                        onAction="#clearDone" text="Clear" VBox.vgrow="NEVER"/>
+                                                <ListView fx:id="doneListView" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
+                                                <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#exportAllDone" text="Export All" VBox.vgrow="NEVER" />
+                                                <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#clearDone" text="Clear" VBox.vgrow="NEVER" />
                                             </children>
                                         </VBox>
-                                        <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
-                                              prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
+                                        <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
                                             <children>
-                                                <Label alignment="CENTER" maxWidth="1.7976931348623157E308"
-                                                       text="Remaining" VBox.vgrow="NEVER">
+                                                <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="Remaining" VBox.vgrow="NEVER">
                                                     <font>
-                                                        <Font name="System Bold" size="12.0"/>
+                                                        <Font name="System Bold" size="12.0" />
                                                     </font>
                                                 </Label>
-                                                <ListView fx:id="notDoneListView" maxHeight="1.7976931348623157E308"
-                                                          maxWidth="1.7976931348623157E308" minHeight="0.0"
-                                                          minWidth="0.0" prefHeight="200.0" prefWidth="200.0"
-                                                          VBox.vgrow="ALWAYS"/>
-                                                <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false"
-                                                        onAction="#exportAllNotDone" text="Export All"
-                                                        VBox.vgrow="NEVER"/>
-                                                <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false"
-                                                        onAction="#clearAllNotDone" text="Clear" VBox.vgrow="NEVER"/>
+                                                <ListView fx:id="notDoneListView" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
+                                                <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#exportAllNotDone" text="Export All" VBox.vgrow="NEVER" />
+                                                <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#clearAllNotDone" text="Clear" VBox.vgrow="NEVER" />
                                             </children>
                                         </VBox>
                                     </children>
                                 </HBox>
                             </children>
                             <BorderPane.margin>
-                                <Insets bottom="2.0" left="2.0" right="2.0"/>
+                                <Insets bottom="2.0" left="2.0" right="2.0" />
                             </BorderPane.margin>
                         </VBox>
-                    </right>
+               </center>
+               <left>
+                  <Pane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="0.0" BorderPane.alignment="CENTER" />
+               </left>
+               <right>
+                  <Pane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="0.0" BorderPane.alignment="CENTER" />
+               </right>
                 </BorderPane>
             </content>
         </Tab>

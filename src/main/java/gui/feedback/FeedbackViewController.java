@@ -705,5 +705,9 @@ public class FeedbackViewController {
 
         return assignment;
     }
+
+    public void selectView (int i) {
+        rootTabPane.getSelectionModel().select(i);
+    }
     //endregion
 }

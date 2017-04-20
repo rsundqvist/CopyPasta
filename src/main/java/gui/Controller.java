@@ -78,6 +78,16 @@ public class Controller implements PastaViewController.PastaControllerListener {
     public void select (Pasta pasta) {
     }
 
+    public void selectFeedback() {
+        feedbackViewController.selectView(0);
+    }
+    public void selectSetup() {
+        feedbackViewController.selectView(1);
+    }
+    public void selectProgress() {
+        feedbackViewController.selectView(2);
+    }
+
     public void toggleAutoSave (Event event) {
         CheckMenuItem checkMenuItem = (CheckMenuItem) event.getSource();
 

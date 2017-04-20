@@ -123,7 +123,7 @@ public class FeedbackText extends BorderPane implements StudentFileViewerControl
         codeArea.insertText(pos, s);
     }
 
-    public void insertText (String s) {
+    public void insertTextAtCaret (String s) {
         insertText(codeArea.getCaretPosition(), s);
     }
 }

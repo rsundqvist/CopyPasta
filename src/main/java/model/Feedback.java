@@ -178,11 +178,10 @@ public class Feedback implements Comparable<Feedback> {
         Matcher matcher = pattern.matcher(content);
 
         if (matcher.find())
-            return matcher.end();
+            return matcher.end(); //First match only
         else
             return -1;
     }
-
 
     /**
      * Returns a {@link #FILE} tag for the argument filename.

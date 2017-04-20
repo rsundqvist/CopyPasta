@@ -95,7 +95,7 @@ public class GroupTab extends Tab implements StudentFileViewerController.FileFee
         if (tab == null || pasta == null) return;
 
         if (tab == feedbackView)
-            feedbackText.insertText(pasta.getContent());
+            feedbackText.insertTextAtCaret(pasta.getContent());
         else if (tab == fileView) {
             Pair<String, Integer> fileAndCaretPos = studentFileViewer.getController().getCurrentFileAndCaretPos();
             StudentFileViewerController ctrl = studentFileViewer.getController();

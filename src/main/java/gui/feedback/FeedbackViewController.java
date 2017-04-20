@@ -55,6 +55,8 @@ public class FeedbackViewController {
     @FXML
     private TextField studentGroupField, assignmentField, teacherField;
     @FXML
+    private Label progressLabel;
+    @FXML
     private TabPane feedbackTabPane, rootTabPane;
     @FXML
     private TextArea templateTextArea, templateHeaderTextArea;
@@ -627,15 +629,26 @@ public class FeedbackViewController {
     public void onSelectionChanged (Event event) {
         Tab statisticsTab = (Tab) event.getSource();
         if (!statisticsTab.isSelected()) return;
-        FeedbackManager fm = feedbackManager;
 
-        int tot = fm.getFeedbackList().size();
-        int done = fm.getDoneFeedbackList().size();
+        updateStatistics();
+    }
+
+    public void updateStatistics () {
+        int tot = feedbackManager.getFeedbackList().size();
+        int done = feedbackManager.getDoneFeedbackList().size();
 
         numFeedback.setText(tot + "");
         numDone.setText(done + "");
-        numNotDone.setText(fm.getNotDoneFeedbackList().size() + "");
-        progressBar.setProgress(tot == 0 ? -1 : (double) done / tot);
+        numNotDone.setText(feedbackManager.getNotDoneFeedbackList().size() + "");
+
+        if (tot == 0) {
+            progressBar.setProgress(-1);
+            progressLabel.setText("-");
+        } else {
+            double pDone = (double) done / tot;
+            progressLabel.setText((int) (pDone * 100 + 0.5) + " %");
+            progressBar.setProgress(pDone);
+        }
 
         updateStatusLists();
     }
@@ -673,6 +686,7 @@ public class FeedbackViewController {
             updateStatusLists();
             removeFeedbackTabs(feedbackList);
         }
+        updateStatistics();
     }
 
     public void exportAllNotDone () {
@@ -695,6 +709,7 @@ public class FeedbackViewController {
             updateStatusLists();
             removeFeedbackTabs(feedbackList);
         }
+        updateStatistics();
     }
 
     public String getAssignment () {

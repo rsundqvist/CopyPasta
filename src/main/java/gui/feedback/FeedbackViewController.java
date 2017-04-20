@@ -498,7 +498,7 @@ public class FeedbackViewController {
         }
     }
 
-    public void shutdown () {
+    public void save () {
         Tools.exportSavedFeedback(feedbackManager.getFeedbackList());
 
         //Feedback

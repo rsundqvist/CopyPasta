@@ -103,7 +103,7 @@ public class GroupTab extends Tab implements StudentFileViewerController.FileFee
             feedbackText.feedbackAt(fileAndCaretPos.getKey(), pasta.getContent(),
                     ctrl.getCaretLine(), ctrl.getCaretColumn(), -1);
 
-            studentFileViewer.getController().flashCopiedLabel();
+            studentFileViewer.getController().flashCopiedlabel();
             if (SWITCH_TO_FEEDBACK_ON_QUICKINSERT)
                 viewsPane.getSelectionModel().select(feedbackView);
         }

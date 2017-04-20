@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.input.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
@@ -7,78 +13,91 @@
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.input.KeyCodeCombination?>
 <?import javafx.scene.layout.VBox?>
-<VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0"
-      prefHeight="300.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="gui.Controller">
+
+<VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="300.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.Controller">
     <children>
-        <MenuBar>
-            <menus>
-                <Menu mnemonicParsing="false" text="File">
-                    <items>
-                        <MenuItem mnemonicParsing="false" onAction="#exit" text="Close"/>
-                    </items>
-                </Menu>
-                <Menu mnemonicParsing="false" text="Pasta">
-                    <items>
-                        <MenuItem mnemonicParsing="false" onAction="#openPastaEditor" text="Open Editor">
-                            <accelerator>
-                                <KeyCodeCombination alt="UP" code="G" control="DOWN" meta="UP" shift="UP"
-                                                    shortcut="UP"/>
-                            </accelerator>
+      <StackPane>
+         <children>
+              <MenuBar>
+                  <menus>
+                      <Menu mnemonicParsing="false" text="File">
+                          <items>
+                        <MenuItem mnemonicParsing="false" onAction="#save" text="Save">
+                           <accelerator>
+                              <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                           </accelerator>
                         </MenuItem>
-                        <SeparatorMenuItem mnemonicParsing="false"/>
-                        <MenuItem mnemonicParsing="false" onAction="#exportPasta" text="Export All"/>
-                        <MenuItem mnemonicParsing="false" onAction="#importPasta" text="Import"/>
-                        <SeparatorMenuItem mnemonicParsing="false"/>
-                        <MenuItem mnemonicParsing="false" onAction="#clearPasta" text="Clear All"/>
-                    </items>
-                </Menu>
-                <Menu mnemonicParsing="false" text="Feedback">
-                    <items>
-                        <MenuItem mnemonicParsing="false" onAction="#openGroupImporter" text="Open Importer">
-                            <accelerator>
-                                <KeyCodeCombination alt="UP" code="I" control="DOWN" meta="UP" shift="UP"
-                                                    shortcut="UP"/>
-                            </accelerator>
-                        </MenuItem>
-                        <SeparatorMenuItem mnemonicParsing="false"/>
-                        <MenuItem mnemonicParsing="false" onAction="#exportFeedback" text="Export All">
-                            <accelerator>
-                                <KeyCodeCombination alt="UP" code="E" control="DOWN" meta="UP" shift="UP"
-                                                    shortcut="UP"/>
-                            </accelerator>
-                        </MenuItem>
-                        <MenuItem mnemonicParsing="false" onAction="#importFeedback" text="Import"/>
-                        <MenuItem mnemonicParsing="false" onAction="#exportTemplate" text="Export Template"/>
-                        <MenuItem mnemonicParsing="false" onAction="#importTemplate" text="Import Template"/>
-                        <SeparatorMenuItem mnemonicParsing="false"/>
-                        <MenuItem mnemonicParsing="false" onAction="#toggleFeedbackDone" text="Toggle done">
-                            <accelerator>
-                                <KeyCodeCombination alt="UP" code="D" control="DOWN" meta="UP" shift="UP"
-                                                    shortcut="UP"/>
-                            </accelerator>
-                        </MenuItem>
-                        <SeparatorMenuItem mnemonicParsing="false"/>
-                        <MenuItem mnemonicParsing="false" onAction="#clearFeedback" text="Clear All"/>
-                    </items>
-                </Menu>
-                <Menu mnemonicParsing="false" text="Chalmers">
-                    <items>
-                        <MenuItem mnemonicParsing="false" onAction="#parseFIREFolder"
-                                  text="Create groups (FIRE grader folder)"/>
-                    </items>
-                </Menu>
-                <Menu mnemonicParsing="false" text="Help">
-                    <items>
-                        <MenuItem mnemonicParsing="false" onAction="#about" text="About"/>
-                    </items>
-                </Menu>
-            </menus>
-        </MenuBar>
+                        <CheckMenuItem mnemonicParsing="false" onAction="#toggleAutoSave" selected="true" text="Autosave (10 min)" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                              <MenuItem mnemonicParsing="false" onAction="#exit" text="Close" />
+                          </items>
+                      </Menu>
+                      <Menu mnemonicParsing="false" text="Pasta">
+                          <items>
+                              <MenuItem mnemonicParsing="false" onAction="#openPastaEditor" text="Open Editor">
+                                  <accelerator>
+                                      <KeyCodeCombination alt="UP" code="G" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                                  </accelerator>
+                              </MenuItem>
+                              <SeparatorMenuItem mnemonicParsing="false" />
+                              <MenuItem mnemonicParsing="false" onAction="#exportPasta" text="Export All" />
+                              <MenuItem mnemonicParsing="false" onAction="#importPasta" text="Import" />
+                              <SeparatorMenuItem mnemonicParsing="false" />
+                              <MenuItem mnemonicParsing="false" onAction="#clearPasta" text="Clear All" />
+                          </items>
+                      </Menu>
+                      <Menu mnemonicParsing="false" text="Feedback">
+                          <items>
+                              <MenuItem mnemonicParsing="false" onAction="#openGroupImporter" text="Open Importer">
+                                  <accelerator>
+                                      <KeyCodeCombination alt="UP" code="I" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                                  </accelerator>
+                              </MenuItem>
+                              <SeparatorMenuItem mnemonicParsing="false" />
+                              <MenuItem mnemonicParsing="false" onAction="#exportFeedback" text="Export All">
+                                  <accelerator>
+                                      <KeyCodeCombination alt="UP" code="E" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                                  </accelerator>
+                              </MenuItem>
+                              <MenuItem mnemonicParsing="false" onAction="#importFeedback" text="Import" />
+                              <MenuItem mnemonicParsing="false" onAction="#exportTemplate" text="Export Template" />
+                              <MenuItem mnemonicParsing="false" onAction="#importTemplate" text="Import Template" />
+                              <SeparatorMenuItem mnemonicParsing="false" />
+                              <MenuItem mnemonicParsing="false" onAction="#toggleFeedbackDone" text="Toggle done">
+                                  <accelerator>
+                                      <KeyCodeCombination alt="UP" code="D" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                                  </accelerator>
+                              </MenuItem>
+                              <SeparatorMenuItem mnemonicParsing="false" />
+                              <MenuItem mnemonicParsing="false" onAction="#clearFeedback" text="Clear All" />
+                          </items>
+                      </Menu>
+                      <Menu mnemonicParsing="false" text="Chalmers">
+                          <items>
+                              <MenuItem mnemonicParsing="false" onAction="#parseFIREFolder" text="Create groups (FIRE grader folder)" />
+                          </items>
+                      </Menu>
+                      <Menu mnemonicParsing="false" text="Help">
+                          <items>
+                              <MenuItem mnemonicParsing="false" onAction="#about" text="About" />
+                          </items>
+                      </Menu>
+                  </menus>
+              </MenuBar>
+            <Label fx:id="savedLabel" text="SAVED" textFill="RED" StackPane.alignment="CENTER_RIGHT">
+               <StackPane.margin>
+                  <Insets right="5.0" />
+               </StackPane.margin>
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+         </children>
+      </StackPane>
         <SplitPane dividerPositions="0.5" prefHeight="160.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
             <items>
-                <fx:include fx:id="pastaView" source="pastaView.fxml"/>
-                <fx:include fx:id="feedbackView" source="feedbackView.fxml"/>
+                <fx:include fx:id="pastaView" source="pastaView.fxml" />
+                <fx:include fx:id="feedbackView" source="feedbackView.fxml" />
             </items>
         </SplitPane>
     </children>

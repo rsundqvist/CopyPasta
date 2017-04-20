@@ -127,7 +127,7 @@ public class PastaViewController {
         }
     }
 
-    public void shutdown () {
+    public void save () {
         pastaManager.exportSavedPasta();
     }
 

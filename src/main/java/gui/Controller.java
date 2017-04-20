@@ -3,11 +3,17 @@ package gui;
 import gui.feedback.FeedbackViewController;
 import gui.pasta.PastaEditor;
 import gui.pasta.PastaViewController;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.CheckMenuItem;
+import javafx.scene.control.Label;
+import javafx.util.Duration;
 import model.IO;
 import model.Pasta;
 import model.UniqueArrayList;
@@ -25,6 +31,10 @@ public class Controller implements PastaViewController.PastaControllerListener {
     private PastaViewController pastaViewController = null;
     @FXML
     private FeedbackViewController feedbackViewController = null;
+    @FXML
+    private Label savedLabel;
+
+    private Timeline autosaveTimeline = null;
 
     public void exit () {
         System.exit(0);
@@ -32,6 +42,19 @@ public class Controller implements PastaViewController.PastaControllerListener {
 
     public void initialize () {
         pastaViewController.initialize(this);
+        savedLabel.setOpacity(0);
+        initTimeline(false);
+    }
+
+    public void initTimeline (boolean saveNow) {
+        if (saveNow)
+            save();
+
+        autosaveTimeline = new Timeline(new KeyFrame(
+                Duration.minutes(10),
+                ae -> save()));
+        autosaveTimeline.setCycleCount(Timeline.INDEFINITE);
+        autosaveTimeline.play();
     }
 
     public void parseFIREFolder () {
@@ -51,6 +74,22 @@ public class Controller implements PastaViewController.PastaControllerListener {
     public void select (Pasta pasta) {
     }
 
+    public void toggleAutoSave (Event event) {
+        CheckMenuItem checkMenuItem = (CheckMenuItem) event.getSource();
+
+        if (checkMenuItem.isSelected())
+            initTimeline(true);
+        else if (autosaveTimeline != null)
+            autosaveTimeline.stop();
+
+    }
+
+    public void save () {
+        pastaViewController.save();
+        feedbackViewController.save();
+        Tools.flashNode(savedLabel);
+    }
+
     @Override
     public void quickInsert (Pasta pasta) {
         feedbackViewController.quickInsert(pasta);
@@ -61,8 +100,8 @@ public class Controller implements PastaViewController.PastaControllerListener {
     }
 
     public void shutdown () {
-        pastaViewController.shutdown();
-        feedbackViewController.shutdown();
+        pastaViewController.save();
+        feedbackViewController.save();
     }
 
     public void openPastaEditor () {

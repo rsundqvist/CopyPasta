@@ -1,7 +1,12 @@
 package gui;
 
+import javafx.animation.FadeTransition;
+import javafx.animation.ParallelTransition;
+import javafx.animation.ScaleTransition;
+import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.util.Duration;
 import model.Feedback;
 import model.IO;
 import model.Pasta;
@@ -123,6 +128,21 @@ public abstract class Tools {
 
         Optional<ButtonType> result = alert.showAndWait();
         return result.isPresent() && result.get() == ButtonType.OK;
+    }
+
+    public static void flashNode (Node node) {
+        FadeTransition ft = new FadeTransition(Duration.millis(2000), node);
+        ft.setFromValue(1.0);
+        ft.setToValue(0.0);
+
+        ScaleTransition st = new ScaleTransition(Duration.millis(2000), node);
+        st.setFromX(1.5);
+        st.setToX(0.5);
+        st.setFromY(1.5);
+        st.setToY(0.5);
+
+        ParallelTransition pt = new ParallelTransition(ft, st);
+        pt.play();
     }
     //endregion
 }

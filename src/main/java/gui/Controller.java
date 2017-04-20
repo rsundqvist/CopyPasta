@@ -3,6 +3,7 @@ package gui;
 import gui.feedback.FeedbackViewController;
 import gui.pasta.PastaEditor;
 import gui.pasta.PastaViewController;
+import javafx.animation.FadeTransition;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.Event;
@@ -21,7 +22,10 @@ import zip.GroupImporter;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,7 +36,7 @@ public class Controller implements PastaViewController.PastaControllerListener {
     @FXML
     private FeedbackViewController feedbackViewController = null;
     @FXML
-    private Label savedLabel;
+    private Label savedLabel, lastSaveTimestampLabel;
 
     private Timeline autosaveTimeline = null;
 
@@ -88,6 +92,13 @@ public class Controller implements PastaViewController.PastaControllerListener {
         pastaViewController.save();
         feedbackViewController.save();
         Tools.flashNode(savedLabel);
+
+        DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
+        lastSaveTimestampLabel.setText("Saved at " + dateFormat.format(Calendar.getInstance().getTime()));
+        FadeTransition ft = new FadeTransition(Duration.millis(3000), lastSaveTimestampLabel);
+        ft.setFromValue(0);
+        ft.setToValue(1.0);
+        ft.play();
     }
 
     @Override

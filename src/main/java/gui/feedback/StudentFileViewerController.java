@@ -168,7 +168,7 @@ public class StudentFileViewerController {
         void feedbackAt (String file, String content, int caretLine, int caretColumn, int caretPosition);
     }
 
-    public void flashCopiedlabel() {
+    public void flashCopiedlabel () {
         Tools.flashNode(copiedLabel);
     }
 

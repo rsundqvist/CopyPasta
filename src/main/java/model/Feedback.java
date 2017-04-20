@@ -5,6 +5,8 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Richard Sundqvist
@@ -19,10 +21,7 @@ public class Feedback implements Comparable<Feedback> {
     public transient static final String NAME = "%NAME%";
     public transient static final String GROUP = "%GROUP%";
     public transient static final String FILE = "%FILE:<file>%";
-
-    public static String getFileTag (String file) {
-        return FILE.replace("<file>", file);
-    }
+    public transient static final String FILE_REGEX = "%([Ff]ile|FILE):[ \t]*\\S+[ \t]*%";
 
     /**
      * Tag indicating that the pasta is incomplete and should be modified by the teacher.
@@ -158,9 +157,9 @@ public class Feedback implements Comparable<Feedback> {
 
         s = s.replace(NAME, teacher);
         s = s.replace(GROUP, group);
-        s = s.replace("\t", "    ");
-
-        //TODO: Regex pattern matching for FILE tags.
+        if (replaceTabs)
+            s = s.replace("\t", "    ");
+        s = s.replaceAll(FILE_REGEX, ""); //Need replaceAll - replace doesnt take regex
 
         return s;
     }
@@ -174,10 +173,24 @@ public class Feedback implements Comparable<Feedback> {
      * @return The position after the sought tag, or -1 if it could not be found.
      */
     public int getFilePosition (String file) {
-        //Very inefficient...
-        String s = getFileTag(file);
-        int i = content.indexOf(s);
-        return i + (i < 0 ? 0 : s.length());
+        String file_regex = "%([Ff]ile|FILE):[ \t]*" + file + "[ \t]*%";
+        Pattern pattern = Pattern.compile(file_regex);
+        Matcher matcher = pattern.matcher(content);
+
+        if (matcher.find())
+            return matcher.end();
+        else
+            return -1;
+    }
+
+
+    /**
+     * Returns a {@link #FILE} tag for the argument filename.
+     * @param file The file.
+     * @return A {@link #FILE} tag for the argument filename.
+     */
+    public static String getFileTag (String file) {
+        return FILE.replace("<file>", file);
     }
 
     /**

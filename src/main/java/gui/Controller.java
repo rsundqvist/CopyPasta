@@ -55,7 +55,7 @@ public class Controller implements PastaViewController.PastaControllerListener {
             save();
 
         autosaveTimeline = new Timeline(new KeyFrame(
-                Duration.minutes(10),
+                Duration.minutes(5),
                 ae -> save()));
         autosaveTimeline.setCycleCount(Timeline.INDEFINITE);
         autosaveTimeline.play();

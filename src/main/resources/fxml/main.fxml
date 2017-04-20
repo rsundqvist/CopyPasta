@@ -29,7 +29,7 @@
                                     </accelerator>
                                 </MenuItem>
                                 <CheckMenuItem mnemonicParsing="false" onAction="#toggleAutoSave" selected="true"
-                                               text="Autosave (10 min)"/>
+                                               text="Autosave (5 min)"/>
                                 <SeparatorMenuItem mnemonicParsing="false"/>
                                 <MenuItem mnemonicParsing="false" onAction="#exit" text="Close"/>
                             </items>

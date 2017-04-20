@@ -6,6 +6,7 @@ ___
 ### `PRERELEASE Rev5`
 13-04-2017
 * Added file view. Student files may be imported, with Java syntax highlightning. Feedback back be added in reference to the file by using the Feedback (Ctrl+F) button or Quick Insert (Ctrl+Q). Also added a tag: %FILE:\<filename\>% to help placing feedback related to a specific file.
+* Added autosave of Pasta, feedback, and template (5 min)
 
 ### `PRERELEASE Rev4`
 05-03-2017

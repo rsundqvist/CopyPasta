@@ -78,13 +78,15 @@ public class Controller implements PastaViewController.PastaControllerListener {
     public void select (Pasta pasta) {
     }
 
-    public void selectFeedback() {
+    public void selectFeedback () {
         feedbackViewController.selectView(0);
     }
-    public void selectSetup() {
+
+    public void selectSetup () {
         feedbackViewController.selectView(1);
     }
-    public void selectProgress() {
+
+    public void selectProgress () {
         feedbackViewController.selectView(2);
     }
 

@@ -20,7 +20,7 @@ public class Feedback implements Comparable<Feedback> {
     public transient static final String HEADER = "%HEADER%";
     public transient static final String NAME = "%NAME%";
     public transient static final String GROUP = "%GROUP%";
-    public transient static final String FILE = "%FILE:<file>%";
+    public transient static final String FILE = "%FILE: <file>%";
     public transient static final String FILE_REGEX = "%([Ff]ile|FILE):[ \t]*\\S+[ \t]*%";
 
     /**

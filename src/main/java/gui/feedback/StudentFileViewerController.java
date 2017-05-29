@@ -14,9 +14,7 @@ import javafx.util.Pair;
 import model.Feedback;
 import model.IO;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
 import java.util.Map;
 
 /**
@@ -109,20 +107,8 @@ public class StudentFileViewerController {
             success = true;
 
             for (File file : db.getFiles()) {
-                try {
-                    BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
-
-                    StringBuilder stringBuilder = new StringBuilder();
-                    String line;
-                    while ((line = bufferedReader.readLine()) != null)
-                        stringBuilder.append(line + "\n");
-
-                    addFile(file.getName(), stringBuilder.toString());
-                    bufferedReader.close();
-                } catch (Exception e) {
-                    IO.showExceptionAlert(e);
-                    e.printStackTrace();
-                }
+                String content = IO.extractContent(file);
+                addFile(file.getName(), content);
             }
         }
         event.setDropCompleted(success);

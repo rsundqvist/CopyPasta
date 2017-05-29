@@ -350,6 +350,21 @@ public class FeedbackManager {
     }
 
     /**
+     * Get feedback by group designation.
+     *
+     * @param group A string identifier for the Feedback.
+     * @return A Feedback item, if found. {@code null} otherwise.
+     */
+    public Feedback getByGroup (String group) {
+        for (Feedback feedback : feedbackList) {
+            if (feedback.getGroup().equals(group))
+                return feedback;
+        }
+
+        return null;
+    }
+
+    /**
      * Returns {@code true} if all feedback is marked as done.
      *
      * @return {@code true} if all feedback is marked as done.
@@ -366,17 +381,32 @@ public class FeedbackManager {
      * Add a list of feedback to the manager. Will not accept feedback whose group collide with an existing member.
      *
      * @param feedbackList The feedback added.
+     * @param setTemplateContent If {@code true}, overwrite current content with template content.
      */
-    public void importFeedback (List<Feedback> feedbackList) {
+    public void importFeedback (List<Feedback> feedbackList, boolean setTemplateContent) {
         List<Feedback> newFeedbackList = new ArrayList<>(feedbackList);
 
         List<String> groups = getGroups();
-        for (Feedback feedback : feedbackList)
-            if (!groups.contains(feedback.getGroup()))
+        for (Feedback feedback : feedbackList) {
+            if (!groups.contains(feedback.getGroup())) {
                 newFeedbackList.add(feedback);
+
+                if(setTemplateContent)
+                    feedback.setContent(template.getContent());
+            }
+        }
 
         this.feedbackList.addAll(feedbackList);
         updateDoneUndoneLists();
+    }
+    /**
+     * Add a list of feedback to the manager. Will not accept feedback whose group collide with an existing member. Will
+     * not overwrite content.
+     *
+     * @param feedbackList The feedback added.
+     */
+    public void importFeedback (List<Feedback> feedbackList) {
+        importFeedback(feedbackList, false);
     }
 
     /**

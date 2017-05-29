@@ -9,7 +9,10 @@ import javafx.scene.image.Image;
 import javafx.stage.Modality;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import model.Feedback;
 import model.IO;
+
+import java.util.List;
 
 /**
  * Created by Richard Sundqvist on 17/04/2017.
@@ -44,9 +47,8 @@ public class GroupImporter {
         //controller.initialize(pastaList, assignment);
     }
 
-    public String showAndWait () {
+    public List<Feedback> showAndWait () {
         stage.showAndWait();
-        //return controller.getPastaList();
-        return null;
+        return controller.getFeedback();
     }
 }

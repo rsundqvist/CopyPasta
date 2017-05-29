@@ -402,8 +402,18 @@ public class FeedbackViewController {
         List<Feedback> feedbackList = feedbackManager.importFeedback();
 
         if (feedbackList != null)
-            for (Feedback feedback : feedbackList)
-                createFeedbackTab(feedback);
+            updateAfterFeedbackImport(feedbackList);
+    }
+
+    public void importFeedbackAddTemplateContent (List<Feedback> feedbackList) {
+        clearFeedback();
+        feedbackManager.importFeedback(feedbackList, true);
+        updateAfterFeedbackImport(feedbackList);
+    }
+
+    private void updateAfterFeedbackImport (List<Feedback> feedbackList) {
+        for (Feedback feedback : feedbackList)
+            createFeedbackTab(feedback);
 
         rootTabPane.getSelectionModel().select(groupTab);
         updateFeedbackTabLockStatus();
@@ -467,13 +477,17 @@ public class FeedbackViewController {
         alert.setHeaderText("Really delete all feedback?");
 
         Optional<ButtonType> result = alert.showAndWait();
-        if (result.isPresent() && result.get() == ButtonType.OK) {
-            feedbackTabPane.getTabs().removeAll(groupTabs);
-            feedbackTabListView.getItems().clear();
-            feedbackManager.clear();
-            groupTabs.clear();
-            updateFeedbackTabLockStatus();
-        }
+        if (result.isPresent() && result.get() == ButtonType.OK)
+            clearFeedback();
+    }
+
+    private void clearFeedback () {
+        feedbackTabPane.getTabs().removeAll(groupTabs);
+        feedbackTabListView.getItems().clear();
+        feedbackManager.clear();
+        groupTabs.clear();
+        updateFeedbackTabLockStatus();
+
     }
 
     public void changeFeedbackGroup () {

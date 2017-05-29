@@ -15,6 +15,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.Label;
 import javafx.util.Duration;
+import model.Feedback;
 import model.IO;
 import model.Pasta;
 import model.UniqueArrayList;
@@ -68,7 +69,7 @@ public class Controller implements PastaViewController.PastaControllerListener {
         String[] directories = file.list((current, name) -> new File(current, name).isDirectory());
 
         for (int i = 0; i < directories.length; i++)
-            directories[i] = directories[i].replaceAll("[^0-9.]", "");
+            directories[i] = directories[i].replaceAll("[^0-9]", "");
 
         List<String> fireGroups = Arrays.asList(directories);
         feedbackViewController.createFeedbackItems(fireGroups);
@@ -149,7 +150,17 @@ public class Controller implements PastaViewController.PastaControllerListener {
 
     public void openGroupImporter () {
         GroupImporter groupImporter = new GroupImporter();
-        groupImporter.showAndWait();
+        List<Feedback> feedbackList = groupImporter.showAndWait();
+
+        if (!feedbackList.isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Replace current feedback?",
+                    ButtonType.YES, ButtonType.NO);
+            alert.setHeaderText("Finish Import");
+
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.isPresent() && result.get() == ButtonType.YES)
+                feedbackViewController.importFeedbackAddTemplateContent(feedbackList);
+        }
     }
 
     public void importPasta () {

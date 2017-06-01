@@ -48,6 +48,7 @@ public class GroupImporter {
     }
 
     public List<Feedback> showAndWait () {
+        controller.onChangeRootDirectory();
         stage.showAndWait();
         return controller.getFeedback();
     }

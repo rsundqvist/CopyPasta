@@ -11,6 +11,8 @@ import javafx.scene.layout.Priority;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -29,7 +31,10 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Enumeration;
 import java.util.List;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
 
 public abstract class IO {
     public static final String ENCODING = "UTF-8";
@@ -467,6 +472,8 @@ public abstract class IO {
      * @param ex The exception to show.
      */
     public static void showExceptionAlert (Exception ex) {
+        ex.printStackTrace();
+
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Exception Dialog");
         alert.setHeaderText("Operation failure.");
@@ -502,6 +509,7 @@ public abstract class IO {
 
     /**
      * Returns the content of a file as a string.
+     *
      * @param file The file to read from.
      * @return The content of the file, or {@code null} if the extraction failed.
      */
@@ -523,5 +531,82 @@ public abstract class IO {
         }
 
         return content;
+    }
+
+    /**
+     * Stolen from NeilMonday @ https://stackoverflow.com/questions/981578/how-to-unzip-files-recursively-in-java
+     *
+     * @param zipFile The file to extract
+     * @throws IOException If an IO exception occurrs.
+     */
+    public static void extractFolder (String zipFile) throws IOException {
+        System.out.println(zipFile);
+        int BUFFER = 2048;
+        File file = new File(zipFile);
+
+        ZipFile zip = new ZipFile(file);
+        String newPath = zipFile.substring(0, zipFile.length() - 4);
+
+        new File(newPath).mkdir();
+        Enumeration zipFileEntries = zip.entries();
+
+        // Process each entry
+        while (zipFileEntries.hasMoreElements()) {
+            // grab a zip file entry
+            ZipEntry entry = (ZipEntry) zipFileEntries.nextElement();
+            String currentEntry = entry.getName();
+            File destFile = new File(newPath, currentEntry);
+            //destFile = new File(newPath, destFile.getName());
+            File destinationParent = destFile.getParentFile();
+
+            // create the parent directory structure if needed
+            destinationParent.mkdirs();
+
+            if (!entry.isDirectory()) {
+                BufferedInputStream is = new BufferedInputStream(zip.getInputStream(entry));
+                int currentByte;
+                // establish buffer for writing file
+                byte data[] = new byte[BUFFER];
+
+                // write the current file to disk
+                FileOutputStream fos = new FileOutputStream(destFile);
+                BufferedOutputStream dest = new BufferedOutputStream(fos, BUFFER);
+
+                // read and write until last byte is encountered
+                while ((currentByte = is.read(data, 0, BUFFER)) != -1)
+                    dest.write(data, 0, currentByte);
+
+                dest.flush();
+                dest.close();
+                is.close();
+            }
+
+            if (currentEntry.endsWith(".zip")) {
+                // found a zip file, try to open
+                extractFolder(destFile.getAbsolutePath());
+            }
+        }
+    }
+
+    /**
+     * Recursively clear all contents of a directory.
+     *
+     * @param root The directory to clear.
+     * @param deleteRoot If {@code true}, delete root folder as well.
+     */
+    public static void clearDirectory (File root, boolean deleteRoot) throws IOException {
+        clearDirectoryWork(root);
+
+        if (deleteRoot)
+            root.delete();
+    }
+
+    private static void clearDirectoryWork (File dir) throws IOException {
+        for (File file : dir.listFiles()) {
+            if (file.isDirectory())
+                clearDirectoryWork(file);
+
+            file.delete();
+        }
     }
 }

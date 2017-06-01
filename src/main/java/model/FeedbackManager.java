@@ -391,7 +391,7 @@ public class FeedbackManager {
             if (!groups.contains(feedback.getGroup())) {
                 newFeedbackList.add(feedback);
 
-                if(setTemplateContent)
+                if (setTemplateContent)
                     feedback.setContent(template.getContent());
             }
         }
@@ -399,6 +399,7 @@ public class FeedbackManager {
         this.feedbackList.addAll(feedbackList);
         updateDoneUndoneLists();
     }
+
     /**
      * Add a list of feedback to the manager. Will not accept feedback whose group collide with an existing member. Will
      * not overwrite content.

@@ -69,7 +69,8 @@ public class JavaCodeArea extends CodeArea {
     }
 
     public void setText (String s) {
-        replaceText(0, getText().length(), s);
+        if (getText() != null)
+            replaceText(0, getText().length(), s);
     }
 
     // @formatter:off

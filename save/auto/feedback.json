@@ -2,7 +2,7 @@
   {
     "content": "%HEADER%\n\nPå lab 3 kan man få 6p som mest.\n\nGrupp: %GROUP%, inlämning 1\nPoäng: xx, accepterad  retur (inom 7 dagar) %MANUAL%\n\nBra men jag har en/några kommentar(er):\n------------------------------------------------------------------------------- \n\n:::::: Steg3: %FILE: Steg3.java% //Default, recommended\n\n:::::: CrystalModel: %File: CrystalModel.java \t% //Acceptable variant\n\n:::::: CrystalView: %file: \tCrystalView.java  \t% //Acceptable variant\n\n:::::: CrystalControl: %  \tFILE:CrystalControl.java  % //Acceptable variant\n\n\nHälsningar,\n%NAME%",
     "header": "",
-    "teacher": "",
+    "teacher": "Richard Sundqvist",
     "group": "11",
     "assignment": "",
     "files": {
@@ -44,9 +44,9 @@
     "done": false
   },
   {
-    "content": "%HEADER%\n\nPå lab 3 kan man få 6p som mest.\n\nGrupp: %GROUP%, inlämning 1\nPoäng: xx, accepterad  retur (inom 7 dagar) %MANUAL%\n\nBra men jag har en/några kommentar(er):\n------------------------------------------------------------------------------- \n\n:::::: Steg3: %FILE: Steg3.java% //Default, recommended\n\n:::::: CrystalModel: %File: CrystalModel.java \t% //Acceptable variant\n\n:::::: CrystalView: %file: \tCrystalView.java  \t% //Acceptable variant\n\n:::::: CrystalControl: %  \tFILE:CrystalControl.java  % //Acceptable variant\n\n\nHälsningar,\n%NAME%",
+    "content": "%HEADER%\n\nPå lab 3 kan man få 6p som mest.\n\nGrupp: %GROUP%, inlämning 1\nPoäng: xx, accepterad  retur (inom 7 dagar) %MANUAL%\n\nBra men jag har en/några kommentar(er):\n------------------------------------------------------------------------------- \n\n:::::: Steg3: %FILE: Steg3.java% //Default, recommended\n\n:::::: CrystalControl: %  \tFILE:CrystalControl.java  % //Acceptable variant\n\n:::::: CrystalModel: %File: CrystalModel.java \t% //Acceptable variant\n\n:::::: CrystalView: %file: \tCrystalView.java  \t% //Acceptable variant\n\n:::::: CrystalControl: %  \tFILE:CrystalControl.java  % //Acceptable variant\n\n\nHälsningar,\n%NAME%",
     "header": "",
-    "teacher": "",
+    "teacher": "Richard Sundqvist",
     "group": "26",
     "assignment": "",
     "files": {

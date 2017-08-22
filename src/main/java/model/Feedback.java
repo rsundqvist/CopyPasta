@@ -21,7 +21,7 @@ public class Feedback implements Comparable<Feedback> {
     public transient static final String NAME = "%NAME%";
     public transient static final String GROUP = "%GROUP%";
     public transient static final String FILE = "%FILE: <file>%";
-    public transient static final String FILE_REGEX = "%([Ff]ile|FILE):[ \t]*\\S+[ \t]*%";
+    public transient static final String FILE_REGEX = "%[ \t]*([Ff]ile|FILE):[ \t]*\\S+[ \t]*%";
 
     /**
      * Tag indicating that the pasta is incomplete and should be modified by the teacher.

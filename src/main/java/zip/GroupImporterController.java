@@ -26,7 +26,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -69,6 +68,8 @@ public class GroupImporterController {
         if (feedback == null) return;
 
         String fileName = (String) filesListView.getSelectionModel().getSelectedItem();
+        if (fileName == null) return;
+
         String content = feedback.getFiles().get(fileName);
         codeArea.setText(content);
         filePreviewLabel.setText(fileName + " (group " + group + ")");
@@ -113,23 +114,36 @@ public class GroupImporterController {
 
         MenuItem add = new MenuItem("Add");
         add.setOnAction(event -> addItem(false));
-        MenuItem addAs = new MenuItem("Add to group");
-        addAs.setOnAction(event -> addItem(true));
+        MenuItem addTo = new MenuItem("Add to group"); //TODO: Allow user to pick group.
+        addTo.setOnAction(event -> addItem(true));
         MenuItem remove = new MenuItem("Remove");
         remove.setOnAction(event -> removeItem());
 
-        contextMenu.getItems().addAll(add, addAs, new SeparatorMenuItem(), remove);
+        contextMenu.getItems().addAll(add, new SeparatorMenuItem(), remove);
 
         return contextMenu;
     }
 
     private void removeItem () {
+        FeedbackTreeItem selectedItem = (FeedbackTreeItem) treeView.getSelectionModel().getSelectedItem();
+        Feedback feedback = selectedItem.getFeedback();
+        feedback.removeFile(selectedItem.getValue().getName());
+
+        update();
     }
 
     private void addItem (boolean pickGroup) {
         FeedbackTreeItem selectedItem = (FeedbackTreeItem) treeView.getSelectionModel().getSelectedItem();
         Feedback feedback = selectedItem.getFeedback();
         feedback.addFile(selectedItem.getValue().getName(), null);
+        System.out.println(selectedItem.getValue().getPath());
+        String content = IO.extractContent(selectedItem.getValue());
+        feedback.addFile(selectedItem.getValue().getName(), content);
+        update();
+    }
+
+    private void update () {
+        crawlNodeStatus((FeedbackTreeItem) treeView.getRoot(), 0, null);
     }
 
     private void updateFileEndingList () throws IOException {
@@ -251,7 +265,7 @@ public class GroupImporterController {
     }
 
     public static class FeedbackTreeItem extends TreeItem<File> {
-        private Feedback feedback;
+        private final Feedback feedback;
 
         public FeedbackTreeItem (File file, Feedback feedback) {
             super(new FileWithGetNameAsToString(file.getPath()));
@@ -260,10 +274,6 @@ public class GroupImporterController {
 
         public Feedback getFeedback () {
             return feedback;
-        }
-
-        public void setFeedback (Feedback feedback) {
-            this.feedback = feedback;
         }
 
         public static class FileWithGetNameAsToString extends File {

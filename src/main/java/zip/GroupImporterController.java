@@ -3,9 +3,12 @@ package zip;
 import gui.feedback.JavaCodeArea;
 import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.SelectionMode;
+import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
@@ -23,8 +26,8 @@ import java.io.File;
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by Richard Sundqvist on 17/04/2017.
@@ -94,6 +97,8 @@ public class GroupImporterController {
                 crawlNodeStatus(root, 0, null);
                 treeView.setRoot(root);
 
+                treeView.setContextMenu(createTreeViewContextMenu());
+
             } catch (Exception e) {
                 IO.showExceptionAlert(e);
                 e.printStackTrace();
@@ -101,6 +106,30 @@ public class GroupImporterController {
         } else {
             rootDirectoryField.setText(null);
         }
+    }
+
+    private ContextMenu createTreeViewContextMenu () {
+        ContextMenu contextMenu = new ContextMenu();
+
+        MenuItem add = new MenuItem("Add");
+        add.setOnAction(event -> addItem(false));
+        MenuItem addAs = new MenuItem("Add to group");
+        addAs.setOnAction(event -> addItem(true));
+        MenuItem remove = new MenuItem("Remove");
+        remove.setOnAction(event -> removeItem());
+
+        contextMenu.getItems().addAll(add, addAs, new SeparatorMenuItem(), remove);
+
+        return contextMenu;
+    }
+
+    private void removeItem () {
+    }
+
+    private void addItem (boolean pickGroup) {
+        FeedbackTreeItem selectedItem = (FeedbackTreeItem) treeView.getSelectionModel().getSelectedItem();
+        Feedback feedback = selectedItem.getFeedback();
+        feedback.addFile(selectedItem.getValue().getName(), null);
     }
 
     private void updateFileEndingList () throws IOException {
@@ -122,7 +151,6 @@ public class GroupImporterController {
             feedback.setGroup(group);
             groupListView.getItems().add(feedback.getGroup());
             feedbackManager.importFeedback(feedback);
-            System.out.println("create feedback: " + feedback.getGroup());
         }
         FeedbackTreeItem root = new FeedbackTreeItem(file, feedback);
 
@@ -138,11 +166,6 @@ public class GroupImporterController {
                 int len = dirFile.getName().length();
                 String s = dirFile.getName().substring(Math.max(0, len - 3), len);
                 if (feedback != null && fileEndingList.contains(s)) {
-                    System.out.println("s = " + s);
-                    System.out.println(fileEndingList);
-                    System.out.println("add file: " + dirFile);
-                    System.out.println("grp: " + feedback.getGroup());
-                    System.out.println();
                     String content = IO.extractContent(dirFile);
                     feedback.addFile(dirFile.getName(), content);
                 }
@@ -156,7 +179,6 @@ public class GroupImporterController {
         if (level == 1) // level 1 => group root
             feedback = root.getFeedback();
 
-
         if (root.isLeaf()) { // leaf => file or empty folder
             if (feedback != null && feedback.getFiles().keySet().contains(root.getValue().getName()))
                 nodeStatus = NodeStatus.GREEN;
@@ -164,25 +186,20 @@ public class GroupImporterController {
                 nodeStatus = NodeStatus.RED;
         } else {
 
-            NodeStatus[] childNodeStatus = new NodeStatus[root.getChildren().size()];
             List<TreeItem<File>> children = root.getChildren();
+            NodeStatus[] childNodeStatus = new NodeStatus[children.size()];
 
-            for (int i = 0; i < children.size(); i++) { //Must iterate over all children to ensure childen are marked properly
+
+            for (int i = 0; i < children.size(); i++) {
                 FeedbackTreeItem treeItem = (FeedbackTreeItem) children.get(i);
                 childNodeStatus[i] = crawlNodeStatus(treeItem, level + 1, feedback);
             }
             nodeStatus = NodeStatus.getCombinedStatus(childNodeStatus);
             setNodeIcon(root, nodeStatus.getImageView());
         }
-
-        String s = "NULL";
-        if (feedback != null)
-            s = feedback.getGroup();
-        System.out.println("root: " + root + ", level = " + level + ", leaf: " + root.isLeaf() + ", feedback = " + s);
-        System.out.println("nodeStatus = " + nodeStatus);
-        System.out.println("num chuldren: " + root.getChildren().size());
-        System.out.println();
         setNodeIcon(root, nodeStatus.getImageView());
+        if (nodeStatus != NodeStatus.RED)
+            root.setExpanded(true);
         return nodeStatus;
     }
 
@@ -207,16 +224,12 @@ public class GroupImporterController {
 
         public static NodeStatus getCombinedStatus (NodeStatus... status) {
             NodeStatus status0 = status[0];
-            NodeStatus combinedStatus = status0;
 
-            if (status0 == RED || status0 == GREEN) {
-                for (int i = 1; i < status.length; i++) {
-                    if (status[i] != status0) combinedStatus = BLUE;
-                    break;
-                }
-            }
+            if (status0 == RED || status0 == GREEN)
+                for (int i = 1; i < status.length; i++)
+                    if (status[i] != status0) return BLUE;
 
-            return combinedStatus;
+            return status0;
         }
 
         public ImageView getImageView () {
@@ -238,10 +251,10 @@ public class GroupImporterController {
     }
 
     public static class FeedbackTreeItem extends TreeItem<File> {
-        private final Feedback feedback;
+        private Feedback feedback;
 
         public FeedbackTreeItem (File file, Feedback feedback) {
-            super(new FileWithDifferentToString(file.getPath()));
+            super(new FileWithGetNameAsToString(file.getPath()));
             this.feedback = feedback;
         }
 
@@ -249,8 +262,12 @@ public class GroupImporterController {
             return feedback;
         }
 
-        public static class FileWithDifferentToString extends File {
-            public FileWithDifferentToString (String pathname) {
+        public void setFeedback (Feedback feedback) {
+            this.feedback = feedback;
+        }
+
+        public static class FileWithGetNameAsToString extends File {
+            public FileWithGetNameAsToString (String pathname) {
                 super(pathname);
             }
 

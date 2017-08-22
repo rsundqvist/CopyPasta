@@ -22,11 +22,11 @@ import java.util.Map;
  */
 public class StudentFileViewerController {
     @FXML
-    private Label fileLabel;
+    private Label fileLabel = null;
     @FXML
-    private TabPane sourceTabs;
+    private TabPane sourceTabs = null;
     @FXML
-    private Label copiedLabel;
+    private Label copiedLabel = null;
 
     private FileTab currentFileTab = null;
     private boolean feedbackLine = true, feedbackColumn = false;

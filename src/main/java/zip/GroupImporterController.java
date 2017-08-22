@@ -136,7 +136,6 @@ public class GroupImporterController {
         FeedbackTreeItem selectedItem = (FeedbackTreeItem) treeView.getSelectionModel().getSelectedItem();
         Feedback feedback = selectedItem.getFeedback();
         feedback.addFile(selectedItem.getValue().getName(), null);
-        System.out.println(selectedItem.getValue().getPath());
         String content = IO.extractContent(selectedItem.getValue());
         feedback.addFile(selectedItem.getValue().getName(), content);
         update();
@@ -178,8 +177,8 @@ public class GroupImporterController {
                 root.getChildren().add(child);
 
                 int len = dirFile.getName().length();
-                String s = dirFile.getName().substring(Math.max(0, len - 3), len);
-                if (feedback != null && fileEndingList.contains(s)) {
+                String[] s = dirFile.getName().split("\\.");
+                if (feedback != null && s.length > 1 && fileEndingList.contains(s[s.length - 1])) {
                     String content = IO.extractContent(dirFile);
                     feedback.addFile(dirFile.getName(), content);
                 }

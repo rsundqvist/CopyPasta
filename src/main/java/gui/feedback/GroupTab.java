@@ -30,7 +30,8 @@ public class GroupTab extends Tab implements StudentFileViewerController.FileFee
         feedbackView.setClosable(false);
 
         studentFileViewer = new StudentFileViewer(this, feedback);
-        fileView = new Tab("Student Files");
+        fileView = new Tab();
+        updateStudentFilesText(); //TODO: Update more than once.
         fileView.setContent(studentFileViewer);
         fileView.setClosable(false);
 
@@ -53,6 +54,11 @@ public class GroupTab extends Tab implements StudentFileViewerController.FileFee
 
     public void addFile (String fileName, String content) {
         studentFileViewer.addFile(fileName, content);
+    }
+
+    public void updateStudentFilesText () {
+        int size = feedback.getFiles().keySet().size();
+        fileView.setText("Student Files ( " + size + " )");
     }
 
     public String toString () {

@@ -91,10 +91,8 @@ public class GroupImporterController {
         String s = IO.extractContent(Tools.GROUP_IMPORT_FILE_PATTERNS);
         if (s != null && s.length() > 0) {
             filePatternsTextArea.setText(s);
-            System.out.println("text changed");
         }
     }
-
 
 
     public void onChangeRootDirectory () {
@@ -122,12 +120,11 @@ public class GroupImporterController {
         }
     }
 
-    public void saveFilePatterns() {
+    public void saveFilePatterns () {
         IO.printStringToFile(filePatternsTextArea.getText(), Tools.GROUP_IMPORT_FILE_PATTERNS);
     }
 
-    public void onClose() {
-        System.out.println("close button");
+    public void onClose () {
         stage.close();
     }
 
@@ -146,12 +143,35 @@ public class GroupImporterController {
         return contextMenu;
     }
 
+
     private void removeItem () {
         FeedbackTreeItem selectedItem = (FeedbackTreeItem) treeView.getSelectionModel().getSelectedItem();
         Feedback feedback = selectedItem.getFeedback();
-        feedback.removeFile(selectedItem.getValue().getName());
+
+        if (feedback != null)
+            removeItem(selectedItem, feedback);
 
         update();
+    }
+
+    private static void removeItem (FeedbackTreeItem treeItem, Feedback feedback) {
+        File file = treeItem.getValue();
+
+        if (file.isDirectory())
+            treeItem.getChildren().forEach(childItem -> removeItem((FeedbackTreeItem) childItem, feedback));
+        else
+            feedback.removeFile(file.getName());
+    }
+
+    private static void addItem (FeedbackTreeItem treeItem, Feedback feedback) {
+        File file = treeItem.getValue();
+
+        if (file.isDirectory())
+            treeItem.getChildren().forEach(childItem -> addItem((FeedbackTreeItem) childItem, feedback));
+        else {
+            String content = IO.extractContent(file);
+            feedback.addFile(file.getName(), content);
+        }
     }
 
     private void addItem (boolean pickGroup) {
@@ -159,7 +179,6 @@ public class GroupImporterController {
         Feedback feedback = selectedItem.getFeedback();
 
         if (feedback == null) {
-
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("No Associated Feedback");
             alert.setHeaderText("No Associated Feedback");
@@ -170,14 +189,13 @@ public class GroupImporterController {
             return;
         }
 
-        feedback.addFile(selectedItem.getValue().getName(), null);
-        String content = IO.extractContent(selectedItem.getValue());
-        feedback.addFile(selectedItem.getValue().getName(), content);
+        addItem(selectedItem, feedback);
         update();
     }
 
     private void update () {
         crawlNodeStatus((FeedbackTreeItem) treeView.getRoot(), 0, null);
+        onGroupSelectionChanged();
     }
 
     private void updateFileEndingList () throws IOException {
@@ -251,10 +269,10 @@ public class GroupImporterController {
         return nodeStatus;
     }
 
-    private void setNodeIcon (TreeItem node, ImageView iw) {
-        iw.setFitWidth(15);
-        iw.setFitHeight(15);
-        iw.setOpacity(0.6);
+    private static void setNodeIcon (TreeItem node, ImageView iw) {
+        iw.setFitWidth(18);
+        iw.setFitHeight(18);
+        iw.setOpacity(0.7);
         node.setGraphic(iw);
     }
 

@@ -23,7 +23,10 @@ public class GroupImporter {
 
     public GroupImporter () {
 
+        stage = new Stage();
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/groupImporter.fxml"));
+        controller = new GroupImporterController((stage));
+        fxmlLoader.setController(controller);
         Parent root = null;
         try {
             root = fxmlLoader.load();
@@ -32,7 +35,6 @@ public class GroupImporter {
             e.printStackTrace();
         }
 
-        stage = new Stage();
         stage.setTitle("Group Importer \u00a9 Richard Sundqvist");
         stage.getIcons().add(new Image(PastaEditor.class.getResourceAsStream("/icon2.png")));
 
@@ -43,13 +45,12 @@ public class GroupImporter {
         stage.setScene(scene);
         stage.initModality(Modality.APPLICATION_MODAL);
 
-        controller = fxmlLoader.getController();
         //controller.initialize(pastaList, assignment);
     }
 
     public List<Feedback> showAndWait () {
-        controller.onChangeRootDirectory();
         stage.showAndWait();
+        controller.saveFilePatterns();
         return controller.getFeedback();
     }
 }

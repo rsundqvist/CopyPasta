@@ -1,5 +1,6 @@
 package zip;
 
+import gui.Tools;
 import gui.feedback.JavaCodeArea;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -18,6 +19,7 @@ import javafx.scene.control.TreeView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
 import model.Feedback;
 import model.FeedbackManager;
 import model.IO;
@@ -50,10 +52,12 @@ public class GroupImporterController {
     private boolean openArchives = true;
     private final JavaCodeArea codeArea;
     private final FeedbackManager feedbackManager = new FeedbackManager();
+    private final Stage stage;
 
-    public GroupImporterController () {
+    public GroupImporterController (Stage stage) {
         codeArea = new JavaCodeArea();
         codeArea.setEditable(false);
+        this.stage = stage;
     }
 
     private void onGroupSelectionChanged () {
@@ -83,7 +87,15 @@ public class GroupImporterController {
 
         groupListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         filesListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+
+        String s = IO.extractContent(Tools.GROUP_IMPORT_FILE_PATTERNS);
+        if (s != null && s.length() > 0) {
+            filePatternsTextArea.setText(s);
+            System.out.println("text changed");
+        }
     }
+
+
 
     public void onChangeRootDirectory () {
         File dir = IO.showDirectoryChooser(null);
@@ -108,6 +120,15 @@ public class GroupImporterController {
         } else {
             rootDirectoryField.setText(null);
         }
+    }
+
+    public void saveFilePatterns() {
+        IO.printStringToFile(filePatternsTextArea.getText(), Tools.GROUP_IMPORT_FILE_PATTERNS);
+    }
+
+    public void onClose() {
+        System.out.println("close button");
+        stage.close();
     }
 
     private ContextMenu createTreeViewContextMenu () {
@@ -141,6 +162,7 @@ public class GroupImporterController {
 
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("No Associated Feedback");
+            alert.setHeaderText("No Associated Feedback");
             alert.setContentText("Items must be located in a child folder to add. I might fix this in the future. Maybe.");
             alert.show();
 

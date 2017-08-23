@@ -28,6 +28,7 @@ public abstract class Tools {
     public static final File AUTO_SAVE_PASTA_FILE = create("save/auto", "pasta.json");
     public static final File AUTO_SAVE_TEMPLATE_FILE = create("save/auto", "template.json");
     public static final File AUTO_SAVE_FEEDBACK_FILE = create("save/auto", "feedback.json");
+    public static final File GROUP_IMPORT_FILE_PATTERNS = create("save/auto", "group_file_patterns.txt");
 
     public static final String VERSION = "PRERELEASE";
 

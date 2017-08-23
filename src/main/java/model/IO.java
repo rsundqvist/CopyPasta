@@ -385,7 +385,7 @@ public abstract class IO {
     }
 
     /**
-     * Print a String to file.
+     * Write a String to file.
      *
      * @param content The content to print.
      * @param file The file to print to.

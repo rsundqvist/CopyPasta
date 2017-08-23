@@ -10,7 +10,7 @@ import model.Pasta;
  * Created by Richard Sundqvist on 19/02/2017.
  */
 public class GroupTab extends Tab implements StudentFileViewerController.FileFeedbackListener {
-    public static final int MIN_TITLE_LENGTH = 4;
+    public static final int MIN_TITLE_LENGTH = 6;
     public static final boolean SWITCH_TO_FEEDBACK_ON_QUICKINSERT = false;
 
     private final Feedback feedback;

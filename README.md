@@ -2,7 +2,7 @@
 
 >Download "CopyPasta.zip" and run "CopyPasta.jar" to get started  [(link)](https://github.com/whisp91/CopyPasta/raw/master/CopyPasta.zip).
 
-Copy Pasta is a program developed to aid in grading assignment exercises. Common feedback ("Pasta") can be created and categorized to speed up the process. Wildcards and templates are used to reduce the risk of mistakes, and to reduce clutter. The program will automatically load/store the most recent data (feedback and Pasta) when starting/exiting.
+Copy Pasta is a program developed to aid in grading exercises. Common feedback ("Pasta") can be created and categorized to speed up the process. Wildcards and templates are used to reduce the risk of mistakes. The program will automatically load/store the most recent data (feedback and Pasta) when starting/exiting.
 
  
 ## Typical workflow
@@ -15,7 +15,7 @@ JSON-files received from course owner. Import the Pasta and the feedback templat
 
 ### 2. Create feedback from templates
 
-Enter the group numbers, "3 5, 6  9, potato" for groups {3, 5, 6, 9, potato}. Tokens separated by spaces and/or comma will be treated as a separate group.
+On the "Setup" tab ***(Ctrl+2)***, enter the group numbers, "3 5, 6  9, potato" for groups {3, 5, 6, 9, potato}. Tokens separated by spaces and/or comma will be treated as a separate group.
 
 Alternatively, groups can be created from a folder structure ***(Ctrl+I)***. In this case, a root folder containing a single folder per group is assumed. You may choose file types, such as .java-files, to include by default.
 
@@ -23,7 +23,7 @@ Alternatively, groups can be created from a folder structure ***(Ctrl+I)***. In 
 
 Commonly used phrases can be saved using the Pasta Editor ***(Ctrl-G)***, then exported ***(RMB -> Export)*** and shared. Pasta items can be categorized using tags. Tags are automatically converted to lower case, and any leading or trailing whitespace will be removed.
 
-From the File view, feedback may be added directly ***(Ctrl+F)*** with a reference to the file and caret position. Alternatively, a Pasta item may be selected from the list and inserted directly ***(Ctrl+Q)*** in an appropriate location.  If there is a %FILE:\<filename\>% tag present, the program will automatically insert the pasta there. If not, it will be created and appended to the end.
+From the File view, feedback may be added directly ***(Ctrl+F)*** with a reference to the file and caret position. Alternatively, a Pasta item may be selected from the list and inserted directly ***(Ctrl+Q)*** in an appropriate location.  If there is a %FILE:\<filename\>% tag present, the program will automatically insert the pasta there. If not, it will be appended at the end.
 
 ### 4. Export the feedback
 

@@ -3,6 +3,7 @@ package zip;
 import gui.feedback.JavaCodeArea;
 import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -135,6 +136,18 @@ public class GroupImporterController {
     private void addItem (boolean pickGroup) {
         FeedbackTreeItem selectedItem = (FeedbackTreeItem) treeView.getSelectionModel().getSelectedItem();
         Feedback feedback = selectedItem.getFeedback();
+
+        if (feedback == null) {
+
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("No Associated Feedback");
+            alert.setContentText("Items must be located in a child folder to add. I might fix this in the future. Maybe.");
+            alert.show();
+
+            //TODO: Handle adding of files in root folder.
+            return;
+        }
+
         feedback.addFile(selectedItem.getValue().getName(), null);
         String content = IO.extractContent(selectedItem.getValue());
         feedback.addFile(selectedItem.getValue().getName(), content);

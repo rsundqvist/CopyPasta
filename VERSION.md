@@ -1,7 +1,12 @@
 # Copy Pasta: Version History
 ___
-#### Current Version: `PRERELEASE Rev5`
+#### Current Version: `PRERELEASE Rev6`
 ## Patch Notes
+
+### `PRERELEASE Rev6`
+22-08-2017
+* Added group import of files matching a pattern (e.g. ending in.txt). Assumes single root folder, containing folder per group. Subfolders are allowed.
+* Various bug and quality-of-life fixes.
 
 ### `PRERELEASE Rev5`
 13-04-2017

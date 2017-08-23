@@ -17,6 +17,8 @@ JSON-files received from course owner. Import the Pasta and the feedback templat
 
 Enter the group numbers, "3 5, 6  9, potato" for groups {3, 5, 6, 9, potato}. Tokens separated by spaces and/or comma will be treated as a separate group.
 
+Alternatively, groups can be created from a **folder structure**. In this case, a root folder containing a single folder per group is assumed. All files will be available. You may choose file types to include by default.
+
 ### 3. Write feedback.  
 
 Commonly used phrases can be saved using the Pasta Editor ***(Ctrl-G)***, then exported ***(RMB -> Export)*** and shared. Pasta items can be categorized using tags. Tags are automatically converted to lower case, and any leading or trailing whitespace will be removed.

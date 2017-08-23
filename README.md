@@ -17,13 +17,13 @@ JSON-files received from course owner. Import the Pasta and the feedback templat
 
 Enter the group numbers, "3 5, 6  9, potato" for groups {3, 5, 6, 9, potato}. Tokens separated by spaces and/or comma will be treated as a separate group.
 
-Alternatively, groups can be created from a **folder structure**. In this case, a root folder containing a single folder per group is assumed. All files will be available. You may choose file types to include by default.
+Alternatively, groups can be created from a folder structure ***(Ctrl+I)***. In this case, a root folder containing a single folder per group is assumed. You may choose file types, such as .java-files, to include by default.
 
 ### 3. Write feedback.  
 
 Commonly used phrases can be saved using the Pasta Editor ***(Ctrl-G)***, then exported ***(RMB -> Export)*** and shared. Pasta items can be categorized using tags. Tags are automatically converted to lower case, and any leading or trailing whitespace will be removed.
 
-From the Files view, feedback may be added directly ***(Ctrl+F)*** with a reference to the file and caret position. Alternatively, a Pasta item may be selected from the list and inserted directly ***(Ctrl+Q)*** in an appropriate location.  If there is a %FILE:\<filename\>% tag present, the program will automatically insert the pasta there. If not, it will be created and appended to the end.
+From the File view, feedback may be added directly ***(Ctrl+F)*** with a reference to the file and caret position. Alternatively, a Pasta item may be selected from the list and inserted directly ***(Ctrl+Q)*** in an appropriate location.  If there is a %FILE:\<filename\>% tag present, the program will automatically insert the pasta there. If not, it will be created and appended to the end.
 
 ### 4. Export the feedback
 

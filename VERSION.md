@@ -5,7 +5,7 @@ ___
 
 ### `PRERELEASE Rev6`
 22-08-2017
-* Added group import of files matching a pattern (e.g. ending in.txt). Assumes single root folder, containing folder per group. Subfolders are allowed.
+* Added group import of files matching a pattern (e.g. ending in .txt). Assumes a single root folder, containing one folder per group. Subfolders are allowed.
 * Various bug and quality-of-life fixes.
 
 ### `PRERELEASE Rev5`

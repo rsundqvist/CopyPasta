@@ -10,6 +10,7 @@ import javafx.scene.control.ToggleButton;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
+import javafx.stage.FileChooser;
 import javafx.util.Pair;
 import model.Feedback;
 import model.IO;
@@ -123,6 +124,13 @@ public class StudentFileViewerController {
             event.acceptTransferModes(TransferMode.COPY);
         else
             event.consume();
+    }
+
+    public void onAdd () {
+        FileChooser fileChooser = new FileChooser();
+        File file = fileChooser.showOpenDialog(null);
+        if (file != null)
+            addFile(file.getName(), IO.extractContent(file));
     }
 
     public void onDelete () {

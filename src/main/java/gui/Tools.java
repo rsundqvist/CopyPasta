@@ -23,7 +23,7 @@ import java.util.Optional;
  */
 public abstract class Tools {
 
-    public static final File IMPORT_TEMP_FOLDER = create("import-temp", null);
+    //public static final File IMPORT_TEMP_FOLDER = create("import-temp", null);
     public static final File SAVE_FOLDER = create("save", null);
     public static final File AUTO_SAVE_PASTA_FILE = create("save/auto", "pasta.json");
     public static final File AUTO_SAVE_TEMPLATE_FILE = create("save/auto", "template.json");
@@ -40,9 +40,8 @@ public abstract class Tools {
         if (!d.exists())
             d.mkdirs();
 
-        File f;
         if (file != null) {
-            f = new File(d, file);
+            File f = new File(d, file);
             if (!f.exists()) {
                 try {
                     f.createNewFile();

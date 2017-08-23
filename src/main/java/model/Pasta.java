@@ -82,56 +82,6 @@ public class Pasta implements Comparable<Pasta>, Cloneable {
         return copy;
     }
 
-    public static void main (String[] args) {
-
-        //Setup
-        List<String> contentTags1 = new ArrayList();
-        contentTags1.add("tag1");
-        contentTags1.add("tag2");
-        String content1 = "content1";
-        Pasta pasta1 = new Pasta(); //Create pasta
-        pasta1.getContentTags().addAll(contentTags1);
-        pasta1.setContent(content1);
-
-        List<String> contentTags2 = new ArrayList(contentTags1);
-        String content2 = content1;
-        Pasta pasta2 = new Pasta(); //Create pasta
-        pasta2.getContentTags().addAll(contentTags2);
-        pasta2.setContent(content2);
-
-        Pasta pasta3 = new Pasta(); //Create pasta
-        pasta3.getContentTags().add("tag3");
-        pasta3.setContent("content3");
-
-        //Basic equals
-        System.out.println("pasta1 == pasta2: " + pasta1.equals(pasta2));
-        System.out.println("pasta1 == pasta3: " + pasta1.equals(pasta3));
-        System.out.println("pasta2 == pasta3: " + pasta2.equals(pasta3));
-
-        //Test with collections
-        //Lists - add
-        UniqueArrayList<Pasta> test1 = new UniqueArrayList<>();
-        test1.add(pasta1);
-
-        System.out.println("test.contains(pasta1): " + test1.contains(pasta1));
-        System.out.println("test.contains(pasta2): " + test1.contains(pasta2));
-
-        test1.add(pasta1);
-        System.out.println("test.size() after test.add(pasta1): " + test1.size());
-        test1.add(pasta2);
-        System.out.println("test.size() after test.add(pasta2): " + test1.size());
-
-        //Lists - addAll
-        UniqueArrayList<Pasta> test2 = new UniqueArrayList<>();
-        test2.add(pasta1);
-        test2.add(pasta2);
-        test2.add(pasta3);
-
-        System.out.println(test1);
-        test1.addAll(test2);
-        System.out.println(test1);
-    }
-
     //endregion
 
     //region Getters and setters

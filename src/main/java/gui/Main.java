@@ -46,18 +46,19 @@ public class Main extends Application {
         boolean isRunning = Tools.getRunningFile();
 
         if (isRunning) {
+            System.err.println("Faulty controlfile detected: " + Tools.IS_RUNNING_FILE.getAbsolutePath());
             ButtonType bt1 = new ButtonType("I understand the risk. Start anyway.");
-            Alert alert = new Alert(Alert.AlertType.WARNING, "Another instance of CopyPasta may be running." +
-                    " This is not recommended as it may cause data loss. If the program was not shut down properly," +
-                    " this message may be shown erroneously."
+
+            Alert alert = new Alert(Alert.AlertType.WARNING, "Another instance of CopyPasta appears to be running." +
+                    " This is not recommended as it may cause data loss. If the program was not shut down properly, this message may be shown erroneously."
                     , new ButtonType("Abort"), bt1);
+
             alert.setHeaderText("Another instance may be running");
 
             Optional<ButtonType> result = alert.showAndWait();
             if (result.isPresent() && result.get() == bt1) {
                 System.err.println("Continuing in spite of faulty controlfile.");
-            }
-            else {
+            } else {
                 System.err.println("Shutting down: faulty controlfile.");
                 System.exit(-1);
             }

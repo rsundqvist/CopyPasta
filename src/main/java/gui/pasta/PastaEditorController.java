@@ -1,5 +1,6 @@
 package gui.pasta;
 
+import gui.feedback.JavaCodeArea;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -8,12 +9,13 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
+import javafx.scene.layout.BorderPane;
 import model.FeedbackManager;
 import model.Pasta;
 import model.UniqueArrayList;
+import org.fxmisc.flowless.VirtualizedScrollPane;
 
 import java.util.List;
 import java.util.Optional;
@@ -25,8 +27,6 @@ public class PastaEditorController implements PastaViewController.PastaControlle
     @FXML
     private TextField titleField;
     @FXML
-    private TextArea pastaEditingTextArea;
-    @FXML
     private ListView currentContentTagView, allContentTagView, currentAssignTagView, allAssignTagView;
     @FXML
     private CheckBox autoTitleCheckBox;
@@ -34,6 +34,10 @@ public class PastaEditorController implements PastaViewController.PastaControlle
     private Button saveChangesButton;
     @FXML
     private Label assignmentLabel;
+    @FXML
+    private BorderPane borderPane;
+
+    private JavaCodeArea pastaEditingTextArea;
     private String currentAssignment;
     private Pasta selectedPastaActual = null;
     private Pasta selectedPastaClone = null;
@@ -44,6 +48,10 @@ public class PastaEditorController implements PastaViewController.PastaControlle
     private PastaViewController pastaViewController = null;
 
     public void initialize (List<Pasta> pastaList, String currentAssignment) {
+        pastaEditingTextArea = new JavaCodeArea();
+        pastaEditingTextArea.setPrefHeight(Double.MAX_VALUE);
+        borderPane.setCenter(new VirtualizedScrollPane<>(pastaEditingTextArea));
+
         pastaViewController.importPasta(pastaList);
         pastaViewController.setListener(this);
         currentAssignment = FeedbackManager.parseAssignmentString(currentAssignment);

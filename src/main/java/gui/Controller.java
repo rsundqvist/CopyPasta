@@ -140,7 +140,6 @@ public class Controller implements PastaViewController.PastaControllerListener {
         PastaEditor pastaEditor = new PastaEditor(copy, feedbackViewController.getAssignment());
         UniqueArrayList<Pasta> editorPastaList = pastaEditor.showAndWait();
 
-        System.out.println(editorPastaList.equals(pastaList));
         if (!editorPastaList.equals(pastaList)) {
             pastaList = editorPastaList;
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Replace current Pasta with editor Pasta?",

@@ -30,7 +30,7 @@ public class FeedbackManager {
      * @param feedback The Feedback to preview.
      */
     public static void preview (Feedback feedback) {
-        File file = Tools.create("save/auto", "preview.txt");
+        File file = Tools.PREVIEW_TXT;
         IO.printStringToFile(feedback.getStylizedContent(), file);
         try {
             java.awt.Desktop.getDesktop().open(file);

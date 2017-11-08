@@ -3,6 +3,11 @@ ___
 #### Current Version: `PRERELEASE Rev7.1`
 ## Patch Notes
 
+### `PRERELEASE Rev7.2`
+dd-mm-yyyy
+* Feedback preview moved to system default editor.
+* File tag creation in feedback improved.
+
 ### `PRERELEASE Rev7.1`
 08-11-2017
 * Update template when importing groups.

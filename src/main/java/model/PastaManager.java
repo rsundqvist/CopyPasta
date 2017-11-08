@@ -1,6 +1,7 @@
 package model;
 
 import gui.Tools;
+import gui.feedback.JavaCodeArea;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
@@ -11,6 +12,7 @@ import javafx.scene.input.ClipboardContent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
+import org.fxmisc.flowless.VirtualizedScrollPane;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -68,14 +70,15 @@ public class PastaManager {
         alert.setHeaderText("Pasta preview");
         alert.setContentText("Output when exporting as a .txt-file:");
 
-        TextArea textArea = new TextArea(pasta.getContent());
-        textArea.setEditable(false);
-        textArea.setWrapText(true);
+        JavaCodeArea jca = new JavaCodeArea(pasta.getContent());
+        jca.setEditable(false);
+        jca.setWrapText(true);
 
-        textArea.setMaxWidth(Double.MAX_VALUE);
-        textArea.setMaxHeight(Double.MAX_VALUE);
-        GridPane.setVgrow(textArea, Priority.ALWAYS);
-        GridPane.setHgrow(textArea, Priority.ALWAYS);
+        jca.setPrefSize(600, 300);
+        jca.setMaxWidth(Double.MAX_VALUE);
+        jca.setMaxHeight(Double.MAX_VALUE);
+        GridPane.setVgrow(jca, Priority.ALWAYS);
+        GridPane.setHgrow(jca, Priority.ALWAYS);
 
         //Content tags
         Label contentLabel = new Label("Content tags:         ");
@@ -118,7 +121,7 @@ public class PastaManager {
         //Add children
         GridPane expContent = new GridPane();
         expContent.setMaxWidth(Double.MAX_VALUE);
-        expContent.add(textArea, 0, 0);
+        expContent.add(new VirtualizedScrollPane<>(jca), 0, 0);
         expContent.add(contentTagsHBox, 0, 1);
         expContent.add(assignmentTagsHBox, 0, 2);
 

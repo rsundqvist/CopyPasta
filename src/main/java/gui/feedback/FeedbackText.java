@@ -110,6 +110,7 @@ public class FeedbackText extends BorderPane implements StudentFileViewerControl
     private static String fileTagString (String file) {
         file = " " + file + " ";
         if (file.length() % 2 != 0) file = file + " ";
+
         int sz = (80 - file.length()) / 2; // space per side
         int numRepeats = sz / 2;
         String extra = sz % 2 == 0 ? "" : "<>";

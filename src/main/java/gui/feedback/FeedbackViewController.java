@@ -413,6 +413,7 @@ public class FeedbackViewController {
      * @param replaceAll if {@code true}, old feedback is cleared.
      */
     public void importFeedbackAddTemplateContent (List<Feedback> feedbackList, boolean replaceAll) {
+        updateTemplate();
         if (replaceAll)
             clearFeedback();
 

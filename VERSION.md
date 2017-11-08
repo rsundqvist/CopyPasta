@@ -1,7 +1,11 @@
 # Copy Pasta: Version History
 ___
-#### Current Version: `PRERELEASE Rev7`
+#### Current Version: `PRERELEASE Rev7.1`
 ## Patch Notes
+
+### `PRERELEASE Rev7.1`
+08-11-2017
+* Update template when importing groups.
 
 ### `PRERELEASE Rev7`
 08-11-2017

@@ -112,12 +112,13 @@ public class FeedbackText extends BorderPane implements StudentFileViewerControl
         if (file.length() % 2 != 0) file = file + " ";
         int sz = (80 - file.length()) / 2; // space per side
         int numRepeats = sz / 2;
+        String extra = sz % 2 == 0 ? "" : "<>";
 
         String around = new String(new char[numRepeats]).replace("\0", "<>");
         String border = new String(new char[80]).replace("\0", "="); // Width 80
         return "\n\n" +
                 border + "\n" +
-                around + file + around + "\n" +
+                around + file + around + extra + "\n" +
                 border + "\n" +
                 Feedback.getFileTag(file);
     }

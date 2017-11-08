@@ -55,7 +55,7 @@ public class JavaCodeArea extends CodeArea {
     }
 
     public JavaCodeArea (String initialContent) {
-        setStyle("-fx-background-color: #dddddd;");
+        setStyle("-fx-font-family: consolas; -fx-font-size: 11pt;-fx-background-color: #dddddd;");
         setShowCaret(ViewActions.CaretVisibility.ON);
         setParagraphGraphicFactory(LineNumberFactory.get(this));
 

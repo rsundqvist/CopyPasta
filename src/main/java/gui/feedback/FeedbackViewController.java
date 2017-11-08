@@ -458,6 +458,10 @@ public class FeedbackViewController {
     public void setFeedbackTemplate (Feedback template) {
         if (template == null) return;
 
+        updateTemplate(template);
+    }
+
+    private void updateTemplate (Feedback template) {
         feedbackManager.setTemplate(template);
         teacherField.setText((template.getTeacher()));
         assignmentField.setText(template.getAssignment());

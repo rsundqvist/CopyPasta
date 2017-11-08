@@ -71,9 +71,9 @@ public class FeedbackText extends BorderPane implements StudentFileViewerControl
 
     public void updateColor () {
         if (feedback.isDone())
-            codeArea.setStyle("-fx-font-family: Arial; -fx-font-size: 10pt; -fx-background-color: #55e055;");
+            codeArea.setStyle("-fx-font-family: consolas; -fx-font-size: 11pt; -fx-background-color: #55e055;");
         else
-            codeArea.setStyle("-fx-font-family: Arial; -fx-font-size: 10pt; -fx-background-color: #dddddd;");
+            codeArea.setStyle("-fx-font-family: consolas; -fx-font-size: 11pt; -fx-background-color: #dddddd;");
     }
 
     private static String caretString (int caretLine, int caretColumn) {

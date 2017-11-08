@@ -109,7 +109,7 @@ public class StudentFileViewerController {
             success = true;
 
             for (File file : db.getFiles()) {
-                String content = IO.extractContent(file);
+                String content = IO.getFileAsString(file);
                 addFile(file.getName(), content);
             }
         }
@@ -130,7 +130,7 @@ public class StudentFileViewerController {
         FileChooser fileChooser = new FileChooser();
         File file = fileChooser.showOpenDialog(null);
         if (file != null)
-            addFile(file.getName(), IO.extractContent(file));
+            addFile(file.getName(), IO.getFileAsString(file));
     }
 
     public void onDelete () {

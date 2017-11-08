@@ -5,9 +5,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+
+import java.util.Optional;
 
 public class Main extends Application {
 
@@ -17,6 +21,8 @@ public class Main extends Application {
 
     @Override
     public void start (Stage primaryStage) throws Exception {
+        checkRunning();
+
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/fxml/main.fxml"));
         Parent root = fxmlLoader.load();
 
@@ -34,6 +40,29 @@ public class Main extends Application {
 
         final Controller controller = fxmlLoader.getController();
         Runtime.getRuntime().addShutdownHook(new Thread(() -> shutdown(controller)));
+    }
+
+    public static void checkRunning () {
+        boolean isRunning = Tools.getRunningFile();
+
+        if (isRunning) {
+            ButtonType bt1 = new ButtonType("I understand the risk. Start anyway.");
+            Alert alert = new Alert(Alert.AlertType.WARNING, "Another instance of CopyPasta may be running." +
+                    " This is not recommended as it may cause data loss. If the program was not shut down properly," +
+                    " this message may be shown erroneously."
+                    , new ButtonType("Abort"), bt1);
+            alert.setHeaderText("Another instance may be running");
+
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.isPresent() && result.get() == bt1) {
+                System.err.println("Continuing in spite of faulty controlfile.");
+            }
+            else {
+                System.err.println("Shutting down: faulty controlfile.");
+                System.exit(-1);
+            }
+        }
+        Tools.setRunningFile(true);
     }
 
     public void shutdown (Controller controller) {

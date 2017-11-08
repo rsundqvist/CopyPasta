@@ -130,6 +130,7 @@ public class Controller implements PastaViewController.PastaControllerListener {
     public void shutdown () {
         pastaViewController.save();
         feedbackViewController.save();
+        Tools.setRunningFile(false);
     }
 
     public void openPastaEditor () {

@@ -513,7 +513,7 @@ public abstract class IO {
      * @param file The file to read from.
      * @return The content of the file, or {@code null} if the extraction failed.
      */
-    public static String extractContent (File file) {
+    public static String getFileAsString (File file) {
         String content = null;
 
         try {

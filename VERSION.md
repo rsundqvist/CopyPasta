@@ -1,10 +1,10 @@
 # Copy Pasta: Version History
 ___
-#### Current Version: `PRERELEASE Rev7.2`
+#### Current Version: `PRERELEASE Rev7.3`
 ## Patch Notes
 
 ### `PRERELEASE Rev7.3`
-08-11-2017
+xx-xx-xxxx
 * Various GUI fixes.
 
 ### `PRERELEASE Rev7.2`

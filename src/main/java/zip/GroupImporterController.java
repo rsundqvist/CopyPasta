@@ -88,7 +88,7 @@ public class GroupImporterController {
         groupListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         filesListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
-        String s = IO.extractContent(Tools.GROUP_IMPORT_FILE_PATTERNS);
+        String s = IO.getFileAsString(Tools.GROUP_IMPORT_FILE_PATTERNS);
         if (s != null && s.length() > 0) {
             filePatternsTextArea.setText(s);
         }
@@ -169,7 +169,7 @@ public class GroupImporterController {
         if (file.isDirectory())
             treeItem.getChildren().forEach(childItem -> addItem((FeedbackTreeItem) childItem, feedback));
         else {
-            String content = IO.extractContent(file);
+            String content = IO.getFileAsString(file);
             feedback.addFile(file.getName(), content);
         }
     }
@@ -232,7 +232,7 @@ public class GroupImporterController {
                 int len = dirFile.getName().length();
                 String[] s = dirFile.getName().split("\\.");
                 if (feedback != null && s.length > 1 && fileEndingList.contains(s[s.length - 1])) {
-                    String content = IO.extractContent(dirFile);
+                    String content = IO.getFileAsString(dirFile);
                     feedback.addFile(dirFile.getName(), content);
                 }
             }

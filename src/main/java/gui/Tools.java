@@ -31,10 +31,19 @@ public abstract class Tools {
     public static final File AUTO_SAVE_TEMPLATE_FILE = create("save/auto", "template.json");
     public static final File AUTO_SAVE_FEEDBACK_FILE = create("save/auto", "feedback.json");
     public static final File GROUP_IMPORT_FILE_PATTERNS = create("save/auto", "group_file_patterns.txt");
+    public static final File IS_RUNNING_FILE = create("/", "isrunning");
 
     public static final String VERSION = "PRERELEASE Rev7.3";
 
     private Tools () {
+    }
+
+    public static void setRunningFile (boolean value) {
+        IO.printStringToFile(value + "", IS_RUNNING_FILE);
+    }
+
+    public static boolean getRunningFile () {
+        return Boolean.parseBoolean(IO.getFileAsString(IS_RUNNING_FILE).replaceAll("\\s+", ""));
     }
 
     public static File create (String dir, String file) {

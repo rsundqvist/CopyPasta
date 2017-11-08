@@ -1,8 +1,8 @@
 [
   {
     "content": "%HEADER%\n-------------\nbody is here\n-----------\n\n%FILE: Steg1.java%\nAt L11:\n#/= Metoder som inte beror av t.ex. instansvariabler bör vara \"static\".\n\n\n%FILE: Steg2.java%\nAt L38:  \n\n%FOOTER%\n",
-    "header": "",
-    "footer": "",
+    "header": "header is here",
+    "footer": "footer is here",
     "teacher": "",
     "group": "22",
     "assignment": "",

@@ -35,7 +35,7 @@ public abstract class Tools {
     private Tools () {
     }
 
-    private static File create (String dir, String file) {
+    public static File create (String dir, String file) {
         File userDir = new File(System.getProperty("user.dir"));
         File d = new File(userDir, dir);
         if (!d.exists())

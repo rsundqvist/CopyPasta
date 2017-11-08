@@ -1,12 +1,9 @@
 package model;
 
 import gui.Tools;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.TextArea;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Priority;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -33,6 +30,7 @@ public class FeedbackManager {
      * @param feedback The Feedback to preview.
      */
     public static void preview (Feedback feedback) {
+        /*
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.getButtonTypes().clear();
         alert.getButtonTypes().add(ButtonType.CLOSE);
@@ -59,6 +57,15 @@ public class FeedbackManager {
         alert.getDialogPane().setExpanded(true);
 
         alert.showAndWait();
+        */
+
+        File file = Tools.create("save/auto", "preview.txt");
+        IO.printStringToFile(feedback.getStylizedContent(), file);
+        try {
+            java.awt.Desktop.getDesktop().open(file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     //endregion
 
@@ -431,17 +438,15 @@ public class FeedbackManager {
      * Update all feedback based on current template. Will override assignment, teacher, header, and footer.
      */
     public void updateFeedback () {
-        String assignment = template.getAssignment();
-        String header = template.getHeader();
-        String footer = template.getFooter();
-        String teacher = template.getTeacher();
+        for (Feedback feedback : feedbackList)
+            updateFeedback(feedback);
+    }
 
-        for (Feedback feedback : feedbackList) {
-            feedback.setAssignment(assignment);
-            feedback.setHeader(header);
-            feedback.setFooter(footer);
-            feedback.setTeacher(teacher);
-        }
+    public void updateFeedback (Feedback feedback) {
+        feedback.setAssignment(template.getAssignment());
+        feedback.setHeader(template.getHeader());
+        feedback.setFooter(template.getFooter());
+        feedback.setTeacher(template.getTeacher());
     }
     //endregion
 }

@@ -547,8 +547,8 @@ public class FeedbackViewController {
         if (tab == null) return;
 
         Feedback feedback = tab.getFeedback();
-        feedback.setTeacher(teacherField.getText());
-
+        updateTemplate();
+        feedbackManager.updateFeedback(feedback);
         FeedbackManager.preview(feedback);
     }
 

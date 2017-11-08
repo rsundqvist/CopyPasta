@@ -38,11 +38,11 @@ public class FeedbackManager {
     public static void preview (Feedback feedback) {
         if (Desktop.isDesktopSupported())
             previewFeedbackNative(feedback);
-         else
+        else
             previewFeedbackJavaFX(feedback);
     }
 
-    private static void previewFeedbackJavaFX(Feedback feedback){
+    private static void previewFeedbackJavaFX (Feedback feedback) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.getButtonTypes().clear();
         alert.getButtonTypes().add(ButtonType.CLOSE);
@@ -70,7 +70,8 @@ public class FeedbackManager {
 
         alert.showAndWait();
     }
-    private static void previewFeedbackNative(Feedback feedback){
+
+    private static void previewFeedbackNative (Feedback feedback) {
         File file = Tools.PREVIEW_TXT;
         IO.printStringToFile(feedback.getStylizedContent(), file);
         try {

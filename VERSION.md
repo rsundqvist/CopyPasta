@@ -5,8 +5,8 @@ ___
 
 ### `PRERELEASE Rev7.2`
 08-11-2017
-* Feedback preview moved to system default editor.
-* File tag creation in feedback improved.
+* Feedback preview moved to system default editor (on supported systems).
+* File tag creation in feedback improved. Or maybe just changed.
 
 ### `PRERELEASE Rev7.1`
 08-11-2017

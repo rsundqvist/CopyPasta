@@ -177,7 +177,7 @@ public class FeedbackViewController {
         GroupTab tab = new GroupTab(feedback);
         tab.setContextMenu(createFeedbackTabContextMenu(tab));
         tab.setOnClosed(event -> updateFeedbackTabLockStatus());
-        feedbackTabPane.getTabs().add(tab);
+        if (!feedback.isDone()) feedbackTabPane.getTabs().add(tab);
         feedbackTabListView.getItems().add(tab);
         groupTabs.add(tab);
     }

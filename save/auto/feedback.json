@@ -15,8 +15,8 @@
   },
   {
     "content": "%HEADER%\n-------------\nbody is here\n-----------\n\nAt L33:\n- Ni har inte gjort någon tar-boll eller gjort en felaktig tar-boll \ndvs inte lämnat in på korrekt sätt.\n%FOOTER%",
-    "header": "",
-    "footer": "",
+    "header": "header is here",
+    "footer": "footer is here",
     "teacher": "",
     "group": "38",
     "assignment": "",

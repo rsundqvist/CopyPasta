@@ -1,11 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.input.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.CheckMenuItem?>
 <?import javafx.scene.control.Label?>
@@ -18,8 +12,9 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-
-<VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="300.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.Controller">
+<VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0"
+      prefHeight="300.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="gui.Controller">
     <children>
         <StackPane>
             <children>
@@ -29,96 +24,106 @@
                             <items>
                                 <MenuItem mnemonicParsing="false" onAction="#save" text="Save">
                                     <accelerator>
-                                        <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                                        <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="UP"
+                                                            shortcut="UP"/>
                                     </accelerator>
                                 </MenuItem>
-                                <CheckMenuItem mnemonicParsing="false" onAction="#toggleAutoSave" selected="true" text="Autosave (5 min)" />
-                                <SeparatorMenuItem mnemonicParsing="false" />
-                                <MenuItem mnemonicParsing="false" onAction="#exit" text="Close" />
+                                <CheckMenuItem mnemonicParsing="false" onAction="#toggleAutoSave" selected="true"
+                                               text="Autosave (5 min)"/>
+                                <SeparatorMenuItem mnemonicParsing="false"/>
+                                <MenuItem mnemonicParsing="false" onAction="#exit" text="Close"/>
                             </items>
                         </Menu>
                         <Menu mnemonicParsing="false" text="Pasta">
                             <items>
                                 <MenuItem mnemonicParsing="false" onAction="#openPastaEditor" text="Open Editor">
                                     <accelerator>
-                                        <KeyCodeCombination alt="UP" code="G" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                                        <KeyCodeCombination alt="UP" code="G" control="DOWN" meta="UP" shift="UP"
+                                                            shortcut="UP"/>
                                     </accelerator>
                                 </MenuItem>
-                                <SeparatorMenuItem mnemonicParsing="false" />
-                                <MenuItem mnemonicParsing="false" onAction="#exportPasta" text="Export All" />
-                                <MenuItem mnemonicParsing="false" onAction="#importPasta" text="Import" />
-                                <SeparatorMenuItem mnemonicParsing="false" />
-                                <MenuItem mnemonicParsing="false" onAction="#clearPasta" text="Clear All" />
+                                <SeparatorMenuItem mnemonicParsing="false"/>
+                                <MenuItem mnemonicParsing="false" onAction="#exportPasta" text="Export All"/>
+                                <MenuItem mnemonicParsing="false" onAction="#importPasta" text="Import"/>
+                                <SeparatorMenuItem mnemonicParsing="false"/>
+                                <MenuItem mnemonicParsing="false" onAction="#clearPasta" text="Clear All"/>
                             </items>
                         </Menu>
                         <Menu mnemonicParsing="false" text="Feedback">
                             <items>
                                 <MenuItem mnemonicParsing="false" onAction="#openGroupImporter" text="Open Importer">
                                     <accelerator>
-                                        <KeyCodeCombination alt="UP" code="I" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                                        <KeyCodeCombination alt="UP" code="I" control="DOWN" meta="UP" shift="UP"
+                                                            shortcut="UP"/>
                                     </accelerator>
                                 </MenuItem>
-                                <SeparatorMenuItem mnemonicParsing="false" />
+                                <SeparatorMenuItem mnemonicParsing="false"/>
                                 <MenuItem mnemonicParsing="false" onAction="#exportFeedback" text="Export All">
                                     <accelerator>
-                                        <KeyCodeCombination alt="UP" code="E" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                                        <KeyCodeCombination alt="UP" code="E" control="DOWN" meta="UP" shift="UP"
+                                                            shortcut="UP"/>
                                     </accelerator>
                                 </MenuItem>
-                                <MenuItem mnemonicParsing="false" onAction="#importFeedback" text="Import" />
-                                <MenuItem mnemonicParsing="false" onAction="#exportTemplate" text="Export Template" />
-                                <MenuItem mnemonicParsing="false" onAction="#importTemplate" text="Import Template" />
-                                <SeparatorMenuItem mnemonicParsing="false" />
+                                <MenuItem mnemonicParsing="false" onAction="#importFeedback" text="Import"/>
+                                <MenuItem mnemonicParsing="false" onAction="#exportTemplate" text="Export Template"/>
+                                <MenuItem mnemonicParsing="false" onAction="#importTemplate" text="Import Template"/>
+                                <SeparatorMenuItem mnemonicParsing="false"/>
                                 <MenuItem mnemonicParsing="false" onAction="#toggleFeedbackDone" text="Toggle done">
                                     <accelerator>
-                                        <KeyCodeCombination alt="UP" code="D" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                                        <KeyCodeCombination alt="UP" code="D" control="DOWN" meta="UP" shift="UP"
+                                                            shortcut="UP"/>
                                     </accelerator>
                                 </MenuItem>
-                                <SeparatorMenuItem mnemonicParsing="false" />
-                                <MenuItem mnemonicParsing="false" onAction="#clearFeedback" text="Clear All" />
+                                <SeparatorMenuItem mnemonicParsing="false"/>
+                                <MenuItem mnemonicParsing="false" onAction="#clearFeedback" text="Clear All"/>
                             </items>
                         </Menu>
                         <Menu mnemonicParsing="false" text="View">
                             <items>
                                 <MenuItem mnemonicParsing="false" onAction="#selectFeedback" text="Feedback">
                                     <accelerator>
-                                        <KeyCodeCombination alt="UP" code="DIGIT1" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                                        <KeyCodeCombination alt="UP" code="DIGIT1" control="DOWN" meta="UP" shift="UP"
+                                                            shortcut="UP"/>
                                     </accelerator>
                                 </MenuItem>
                                 <MenuItem mnemonicParsing="false" onAction="#selectSetup" text="Setup">
                                     <accelerator>
-                                        <KeyCodeCombination alt="UP" code="DIGIT2" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                                        <KeyCodeCombination alt="UP" code="DIGIT2" control="DOWN" meta="UP" shift="UP"
+                                                            shortcut="UP"/>
                                     </accelerator>
                                 </MenuItem>
                                 <MenuItem mnemonicParsing="false" onAction="#selectProgress" text="Progress">
                                     <accelerator>
-                                        <KeyCodeCombination alt="UP" code="DIGIT3" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                                        <KeyCodeCombination alt="UP" code="DIGIT3" control="DOWN" meta="UP" shift="UP"
+                                                            shortcut="UP"/>
                                     </accelerator>
                                 </MenuItem>
                             </items>
                         </Menu>
                         <Menu mnemonicParsing="false" text="Help">
                             <items>
-                                <MenuItem mnemonicParsing="false" onAction="#about" text="About" />
+                                <MenuItem mnemonicParsing="false" onAction="#about" text="About"/>
                             </items>
                         </Menu>
                     </menus>
                 </MenuBar>
                 <StackPane mouseTransparent="true">
                     <children>
-                        <Label fx:id="lastSaveTimestampLabel" alignment="CENTER_RIGHT" text="Not saved yet." StackPane.alignment="CENTER_RIGHT">
+                        <Label fx:id="lastSaveTimestampLabel" alignment="CENTER_RIGHT" text="Not saved yet."
+                               StackPane.alignment="CENTER_RIGHT">
                             <padding>
-                                <Insets right="5.0" />
+                                <Insets right="5.0"/>
                             </padding>
                             <font>
-                                <Font name="System Italic" size="12.0" />
+                                <Font name="System Italic" size="12.0"/>
                             </font>
                         </Label>
                         <Label fx:id="savedLabel" text="SAVED" textFill="RED" StackPane.alignment="CENTER_RIGHT">
                             <StackPane.margin>
-                                <Insets right="5.0" />
+                                <Insets right="5.0"/>
                             </StackPane.margin>
                             <font>
-                                <Font name="System Bold" size="12.0" />
+                                <Font name="System Bold" size="12.0"/>
                             </font>
                         </Label>
                     </children>
@@ -127,8 +132,8 @@
         </StackPane>
         <SplitPane dividerPositions="0.5" prefHeight="160.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
             <items>
-                <fx:include fx:id="pastaView" source="pastaView.fxml" />
-                <fx:include fx:id="feedbackView" source="feedbackView.fxml" />
+                <fx:include fx:id="pastaView" source="pastaView.fxml"/>
+                <fx:include fx:id="feedbackView" source="feedbackView.fxml"/>
             </items>
         </SplitPane>
     </children>

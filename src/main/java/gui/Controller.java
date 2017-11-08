@@ -14,6 +14,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.Label;
+import javafx.stage.Modality;
 import javafx.util.Duration;
 import model.Feedback;
 import model.IO;
@@ -21,8 +22,11 @@ import model.Pasta;
 import model.UniqueArrayList;
 import zip.GroupImporter;
 
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -37,7 +41,7 @@ public class Controller implements PastaViewController.PastaControllerListener {
     @FXML
     private FeedbackViewController feedbackViewController = null;
     @FXML
-    private Label savedLabel, lastSaveTimestampLabel;
+    private Label savedLabel, lastSaveTimestampLabel, versionLabel;
 
     private Timeline autosaveTimeline = null;
 
@@ -203,6 +207,8 @@ public class Controller implements PastaViewController.PastaControllerListener {
     }
 
     public void about () {
+        about_fxml();
+        /*
         String content = "" +
                 "Copy Pasta is a program developed to aid in grading lab exercises. Common feedback (\"Pasta\") " +
                 "can be created and categorized to speed up the process. Wildcards and templates are used to reduce the" +
@@ -231,18 +237,20 @@ public class Controller implements PastaViewController.PastaControllerListener {
         alert.setHeaderText("About Copy Pasta");
         alert.setContentText(content);
         alert.showAndWait();
+        */
     }
 
     public void toggleFeedbackDone () {
         feedbackViewController.toggleDoneTab();
     }
 
-    public void about2 () {
+    public void about_fxml () {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("About Program");
         alert.setHeaderText("About Copy Pasta");
 
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/fxml/about.fxml"));
+        fxmlLoader.setController(this);
         Parent root = null;
         try {
             root = fxmlLoader.load();
@@ -251,8 +259,37 @@ public class Controller implements PastaViewController.PastaControllerListener {
             e.printStackTrace();
             return;
         }
-
+        versionLabel.setText(Tools.VERSION);
         alert.getDialogPane().setExpandableContent(root);
+        alert.getDialogPane().setExpanded(true);
+        alert.initModality(Modality.NONE);
+        alert.showAndWait();
+    }
+
+    public void onMail () {
+        Desktop desktop;
+        if (Desktop.isDesktopSupported()
+                && (desktop = Desktop.getDesktop()).isSupported(Desktop.Action.MAIL)) {
+            try {
+                desktop.mail(new URI("mailto:richard.sundqvist@live.se?subject=About%20CopyPasta"));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void onRepo () {
+        try {
+            Desktop.getDesktop().browse(new URL("https://github.com/whisp91/CopyPasta").toURI());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void onUpdate () {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION, "Check the Git repository for the latest version.",
+                ButtonType.OK);
+        alert.setHeaderText("Not Implemented");
         alert.showAndWait();
     }
 }

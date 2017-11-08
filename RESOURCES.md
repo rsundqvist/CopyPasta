@@ -9,7 +9,7 @@ Import/export of feedback and pasta.
 Rendering of source code and feedback text with syntax highlighting.
 
 ## [Mastering Regular Expressions 3d edition](https://www-dawsonera-com.proxy.lib.chalmers.se/abstract/9780596550028)
-Manage feedback tags.
+Regex for managing feedback tags.
 
 ## [7-Zip-JBinding](http://sevenzipjbind.sourceforge.net/)
-TODO
+TODO. Later. Maybe never.

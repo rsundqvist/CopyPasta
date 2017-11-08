@@ -9,6 +9,7 @@ ___
 * Added footer functionality.
 * QuickInsert of Pasta will now check for %FOOTER% tag when creating missing %FILE%-tags.
 * Some GUI cleanup.
+* Updated "About".
 
 ### `PRERELEASE Rev6`
 22-08-2017

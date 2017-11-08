@@ -23,7 +23,7 @@ Alternatively, groups can be created from a folder structure ***(Ctrl+I)***. In 
 
 Commonly used phrases can be saved using the Pasta Editor ***(Ctrl-G)***, then exported ***(RMB -> Export)*** and shared. Pasta items can be categorized using tags. Tags are automatically converted to lower case, and any leading or trailing whitespace will be removed.
 
-From the File view, feedback may be added directly ***(Ctrl+F)*** with a reference to the file and caret position. Alternatively, a Pasta item may be selected from the list and inserted directly ***(Ctrl+Q)*** in an appropriate location.  If there is a %FILE:\<filename\>% tag present, the program will automatically insert the pasta there. If not, it will be appended at the end.
+From the File view, feedback may be added directly ***(Ctrl+F)*** with a reference to the file and caret position. Alternatively, a Pasta item may be selected from the list and inserted directly ***(Ctrl+Q)*** in an appropriate location.  If there is a %FILE:\<filename\>% tag present, the program will automatically insert the pasta there. If not, it will be appended at the end or above the %FOOTER% tag.
 
 ### 4. Export the feedback
 

@@ -102,7 +102,12 @@
                         </Menu>
                         <Menu mnemonicParsing="false" text="Help">
                             <items>
-                                <MenuItem mnemonicParsing="false" onAction="#about" text="About"/>
+                                <MenuItem mnemonicParsing="false" onAction="#about" text="About">
+                                    <accelerator>
+                                        <KeyCodeCombination alt="ANY" code="F1" control="UP" meta="UP" shift="UP"
+                                                            shortcut="UP"/>
+                                    </accelerator>
+                                </MenuItem>
                             </items>
                         </Menu>
                     </menus>

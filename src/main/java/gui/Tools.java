@@ -32,7 +32,7 @@ public abstract class Tools {
     public static final File AUTO_SAVE_FEEDBACK_FILE = create("save/auto", "feedback.json");
     public static final File GROUP_IMPORT_FILE_PATTERNS = create("save/auto", "group_file_patterns.txt");
 
-    public static final String VERSION = "PRERELEASE Rev7.2";
+    public static final String VERSION = "PRERELEASE Rev7.3";
 
     private Tools () {
     }

@@ -3,6 +3,10 @@ ___
 #### Current Version: `PRERELEASE Rev7.2`
 ## Patch Notes
 
+### `PRERELEASE Rev7.3`
+08-11-2017
+* Various GUI fixes.
+
 ### `PRERELEASE Rev7.2`
 08-11-2017
 * Feedback preview moved to system default editor (on supported systems).

@@ -1,6 +1,7 @@
 {
-  "content": "",
-  "header": "",
+  "content": "%HEADER%\n-------------\nbody is here\n-----------\n%FOOTER%",
+  "header": "header is here",
+  "footer": "footer is here",
   "teacher": "",
   "group": "",
   "assignment": "",

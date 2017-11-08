@@ -59,7 +59,7 @@ public class FeedbackViewController {
     @FXML
     private TabPane feedbackTabPane, rootTabPane;
     @FXML
-    private TextArea templateTextArea, templateHeaderTextArea;
+    private TextArea templateTextArea, templateHeaderTextArea, templateFooterTextArea;
     @FXML
     /**
      * Container for the actual feedback tabs.
@@ -167,6 +167,7 @@ public class FeedbackViewController {
         Feedback template = feedbackManager.getTemplate();
         template.setContent(templateTextArea.getText());
         template.setHeader(templateHeaderTextArea.getText());
+        template.setFooter(templateFooterTextArea.getText());
         template.setTeacher(teacherField.getText());
         template.setAssignment(getAssignment());
         feedbackManager.setTemplate(template);
@@ -405,8 +406,16 @@ public class FeedbackViewController {
             updateAfterFeedbackImport(feedbackList);
     }
 
-    public void importFeedbackAddTemplateContent (List<Feedback> feedbackList) {
-        clearFeedback();
+    /**
+     * Import feedback.
+     *
+     * @param feedbackList The feedback to import.
+     * @param replaceAll if {@code true}, old feedback is cleared.
+     */
+    public void importFeedbackAddTemplateContent (List<Feedback> feedbackList, boolean replaceAll) {
+        if (replaceAll)
+            clearFeedback();
+
         feedbackManager.importFeedback(feedbackList, true);
         updateAfterFeedbackImport(feedbackList);
     }
@@ -453,6 +462,7 @@ public class FeedbackViewController {
         assignmentField.setText(template.getAssignment());
         templateTextArea.setText(template.getContent());
         templateHeaderTextArea.setText(template.getHeader());
+        templateFooterTextArea.setText(template.getFooter());
     }
 
     public void onMouseClicked (MouseEvent event) {
@@ -522,6 +532,7 @@ public class FeedbackViewController {
         template.setTeacher(teacherField.getText());
         template.setContent(templateTextArea.getText());
         template.setHeader(templateHeaderTextArea.getText());
+        template.setFooter(templateFooterTextArea.getText());
         template.setAssignment(getAssignment());
         Tools.exportSavedTemplate(template);
     }

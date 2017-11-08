@@ -151,6 +151,16 @@
                                                   promptText="\%HEADER% will be replaced by the contents of the pane above. You may use wildcards in the header as well. %GROUP% will be replaced by the student group number. %TEACHER% will be replaced by the teacher's name."/>
                                     </content>
                                 </TitledPane>
+                                <TitledPane animated="false" expanded="false" maxHeight="1.7976931348623157E308"
+                                            maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0"
+                                            text="Template Footer">
+                                    <content>
+                                        <TextArea fx:id="templateFooterTextArea" maxHeight="1.7976931348623157E308"
+                                                  maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0"
+                                                  prefHeight="200.0" prefWidth="200.0"
+                                                  promptText="Template footer goes here (optional)."/>
+                                    </content>
+                                </TitledPane>
                             </panes>
                         </Accordion>
                     </center>

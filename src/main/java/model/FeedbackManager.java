@@ -134,17 +134,9 @@ public class FeedbackManager {
             throw new IllegalStateException("Feedback not set.");
         ArrayList<Feedback> newFeedbackList = new ArrayList<>(groupList.size());
 
-        String header = template.getHeader();
-        String content = template.getContent();
-        String teacher = template.getTeacher();
-        String assignment = template.getAssignment();
         for (String group : groupList) {
-            Feedback feedback = new Feedback();
-            feedback.setHeader(header);
-            feedback.setContent(content);
-            feedback.setTeacher(teacher);
+            Feedback feedback = new Feedback(template);
             feedback.setGroup(group);
-            feedback.setAssignment(assignment);
             newFeedbackList.add(feedback);
         }
 
@@ -436,16 +428,18 @@ public class FeedbackManager {
     }
 
     /**
-     * Update all feedback based on current template. Will override assignment, teacher, and header.
+     * Update all feedback based on current template. Will override assignment, teacher, header, and footer.
      */
     public void updateFeedback () {
         String assignment = template.getAssignment();
         String header = template.getHeader();
+        String footer = template.getFooter();
         String teacher = template.getTeacher();
 
         for (Feedback feedback : feedbackList) {
             feedback.setAssignment(assignment);
             feedback.setHeader(header);
+            feedback.setFooter(footer);
             feedback.setTeacher(teacher);
         }
     }

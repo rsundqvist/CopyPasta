@@ -153,13 +153,20 @@ public class Controller implements PastaViewController.PastaControllerListener {
         List<Feedback> feedbackList = groupImporter.showAndWait();
 
         if (!feedbackList.isEmpty()) {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Replace current feedback?",
-                    ButtonType.YES, ButtonType.NO);
+            ButtonType bt1 = new ButtonType("Nothing");
+            ButtonType bt2 = new ButtonType("Replace ALL groups");
+            ButtonType bt3 = new ButtonType("Import new groups");
+
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "What do you want to do?",
+                    bt1, bt2, bt3);
             alert.setHeaderText("Finish Import");
 
             Optional<ButtonType> result = alert.showAndWait();
-            if (result.isPresent() && result.get() == ButtonType.YES)
-                feedbackViewController.importFeedbackAddTemplateContent(feedbackList);
+            if (result.isPresent())
+                if (result.get() == bt2)
+                    feedbackViewController.importFeedbackAddTemplateContent(feedbackList, true); //Replace all
+                else if (result.get() == bt3)
+                    feedbackViewController.importFeedbackAddTemplateContent(feedbackList, false); // Add new only
         }
     }
 

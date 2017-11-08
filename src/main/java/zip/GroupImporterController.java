@@ -251,10 +251,8 @@ public class GroupImporterController {
             else
                 nodeStatus = NodeStatus.RED;
         } else {
-
             List<TreeItem<File>> children = root.getChildren();
             NodeStatus[] childNodeStatus = new NodeStatus[children.size()];
-
 
             for (int i = 0; i < children.size(); i++) {
                 FeedbackTreeItem treeItem = (FeedbackTreeItem) children.get(i);

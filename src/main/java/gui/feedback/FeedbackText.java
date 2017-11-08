@@ -96,25 +96,31 @@ public class FeedbackText extends BorderPane implements StudentFileViewerControl
 
         String caretInfo = caretString(caretLine, caretColumn);
         String text = "\nAt " + caretInfo + ":  \n";
-        if (pos < 0) {
+        if (pos < 0) { // No FILE-tag
+            pos = feedback.getContent().indexOf(feedback.FOOTER) - 1; //Place above footer, if it exists.
+            if (pos < 0)  // No footer - place at end of file.
+                pos = feedback.getContent().length();
+
+
             text = "\n\n" + Feedback.getFileTag(file) + text;
-            pos = feedback.getContent().length();
         }
         insertText(pos, text);
     }
 
     public void feedbackAt (String file, String content, int caretLine, int caretColumn, int caretPosition) {
-        int pos = feedback.getFilePosition(file);
-
         String text;
         if (caretLine < 0 && caretColumn < 0)
             text = "\n";
         else
-            text = "\nAt " + caretString(caretLine, caretColumn) + ":  \n";
+            text = "\nAt " + caretString(caretLine, caretColumn) + ":\n";
 
-        if (pos < 0) {
+        int pos = feedback.getFilePosition(file);
+        if (pos < 0) { // No FILE-tag or footer present.
+            pos = feedback.getContent().indexOf(feedback.FOOTER) - 1; //Place above footer, if it exists.
+            if (pos < 0)  // No footer - place at end of file.
+                pos = feedback.getContent().length();
+
             text = "\n\n" + Feedback.getFileTag(file) + text;
-            pos = feedback.getContent().length();
         }
         insertText(pos, text + content);
     }

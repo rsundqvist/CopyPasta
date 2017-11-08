@@ -1,7 +1,14 @@
 # Copy Pasta: Version History
 ___
-#### Current Version: `PRERELEASE Rev6`
+#### Current Version: `PRERELEASE Rev7`
 ## Patch Notes
+
+### `PRERELEASE Rev7`
+08-11-2017
+* Added more import options for groups.
+* Added footer functionality.
+* QuickInsert of Pasta will now check for %FOOTER% tag when creating missing %FILE%-tags.
+* Some GUI cleanup.
 
 ### `PRERELEASE Rev6`
 22-08-2017
@@ -40,4 +47,4 @@ ___
 
 ### `PRERELEASE Rev0`
 23-02-2017
-> Initial version
+> Initial version.

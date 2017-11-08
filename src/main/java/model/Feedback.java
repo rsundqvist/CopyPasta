@@ -18,6 +18,7 @@ public class Feedback implements Comparable<Feedback> {
     // Constant
     // ================================================================================= //
     public transient static final String HEADER = "%HEADER%";
+    public transient static final String FOOTER = "%FOOTER%";
     public transient static final String NAME = "%NAME%";
     public transient static final String GROUP = "%GROUP%";
     public transient static final String FILE = "%FILE: <file>%";
@@ -33,7 +34,7 @@ public class Feedback implements Comparable<Feedback> {
     // ================================================================================= //
     // Field
     // ================================================================================= //
-    private String content, header, teacher, group, assignment;
+    private String content, header, footer, teacher, group, assignment;
     private final Map<String, String> files;
     private boolean done;
     //endregion
@@ -46,6 +47,7 @@ public class Feedback implements Comparable<Feedback> {
     public Feedback () {
         content = "";
         header = "";
+        footer = "";
         teacher = "";
         group = "";
         assignment = "";
@@ -61,6 +63,7 @@ public class Feedback implements Comparable<Feedback> {
     public Feedback (Feedback orig) {
         content = orig.content;
         header = orig.header;
+        footer = orig.footer;
         teacher = orig.teacher;
         group = orig.group;
         files = new HashMap<>(orig.files); //Shallow copy
@@ -145,15 +148,17 @@ public class Feedback implements Comparable<Feedback> {
     /**
      * Returns a String representation of this Feedback, with wildcards replaced by actual values.
      *
-     * @param changeHeader If {@code true}, the header will be changed as well.
+     * @param live If {@code true}, the header and footer will be changed as well.
      * @param replaceTabs If {@code true}, tabs will be replaced by 4 spaces.
      * @return A String representation of this Feedback.
      */
-    public String getStylizedContent (boolean changeHeader, boolean replaceTabs) {
+    public String getStylizedContent (boolean live, boolean replaceTabs) {
         String s = content;
 
-        if (changeHeader)
-            s = s.replace(HEADER, header); //Should be done first!
+        if (live) {
+            s = s.replace(HEADER, header);
+            s = s.replace(FOOTER, footer);
+        }
 
         s = s.replace(NAME, teacher);
         s = s.replace(GROUP, group);
@@ -228,6 +233,26 @@ public class Feedback implements Comparable<Feedback> {
     public void setHeader (String header) {
         this.header = header;
     }
+
+
+    /**
+     * Sets the header value, which will replace the {@link #FOOTER} wildcard.
+     *
+     * @return The footer.
+     */
+    public String getFooter () {
+        return footer;
+    }
+
+    /**
+     * Sets the header value, which will replace the {@link #FOOTER} wildcard.
+     *
+     * @param footer The new footer.
+     */
+    public void setFooter (String footer) {
+        this.footer = footer;
+    }
+
 
     /**
      * Gets the teacher name value, which will replace the {@link #NAME} wildcard.

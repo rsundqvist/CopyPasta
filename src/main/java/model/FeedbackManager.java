@@ -30,35 +30,6 @@ public class FeedbackManager {
      * @param feedback The Feedback to preview.
      */
     public static void preview (Feedback feedback) {
-        /*
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.getButtonTypes().clear();
-        alert.getButtonTypes().add(ButtonType.CLOSE);
-        String assignment = feedback.getAssignment() == null ? "" : ": \"" + feedback.getAssignment() + "\"";
-        alert.setTitle("Feedback Preview" + assignment);
-        alert.setHeaderText("Feedback preview for group \"" + feedback.getGroup() + "\"");
-        alert.setContentText("Output when exporting as a .txt-file:");
-
-        TextArea textArea = new TextArea(feedback.getStylizedContent());
-        textArea.setEditable(false);
-        textArea.setWrapText(true);
-
-        textArea.setMaxWidth(Double.MAX_VALUE);
-        textArea.setMaxHeight(Double.MAX_VALUE);
-        GridPane.setVgrow(textArea, Priority.ALWAYS);
-        GridPane.setHgrow(textArea, Priority.ALWAYS);
-
-        GridPane expContent = new GridPane();
-        expContent.setMaxWidth(Double.MAX_VALUE);
-        expContent.add(textArea, 0, 0);
-
-        // Set expandable Exception into the dialog pane.
-        alert.getDialogPane().setExpandableContent(expContent);
-        alert.getDialogPane().setExpanded(true);
-
-        alert.showAndWait();
-        */
-
         File file = Tools.create("save/auto", "preview.txt");
         IO.printStringToFile(feedback.getStylizedContent(), file);
         try {

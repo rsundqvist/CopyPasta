@@ -102,9 +102,25 @@ public class FeedbackText extends BorderPane implements StudentFileViewerControl
                 pos = feedback.getContent().length();
 
 
-            text = "\n\n" + Feedback.getFileTag(file) + text;
+            text = fileTagString(file) + text;
         }
         insertText(pos, text);
+    }
+
+    private static String fileTagString (String file) {
+        file = " " + file + " ";
+        if (file.length() % 2 != 0) file = file + " ";
+        int sz = (80 - file.length()) / 2; // space per side
+        int numRepeats = sz / 2;
+
+        String around = new String(new char[numRepeats]).replace("\0", "<>");
+        System.out.println("around = " + around);
+        String border = new String(new char[80]).replace("\0", "="); // Width 80
+        return "\n\n" +
+                border + "\n" +
+                around + file + around + "\n" +
+                border + "\n" +
+                Feedback.getFileTag(file);
     }
 
     public void feedbackAt (String file, String content, int caretLine, int caretColumn, int caretPosition) {
@@ -120,7 +136,7 @@ public class FeedbackText extends BorderPane implements StudentFileViewerControl
             if (pos < 0)  // No footer - place at end of file.
                 pos = feedback.getContent().length();
 
-            text = "\n\n" + Feedback.getFileTag(file) + text;
+            text = fileTagString(file) + text;
         }
         insertText(pos, text + content);
     }

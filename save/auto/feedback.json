@@ -1,8 +1,8 @@
 [
   {
-    "content": "%HEADER%\n-------------\nbody is here\n-----------\n\n%FILE: Steg1.java%\nAt L11:\n#/= Metoder som inte beror av t.ex. instansvariabler bör vara \"static\".\n\n\n%FILE: Steg2.java%\nAt L38:  \n\n%FOOTER%\n",
-    "header": "header is here",
-    "footer": "footer is here",
+    "content": "%HEADER%\n-------------\nbody is here\n-----------\n%FOOTER%",
+    "header": "",
+    "footer": "",
     "teacher": "",
     "group": "22",
     "assignment": "",
@@ -14,7 +14,7 @@
     "done": false
   },
   {
-    "content": "%HEADER%\n-------------\nbody is here\n-----------\n\nAt L33:\n- Ni har inte gjort någon tar-boll eller gjort en felaktig tar-boll \ndvs inte lämnat in på korrekt sätt.\n%FOOTER%",
+    "content": "%HEADER%\n-------------\nbody is here\n-----------\n\n================================================================================\n<><><><><><><><><><><><><><><><> Skotta_r.java  <><><><><><><><><><><><><><><><>\n================================================================================\n%FILE:  Skotta_r.java  %\nAt L9:\n* Ni behöver inte skriva this. Normalt gör man bara det när man\nmåste, dvs. när kan har en namnkonflikt mellan en lokal variabel/metodparameter\noch en instansvariabel. Exempel: \n\tpublic class Example {\n    \t\tprivate int x, previousX; //Instansvariabler\n\n    \t\tpublic void setX (int x) {\n        \t\tpreviousX = this.x; //Det finns bara en \"previousX\"\n        \t\tthis.x = x; //Peka ut instansvariabeln med \"this\"\n    \t\t}\n\t}\n\n\n================================================================================\n<><><><><><><><><><><><><><><><> Skotta_r3.java <><><><><><><><><><><><><><><><>\n================================================================================\n%FILE:  Skotta_r3.java %\nAt L86:\n= Instansvariabler är ej privata.\n\n%FOOTER%",
     "header": "header is here",
     "footer": "footer is here",
     "teacher": "",

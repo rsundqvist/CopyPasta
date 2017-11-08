@@ -417,8 +417,8 @@ public class FeedbackViewController {
         if (replaceAll)
             clearFeedback();
 
-        feedbackManager.importFeedback(feedbackList, true);
-        updateAfterFeedbackImport(feedbackList);
+        List<Feedback> newFeedbackList = feedbackManager.importFeedback(feedbackList, true);
+        updateAfterFeedbackImport(newFeedbackList);
     }
 
     private void updateAfterFeedbackImport (List<Feedback> feedbackList) {

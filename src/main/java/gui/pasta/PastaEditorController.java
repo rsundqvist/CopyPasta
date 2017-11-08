@@ -46,7 +46,6 @@ public class PastaEditorController implements PastaViewController.PastaControlle
     public void initialize (List<Pasta> pastaList, String currentAssignment) {
         pastaViewController.importPasta(pastaList);
         pastaViewController.setListener(this);
-        System.out.println(currentAssignment);
         currentAssignment = FeedbackManager.parseAssignmentString(currentAssignment);
         this.currentAssignment = currentAssignment;
         currentAssignment = currentAssignment.length() == 0 ? "<None>" : currentAssignment;

@@ -7,6 +7,7 @@ ___
 08-11-2017
 * Feedback preview moved to system default editor (on supported systems).
 * File tag creation in feedback improved. Or maybe just changed.
+* Feedback folder import bugfix.
 
 ### `PRERELEASE Rev7.1`
 08-11-2017

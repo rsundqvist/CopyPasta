@@ -394,22 +394,25 @@ public class FeedbackManager {
      *
      * @param feedbackList The feedback added.
      * @param setTemplateContent If {@code true}, overwrite current content with template content.
+     * @return The feedback that was imported.
      */
-    public void importFeedback (List<Feedback> feedbackList, boolean setTemplateContent) {
-        List<Feedback> newFeedbackList = new ArrayList<>(feedbackList);
+    public List<Feedback> importFeedback (List<Feedback> feedbackList, boolean setTemplateContent) {
+        List<Feedback> newFeedbackList = new ArrayList<>(feedbackList.size());
 
         List<String> groups = getGroups();
+        List<String> newGroups = new ArrayList<>();
         for (Feedback feedback : feedbackList) {
             if (!groups.contains(feedback.getGroup())) {
                 newFeedbackList.add(feedback);
-
+                newGroups.add(feedback.getGroup());
                 if (setTemplateContent)
                     feedback.setContent(template.getContent());
             }
         }
 
-        this.feedbackList.addAll(feedbackList);
+        this.feedbackList.addAll(newFeedbackList);
         updateDoneUndoneLists();
+        return newFeedbackList;
     }
 
     /**

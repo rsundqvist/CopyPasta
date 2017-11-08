@@ -114,7 +114,6 @@ public class FeedbackText extends BorderPane implements StudentFileViewerControl
         int numRepeats = sz / 2;
 
         String around = new String(new char[numRepeats]).replace("\0", "<>");
-        System.out.println("around = " + around);
         String border = new String(new char[80]).replace("\0", "="); // Width 80
         return "\n\n" +
                 border + "\n" +

@@ -1,10 +1,10 @@
 # Copy Pasta: Version History
 ___
-#### Current Version: `PRERELEASE Rev7.1`
+#### Current Version: `PRERELEASE Rev7.2`
 ## Patch Notes
 
 ### `PRERELEASE Rev7.2`
-dd-mm-yyyy
+08-11-2017
 * Feedback preview moved to system default editor.
 * File tag creation in feedback improved.
 

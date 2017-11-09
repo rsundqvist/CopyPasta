@@ -6,7 +6,7 @@ ___
 ### `PRERELEASE Rev7.3`
 10-11-2017
 * Added Settings panel (Ctrl+F2). Use with caution!
-* Various GUI fixes.
+* Various GUI fixes and changes.
 
 ### `PRERELEASE Rev7.2`
 08-11-2017

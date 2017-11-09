@@ -1,6 +1,0 @@
-txt
-java
-cpp
-c
-h
-cs

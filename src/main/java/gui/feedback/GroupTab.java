@@ -6,9 +6,7 @@ import javafx.util.Pair;
 import model.Feedback;
 import model.Pasta;
 
-/**
- * Created by Richard Sundqvist on 19/02/2017.
- */
+/** Created by Richard Sundqvist on 19/02/2017. */
 public class GroupTab extends Tab implements StudentFileViewerController.FileFeedbackListener {
     public static final int MIN_TITLE_LENGTH = 6;
     public static final boolean SWITCH_TO_FEEDBACK_ON_QUICKINSERT = false;
@@ -19,7 +17,7 @@ public class GroupTab extends Tab implements StudentFileViewerController.FileFee
     private final Tab feedbackView, fileView;
     private final StudentFileViewer studentFileViewer;
 
-    public GroupTab (Feedback feedback) {
+    public GroupTab(Feedback feedback) {
         this.feedback = feedback;
         feedbackText = new FeedbackText(feedback);
 
@@ -31,7 +29,7 @@ public class GroupTab extends Tab implements StudentFileViewerController.FileFee
 
         studentFileViewer = new StudentFileViewer(this, feedback);
         fileView = new Tab();
-        updateStudentFilesText(); //TODO: Update after import through drag-and-drop, etc
+        updateStudentFilesText(); // TODO: Update after import through drag-and-drop, etc
         fileView.setContent(studentFileViewer);
         fileView.setClosable(false);
 
@@ -42,31 +40,29 @@ public class GroupTab extends Tab implements StudentFileViewerController.FileFee
         updateTitle();
     }
 
-
-    private void updateFeedback () {
-        feedback.setContent(feedbackText.getText()); //TODO Too many calls?
+    private void updateFeedback() {
+        feedback.setContent(feedbackText.getText()); // TODO Too many calls?
     }
 
-    public Feedback getFeedback () {
+    public Feedback getFeedback() {
         feedback.setContent(feedbackText.getText());
         return feedback;
     }
 
-    public void addFile (String fileName, String content) {
+    public void addFile(String fileName, String content) {
         studentFileViewer.addFile(fileName, content);
     }
 
-    public void updateStudentFilesText () {
+    public void updateStudentFilesText() {
         int size = feedback.getFiles().keySet().size();
         fileView.setText("Student Files ( " + size + " )");
     }
 
-    public String toString () {
+    public String toString() {
         return getText();
     }
 
-
-    public void setTitle (String title) {
+    public void setTitle(String title) {
         if (title == null || title.equals("")) {
             title = "<Unknown group>";
         }
@@ -80,34 +76,39 @@ public class GroupTab extends Tab implements StudentFileViewerController.FileFee
         setText(title);
     }
 
-    public void updateTitle () {
+    public void updateTitle() {
         feedbackText.updateColor();
         setTitle(feedback.getGroup() + (feedback.isDone() ? " \u2713" : ""));
     }
 
     @Override
-    public void feedbackAt (String file, int caretLine, int caretColumn, int caretPosition) {
+    public void feedbackAt(String file, int caretLine, int caretColumn, int caretPosition) {
         feedbackText.feedbackAt(file, caretLine, caretColumn, caretPosition);
         viewsPane.getSelectionModel().select(feedbackView);
     }
 
-    public void feedbackAt (String file, String content, int caretLine, int caretColumn, int caretPosition) {
+    public void feedbackAt(
+            String file, String content, int caretLine, int caretColumn, int caretPosition) {
         feedbackText.feedbackAt(file, content, caretLine, caretColumn, caretPosition);
         viewsPane.getSelectionModel().select(feedbackView);
     }
 
-    public void quickInsert (Pasta pasta) {
+    public void quickInsert(Pasta pasta) {
         Tab tab = viewsPane.getSelectionModel().getSelectedItem();
         if (tab == null || pasta == null) return;
 
-        if (tab == feedbackView)
-            feedbackText.insertTextAtCaret(pasta.getContent());
+        if (tab == feedbackView) feedbackText.insertTextAtCaret(pasta.getContent());
         else if (tab == fileView) {
-            Pair<String, Integer> fileAndCaretPos = studentFileViewer.getController().getCurrentFileAndCaretPos();
+            Pair<String, Integer> fileAndCaretPos =
+                    studentFileViewer.getController().getCurrentFileAndCaretPos();
             StudentFileViewerController ctrl = studentFileViewer.getController();
 
-            feedbackText.feedbackAt(fileAndCaretPos.getKey(), pasta.getContent(),
-                    ctrl.getCaretLine(), ctrl.getCaretColumn(), -1);
+            feedbackText.feedbackAt(
+                    fileAndCaretPos.getKey(),
+                    pasta.getContent(),
+                    ctrl.getCaretLine(),
+                    ctrl.getCaretColumn(),
+                    -1);
 
             studentFileViewer.getController().flashCopiedlabel();
             if (SWITCH_TO_FEEDBACK_ON_QUICKINSERT)

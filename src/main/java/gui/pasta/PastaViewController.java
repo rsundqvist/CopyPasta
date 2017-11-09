@@ -25,42 +25,38 @@ import java.util.List;
 import java.util.Optional;
 
 public class PastaViewController {
-    //region Field
+    // region Field
     // ================================================================================= //
     // Field
     // ================================================================================= //
     private PastaControllerListener listener;
-    @FXML
-    private ListView listView;
-    @FXML
-    private TextArea previewTextArea;
-    @FXML
-    private FlowPane filterFlowPane;
-    @FXML
-    private TextField searchField;
+    @FXML private ListView listView;
+    @FXML private TextArea previewTextArea;
+    @FXML private FlowPane filterFlowPane;
+    @FXML private TextField searchField;
 
     private PastaManager pastaManager = new PastaManager();
-    //endregion
+    // endregion
 
-    private static void exportPastaTXT (List<Pasta> pastaList) {
+    private static void exportPastaTXT(List<Pasta> pastaList) {
         String gatheredContent = PastaManager.gatherContent(pastaList);
-        File file = IO.showTXTSaveDialog(Tools.SAVE_FOLDER, "pasta");
+        File file = IO.showTXTSaveDialog(null, "pasta");
         IO.printStringToFile(gatheredContent, file);
     }
 
-    public void initialize () {
+    public void initialize() {
         listView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         searchField.textProperty().addListener(event -> searchPasta());
     }
 
-    private void searchPasta () {
+    private void searchPasta() {
         String searchString = searchField.getText();
         List<String> searchTerms = Arrays.asList(searchString.split(","));
         pastaManager.search(searchTerms);
         updateFilteredList();
     }
 
-    public void initialize (PastaControllerListener listener) {
+    public void initialize(PastaControllerListener listener) {
         setListener(listener);
 
         List<Pasta> importedPastaList;
@@ -72,54 +68,51 @@ public class PastaViewController {
         }
     }
 
-    public void setListener (PastaControllerListener listener) {
+    public void setListener(PastaControllerListener listener) {
         this.listener = listener;
     }
 
-    public void quickInsert () {
+    public void quickInsert() {
         Pasta pasta = (Pasta) listView.getSelectionModel().getSelectedItem();
         listener.quickInsert(pasta);
         listView.getSelectionModel().clearSelection();
     }
 
-    public void onMouseClicked (MouseEvent event) {
+    public void onMouseClicked(MouseEvent event) {
         Pasta pasta = (Pasta) listView.getSelectionModel().getSelectedItem();
         if (pasta != null) {
             previewTextArea.setText(pasta.getContent());
-            if (listener != null)
-                listener.select(pasta);
+            if (listener != null) listener.select(pasta);
 
-            if (event.getClickCount() > 1)
-                preview();
+            if (event.getClickCount() > 1) preview();
         }
     }
 
-    public void copyItem () {
+    public void copyItem() {
         Pasta pasta = (Pasta) listView.getSelectionModel().getSelectedItem();
-        if (pasta != null)
-            PastaManager.copyPastaContentsToClipboard(pasta);
+        if (pasta != null) PastaManager.copyPastaContentsToClipboard(pasta);
     }
 
-    public void exportAllPasta () {
+    public void exportAllPasta() {
         pastaManager.exportPasta();
     }
 
-    public void exportPastaJSON () {
+    public void exportPastaJSON() {
         List<Pasta> pastaList = listView.getSelectionModel().getSelectedItems();
         PastaManager.exportPasta(pastaList);
     }
 
-    public void exportPastaTXT () {
+    public void exportPastaTXT() {
         List<Pasta> pastaList = listView.getSelectionModel().getSelectedItems();
         exportPastaTXT(pastaList);
     }
 
-    public void importPasta () {
+    public void importPasta() {
         List<Pasta> importedPastaList = IO.importPasta();
         importPasta(importedPastaList);
     }
 
-    public void importPasta (List<Pasta> importedPastaList) {
+    public void importPasta(List<Pasta> importedPastaList) {
         importedPastaList = pastaManager.importPasta(importedPastaList);
         if (importedPastaList != null) {
             updateFilters();
@@ -127,15 +120,15 @@ public class PastaViewController {
         }
     }
 
-    public void save () {
+    public void save() {
         pastaManager.exportSavedPasta();
     }
 
-    public UniqueArrayList<Pasta> getPastaList () {
+    public UniqueArrayList<Pasta> getPastaList() {
         return pastaManager.getPastaList();
     }
 
-    public void setPastaList (UniqueArrayList<Pasta> pastaList) {
+    public void setPastaList(UniqueArrayList<Pasta> pastaList) {
         pastaManager.clear();
         filterFlowPane.getChildren().clear();
         listView.getItems().clear();
@@ -146,7 +139,7 @@ public class PastaViewController {
         updateFilters();
     }
 
-    public void clearAllPasta () {
+    public void clearAllPasta() {
         int numItems = pastaManager.getPastaList().size();
 
         if (Tools.confirmDelete(numItems)) {
@@ -156,13 +149,13 @@ public class PastaViewController {
         }
     }
 
-    public void clearTagFilters () {
+    public void clearTagFilters() {
         pastaManager.clearTagFilters();
         updateFilters();
         updateFilteredList();
     }
 
-    public void updateFilters () {
+    public void updateFilters() {
         filterFlowPane.getChildren().clear();
 
         for (String tag : pastaManager.getTagList()) {
@@ -173,74 +166,76 @@ public class PastaViewController {
         }
     }
 
-    public void matchAnyTag () {
+    public void matchAnyTag() {
         pastaManager.setAnyTag(true);
         updateFilteredList();
     }
 
-    public void matchAllTag () {
+    public void matchAllTag() {
         pastaManager.setAnyTag(false);
         updateFilteredList();
     }
 
-    private void onTagChanged (CheckBox cb) {
+    private void onTagChanged(CheckBox cb) {
 
         boolean changed;
-        if (cb.isSelected())
-            changed = pastaManager.addFilterTag(cb.getText());
-        else
-            changed = pastaManager.removeFilterTag(cb.getText());
+        if (cb.isSelected()) changed = pastaManager.addFilterTag(cb.getText());
+        else changed = pastaManager.removeFilterTag(cb.getText());
 
-        if (changed)
-            updateFilteredList();
+        if (changed) updateFilteredList();
     }
 
-    public void refreshListView () {
+    public void refreshListView() {
         listView.refresh();
     }
 
-    private void updateFilteredList () {
-        //pastaManager.updateFilteredList(); //TODO probably not needed?
+    private void updateFilteredList() {
+        // pastaManager.updateFilteredList(); //TODO probably not needed?
 
         listView.getItems().clear();
         listView.getItems().addAll(pastaManager.getFilteredPastaList());
     }
 
-    public void delete () {
+    public void delete() {
         List<Pasta> selectedItems = listView.getSelectionModel().getSelectedItems();
         int numberOfItems = selectedItems.size();
         if (numberOfItems > 1) {
-            String contentText = "Really delete all selected Pasta? There are currently " +
-                    numberOfItems + " items selected.";
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, contentText, ButtonType.OK, ButtonType.CANCEL);
+            String contentText =
+                    "Really delete all selected Pasta? There are currently "
+                            + numberOfItems
+                            + " items selected.";
+            Alert alert =
+                    new Alert(
+                            Alert.AlertType.CONFIRMATION,
+                            contentText,
+                            ButtonType.OK,
+                            ButtonType.CANCEL);
             alert.setHeaderText("Really delete all selected Pasta?");
 
             Optional<ButtonType> result = alert.showAndWait();
-            if (!result.isPresent() || result.get() != ButtonType.OK)
-                return;
+            if (!result.isPresent() || result.get() != ButtonType.OK) return;
         }
 
         pastaManager.removePasta(selectedItems);
         listView.getItems().removeAll(selectedItems);
     }
 
-    public void preview () {
+    public void preview() {
         Pasta pasta = (Pasta) listView.getSelectionModel().getSelectedItem();
-        if (pasta != null)
-            PastaManager.preview(pasta);
+        if (pasta != null) PastaManager.preview(pasta);
     }
 
-    public void toggleNotTag (Event event) {
+    public void toggleNotTag(Event event) {
         CheckBox cb = (CheckBox) event.getSource();
         pastaManager.setNegate(cb.isSelected());
         updateFilteredList();
     }
 
-    public PastaManager getPastaManager () {
+    public PastaManager getPastaManager() {
         return pastaManager;
     }
 
-    public void toggleCurrentAssignmentOnly (Event event) {
+    public void toggleCurrentAssignmentOnly(Event event) {
         ToggleButton toggleButton = (ToggleButton) event.getSource();
 
         if (toggleButton.isSelected()) {
@@ -252,7 +247,7 @@ public class PastaViewController {
         updateFilteredList();
     }
 
-    public Pasta createNew () {
+    public Pasta createNew() {
         Pasta newPasta = pastaManager.createNew();
         listView.getItems().remove(newPasta);
         listView.getItems().add(0, newPasta);
@@ -265,29 +260,27 @@ public class PastaViewController {
     // Interface declaration
     // ====================================================
 
-    /**
-     * Listener interface for the controller.
-     */
+    /** Listener interface for the controller. */
     public interface PastaControllerListener {
         /**
          * Called when an item is selected.
          *
          * @param pasta The selected item.
          */
-        void select (Pasta pasta);
+        void select(Pasta pasta);
 
         /**
          * Called to quick insert an item.
          *
          * @param pasta The selected item
          */
-        void quickInsert (Pasta pasta);
+        void quickInsert(Pasta pasta);
 
         /**
          * Called {@link #toggleCurrentAssignmentOnly} invocation.
          *
          * @return The assignment to filter for.
          */
-        String getCurrentAssignment ();
+        String getCurrentAssignment();
     }
 }

@@ -17,11 +17,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-/**
- * @author Richard Sundqvist
- */
+/** @author Richard Sundqvist */
 public class PastaManager {
-    //region Field
+    // region Field
     // ================================================================================= //
     // Field
     // ================================================================================= //
@@ -32,11 +30,11 @@ public class PastaManager {
     private UniqueArrayList<String> assignmentTagList = new UniqueArrayList<>();
     private String currentAssignment = null;
 
-    private boolean anyTag = true; //Determines if UNION or INTERSECT filtering is used.
-    private boolean negate = false; //Exclude all items which match (negation/complement).
-    //endregion
+    private boolean anyTag = true; // Determines if UNION or INTERSECT filtering is used.
+    private boolean negate = false; // Exclude all items which match (negation/complement).
+    // endregion
 
-    //region Control
+    // region Control
     // ================================================================================= //
     // Control
     // ================================================================================= //
@@ -47,11 +45,10 @@ public class PastaManager {
      * @param pastaList The list to gather from.
      * @return A single string of content.
      */
-    public static String gatherContent (List<Pasta> pastaList) {
+    public static String gatherContent(List<Pasta> pastaList) {
         StringBuilder sb = new StringBuilder();
 
-        for (Pasta pasta : pastaList)
-            sb.append(pasta.getContent().trim() + "\n\n");
+        for (Pasta pasta : pastaList) sb.append(pasta.getContent().trim() + "\n\n");
 
         return sb.toString();
     }
@@ -61,7 +58,7 @@ public class PastaManager {
      *
      * @param pasta The Pasta to preview.
      */
-    public static void preview (Pasta pasta) {
+    public static void preview(Pasta pasta) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.getButtonTypes().clear();
         alert.getButtonTypes().add(ButtonType.CLOSE);
@@ -79,7 +76,7 @@ public class PastaManager {
         GridPane.setVgrow(jca, Priority.ALWAYS);
         GridPane.setHgrow(jca, Priority.ALWAYS);
 
-        //Content tags
+        // Content tags
         Label contentLabel = new Label("Content tags:         ");
         contentLabel.setMaxHeight(Double.MAX_VALUE);
 
@@ -98,7 +95,7 @@ public class PastaManager {
         contentTagsHBox.getChildren().addAll(contentLabel, contentTagsTextField);
         HBox.setHgrow(contentTagsTextField, Priority.ALWAYS);
 
-        //Assignment tags
+        // Assignment tags
         Label assignmentLabel = new Label("Assignment tags:   ");
         assignmentLabel.setMaxHeight(Double.MAX_VALUE);
 
@@ -107,7 +104,8 @@ public class PastaManager {
             pastaAssignmentTags = "<no tags>";
         } else {
             pastaAssignmentTags = pasta.getAssignmentTags().toString();
-            pastaAssignmentTags = pastaAssignmentTags.substring(1, pastaAssignmentTags.length() - 1);
+            pastaAssignmentTags =
+                    pastaAssignmentTags.substring(1, pastaAssignmentTags.length() - 1);
         }
         TextField assignmentTagsTextField = new TextField(pastaAssignmentTags);
         assignmentTagsTextField.setEditable(false);
@@ -117,7 +115,7 @@ public class PastaManager {
         assignmentTagsHBox.getChildren().addAll(assignmentLabel, assignmentTagsTextField);
         HBox.setHgrow(assignmentTagsTextField, Priority.ALWAYS);
 
-        //Add children
+        // Add children
         GridPane expContent = new GridPane();
         expContent.setMaxWidth(Double.MAX_VALUE);
         expContent.add(new VirtualizedScrollPane<>(jca), 0, 0);
@@ -137,12 +135,11 @@ public class PastaManager {
      * @param pasta The pasta to copy.
      * @return {@code true} if content was copied to clipboard.
      */
-    public static boolean copyPastaContentsToClipboard (Pasta pasta) {
+    public static boolean copyPastaContentsToClipboard(Pasta pasta) {
         if (pasta == null) return false;
 
         String content = pasta.getContent();
-        if (content == null || content.isEmpty())
-            return false;
+        if (content == null || content.isEmpty()) return false;
 
         Clipboard clipboard = Clipboard.getSystemClipboard();
         ClipboardContent clipboardContent = new ClipboardContent();
@@ -157,8 +154,8 @@ public class PastaManager {
      *
      * @param exportPastaList The list to export.
      */
-    public static void exportPasta (List<Pasta> exportPastaList) {
-        IO.exportPastaJSON(Tools.SAVE_FOLDER, exportPastaList);
+    public static void exportPasta(List<Pasta> exportPastaList) {
+        IO.exportPastaJSON(null, exportPastaList);
     }
 
     /**
@@ -166,14 +163,12 @@ public class PastaManager {
      *
      * @param pasta The pasta item to export.
      */
-    public static void exportPasta (Pasta pasta) {
-        IO.exportPastaJSON(Tools.SAVE_FOLDER, pasta);
+    public static void exportPasta(Pasta pasta) {
+        IO.exportPastaJSON(null, pasta);
     }
 
-    /**
-     * Clear the manager.
-     */
-    public void clear () {
+    /** Clear the manager. */
+    public void clear() {
         pastaList.clear();
         filteredPastaList.clear();
         tagList.clear();
@@ -181,10 +176,8 @@ public class PastaManager {
         activeTagList.clear();
     }
 
-    /**
-     * Clear tag filters.
-     */
-    public void clearTagFilters () {
+    /** Clear tag filters. */
+    public void clearTagFilters() {
         activeTagList.clear();
         filteredPastaList.addAll(pastaList);
     }
@@ -194,7 +187,7 @@ public class PastaManager {
      *
      * @return A single string of content.
      */
-    public String gatherContent () {
+    public String gatherContent() {
         return gatherContent(pastaList);
     }
 
@@ -204,12 +197,10 @@ public class PastaManager {
      * @param pastaList A list of Pasta.
      * @return {@code true} if filters were added.
      */
-    public boolean addContentTags (List<Pasta> pastaList) {
+    public boolean addContentTags(List<Pasta> pastaList) {
         boolean changed = false;
 
-        for (Pasta pasta : pastaList)
-            if (tagList.addAll(pasta.getContentTags()))
-                changed = true;
+        for (Pasta pasta : pastaList) if (tagList.addAll(pasta.getContentTags())) changed = true;
 
         return changed;
     }
@@ -220,20 +211,17 @@ public class PastaManager {
      * @param pastaList A list of Pasta.
      * @return {@code true} if filters were added.
      */
-    public boolean addAssignmentTags (List<Pasta> pastaList) {
+    public boolean addAssignmentTags(List<Pasta> pastaList) {
         boolean changed = false;
 
         for (Pasta pasta : pastaList)
-            if (assignmentTagList.addAll(pasta.getAssignmentTags()))
-                changed = true;
+            if (assignmentTagList.addAll(pasta.getAssignmentTags())) changed = true;
 
         return changed;
     }
 
-    /**
-     * Force updating of filters of items contained in {@link #pastaList}
-     */
-    public void updateTags () {
+    /** Force updating of filters of items contained in {@link #pastaList} */
+    public void updateTags() {
         tagList.clear();
         assignmentTagList.clear();
         filteredPastaList.clear();
@@ -243,14 +231,15 @@ public class PastaManager {
     }
 
     /**
-     * Update the filtered list. Will search {@link Pasta#content}, {@link Pasta#title}, {@link Pasta#contentTags} and
-     * {@link Pasta#assignmentTags}, ignoring tag settings.
+     * Update the filtered list. Will search {@link Pasta#content}, {@link Pasta#title}, {@link
+     * Pasta#contentTags} and {@link Pasta#assignmentTags}, ignoring tag settings.
      */
-    public void search (List<String> searchTerms) {
+    public void search(List<String> searchTerms) {
         filteredPastaList.clear();
 
-        if (searchTerms == null || searchTerms.isEmpty() ||
-                (searchTerms.size() == 1 && searchTerms.get(0).isEmpty())) {
+        if (searchTerms == null
+                || searchTerms.isEmpty()
+                || (searchTerms.size() == 1 && searchTerms.get(0).isEmpty())) {
             filteredPastaList.addAll(pastaList);
         } else {
             List<Pasta> filteredList = PastaFilter.search(pastaList, searchTerms);
@@ -259,10 +248,10 @@ public class PastaManager {
     }
 
     /**
-     * Update the filtered lists. If {@link #currentAssignment} is set, all items which do not match the current currentAssignment
-     * will be excluded from the filtered list as well.
+     * Update the filtered lists. If {@link #currentAssignment} is set, all items which do not match
+     * the current currentAssignment will be excluded from the filtered list as well.
      */
-    public void updateFilteredList () {
+    public void updateFilteredList() {
         filteredPastaList.clear();
 
         if (activeTagList.isEmpty() && currentAssignment == null) {
@@ -287,9 +276,9 @@ public class PastaManager {
 
         this.filteredPastaList.addAll(filteredPastaList);
     }
-    //endregion
+    // endregion
 
-    //region Import/export
+    // region Import/export
     // ================================================================================= //
     // Import/export
     // ================================================================================= //
@@ -300,7 +289,7 @@ public class PastaManager {
      * @param pastaList The pasta to remove.
      * @return {@code} true if pasta was removed, false otherwise.
      */
-    public boolean removePasta (List<Pasta> pastaList) {
+    public boolean removePasta(List<Pasta> pastaList) {
         boolean changed = this.pastaList.removeAll(pastaList);
 
         if (changed) {
@@ -311,44 +300,42 @@ public class PastaManager {
         return changed;
     }
 
-    private void removeContentTags (List<Pasta> removedPastaList) {
+    private void removeContentTags(List<Pasta> removedPastaList) {
         UniqueArrayList<String> rejectedItems = new UniqueArrayList<>();
 
-        for (Pasta pasta : removedPastaList)
-            rejectedItems.addAll(pasta.getContentTags());
+        for (Pasta pasta : removedPastaList) rejectedItems.addAll(pasta.getContentTags());
 
-        for (Pasta pasta : pastaList)
-            rejectedItems.removeAll(pasta.getContentTags());
+        for (Pasta pasta : pastaList) rejectedItems.removeAll(pasta.getContentTags());
 
         tagList.removeAll(rejectedItems);
     }
 
-    private void removeAssignmentTags (List<Pasta> removedPastaList) {
+    private void removeAssignmentTags(List<Pasta> removedPastaList) {
         UniqueArrayList<String> rejectedItems = new UniqueArrayList<>();
 
-        for (Pasta pasta : removedPastaList)
-            rejectedItems.addAll(pasta.getAssignmentTags());
+        for (Pasta pasta : removedPastaList) rejectedItems.addAll(pasta.getAssignmentTags());
 
-        for (Pasta pasta : pastaList)
-            rejectedItems.removeAll(pasta.getAssignmentTags());
+        for (Pasta pasta : pastaList) rejectedItems.removeAll(pasta.getAssignmentTags());
 
         tagList.removeAll(rejectedItems);
     }
 
     /**
-     * Attempt to import Pasta from the default location, defined by {@link Tools#AUTO_SAVE_PASTA_FILE}.
+     * Attempt to import Pasta from the default location, defined by {@link
+     * Tools#AUTO_SAVE_PASTA_FILE}.
      *
      * @return The imported pasta, or {@code null} if nothing was imported.
      */
-    public List<Pasta> importSavedPasta () {
+    public List<Pasta> importSavedPasta() {
         List<Pasta> importedPastaList = Tools.importSavedPasta();
         return importPasta(importedPastaList);
     }
 
     /**
-     * Attempt to export Pasta to the default location, defined by {@link Tools#AUTO_SAVE_PASTA_FILE}.
+     * Attempt to export Pasta to the default location, defined by {@link
+     * Tools#AUTO_SAVE_PASTA_FILE}.
      */
-    public void exportSavedPasta () {
+    public void exportSavedPasta() {
         Tools.exportSavedPasta(pastaList);
     }
 
@@ -358,9 +345,8 @@ public class PastaManager {
      * @param importedPastaList The list of Pasta to import.
      * @return The imported pasta, or {@code null} if nothing was imported.
      */
-    public List<Pasta> importPasta (List<Pasta> importedPastaList) {
-        if (importedPastaList == null || importedPastaList.isEmpty())
-            return null;
+    public List<Pasta> importPasta(List<Pasta> importedPastaList) {
+        if (importedPastaList == null || importedPastaList.isEmpty()) return null;
 
         importedPastaList = new ArrayList<>(importedPastaList);
         importedPastaList.removeAll(pastaList);
@@ -377,25 +363,22 @@ public class PastaManager {
      *
      * @return The imported pasta, or {@code null} if nothing was imported.
      */
-    public List<Pasta> importPasta () {
+    public List<Pasta> importPasta() {
         List<Pasta> importedPastaList = IO.importPasta();
         return importPasta(importedPastaList);
     }
 
-    /**
-     * Displays a dialog and attempts to export the pasta maintained by the manager.
-     */
-    public void exportPasta () {
+    /** Displays a dialog and attempts to export the pasta maintained by the manager. */
+    public void exportPasta() {
         exportPasta(pastaList);
     }
-    //endregion
+    // endregion
 
-
-    //region Getters and setters
+    // region Getters and setters
     // ================================================================================= //
     // Getters and setters
     // ================================================================================= //
-    public UniqueArrayList<String> getActiveTagList () {
+    public UniqueArrayList<String> getActiveTagList() {
         return activeTagList;
     }
 
@@ -405,11 +388,10 @@ public class PastaManager {
      * @param tag The tag to add.
      * @return {@code true} if the list of filters changed.
      */
-    public boolean addFilterTag (String tag) {
+    public boolean addFilterTag(String tag) {
         boolean changed = activeTagList.add(tag);
 
-        if (changed)
-            updateFilteredList();
+        if (changed) updateFilteredList();
 
         return changed;
     }
@@ -419,13 +401,14 @@ public class PastaManager {
      *
      * @return A new Pasta item.
      */
-    public Pasta createNew () {
+    public Pasta createNew() {
         Pasta newPasta = new Pasta();
 
         List<Pasta> newList = new ArrayList<>(1);
         newList.add(newPasta);
 
-        pastaList.remove(newPasta); //Ensure that the newly created item is the contained in pastaList
+        pastaList.remove(
+                newPasta); // Ensure that the newly created item is the contained in pastaList
         importPasta(newList);
 
         return newPasta;
@@ -437,20 +420,19 @@ public class PastaManager {
      * @param tag The tag to add.
      * @return {@code true} if the list of filters changed.
      */
-    public boolean removeFilterTag (String tag) {
+    public boolean removeFilterTag(String tag) {
         boolean changed = activeTagList.remove(tag);
 
-        if (changed)
-            updateFilteredList();
+        if (changed) updateFilteredList();
 
         return changed;
     }
 
-    public UniqueArrayList<Pasta> getPastaList () {
+    public UniqueArrayList<Pasta> getPastaList() {
         return pastaList;
     }
 
-    public void setPastaList (UniqueArrayList<Pasta> pastaList) {
+    public void setPastaList(UniqueArrayList<Pasta> pastaList) {
         clear();
         this.pastaList = pastaList;
         Collections.sort(pastaList);
@@ -463,7 +445,7 @@ public class PastaManager {
      *
      * @return A list of content tags.
      */
-    public List<String> getTagList () {
+    public List<String> getTagList() {
         return Collections.unmodifiableList(tagList);
     }
 
@@ -472,7 +454,7 @@ public class PastaManager {
      *
      * @return A list of assignment tags.
      */
-    public List<String> getAssignmentTagList () {
+    public List<String> getAssignmentTagList() {
         return Collections.unmodifiableList(assignmentTagList);
     }
 
@@ -481,7 +463,7 @@ public class PastaManager {
      *
      * @return The filtered list.
      */
-    public List<Pasta> getFilteredPastaList () {
+    public List<Pasta> getFilteredPastaList() {
         return Collections.unmodifiableList(filteredPastaList);
     }
 
@@ -490,16 +472,18 @@ public class PastaManager {
      *
      * @return {@code true} if using union filtering, {@code false} otherwise.
      */
-    public boolean isAnyTag () {
+    public boolean isAnyTag() {
         return anyTag;
     }
 
     /**
-     * Update the filtering mode for the manager. Will call {@link #updateFilteredList()} if the mode changed.
+     * Update the filtering mode for the manager. Will call {@link #updateFilteredList()} if the
+     * mode changed.
      *
-     * @param anyTag The new filtering mode. A {@code true} value implies union, {@code false} implies intersect.
+     * @param anyTag The new filtering mode. A {@code true} value implies union, {@code false}
+     *     implies intersect.
      */
-    public void setAnyTag (boolean anyTag) {
+    public void setAnyTag(boolean anyTag) {
         if (this.anyTag != anyTag) {
             this.anyTag = anyTag;
             updateFilteredList();
@@ -511,16 +495,17 @@ public class PastaManager {
      *
      * @return {@code true} if the search criteria are negated.
      */
-    public boolean isNegate () {
+    public boolean isNegate() {
         return negate;
     }
 
     /**
-     * Update the filtering mode for the manager. Will call {@link #updateFilteredList()} if the mode changed.
+     * Update the filtering mode for the manager. Will call {@link #updateFilteredList()} if the
+     * mode changed.
      *
      * @param negate The new filtering negation mode.
      */
-    public void setNegate (boolean negate) {
+    public void setNegate(boolean negate) {
         if (this.negate != negate) {
             this.negate = negate;
             updateFilteredList();
@@ -532,7 +517,7 @@ public class PastaManager {
      *
      * @return The currentAssignment.
      */
-    public String getAssignment () {
+    public String getAssignment() {
         return currentAssignment;
     }
 
@@ -541,11 +526,10 @@ public class PastaManager {
      *
      * @param assignment The new currentAssignment.
      */
-    public void setAssignment (String assignment) {
-        if (assignment == null || assignment.isEmpty())
-            assignment = null;
+    public void setAssignment(String assignment) {
+        if (assignment == null || assignment.isEmpty()) assignment = null;
         this.currentAssignment = assignment;
         updateFilteredList();
     }
-    //endregion
+    // endregion
 }

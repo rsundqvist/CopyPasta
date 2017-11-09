@@ -18,32 +18,41 @@ import java.net.UnknownHostException;
 import java.util.List;
 import java.util.Optional;
 
-/**
- * Created by Richard Sundqvist on 19/02/2017.
- */
+/** Created by Richard Sundqvist on 19/02/2017. */
 public abstract class Tools {
+    // Work data
+    public static File AUTO_SAVE_PASTA_FILE = null;
+    public static File AUTO_SAVE_TEMPLATE_FILE = null;
+    public static File AUTO_SAVE_FEEDBACK_FILE = null;
+    public static File GROUP_IMPORT_FILE_PATTERNS = null;
 
-    //public static final File IMPORT_TEMP_FOLDER = create("import-temp", null);
-    public static final File SAVE_FOLDER = create("data", null);
-    public static final File PREVIEW_TXT = Tools.create("data/auto", "preview.txt");
-    ;
-    public static final File AUTO_SAVE_PASTA_FILE = create("data/auto", "pasta.json");
-    public static final File AUTO_SAVE_TEMPLATE_FILE = create("data/auto", "template.json");
-    public static final File AUTO_SAVE_FEEDBACK_FILE = create("data/auto", "feedback.json");
-    public static final File GROUP_IMPORT_FILE_PATTERNS = create("data/auto", "group_file_patterns.txt");
-    public static final File IS_RUNNING_FILE = create("data/auto", "isrunning");
-    public static final File SETTINGS_FILE = create("data/auto", "settings");
+    // Program data
+    public static final File IS_RUNNING_FILE = create("CopyPasta/data", "isrunning", false);
+    public static final File SETTINGS_FILE = create("CopyPasta/data", "settings", false);
+    public static final File PREVIEW_FILE = Tools.create("CopyPasta/data", "preview.txt", false);
 
     public static final String VERSION = "PRERELEASE Rev7.3";
 
-    private Tools () {
+    private Tools() {}
+
+    public static void initializeWorkspaceFiles() {
+        AUTO_SAVE_PASTA_FILE = create("CopyPasta/workspace", "pasta.json", true);
+        AUTO_SAVE_TEMPLATE_FILE = create("CopyPasta/workspace", "template.json", true);
+        AUTO_SAVE_FEEDBACK_FILE = create("CopyPasta/workspace", "feedback.json", true);
+        GROUP_IMPORT_FILE_PATTERNS = create("CopyPasta/workspace", "group_file_patterns.txt", true);
     }
 
-    public static File create (String dir, String file) {
-        File userDir = new File(System.getProperty("user.dir"));
-        File d = new File(userDir, dir);
-        if (!d.exists())
-            d.mkdirs();
+    public static File create(String dir, String file, boolean workspace) {
+        File baseDir;
+
+        if (workspace && !Settings.WORKSPACE_LOCATION.startsWith("user.")) {
+            baseDir = new File(Settings.WORKSPACE_LOCATION);
+        } else {
+            baseDir = new File(System.getProperty("user.home"));
+        }
+
+        File d = new File(baseDir, dir);
+        if (!d.exists()) d.mkdirs();
 
         if (file != null) {
             File f = new File(d, file);
@@ -60,45 +69,43 @@ public abstract class Tools {
             return d;
         }
     }
-    //Files and directories
+    // Files and directories
 
-
-    //region Pasta
+    // region Pasta
     // ================================================================================= //
     // Pasta
     // ================================================================================= //
-    public static void exportSavedPasta (List<Pasta> pastaList) {
+    public static void exportSavedPasta(List<Pasta> pastaList) {
         IO.exportPastaJSON(pastaList, AUTO_SAVE_PASTA_FILE);
     }
 
-    public static List<Pasta> importSavedPasta () {
+    public static List<Pasta> importSavedPasta() {
         return IO.importPasta(AUTO_SAVE_PASTA_FILE);
     }
-    //endregion
+    // endregion
 
-
-    //region Feedback
+    // region Feedback
     // ================================================================================= //
     // Feedback
     // ================================================================================= //
-    public static void exportSavedFeedback (List<Feedback> feedbackList) {
+    public static void exportSavedFeedback(List<Feedback> feedbackList) {
         IO.exportFeedbackAsJson(feedbackList, AUTO_SAVE_FEEDBACK_FILE);
     }
 
-    public static List<Feedback> importSavedFeedback () {
+    public static List<Feedback> importSavedFeedback() {
         return IO.importFeedback(AUTO_SAVE_FEEDBACK_FILE);
     }
 
-    public static void exportSavedTemplate (Feedback template) {
+    public static void exportSavedTemplate(Feedback template) {
         IO.exportSingleFeedbackAsJson(template, AUTO_SAVE_TEMPLATE_FILE);
     }
 
-    public static Feedback importSavedTemplate () {
+    public static Feedback importSavedTemplate() {
         return IO.importFeedbackSingle(AUTO_SAVE_TEMPLATE_FILE);
     }
-    //endregion
+    // endregion
 
-    //region Miscellaneous
+    // region Miscellaneous
     // ================================================================================= //
     // Miscellaneous
     // ================================================================================= //
@@ -108,7 +115,7 @@ public abstract class Tools {
      *
      * @return The computer name, or {@code null} if an exception occurred.
      */
-    public static String getComputerName () {
+    public static String getComputerName() {
         String computerName = null;
         try {
             computerName = InetAddress.getLocalHost().getHostName();
@@ -124,17 +131,24 @@ public abstract class Tools {
      * @param numberOfItems The number of items being deleted.
      * @return {@code true} if user wants to delete items, {@code false} otherwise.
      */
-    public static boolean confirmDelete (int numberOfItems) {
-        String contentText = "Really delete all selected elements? There are currently " +
-                numberOfItems + " items selected.";
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, contentText, ButtonType.OK, ButtonType.CANCEL);
+    public static boolean confirmDelete(int numberOfItems) {
+        String contentText =
+                "Really delete all selected elements? There are currently "
+                        + numberOfItems
+                        + " items selected.";
+        Alert alert =
+                new Alert(
+                        Alert.AlertType.CONFIRMATION,
+                        contentText,
+                        ButtonType.OK,
+                        ButtonType.CANCEL);
         alert.setHeaderText("Really delete all selected items?");
 
         Optional<ButtonType> result = alert.showAndWait();
         return result.isPresent() && result.get() == ButtonType.OK;
     }
 
-    public static void flashNode (Node node) {
+    public static void flashNode(Node node) {
         FadeTransition ft = new FadeTransition(Duration.millis(2000), node);
         ft.setFromValue(1.0);
         ft.setToValue(0.0);
@@ -148,5 +162,5 @@ public abstract class Tools {
         ParallelTransition pt = new ParallelTransition(ft, st);
         pt.play();
     }
-    //endregion
+    // endregion
 }

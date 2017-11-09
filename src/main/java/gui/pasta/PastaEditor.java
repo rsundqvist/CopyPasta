@@ -14,14 +14,12 @@ import model.UniqueArrayList;
 
 import java.util.List;
 
-/**
- * Created by Richard Sundqvist on 20/02/2017.
- */
+/** Created by Richard Sundqvist on 20/02/2017. */
 public class PastaEditor {
     private final Stage stage;
     private final PastaEditorController controller;
 
-    public PastaEditor (List<Pasta> pastaList, String assignment) {
+    public PastaEditor(List<Pasta> pastaList, String assignment) {
 
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/pastaEditor.fxml"));
         Parent root = null;
@@ -47,7 +45,7 @@ public class PastaEditor {
         controller.initialize(pastaList, assignment);
     }
 
-    public UniqueArrayList<Pasta> showAndWait () {
+    public UniqueArrayList<Pasta> showAndWait() {
         stage.showAndWait();
         return controller.getPastaList();
     }

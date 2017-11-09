@@ -25,6 +25,8 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.text.TextFlow?>
 <TabPane fx:id="rootTabPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
          fx:controller="gui.feedback.FeedbackViewController">
     <tabs>
@@ -61,16 +63,16 @@
                                         onAction="#exportTemplate" text="Export Template"/>
                                 <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false"
                                         onAction="#importTemplate" text="Import Template"/>
-                                <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="Name">
+                                <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="Signature">
                                     <font>
                                         <Font name="System Bold" size="12.0"/>
                                     </font>
                                 </Label>
-                                <TextField fx:id="teacherField" promptText="E.g.: Richard Sundqvist">
-                                    <VBox.margin>
-                                        <Insets/>
-                                    </VBox.margin>
-                                </TextField>
+                                <TextArea fx:id="teacherField" maxHeight="1.7976931348623157E308"
+                                          maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity"
+                                          prefHeight="60.0" prefWidth="150.0" promptText="Replaces the %SIGNATURE% tag."
+                                          text="Sincerely,&#10;Richard Sundqvist&#10;richard.sundqvist@live.se"
+                                          VBox.vgrow="SOMETIMES"/>
                                 <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="All Feedback">
                                     <font>
                                         <Font name="System Bold" size="12.0"/>
@@ -111,6 +113,13 @@
                                         </ContextMenu>
                                     </contextMenu>
                                 </ListView>
+                                <TextFlow maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+                                          minWidth="-Infinity" prefHeight="35.0" prefWidth="160.0" VBox.vgrow="NEVER">
+                                    <children>
+                                        <Text strokeType="OUTSIDE" strokeWidth="0.0"
+                                              text="Click a group to it add to the &quot;Student Feedback&quot; panel."/>
+                                    </children>
+                                </TextFlow>
                                 <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false"
                                         onAction="#exportAllFeedback" text="Export All">
                                     <tooltip>
@@ -148,7 +157,7 @@
                                         <TextArea fx:id="templateTextArea" maxHeight="1.7976931348623157E308"
                                                   maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0"
                                                   prefHeight="371.0" prefWidth="261.0"
-                                                  promptText="\%HEADER% will be replaced by the contents of the pane above. You may use wildcards in the header as well. %GROUP% will be replaced by the student group number. %TEACHER% will be replaced by the teacher's name."/>
+                                                  promptText="\\%HEADER% will be replaced by the contents of the pane above. You may use wildcards in the header as well. %GROUP% will be replaced by the student group number."/>
                                     </content>
                                 </TitledPane>
                                 <TitledPane animated="false" expanded="false" maxHeight="1.7976931348623157E308"

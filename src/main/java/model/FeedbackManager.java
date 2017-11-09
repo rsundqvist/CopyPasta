@@ -5,9 +5,6 @@ import gui.Tools;
 import gui.feedback.JavaCodeArea;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.TextArea;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Priority;
 import org.fxmisc.flowless.VirtualizedScrollPane;
 
 import java.awt.*;
@@ -460,7 +457,7 @@ public class FeedbackManager {
         feedback.setAssignment(template.getAssignment());
         feedback.setHeader(template.getHeader());
         feedback.setFooter(template.getFooter());
-        feedback.setTeacher(template.getTeacher());
+        feedback.setSignature(template.getSignature());
     }
     //endregion
 }

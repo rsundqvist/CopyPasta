@@ -19,7 +19,7 @@ public class Feedback implements Comparable<Feedback> {
     // ================================================================================= //
     public transient static final String HEADER = "%HEADER%";
     public transient static final String FOOTER = "%FOOTER%";
-    public transient static final String NAME = "%NAME%";
+    public transient static final String SIGNATURE = "%SIGNATURE%";
     public transient static final String GROUP = "%GROUP%";
     public transient static final String FILE = "%FILE: <file>%";
     public transient static final String FILE_REGEX = "%[ \t]*([Ff]ile|FILE):[ \t]*\\S+[ \t]*%";
@@ -34,7 +34,7 @@ public class Feedback implements Comparable<Feedback> {
     // ================================================================================= //
     // Field
     // ================================================================================= //
-    private String content, header, footer, teacher, group, assignment;
+    private String content, header, footer, signature, group, assignment;
     private final Map<String, String> files;
     private boolean done;
     //endregion
@@ -48,7 +48,7 @@ public class Feedback implements Comparable<Feedback> {
         content = "";
         header = "";
         footer = "";
-        teacher = "";
+        signature = "";
         group = "";
         assignment = "";
         files = new HashMap<>();
@@ -64,7 +64,7 @@ public class Feedback implements Comparable<Feedback> {
         content = orig.content;
         header = orig.header;
         footer = orig.footer;
-        teacher = orig.teacher;
+        signature = orig.signature;
         group = orig.group;
         files = new HashMap<>(orig.files); //Shallow copy
         done = orig.done;
@@ -160,7 +160,7 @@ public class Feedback implements Comparable<Feedback> {
             s = s.replace(FOOTER, footer);
         }
 
-        s = s.replace(NAME, teacher);
+        s = s.replace(SIGNATURE, signature);
         s = s.replace(GROUP, group);
         if (replaceTabs)
             s = s.replace("\t", "    ");
@@ -255,21 +255,21 @@ public class Feedback implements Comparable<Feedback> {
 
 
     /**
-     * Gets the teacher name value, which will replace the {@link #NAME} wildcard.
+     * Gets the signature name value, which will replace the {@link #SIGNATURE} wildcard.
      *
-     * @return new teacher name.
+     * @return new signature name.
      */
-    public String getTeacher () {
-        return teacher;
+    public String getSignature () {
+        return signature;
     }
 
     /**
-     * Sets the teacher name value, which will replace the {@link #NAME} wildcard.
+     * Sets the signature name value, which will replace the {@link #SIGNATURE} wildcard.
      *
-     * @param teacher The new teacher name.
+     * @param signature The new signature name.
      */
-    public void setTeacher (String teacher) {
-        this.teacher = teacher;
+    public void setSignature (String signature) {
+        this.signature = signature;
     }
 
     /**

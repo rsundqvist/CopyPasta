@@ -53,13 +53,13 @@ public class FeedbackViewController {
     @FXML
     private Tab groupTab, setupTab, progressTab;
     @FXML
-    private TextField studentGroupField, assignmentField, teacherField;
+    private TextField studentGroupField, assignmentField;
     @FXML
     private Label progressLabel;
     @FXML
     private TabPane feedbackTabPane, rootTabPane;
     @FXML
-    private TextArea templateTextArea, templateHeaderTextArea, templateFooterTextArea;
+    private TextArea teacherField, templateTextArea, templateHeaderTextArea, templateFooterTextArea;
     @FXML
     /**
      * Container for the actual feedback tabs.
@@ -168,7 +168,7 @@ public class FeedbackViewController {
         template.setContent(templateTextArea.getText());
         template.setHeader(templateHeaderTextArea.getText());
         template.setFooter(templateFooterTextArea.getText());
-        template.setTeacher(teacherField.getText());
+        template.setSignature(teacherField.getText());
         template.setAssignment(getAssignment());
         feedbackManager.setTemplate(template);
     }
@@ -463,7 +463,7 @@ public class FeedbackViewController {
 
     private void updateTemplate (Feedback template) {
         feedbackManager.setTemplate(template);
-        teacherField.setText((template.getTeacher()));
+        teacherField.setText((template.getSignature()));
         assignmentField.setText(template.getAssignment());
         templateTextArea.setText(template.getContent());
         templateHeaderTextArea.setText(template.getHeader());
@@ -534,7 +534,7 @@ public class FeedbackViewController {
 
         //Feedback
         Feedback template = new Feedback();
-        template.setTeacher(teacherField.getText());
+        template.setSignature(teacherField.getText());
         template.setContent(templateTextArea.getText());
         template.setHeader(templateHeaderTextArea.getText());
         template.setFooter(templateFooterTextArea.getText());

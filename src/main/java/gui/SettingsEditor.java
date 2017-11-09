@@ -42,7 +42,8 @@ public class SettingsEditor {
         controller.initialize(stage);
     }
 
-    public void showAndWait(){
-        stage.showAndWait();;
+    public void showAndWait () {
+        stage.showAndWait();
+        ;
     }
 }

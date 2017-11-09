@@ -65,13 +65,16 @@ public abstract class Settings {
     public static void loadFromProperties () {
         try {
             USE_NATIVE_TXT_EDITOR = Boolean.parseBoolean((String) properties.get(use_native_txt_editor));
+
             String s = (String) properties.get(startup_version_check);
             if (s != null && !s.isEmpty())
                 STARTUP_VERSION_CHECK = Boolean.parseBoolean(s);
 
             WORKSPACE_LOCATION = (String) properties.get(workspace_location);
-            if (WORKSPACE_LOCATION == null || WORKSPACE_LOCATION.equals("null"))
+
+            if (WORKSPACE_LOCATION == null || WORKSPACE_LOCATION.isEmpty() || WORKSPACE_LOCATION.equals("null"))
                 WORKSPACE_LOCATION = "user.dir";
+
             FILE_DECORATION_WIDTH = Integer.parseInt((String) properties.get(file_decoration_width));
         } catch (Exception e) {
             IO.showExceptionAlert(e);

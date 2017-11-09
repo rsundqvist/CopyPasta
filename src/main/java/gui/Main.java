@@ -22,6 +22,7 @@ public class Main extends Application {
     @Override
     public void start (Stage primaryStage) throws Exception {
         checkRunning();
+        Settings.loadSettingsFile();
 
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/fxml/main.fxml"));
         Parent root = fxmlLoader.load();
@@ -43,10 +44,10 @@ public class Main extends Application {
     }
 
     public static void checkRunning () {
-        boolean isRunning = Tools.getRunningFile();
+        boolean isRunning = Settings.getRunningFile();
 
         if (isRunning) {
-            System.err.println("Faulty controlfile detected: " + Tools.IS_RUNNING_FILE.getAbsolutePath());
+            System.err.println("Faulty controlfile detected: " + Tools.SETTINGS_FILE.getAbsolutePath());
             ButtonType bt1 = new ButtonType("I understand the risk. Start anyway.");
 
             Alert alert = new Alert(Alert.AlertType.WARNING, "Another instance of CopyPasta appears to be running." +
@@ -63,7 +64,7 @@ public class Main extends Application {
                 System.exit(-1);
             }
         }
-        Tools.setRunningFile(true);
+        Settings.setRunningFile(true);
     }
 
     public void shutdown (Controller controller) {

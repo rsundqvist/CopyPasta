@@ -24,26 +24,19 @@ import java.util.Optional;
 public abstract class Tools {
 
     //public static final File IMPORT_TEMP_FOLDER = create("import-temp", null);
-    public static final File SAVE_FOLDER = create("save", null);
-    public static final File PREVIEW_TXT = Tools.create("save/auto", "preview.txt");
+    public static final File SAVE_FOLDER = create("data", null);
+    public static final File PREVIEW_TXT = Tools.create("data/auto", "preview.txt");
     ;
-    public static final File AUTO_SAVE_PASTA_FILE = create("save/auto", "pasta.json");
-    public static final File AUTO_SAVE_TEMPLATE_FILE = create("save/auto", "template.json");
-    public static final File AUTO_SAVE_FEEDBACK_FILE = create("save/auto", "feedback.json");
-    public static final File GROUP_IMPORT_FILE_PATTERNS = create("save/auto", "group_file_patterns.txt");
-    public static final File IS_RUNNING_FILE = create("/", "isrunning");
+    public static final File AUTO_SAVE_PASTA_FILE = create("data/auto", "pasta.json");
+    public static final File AUTO_SAVE_TEMPLATE_FILE = create("data/auto", "template.json");
+    public static final File AUTO_SAVE_FEEDBACK_FILE = create("data/auto", "feedback.json");
+    public static final File GROUP_IMPORT_FILE_PATTERNS = create("data/auto", "group_file_patterns.txt");
+    public static final File IS_RUNNING_FILE = create("data/auto", "isrunning");
+    public static final File SETTINGS_FILE = create("data/auto", "settings");
 
     public static final String VERSION = "PRERELEASE Rev7.3";
 
     private Tools () {
-    }
-
-    public static void setRunningFile (boolean value) {
-        IO.printStringToFile(value + "", IS_RUNNING_FILE);
-    }
-
-    public static boolean getRunningFile () {
-        return Boolean.parseBoolean(IO.getFileAsString(IS_RUNNING_FILE).replaceAll("\\s+", ""));
     }
 
     public static File create (String dir, String file) {

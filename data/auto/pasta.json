@@ -1,5 +1,18 @@
 [
   {
+    "creationDate": "Nov 8, 2017 6:02:12 PM",
+    "contentTags": [
+      "general",
+      "oop"
+    ],
+    "assignmentTags": [
+      "intro",
+      "leapyear"
+    ],
+    "lastModificationDate": "Nov 8, 2017 6:08:57 PM",
+    "content": "# Att använda två arrayer för skottår/inte skottår är inte särskilt snyggt.\nLägg hellre till en dag om månaden överstiger februari och året som utvärderas är skottår."
+  },
+  {
     "creationDate": "Feb 22, 2017 12:05:06 PM",
     "contentTags": [
       "general"
@@ -7,9 +20,21 @@
     "assignmentTags": [
       "ratnum"
     ],
-    "lastModificationDate": "Apr 13, 2017 11:56:31 AM",
+    "lastModificationDate": "Nov 8, 2017 6:03:35 PM",
     "title": "# Getter/Setter med krav",
     "content": "# När man har instansvariabler som måste uppfylla vissa krav (såsom numerator\noch denominator) måste man se till att de stämmer även efter att settern\nanvänts. Som de ser ut nu kan man sätta 0 i nämnaren eller skapa ett bråka som\ninte är på minimal form.\n"
+  },
+  {
+    "creationDate": "Nov 8, 2017 6:05:15 PM",
+    "contentTags": [
+      "general",
+      "style"
+    ],
+    "assignmentTags": [
+      "intro"
+    ],
+    "lastModificationDate": "Nov 8, 2017 7:28:32 PM",
+    "content": "# Kod på formen:\n\tif (A) do x;\n\telse if (B) do x;\nKan och bör skrivas:\n\tif (A || B) do x;\n"
   },
   {
     "creationDate": "Feb 20, 2017 8:29:55 PM",
@@ -18,8 +43,8 @@
       "style"
     ],
     "assignmentTags": [],
-    "lastModificationDate": "Apr 13, 2017 11:57:23 AM",
-    "content": "# Kod på formen:\n    if (a < b) {\n        return true;\n    } else {\n       return false;\n    }\nKan och bör skrivas:\n    return a < b;\n"
+    "lastModificationDate": "Nov 8, 2017 7:28:23 PM",
+    "content": "# Kod på formen:\n    if (a < b) {\n        return true;\n    } else {\n        return false;\n    }\nKan och bör skrivas:\n    return a < b;\n"
   },
   {
     "creationDate": "Feb 22, 2017 11:58:24 AM",
@@ -28,8 +53,8 @@
       "style"
     ],
     "assignmentTags": [],
-    "lastModificationDate": "Apr 13, 2017 11:56:36 AM",
-    "content": "#/= Följ konvention för namn av variabler och parametrar i Java.\n\tKONSTANT:   \tpublic static final int MY_INTEGER_CONSTANT = 0;\n\tFÄLT\t:\t\tprivate int myIntegerField = 0;\n\tPARAMETER:   public void myMethod (int myIntegerParameter)\n"
+    "lastModificationDate": "Nov 8, 2017 7:41:11 PM",
+    "content": "#/= Följ konvention för identifierare av variabler/metoder/klasser i Java.\n    KONSTANT:   public static final int MY_INTEGER_CONSTANT = 0;\n    FÄLT:       private int myIntegerField = 0;\n    PARAMETER:  public void myMethod (int myIntegerParameter)\n    METOD:      public void myOtherMethod()\n    KLASS:      public class MyClass\n"
   },
   {
     "creationDate": "Feb 22, 2017 11:55:49 AM",
@@ -49,8 +74,22 @@
       "oop"
     ],
     "assignmentTags": [],
-    "lastModificationDate": "Apr 13, 2017 11:56:42 AM",
-    "content": "#/= Variabler existerar bara i det block där de deklareras. Block är t.ex. klasser,\nloopar, if-satser och metoder. Alltså:\n\n\tpublic class MyClass {\n\t\tprivate int myField = 0;\n\n\t\t//Här existerar bara \"myField\".\n\t\tpublic boolean myMethod (int arg) {\n\t\t\t//Här existerar \"myField\" och \"arg\".\n\t\t\tif (x > 0) {\n\t\t\t\tint myInt = arg + 1;\n\t\t\t\t//Här existerar \"myField\", \"arg\", och \"myInt\"\n\t\t\t}\n\t\t\t//Här existerar \"myField\" och \"arg\".\n\t\t}\n\t\t//Här existerar bara \"myField\".\n\t}\n"
+    "lastModificationDate": "Nov 8, 2017 7:34:28 PM",
+    "content": "#/= Variabler existerar bara i det block där de deklareras. Block är t.ex. klasser,\nloopar, if-satser och metoder.\nFörklaring (bild): https://i.imgur.com/cBVa9Gu.jpg"
+  },
+  {
+    "creationDate": "Nov 8, 2017 7:08:44 PM",
+    "contentTags": [
+      "general",
+      "style",
+      "oop"
+    ],
+    "assignmentTags": [
+      "leapyear",
+      "intro"
+    ],
+    "lastModificationDate": "Nov 8, 2017 7:09:32 PM",
+    "content": "* Det är smidigare att använda en array med längder på månaderna."
   },
   {
     "creationDate": "Feb 20, 2017 8:34:50 PM",
@@ -61,6 +100,17 @@
     "assignmentTags": [],
     "lastModificationDate": "Apr 13, 2017 11:56:46 AM",
     "content": "* Ni behöver inte skriva this. Normalt gör man bara det när man\nmåste, dvs. när kan har en namnkonflikt mellan en lokal variabel/metodparameter\noch en instansvariabel. Exempel: \n\tpublic class Example {\n    \t\tprivate int x, previousX; //Instansvariabler\n\n    \t\tpublic void setX (int x) {\n        \t\tpreviousX = this.x; //Det finns bara en \"previousX\"\n        \t\tthis.x = x; //Peka ut instansvariabeln med \"this\"\n    \t\t}\n\t}\n"
+  },
+  {
+    "creationDate": "Nov 8, 2017 12:39:31 PM",
+    "contentTags": [
+      "general"
+    ],
+    "assignmentTags": [
+      "intro"
+    ],
+    "lastModificationDate": "Nov 9, 2017 12:08:41 AM",
+    "content": "- Använd engelska identifierare för paket/klasser/variabler/funktioner. Svenska\när OK i strängar. Titta gärna på automatiska byten av namn i IDE:er såsom\nIntelliJ IDEA (Shift+F6). Detta kallas \"refactoring\" på engelska."
   },
   {
     "creationDate": "Feb 22, 2017 5:54:05 PM",
@@ -162,7 +212,7 @@
       "style"
     ],
     "assignmentTags": [],
-    "lastModificationDate": "Apr 13, 2017 11:57:15 AM",
+    "lastModificationDate": "Nov 8, 2017 7:55:03 PM",
     "content": "=/# Indenteringen är inte korrekt. Möjligtvis blandar ni spaces och tabbar. Titta\ngärna på automatisk indentering i IDE:er såsom IntelliJ IDEA (Ctrl+Alt+L).\n"
   },
   {

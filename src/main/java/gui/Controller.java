@@ -112,7 +112,7 @@ public class Controller implements PastaViewController.PastaControllerListener {
 
         DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
         lastSaveTimestampLabel.setText("Saved at " + dateFormat.format(Calendar.getInstance().getTime()));
-        FadeTransition ft = new FadeTransition(Duration.millis(3000), lastSaveTimestampLabel);
+        FadeTransition ft = new FadeTransition(Duration.seconds(6), lastSaveTimestampLabel);
         ft.setFromValue(0);
         ft.setToValue(1.0);
         ft.play();
@@ -127,10 +127,15 @@ public class Controller implements PastaViewController.PastaControllerListener {
         return feedbackViewController.getAssignment();
     }
 
+    public void settings () {
+        new SettingsEditor().showAndWait();
+    }
+
     public void shutdown () {
         pastaViewController.save();
         feedbackViewController.save();
-        Tools.setRunningFile(false);
+        Settings.storeStoreSettingsFile();
+        Settings.setRunningFile(false);
     }
 
     public void openPastaEditor () {

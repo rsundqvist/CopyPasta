@@ -1,11 +1,14 @@
 package model;
 
+import gui.Settings;
 import gui.Tools;
+import gui.feedback.JavaCodeArea;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
+import org.fxmisc.flowless.VirtualizedScrollPane;
 
 import java.awt.*;
 import java.io.File;
@@ -36,7 +39,7 @@ public class FeedbackManager {
      * @param feedback The Feedback to preview.
      */
     public static void preview (Feedback feedback) {
-        if (Desktop.isDesktopSupported())
+        if (Settings.USE_NATIVE_TXT_EDITOR && Desktop.isDesktopSupported())
             previewFeedbackNative(feedback);
         else
             previewFeedbackJavaFX(feedback);
@@ -51,21 +54,16 @@ public class FeedbackManager {
         alert.setHeaderText("Feedback preview for group \"" + feedback.getGroup() + "\"");
         alert.setContentText("Output when exporting as a .txt-file:");
 
-        TextArea textArea = new TextArea(feedback.getStylizedContent());
-        textArea.setEditable(false);
-        textArea.setWrapText(true);
+        JavaCodeArea jca = new JavaCodeArea(feedback.getStylizedContent());
+        jca.setEditable(false);
+        jca.setWrapText(true);
 
-        textArea.setMaxWidth(Double.MAX_VALUE);
-        textArea.setMaxHeight(Double.MAX_VALUE);
-        GridPane.setVgrow(textArea, Priority.ALWAYS);
-        GridPane.setHgrow(textArea, Priority.ALWAYS);
-
-        GridPane expContent = new GridPane();
-        expContent.setMaxWidth(Double.MAX_VALUE);
-        expContent.add(textArea, 0, 0);
+        jca.setPrefSize(800, 500);
+        jca.setMaxWidth(Double.MAX_VALUE);
+        jca.setMaxHeight(Double.MAX_VALUE);
 
         // Set expandable Exception into the dialog pane.
-        alert.getDialogPane().setExpandableContent(expContent);
+        alert.getDialogPane().setExpandableContent(new VirtualizedScrollPane<>(jca));
         alert.getDialogPane().setExpanded(true);
 
         alert.showAndWait();

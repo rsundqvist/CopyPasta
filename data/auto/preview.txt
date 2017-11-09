@@ -1,0 +1,55 @@
+Alla markeringar skall du rätta. Inga felanmärkningar skall naturligtvis  
+upprepas i senare labbar. Det kan också vara så att ni gjort samma typ av fel
+flera gånger. Samtliga ska rättas även om ni bara får en kommentar!
+
+Teckenförklaring:
+"-"    allvarlig kommentar som antagligen har resulterat i en retur.
+"="    allvarlig kommentar som *inte* har resulterat i en return. Många "=" kan
+       också resultera i en retur.
+"#"    mindre allvarlig kommentar.
+"*"    kommentar, behöver ej åtgärdas.
+"+"    extra bra
+
+Förstår du inte vad rättaren menar? Maila och fråga - vi bits inte :-)
+
+--------------------------------------------------------------------------------
+                        Laboration 1: Uppvärming 
+--------------------------------------------------------------------------------
+
+Grupp: 64, inlämning 1
+Resultat: retur
+
+Bra men jag har en/några kommentar(er):
+--------------------------------------------------------------------------------
+
+
+================================================================================
+<><><><><><><><><><><><><><><><><> First.java <><><><><><><><><><><><><><><><><>
+================================================================================
+
+At L11:
+# Kod på formen:
+    if (A) do x;
+    else if (B) do x;
+Kan och bör skrivas:
+    if (A || B) do x;
+
+At L12:
+- Indenteringen är inte korrekt. Möjligtvis blandar ni spaces och tabbar. Titta
+gärna på automatisk indentering i IDE:er såsom IntelliJ IDEA (Ctrl+Alt+L).
+
+At L7:  
+# Använd while(true) om "run" inte ska användas till något annat.
+
+
+================================================================================
+<><><><><><><><><><><><><><><><> Second.java  <><><><><><><><><><><><><><><><><>
+================================================================================
+
+At L8:
+# Att använda två arrayer för skottår/inte skottår är inte särskilt snyggt.
+Lägg hellre till en dag om månaden överstiger februari och året som utvärderas är skottår.
+
+
+Hälsningar,
+Richard Sundqvist

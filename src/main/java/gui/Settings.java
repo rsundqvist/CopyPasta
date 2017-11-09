@@ -13,14 +13,22 @@ public abstract class Settings {
     private Settings () {
     }
 
+    /*
+     * Settings
+     */
     public static boolean USE_NATIVE_TXT_EDITOR = false;
     private static final String use_native_txt_editor = "use_native_txt_editor";
+
+    /*
+     * Class stuff
+     */
     public static final Map<String, String[]> about = createAbout();
     public static final Properties properties = new Properties();
-    public static final int OPTION_INDEX = 0;
-    public static final int ABOUT_INDEX = 1;
-    public static final int TYPE_INDEX = 2;
+    public static final int OPTION_INDEX = 0, ABOUT_INDEX = 1, TYPE_INDEX = 2;
 
+    // ================================================================================= //
+    // Methods that must be changed every time a new setting variable is introduced
+    // ================================================================================= //
     private static Map<String, String[]> createAbout () {
         Map<String, String[]> about = new HashMap<>();
 
@@ -28,9 +36,26 @@ public abstract class Settings {
                 new String[]{"Native Preview", //Display name
                         "Try to use the native editor for some previews. As of 2017-11-09, will cause a crash on Ubuntu 16.04.", //about
                         Boolean.class.getCanonicalName() + ""});
-
         return about;
     }
+
+    public static void loadFromProperties () {
+        try {
+            USE_NATIVE_TXT_EDITOR = Boolean.parseBoolean((String) properties.get(use_native_txt_editor));
+        } catch (Exception e) {
+            IO.showExceptionAlert(e);
+        }
+    }
+
+    public static void putToProperties () {
+        putValue(use_native_txt_editor, "" + USE_NATIVE_TXT_EDITOR);
+    }
+    //endregion
+
+
+    // ================================================================================= //
+    // Other stuff
+    // ================================================================================= //
 
 
     public static final void loadSettingsFile () {
@@ -39,14 +64,6 @@ public abstract class Settings {
         } catch (IOException e) {
         }
         loadFromProperties();
-    }
-
-    public static void loadFromProperties () {
-        USE_NATIVE_TXT_EDITOR = Boolean.parseBoolean((String) properties.get(use_native_txt_editor));
-    }
-
-    public static void putToProperties () {
-        putValue(use_native_txt_editor, "" + USE_NATIVE_TXT_EDITOR);
     }
 
     public static void putValue (String key, String value) {

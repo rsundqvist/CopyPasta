@@ -2,7 +2,7 @@
   "content": "%HEADER%\n\n--------------------------------------------------------------------------------\n                        Laboration 1: Uppvärming \n--------------------------------------------------------------------------------\n\nGrupp: %GROUP%, inlämning 1\nResultat: accept retur %MANUAL%\n\nBra men jag har en/några kommentar(er):\n--------------------------------------------------------------------------------\n\n%FOOTER%",
   "header": "Alla markeringar skall du rätta. Inga felanmärkningar skall naturligtvis  \nupprepas i senare labbar. Det kan också vara så att ni gjort samma typ av fel\nflera gånger. Samtliga ska rättas även om ni bara får en kommentar!\n\nTeckenförklaring:\n\"-\"\tallvarlig kommentar som antagligen har resulterat i en retur.\n\"=\"\tallvarlig kommentar som *inte* har resulterat i en return. Många \"=\" kan\n   \tockså resultera i en retur.\n\"#\"\tmindre allvarlig kommentar.\n\"*\"\tkommentar, behöver ej åtgärdas.\n\"+\"\textra bra\n\nFörstår du inte vad rättaren menar? Maila och fråga - vi bits inte :-)",
   "footer": "\nHälsningar,\n%SIGNATURE%",
-  "signature": "",
+  "signature": "Richard Sundqvist\ndsadsa\tds\ndsadsa",
   "group": "",
   "assignment": "intro",
   "files": {},

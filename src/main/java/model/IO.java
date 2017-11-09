@@ -476,7 +476,7 @@ public abstract class IO {
 
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Exception Dialog");
-        alert.setHeaderText("Operation failure.");
+        alert.setHeaderText("Ooops");
         alert.setContentText("ERROR: " + ex.toString());
 
         // Create expandable Exception.

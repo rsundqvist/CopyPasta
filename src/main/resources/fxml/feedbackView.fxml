@@ -41,7 +41,7 @@
             <content>
                 <BorderPane prefHeight="200.0" prefWidth="200.0">
                     <right>
-                        <VBox prefHeight="371.0" prefWidth="150.0" BorderPane.alignment="CENTER">
+                        <VBox maxWidth="-Infinity" prefHeight="371.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                             <children>
                                 <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false"
                                         onAction="#createFeedbackItems" text="Create Feedback" VBox.vgrow="ALWAYS"/>
@@ -113,11 +113,12 @@
                                         </ContextMenu>
                                     </contextMenu>
                                 </ListView>
-                                <TextFlow maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
-                                          minWidth="-Infinity" prefHeight="35.0" prefWidth="160.0" VBox.vgrow="NEVER">
+                                <TextFlow maxWidth="1.7976931348623157E308" minWidth="0.0" prefHeight="35.0"
+                                          prefWidth="200.0" textAlignment="CENTER" VBox.vgrow="NEVER">
                                     <children>
                                         <Text strokeType="OUTSIDE" strokeWidth="0.0"
-                                              text="Click a group to it add to the &quot;Student Feedback&quot; panel."/>
+                                              text="Click a group to it add to the &quot;Student Feedback&quot; panel."
+                                              textAlignment="CENTER"/>
                                     </children>
                                 </TextFlow>
                                 <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false"

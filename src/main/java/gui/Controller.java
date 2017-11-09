@@ -24,14 +24,12 @@ import zip.GroupImporter;
 
 import java.awt.*;
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URI;
 import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
@@ -55,6 +53,8 @@ public class Controller implements PastaViewController.PastaControllerListener {
         pastaViewController.initialize(this);
         savedLabel.setOpacity(0);
         initTimeline(false);
+        if (Settings.STARTUP_VERSION_CHECK)
+            checkUpdates(true);
     }
 
     public void initTimeline (boolean saveNow) {
@@ -64,20 +64,6 @@ public class Controller implements PastaViewController.PastaControllerListener {
         autosaveTimeline = new Timeline(new KeyFrame(Duration.minutes(5), ae -> save()));
         autosaveTimeline.setCycleCount(Timeline.INDEFINITE);
         autosaveTimeline.play();
-    }
-
-    public void parseFIREFolder () {
-        File file = IO.showDirectoryChooser(null);
-        if (file == null)
-            return;
-
-        String[] directories = file.list((current, name) -> new File(current, name).isDirectory());
-
-        for (int i = 0; i < directories.length; i++)
-            directories[i] = directories[i].replaceAll("[^0-9]", "");
-
-        List<String> fireGroups = Arrays.asList(directories);
-        feedbackViewController.createFeedbackItems(fireGroups);
     }
 
     @Override
@@ -177,75 +163,10 @@ public class Controller implements PastaViewController.PastaControllerListener {
         }
     }
 
-    public void importPasta () {
-        pastaViewController.importPasta();
-    }
-
-    public void exportPasta () {
-        pastaViewController.exportAllPasta();
-    }
-
-    public void clearPasta () {
-        pastaViewController.clearAllPasta();
-    }
-
-    public void exportFeedback () {
-        feedbackViewController.exportAllFeedback();
-    }
-
-    public void importFeedback () {
-        feedbackViewController.importFeedback();
-    }
-
-    public void exportTemplate () {
-        feedbackViewController.exportTemplate();
-    }
-
-    public void importTemplate () {
-        feedbackViewController.importTemplate();
-    }
-
-    public void clearFeedback () {
-        feedbackViewController.clear();
-    }
-
     public void about () {
         about_fxml();
-        /*
-        String content = "" +
-                "Copy Pasta is a program developed to aid in grading lab exercises. Common feedback (\"Pasta\") " +
-                "can be created and categorized to speed up the process. Wildcards and templates are used to reduce the" +
-                " risk of mistakes, and to reduce clutter. The program will automatically load/store the most recent" +
-                " data (feedback and Pasta) when starting/exiting. \n" +
-                "\n" +
-                "Typical workflow: \n" +
-                "   1. Setup (JSON-files received from course owner) \n" +
-                "       i. Import feedback template \n" +
-                "       ii. Import Pasta \n" +
-                "   2. Enter group numbers, then click \"Create Feedback\". \n" +
-                "       e.g. \"3 5, 6  9, potato\" for groups {3, 5, 6, 9, potato}. \n" +
-                "   3. Write feedback. \n" + "" +
-                "       i. Save common feedback with the Pasta Editor (Ctrl+G). \n" +
-                "       ii. Share common feedback (RMB -> Export) \n" +
-                "   4. Export the feedback to .txt (Ctrl+E) \n" +
-                "\n" +
-                "Author:       Richard Sundqvist\n" +
-                "E-mail:        richard.sundqvist@live.se\n" +
-                "Git repo:     https://github.com/whisp91/CopyPasta\n" +
-                "Version:      " + Tools.VERSION + "\n" +
-                "";
-
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("About Program");
-        alert.setHeaderText("About Copy Pasta");
-        alert.setContentText(content);
-        alert.showAndWait();
-        */
     }
 
-    public void toggleFeedbackDone () {
-        feedbackViewController.toggleDoneTab();
-    }
 
     public void about_fxml () {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -289,6 +210,10 @@ public class Controller implements PastaViewController.PastaControllerListener {
     }
 
     public void onUpdate () {
+        checkUpdates(true);
+    }
+
+    public static void checkUpdates (boolean alertOnFalse) {
         try {
             //https://docs.oracle.com/javase/tutorial/networking/urls/readingURL.html
             URL url = new URL("https://raw.githubusercontent.com/whisp91/CopyPasta/master/VERSION");
@@ -300,23 +225,24 @@ public class Controller implements PastaViewController.PastaControllerListener {
                 sb.append(inputLine + "\n");
 
             String version = sb.toString();
-            if(Tools.isNewer(version)) {
+            if (Tools.isNewer(version)) {
                 newVersion(version);
+            } else if (alertOnFalse) {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION, "Looks like you have the latest version.", ButtonType.OK);
+                alert.setHeaderText("No updates found");
+                alert.showAndWait();
             }
         } catch (Exception e) {
             e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.INFORMATION,
-                    "Operation failed: " + e.getClass().getCanonicalName() + ": " + e.getMessage() +
-                    "\n\nCheck the Git repository for the latest version.", ButtonType.OK);
-            alert.setHeaderText("Check Failed");
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Operation failed: " + e.getClass().getCanonicalName() + ": " + e.getMessage() + "\n\nCheck the Git repository for the latest version.", ButtonType.OK);
+            alert.setHeaderText("Version check failed");
             alert.showAndWait();
         }
     }
 
-    private void newVersion (String version) {
+    private static void newVersion (String version) {
         ButtonType bt = new ButtonType("Download");
-        Alert alert = new Alert(Alert.AlertType.INFORMATION,"The \"Download\" button will open the browser to download the new .zip-file." +
-                " You may safely replace the old file entirely, as none of the data in the zip-archive is user-specific.\n\n New version: " + version, bt, ButtonType.CANCEL);
+        Alert alert = new Alert(Alert.AlertType.INFORMATION, "The \"Download\" button will open the browser to download the new .zip-file." + " You may safely replace the old file entirely, as none of the data in the zip-archive is user-specific.\n\n New version: " + version, bt, ButtonType.CANCEL);
         alert.setHeaderText("New version found!");
 
         Optional<ButtonType> result = alert.showAndWait();
@@ -327,5 +253,41 @@ public class Controller implements PastaViewController.PastaControllerListener {
                 e.printStackTrace();
             }
         }
+    }
+
+    public void importPasta () {
+        pastaViewController.importPasta();
+    }
+
+    public void exportPasta () {
+        pastaViewController.exportAllPasta();
+    }
+
+    public void clearPasta () {
+        pastaViewController.clearAllPasta();
+    }
+
+    public void exportFeedback () {
+        feedbackViewController.exportAllFeedback();
+    }
+
+    public void importFeedback () {
+        feedbackViewController.importFeedback();
+    }
+
+    public void exportTemplate () {
+        feedbackViewController.exportTemplate();
+    }
+
+    public void importTemplate () {
+        feedbackViewController.importTemplate();
+    }
+
+    public void clearFeedback () {
+        feedbackViewController.clear();
+    }
+
+    public void toggleFeedbackDone () {
+        feedbackViewController.toggleDoneTab();
     }
 }

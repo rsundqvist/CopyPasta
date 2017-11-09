@@ -48,7 +48,10 @@ public class SettingsEditorController {
         int row = 1;
         int valueCol = 4;
         int numCols = 5;
-        for (String key : Settings.getAbout().keySet()) {
+
+        ArrayList<String> keySet = new ArrayList<>(Settings.getAbout().keySet());
+        keySet.sort(String::compareToIgnoreCase); // Alphabetic order
+        for (String key : keySet) {
             int i = row * numCols + valueCol;
             String value = ((TextField) (optionsGrid.getChildren().get(i))).getText();
             Settings.putValue(key, value);

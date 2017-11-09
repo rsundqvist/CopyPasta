@@ -33,7 +33,7 @@ public abstract class Tools {
     public static final File SETTINGS_FILE = create("CopyPasta/data", "settings", false);
     public static final File PREVIEW_FILE = Tools.create("CopyPasta/data", "preview.txt", false);
 
-    public static final String VERSION = "PRERELEASE Rev7.4";
+    public static final String VERSION = "PRERELEASE Rev7.4.1";
 
     public static boolean isNewer (String otherVersion) throws Exception {
         boolean otherIsPrerelease = otherVersion.contains("PRERELEASE");
@@ -52,13 +52,13 @@ public abstract class Tools {
         int[] subversion = new int[3]; //major.minor.hotfix
         String[] s = version.split("\\.");
         for (int i = 0; i < s.length; i++)
-            subversion[i] = Integer.parseInt(s[i]);
+            subversion[i] = Integer.parseInt(s[i].trim());
 
         // Possible update
         int[] otherSubversion = new int[3]; //major.minor.hotfix
         s = otherVersion.split("\\.");
         for (int i = 0; i < s.length; i++)
-            otherSubversion[i] = Integer.parseInt(s[i]);
+            otherSubversion[i] = Integer.parseInt(s[i].trim());
 
         for (int i = 0; i < 3; i++) {
             if (otherSubversion[i] > subversion[i])

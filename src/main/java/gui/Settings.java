@@ -11,6 +11,7 @@ import java.util.Properties;
 
 public abstract class Settings {
 
+
     private Settings () {
     }
 
@@ -25,6 +26,9 @@ public abstract class Settings {
 
     public static int FILE_DECORATION_WIDTH = 80;
     private static final String file_decoration_width = "file_decoration_width";
+
+    public static boolean STARTUP_VERSION_CHECK = true;
+    private static final String startup_version_check = "startup_version_check";
 
     /*
      * Class stuff
@@ -44,14 +48,16 @@ public abstract class Settings {
                         Boolean.class.getCanonicalName() + ""}); // Type
 
         about.put(workspace_location, // Key
-                new String[]{"Workspace Location",
-                        "Default (recommended): \"user.dir\". CopyPasta must be restarted for this to take effect." + "\nDefault location (Windows 10): \"%UserProfile%/CopyPasta/workspace\"", // about
+                new String[]{"Workspace Location", "Default (recommended): \"user.dir\". CopyPasta must be restarted for this to take effect." + "\nDefault location (Windows 10): \"%UserProfile%/CopyPasta/workspace\"", // about
                         String.class.getCanonicalName() + ""});
 
         about.put(file_decoration_width, // Key
                 new String[]{"File Decoration Width", // Display name
-                        "Width of automatically generated file sections in the feedback view, measured in characters.",
-                        Integer.class.getCanonicalName() + ""});
+                        "Width of automatically generated file sections in the feedback view, measured in characters.", Integer.class.getCanonicalName() + ""});
+
+        about.put(startup_version_check, // Key
+                new String[]{"Startup Version Check", // Display name
+                        "Check for updates on startup.", Boolean.class.getCanonicalName() + ""});
 
         return about;
     }
@@ -59,6 +65,9 @@ public abstract class Settings {
     public static void loadFromProperties () {
         try {
             USE_NATIVE_TXT_EDITOR = Boolean.parseBoolean((String) properties.get(use_native_txt_editor));
+            String s = (String) properties.get(startup_version_check);
+            if (s != null && !s.isEmpty())
+                STARTUP_VERSION_CHECK = Boolean.parseBoolean(s);
 
             WORKSPACE_LOCATION = (String) properties.get(workspace_location);
             if (WORKSPACE_LOCATION == null || WORKSPACE_LOCATION.equals("null"))
@@ -73,6 +82,7 @@ public abstract class Settings {
         putValue(use_native_txt_editor, "" + USE_NATIVE_TXT_EDITOR);
         putValue(workspace_location, "" + WORKSPACE_LOCATION);
         putValue(file_decoration_width, "" + FILE_DECORATION_WIDTH);
+        putValue(startup_version_check, "" + STARTUP_VERSION_CHECK);
     }
     // endregion
 

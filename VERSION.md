@@ -6,6 +6,8 @@ ___
 ### `PRERELEASE Rev7.3`
 09-11-2017
 * Added Settings panel (Ctrl+F2). Use with caution!
+* Separated workspace and program data storage.
+    * Workspace may be changed through settings.
 * Various GUI fixes and changes.
 
 ### `PRERELEASE Rev7.2`

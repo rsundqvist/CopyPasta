@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.Properties;
 
 public abstract class Settings {
+
     private Settings () {
     }
 
@@ -21,6 +22,9 @@ public abstract class Settings {
 
     public static String WORKSPACE_LOCATION = "user.dir";
     private static final String workspace_location = "workspace_location";
+
+    public static int FILE_DECORATION_WIDTH = 80;
+    private static final String file_decoration_width = "file_decoration_width";
 
     /*
      * Class stuff
@@ -42,8 +46,13 @@ public abstract class Settings {
 
         about.put(workspace_location, // Key
                 new String[]{"Workspace Location", // Display name
-                        "Recommended: \"user.dir\". Use with caution. CopyPasta must be restarted for this to take effect." + "\nDefault location (Windows 10): \"%UserProfile%/CopyPasta/workspace\"", // about
+                        "Default (recommended): \"user.dir\". CopyPasta must be restarted for this to take effect." + "\nDefault location (Windows 10): \"%UserProfile%/CopyPasta/workspace\"", // about
                         String.class.getCanonicalName() + ""});
+
+        about.put(file_decoration_width, // Key
+                new String[]{"File Decoration Width", // Display name
+                        "Width of automatic file sections in the feedback view, measured in characters.", // about
+                        Integer.class.getCanonicalName() + ""});
 
         return about;
     }
@@ -55,6 +64,7 @@ public abstract class Settings {
             WORKSPACE_LOCATION = (String) properties.get(workspace_location);
             if (WORKSPACE_LOCATION == null || WORKSPACE_LOCATION.equals("null"))
                 WORKSPACE_LOCATION = "user.dir";
+            FILE_DECORATION_WIDTH = Integer.parseInt((String) properties.get(file_decoration_width));
         } catch (Exception e) {
             IO.showExceptionAlert(e);
         }
@@ -63,6 +73,7 @@ public abstract class Settings {
     public static void putToProperties () {
         putValue(use_native_txt_editor, "" + USE_NATIVE_TXT_EDITOR);
         putValue(workspace_location, "" + WORKSPACE_LOCATION);
+        putValue(file_decoration_width, "" + FILE_DECORATION_WIDTH);
     }
     // endregion
 

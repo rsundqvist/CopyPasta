@@ -8,6 +8,11 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+
 /**
  * Created by Richard Sundqvist on 20/02/2017.
  */
@@ -25,7 +30,9 @@ public class SettingsEditorController {
         fileLabel.setText(Tools.SETTINGS_FILE.getAbsolutePath());
 
         int row = 1;
-        for (String key : Settings.about.keySet()) {
+        ArrayList<String> keySet = new ArrayList<>(Settings.about.keySet());
+        keySet.sort(String::compareToIgnoreCase); // Alphabetic order
+        for (String key : keySet) {
             String[] s = Settings.about.get(key);
             Label optionlabel = new Label(s[Settings.OPTION_INDEX]);
             TextFlow aboutText = new TextFlow(new Text(s[Settings.ABOUT_INDEX]));

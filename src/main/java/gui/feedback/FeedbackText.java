@@ -1,5 +1,6 @@
 package gui.feedback;
 
+import gui.Settings;
 import javafx.scene.layout.BorderPane;
 import model.Feedback;
 import org.fxmisc.flowless.VirtualizedScrollPane;
@@ -108,7 +109,7 @@ public class FeedbackText extends BorderPane implements StudentFileViewerControl
         if (file.length() % 2 != 0)
             file = file + " ";
 
-        int sz = (80 - file.length()) / 2; // space per side
+        int sz = (Settings.FILE_DECORATION_WIDTH - file.length()) / 2; // space per side
         int numRepeats = sz / 2;
         String extra = sz % 2 == 0 ? "" : "<>";
 

@@ -29,7 +29,7 @@ public class SettingsEditor {
 
         stage = new Stage();
         stage.setTitle("Settings Editor \u00a9 Richard Sundqvist");
-        stage.getIcons().add(new Image(SettingsEditor.class.getResourceAsStream("/icon2.png")));
+        stage.getIcons().add(new Image(SettingsEditor.class.getResourceAsStream("/icon.png")));
 
         Rectangle2D screenSize = Screen.getPrimary().getVisualBounds();
         double windowWidth = screenSize.getWidth() * .6;

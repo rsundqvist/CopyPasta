@@ -307,7 +307,7 @@ public class GroupImporterController {
                     s = "/green_circle.png";
                     break;
                 case BLUE:
-                    s = "/bblue_circle.png";
+                    s = "/blue_circle.png";
                     break;
             }
             return new ImageView(new Image(getClass().getResourceAsStream(s)));

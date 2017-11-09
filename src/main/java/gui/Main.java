@@ -28,7 +28,7 @@ public class Main extends Application {
         Parent root = fxmlLoader.load();
 
         primaryStage.setTitle("Copy Pasta \u00a9 Richard Sundqvist");
-        primaryStage.getIcons().add(new Image(Main.class.getResourceAsStream("/icon2.png")));
+        primaryStage.getIcons().add(new Image(Main.class.getResourceAsStream("/icon.png")));
 
         Rectangle2D screenSize = Screen.getPrimary().getVisualBounds();
         double windowWidth = screenSize.getWidth() * .9;

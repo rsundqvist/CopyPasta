@@ -14,12 +14,14 @@ import model.IO;
 
 import java.util.List;
 
-/** Created by Richard Sundqvist on 17/04/2017. */
+/**
+ * Created by Richard Sundqvist on 17/04/2017.
+ */
 public class GroupImporter {
     private final Stage stage;
     private final GroupImporterController controller;
 
-    public GroupImporter() {
+    public GroupImporter () {
 
         stage = new Stage();
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/groupImporter.fxml"));
@@ -46,7 +48,7 @@ public class GroupImporter {
         // controller.initialize(pastaList, assignment);
     }
 
-    public List<Feedback> showAndWait() {
+    public List<Feedback> showAndWait () {
         stage.showAndWait();
         controller.saveFilePatterns();
         return controller.getFeedback();

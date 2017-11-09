@@ -15,12 +15,12 @@ import java.util.Optional;
 
 public class Main extends Application {
 
-    public static void main(String[] args) {
+    public static void main (String[] args) {
         launch(args);
     }
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start (Stage primaryStage) throws Exception {
         checkRunning();
         Settings.loadSettingsFile();
         Tools.initializeWorkspaceFiles();
@@ -28,21 +28,14 @@ public class Main extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/fxml/main.fxml"));
         Parent root = fxmlLoader.load();
 
-        primaryStage.setTitle(
-                "Copy Pasta \u00a9 Richard Sundqvist          -          Workspace: \""
-                        + Tools.AUTO_SAVE_FEEDBACK_FILE.getParent()
-                        + "\"");
+        primaryStage.setTitle("Copy Pasta \u00a9 Richard Sundqvist" + "          -          Workspace: \"" + Tools.AUTO_SAVE_FEEDBACK_FILE.getParent() + "\"");
         primaryStage.getIcons().add(new Image(Main.class.getResourceAsStream("/icon.png")));
 
         Rectangle2D screenSize = Screen.getPrimary().getVisualBounds();
         double windowWidth = screenSize.getWidth() * .9;
         double windowHeight = screenSize.getHeight() * .9;
         Scene scene = new Scene(root, windowWidth, windowHeight);
-        scene.getStylesheets()
-                .add(
-                        Main.class
-                                .getResource("/highlighting.css")
-                                .toExternalForm()); // Syntax highlighting
+        scene.getStylesheets().add(Main.class.getResource("/highlighting.css").toExternalForm()); // Syntax highlighting
         primaryStage.setScene(scene);
 
         primaryStage.show();
@@ -53,21 +46,14 @@ public class Main extends Application {
         System.out.println("Workspace location: " + Tools.AUTO_SAVE_FEEDBACK_FILE.getParent());
     }
 
-    public static void checkRunning() {
+    public static void checkRunning () {
         boolean isRunning = Settings.getRunningFile();
 
         if (isRunning) {
-            System.err.println(
-                    "Faulty controlfile detected: " + Tools.SETTINGS_FILE.getAbsolutePath());
+            System.err.println("Faulty controlfile detected: " + Tools.SETTINGS_FILE.getAbsolutePath());
             ButtonType bt1 = new ButtonType("I understand the risk. Start anyway.");
 
-            Alert alert =
-                    new Alert(
-                            Alert.AlertType.WARNING,
-                            "Another instance of CopyPasta appears to be running."
-                                    + " This is not recommended as it may cause data loss. If the program was not shut down properly, this message may be shown erroneously.",
-                            new ButtonType("Abort"),
-                            bt1);
+            Alert alert = new Alert(Alert.AlertType.WARNING, "Another instance of CopyPasta appears to be running." + " This is not recommended as it may cause data loss. If the program was not shut down properly, this message may be shown erroneously.", new ButtonType("Abort"), bt1);
 
             alert.setHeaderText("Another instance may be running");
 
@@ -82,7 +68,7 @@ public class Main extends Application {
         Settings.setRunningFile(true);
     }
 
-    public void shutdown(Controller controller) {
+    public void shutdown (Controller controller) {
         controller.shutdown();
     }
 }

@@ -8,7 +8,9 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/** @author Richard Sundqvist */
+/**
+ * @author Richard Sundqvist
+ */
 public class Feedback implements Comparable<Feedback> {
 
     // region Constant
@@ -22,7 +24,9 @@ public class Feedback implements Comparable<Feedback> {
     public static final transient String FILE = "%FILE: <file>%";
     public static final transient String FILE_REGEX = "%[ \t]*([Ff]ile|FILE):[ \t]*\\S+[ \t]*%";
 
-    /** Tag indicating that the pasta is incomplete and should be modified by the teacher. */
+    /**
+     * Tag indicating that the pasta is incomplete and should be modified by the teacher.
+     */
     public static final transient String MANUAL = "%MANUAL%";
     // endregion
 
@@ -39,7 +43,7 @@ public class Feedback implements Comparable<Feedback> {
     // ================================================================================= //
     // Constructor
     // ================================================================================= //
-    public Feedback() {
+    public Feedback () {
         content = "";
         header = "";
         footer = "";
@@ -55,7 +59,7 @@ public class Feedback implements Comparable<Feedback> {
      *
      * @param orig The Pasta to copy.
      */
-    public Feedback(Feedback orig) {
+    public Feedback (Feedback orig) {
         content = orig.content;
         header = orig.header;
         footer = orig.footer;
@@ -71,10 +75,11 @@ public class Feedback implements Comparable<Feedback> {
      * @param c The original collection.
      * @return A new collection containing copies of the original Pasta.
      */
-    public static List<Feedback> copy(Collection<Feedback> c) {
+    public static List<Feedback> copy (Collection<Feedback> c) {
         ArrayList<Feedback> copy = new ArrayList<>(c.size());
 
-        for (Feedback feedback : c) copy.add(feedback.copy());
+        for (Feedback feedback : c)
+            copy.add(feedback.copy());
 
         return copy;
     }
@@ -85,11 +90,12 @@ public class Feedback implements Comparable<Feedback> {
      * @param feedbackList A list of Feedback.
      * @return A list of feedback contain the %MANUAL% tag.
      */
-    public static List<Feedback> checkManual(List<Feedback> feedbackList) {
+    public static List<Feedback> checkManual (List<Feedback> feedbackList) {
         List<Feedback> containsTag = new ArrayList<>(feedbackList.size());
 
         for (Feedback feedback : feedbackList)
-            if (checkManual(feedback.content)) containsTag.add(feedback);
+            if (checkManual(feedback.content))
+                containsTag.add(feedback);
 
         return containsTag;
     }
@@ -99,9 +105,9 @@ public class Feedback implements Comparable<Feedback> {
      *
      * @param s a string
      * @return {@code true} if the string contains the manual tag. {@code false} if it doesn't, or
-     *     if {@code s} is {@code null}.
+     * if {@code s} is {@code null}.
      */
-    public static boolean checkManual(String s) {
+    public static boolean checkManual (String s) {
         return s == null ? false : s.contains(MANUAL);
     }
 
@@ -112,8 +118,10 @@ public class Feedback implements Comparable<Feedback> {
     // Getters and setters
     // ================================================================================= //
 
-    /** Returns a copy of this pasta. */
-    public Feedback copy() {
+    /**
+     * Returns a copy of this pasta.
+     */
+    public Feedback copy () {
         return new Feedback(this);
     }
 
@@ -122,7 +130,7 @@ public class Feedback implements Comparable<Feedback> {
      *
      * @return A String representation of this Feedback.
      */
-    public String toString() {
+    public String toString () {
         return getStylizedContent();
     }
 
@@ -131,7 +139,7 @@ public class Feedback implements Comparable<Feedback> {
      *
      * @return A String representation of this Feedback.
      */
-    public String getStylizedContent() {
+    public String getStylizedContent () {
         return getStylizedContent(true, true);
     }
 
@@ -142,7 +150,7 @@ public class Feedback implements Comparable<Feedback> {
      * @param replaceTabs If {@code true}, tabs will be replaced by 4 spaces.
      * @return A String representation of this Feedback.
      */
-    public String getStylizedContent(boolean live, boolean replaceTabs) {
+    public String getStylizedContent (boolean live, boolean replaceTabs) {
         String s = content;
 
         if (live) {
@@ -152,7 +160,8 @@ public class Feedback implements Comparable<Feedback> {
 
         s = s.replace(SIGNATURE, signature);
         s = s.replace(GROUP, group);
-        if (replaceTabs) s = s.replace("\t", "    ");
+        if (replaceTabs)
+            s = s.replace("\t", "    ");
         s = s.replaceAll(FILE_REGEX, ""); // Need replaceAll - replace doesnt take regex
 
         return s;
@@ -166,13 +175,15 @@ public class Feedback implements Comparable<Feedback> {
      * @param file The file to look for.
      * @return The position after the sought tag, or -1 if it could not be found.
      */
-    public int getFilePosition(String file) {
+    public int getFilePosition (String file) {
         String file_regex = "%([Ff]ile|FILE):[ \t]*" + file + "[ \t]*%";
         Pattern pattern = Pattern.compile(file_regex);
         Matcher matcher = pattern.matcher(content);
 
-        if (matcher.find()) return matcher.end(); // First match only
-        else return -1;
+        if (matcher.find())
+            return matcher.end(); // First match only
+        else
+            return -1;
     }
 
     /**
@@ -181,7 +192,7 @@ public class Feedback implements Comparable<Feedback> {
      * @param file The file.
      * @return A {@link #FILE} tag for the argument filename.
      */
-    public static String getFileTag(String file) {
+    public static String getFileTag (String file) {
         return FILE.replace("<file>", file);
     }
 
@@ -190,7 +201,7 @@ public class Feedback implements Comparable<Feedback> {
      *
      * @return The content of this Feedback.
      */
-    public String getContent() {
+    public String getContent () {
         return content;
     }
 
@@ -199,7 +210,7 @@ public class Feedback implements Comparable<Feedback> {
      *
      * @param content The new content for this Feedback.
      */
-    public void setContent(String content) {
+    public void setContent (String content) {
         this.content = content;
     }
 
@@ -208,7 +219,7 @@ public class Feedback implements Comparable<Feedback> {
      *
      * @return The header.
      */
-    public String getHeader() {
+    public String getHeader () {
         return header;
     }
 
@@ -217,7 +228,7 @@ public class Feedback implements Comparable<Feedback> {
      *
      * @param header The new header.
      */
-    public void setHeader(String header) {
+    public void setHeader (String header) {
         this.header = header;
     }
 
@@ -226,7 +237,7 @@ public class Feedback implements Comparable<Feedback> {
      *
      * @return The footer.
      */
-    public String getFooter() {
+    public String getFooter () {
         return footer;
     }
 
@@ -235,7 +246,7 @@ public class Feedback implements Comparable<Feedback> {
      *
      * @param footer The new footer.
      */
-    public void setFooter(String footer) {
+    public void setFooter (String footer) {
         this.footer = footer;
     }
 
@@ -244,7 +255,7 @@ public class Feedback implements Comparable<Feedback> {
      *
      * @return new signature name.
      */
-    public String getSignature() {
+    public String getSignature () {
         return signature;
     }
 
@@ -253,7 +264,7 @@ public class Feedback implements Comparable<Feedback> {
      *
      * @param signature The new signature name.
      */
-    public void setSignature(String signature) {
+    public void setSignature (String signature) {
         this.signature = signature;
     }
 
@@ -262,7 +273,7 @@ public class Feedback implements Comparable<Feedback> {
      *
      * @return The group number.
      */
-    public String getGroup() {
+    public String getGroup () {
         return group;
     }
 
@@ -271,7 +282,7 @@ public class Feedback implements Comparable<Feedback> {
      *
      * @param group The new group number.
      */
-    public void setGroup(String group) {
+    public void setGroup (String group) {
         this.group = group;
     }
 
@@ -280,7 +291,7 @@ public class Feedback implements Comparable<Feedback> {
      *
      * @return The done status of this Feedback.
      */
-    public boolean isDone() {
+    public boolean isDone () {
         return done;
     }
 
@@ -289,12 +300,12 @@ public class Feedback implements Comparable<Feedback> {
      *
      * @param done The new done status of this Feedback.
      */
-    public void setDone(boolean done) {
+    public void setDone (boolean done) {
         this.done = done;
     }
 
     @Override
-    public int compareTo(Feedback other) {
+    public int compareTo (Feedback other) {
         return group.compareTo(other.group);
     }
 
@@ -303,7 +314,7 @@ public class Feedback implements Comparable<Feedback> {
      *
      * @return The associated assignment assignment.
      */
-    public String getAssignment() {
+    public String getAssignment () {
         return assignment;
     }
 
@@ -312,7 +323,7 @@ public class Feedback implements Comparable<Feedback> {
      *
      * @param assignment The new associated assignment assignment.
      */
-    public void setAssignment(String assignment) {
+    public void setAssignment (String assignment) {
         this.assignment = assignment;
     }
 
@@ -322,7 +333,7 @@ public class Feedback implements Comparable<Feedback> {
      * @param fileName The filename, used as key.
      * @param content The content, used as value.
      */
-    public void addFile(String fileName, String content) {
+    public void addFile (String fileName, String content) {
         files.put(fileName, content);
     }
 
@@ -331,7 +342,7 @@ public class Feedback implements Comparable<Feedback> {
      *
      * @param fileName The file to remove.
      */
-    public void removeFile(String fileName) {
+    public void removeFile (String fileName) {
         files.remove(fileName);
     }
 
@@ -340,7 +351,7 @@ public class Feedback implements Comparable<Feedback> {
      *
      * @return A map of files.
      */
-    public Map<String, String> getFiles() {
+    public Map<String, String> getFiles () {
         return files;
     }
     // endregion

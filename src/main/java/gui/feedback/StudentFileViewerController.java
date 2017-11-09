@@ -18,11 +18,16 @@ import model.IO;
 import java.io.File;
 import java.util.Map;
 
-/** Created by Richard Sundqvist on 26/03/2017. */
+/**
+ * Created by Richard Sundqvist on 26/03/2017.
+ */
 public class StudentFileViewerController {
-    @FXML private Label fileLabel = null;
-    @FXML private TabPane sourceTabs = null;
-    @FXML private Label copiedLabel = null;
+    @FXML
+    private Label fileLabel = null;
+    @FXML
+    private TabPane sourceTabs = null;
+    @FXML
+    private Label copiedLabel = null;
 
     private FileTab currentFileTab = null;
     private boolean feedbackLine = true, feedbackColumn = false;
@@ -30,33 +35,29 @@ public class StudentFileViewerController {
     private final Feedback feedback;
     private boolean editable = false;
 
-    public StudentFileViewerController(FileFeedbackListener listener, Feedback feedback) {
+    public StudentFileViewerController (FileFeedbackListener listener, Feedback feedback) {
         this.listener = listener;
         this.feedback = feedback;
     }
 
     @FXML
-    private void initialize() {
+    private void initialize () {
         copiedLabel.setOpacity(0);
-        sourceTabs
-                .getSelectionModel()
-                .selectedItemProperty()
-                .addListener(
-                        event -> {
-                            currentFileTab =
-                                    (FileTab) sourceTabs.getSelectionModel().getSelectedItem();
+        sourceTabs.getSelectionModel().selectedItemProperty().addListener(event -> {
+            currentFileTab = (FileTab) sourceTabs.getSelectionModel().getSelectedItem();
 
-                            if (currentFileTab == null)
-                                fileLabel.setText("Drag and drop to add files!");
-                            else fileLabel.setText(currentFileTab.getText());
-                        });
+            if (currentFileTab == null)
+                fileLabel.setText("Drag and drop to add files!");
+            else
+                fileLabel.setText(currentFileTab.getText());
+        });
 
         Map<String, String> files = feedback.getFiles();
         for (String key : files.keySet())
             sourceTabs.getTabs().add(new FileTab(key, files.get(key)));
     }
 
-    public void onFeedback() {
+    public void onFeedback () {
         if (currentFileTab != null) {
             int line = getCaretLine();
             int column = getCaretColumn();
@@ -65,7 +66,7 @@ public class StudentFileViewerController {
         }
     }
 
-    public void toggleEditable(Event e) {
+    public void toggleEditable (Event e) {
 
         if (!sourceTabs.getTabs().isEmpty()) {
             ToggleButton toggleButton = (ToggleButton) e.getSource();
@@ -76,36 +77,32 @@ public class StudentFileViewerController {
                 sourceTabs.getTabs().forEach(tab -> ((FileTab) tab).setEditable(true));
             } else {
                 toggleButton.setText("Edit");
-                sourceTabs
-                        .getTabs()
-                        .forEach(
-                                tab -> {
-                                    FileTab fileTab = (FileTab) tab;
-                                    feedback.addFile(
-                                            fileTab.getText(), fileTab.getCodeAreaContent());
-                                    fileTab.setEditable(false);
-                                });
+                sourceTabs.getTabs().forEach(tab -> {
+                    FileTab fileTab = (FileTab) tab;
+                    feedback.addFile(fileTab.getText(), fileTab.getCodeAreaContent());
+                    fileTab.setEditable(false);
+                });
             }
         }
     }
 
-    public int getCaretLine() {
+    public int getCaretLine () {
         return feedbackLine ? currentFileTab.getCaretLine() : -1;
     }
 
-    public int getCaretColumn() {
+    public int getCaretColumn () {
         return feedbackColumn ? currentFileTab.getCaretColumn() : -1;
     }
 
-    public void toggleFeedbackLine(Event event) {
+    public void toggleFeedbackLine (Event event) {
         feedbackLine = ((CheckBox) event.getSource()).isSelected();
     }
 
-    public void toggleFeedbackColumn(Event event) {
+    public void toggleFeedbackColumn (Event event) {
         feedbackColumn = ((CheckBox) event.getSource()).isSelected();
     }
 
-    public void onDragDropped(DragEvent event) {
+    public void onDragDropped (DragEvent event) {
         Dragboard db = event.getDragboard();
         boolean success = false;
         if (db.hasFiles()) {
@@ -120,51 +117,53 @@ public class StudentFileViewerController {
         event.consume();
     }
 
-    public void onDragOver(DragEvent event) {
+    public void onDragOver (DragEvent event) {
         Dragboard db = event.getDragboard();
 
-        if (db.hasFiles()) event.acceptTransferModes(TransferMode.COPY);
-        else event.consume();
+        if (db.hasFiles())
+            event.acceptTransferModes(TransferMode.COPY);
+        else
+            event.consume();
     }
 
-    public void onAdd() {
+    public void onAdd () {
         FileChooser fileChooser = new FileChooser();
         File file = fileChooser.showOpenDialog(null);
-        if (file != null) addFile(file.getName(), IO.getFileAsString(file));
+        if (file != null)
+            addFile(file.getName(), IO.getFileAsString(file));
     }
 
-    public void onDelete() {
+    public void onDelete () {
         if (currentFileTab != null) {
             feedback.removeFile(currentFileTab.getFileName());
             sourceTabs.getTabs().remove(currentFileTab);
         }
     }
 
-    public void addFile(String fileName, String content) {
+    public void addFile (String fileName, String content) {
         feedback.addFile(fileName, content);
         FileTab fileTab = new FileTab(fileName, content);
         fileTab.setEditable(editable);
         sourceTabs.getTabs().add(fileTab);
     }
 
-    public Pair<String, Integer> getCurrentFileAndCaretPos() {
+    public Pair<String, Integer> getCurrentFileAndCaretPos () {
         String file = currentFileTab == null ? null : currentFileTab.getText();
         int pos = currentFileTab.getCaretPosition();
         return new Pair(file, pos);
     }
 
-    public FileTab getCurrentFileTab() {
+    public FileTab getCurrentFileTab () {
         return currentFileTab;
     }
 
     public interface FileFeedbackListener {
-        void feedbackAt(String file, int caretLine, int caretColumn, int caretPosition);
+        void feedbackAt (String file, int caretLine, int caretColumn, int caretPosition);
 
-        void feedbackAt(
-                String file, String content, int caretLine, int caretColumn, int caretPosition);
+        void feedbackAt (String file, String content, int caretLine, int caretColumn, int caretPosition);
     }
 
-    public void flashCopiedlabel() {
+    public void flashCopiedlabel () {
         Tools.flashNode(copiedLabel);
     }
 }

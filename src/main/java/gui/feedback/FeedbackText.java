@@ -14,9 +14,10 @@ import java.util.Collections;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/** Created by Richard Sundqvist on 12/04/2017. */
-public class FeedbackText extends BorderPane
-        implements StudentFileViewerController.FileFeedbackListener {
+/**
+ * Created by Richard Sundqvist on 12/04/2017.
+ */
+public class FeedbackText extends BorderPane implements StudentFileViewerController.FileFeedbackListener {
 
     // region strings
     private static final String TAG_PATTERN = "\\%(.*?)\\%";
@@ -27,31 +28,26 @@ public class FeedbackText extends BorderPane
     private final CodeArea codeArea;
     private final Feedback feedback;
 
-    public FeedbackText(Feedback feedback) {
+    public FeedbackText (Feedback feedback) {
         this.feedback = feedback;
         codeArea = new CodeArea();
         codeArea.setParagraphGraphicFactory(LineNumberFactory.get(codeArea));
         codeArea.setShowCaret(ViewActions.CaretVisibility.ON);
-        codeArea.textProperty()
-                .addListener(
-                        event -> {
-                            feedback.setContent(codeArea.getText());
-                        });
+        codeArea.textProperty().addListener(event -> {
+            feedback.setContent(codeArea.getText());
+        });
 
-        codeArea.richChanges()
-                .filter(ch -> !ch.getInserted().equals(ch.getRemoved()))
-                .subscribe(
-                        change -> {
-                            String text = codeArea.getText();
-                            if (text != null && !text.isEmpty()) // Prevent exception
-                            codeArea.setStyleSpans(0, computeHighlighting(text));
-                        });
+        codeArea.richChanges().filter(ch -> !ch.getInserted().equals(ch.getRemoved())).subscribe(change -> {
+            String text = codeArea.getText();
+            if (text != null && !text.isEmpty()) // Prevent exception
+                codeArea.setStyleSpans(0, computeHighlighting(text));
+        });
         setCenter(new VirtualizedScrollPane<>(codeArea));
         codeArea.replaceText(0, 0, feedback.getContent());
         updateColor();
     }
 
-    private static StyleSpans<Collection<String>> computeHighlighting(String text) {
+    private static StyleSpans<Collection<String>> computeHighlighting (String text) {
         Matcher matcher = PATTERN.matcher(text);
         int lastKwEnd = 0;
         StyleSpansBuilder<Collection<String>> spansBuilder = new StyleSpansBuilder<>();
@@ -66,52 +62,51 @@ public class FeedbackText extends BorderPane
         return spansBuilder.create();
     }
 
-    public String getText() {
+    public String getText () {
         return codeArea.getText();
     }
 
-    public void updateColor() {
+    public void updateColor () {
         if (feedback.isDone())
-            codeArea.setStyle(
-                    "-fx-font-family: consolas; -fx-font-size: 11pt; -fx-background-color: #55e055;");
+            codeArea.setStyle("-fx-font-family: consolas; -fx-font-size: 11pt; -fx-background-color: #55e055;");
         else
-            codeArea.setStyle(
-                    "-fx-font-family: consolas; -fx-font-size: 11pt; -fx-background-color: #dddddd;");
+            codeArea.setStyle("-fx-font-family: consolas; -fx-font-size: 11pt; -fx-background-color: #dddddd;");
     }
 
-    private static String caretString(int caretLine, int caretColumn) {
+    private static String caretString (int caretLine, int caretColumn) {
         StringBuilder stringBuilder = new StringBuilder();
 
         if (caretLine != -1) {
             stringBuilder.append("L" + caretLine);
-            if (caretColumn != -1) stringBuilder.append(", ");
+            if (caretColumn != -1)
+                stringBuilder.append(", ");
         }
-        if (caretColumn != -1) stringBuilder.append("C" + caretColumn);
+        if (caretColumn != -1)
+            stringBuilder.append("C" + caretColumn);
 
         return stringBuilder.toString();
     }
 
     @Override
-    public void feedbackAt(String file, int caretLine, int caretColumn, int caretPosition) {
+    public void feedbackAt (String file, int caretLine, int caretColumn, int caretPosition) {
         int pos = feedback.getFilePosition(file);
 
         String caretInfo = caretString(caretLine, caretColumn);
         String text = "\nAt " + caretInfo + ":  \n";
         if (pos < 0) { // No FILE-tag
-            pos =
-                    feedback.getContent().indexOf(feedback.FOOTER)
-                            - 1; // Place above footer, if it exists.
+            pos = feedback.getContent().indexOf(feedback.FOOTER) - 1; // Place above footer, if it exists.
             if (pos < 0) // No footer - place at end of file.
-            pos = feedback.getContent().length();
+                pos = feedback.getContent().length();
 
             text = fileTagString(file) + text;
         }
         insertText(pos, text);
     }
 
-    private static String fileTagString(String file) {
+    private static String fileTagString (String file) {
         file = " " + file + " ";
-        if (file.length() % 2 != 0) file = file + " ";
+        if (file.length() % 2 != 0)
+            file = file + " ";
 
         int sz = (80 - file.length()) / 2; // space per side
         int numRepeats = sz / 2;
@@ -119,43 +114,32 @@ public class FeedbackText extends BorderPane
 
         String around = new String(new char[numRepeats]).replace("\0", "<>");
         String border = new String(new char[80]).replace("\0", "="); // Width 80
-        return "\n\n"
-                + border
-                + "\n"
-                + around
-                + file
-                + around
-                + extra
-                + "\n"
-                + border
-                + "\n"
-                + Feedback.getFileTag(file);
+        return "\n\n" + border + "\n" + around + file + around + extra + "\n" + border + "\n" + Feedback.getFileTag(file);
     }
 
-    public void feedbackAt(
-            String file, String content, int caretLine, int caretColumn, int caretPosition) {
+    public void feedbackAt (String file, String content, int caretLine, int caretColumn, int caretPosition) {
         String text;
-        if (caretLine < 0 && caretColumn < 0) text = "\n";
-        else text = "\nAt " + caretString(caretLine, caretColumn) + ":\n";
+        if (caretLine < 0 && caretColumn < 0)
+            text = "\n";
+        else
+            text = "\nAt " + caretString(caretLine, caretColumn) + ":\n";
 
         int pos = feedback.getFilePosition(file);
         if (pos < 0) { // No FILE-tag or footer present.
-            pos =
-                    feedback.getContent().indexOf(feedback.FOOTER)
-                            - 1; // Place above footer, if it exists.
+            pos = feedback.getContent().indexOf(feedback.FOOTER) - 1; // Place above footer, if it exists.
             if (pos < 0) // No footer - place at end of file.
-            pos = feedback.getContent().length();
+                pos = feedback.getContent().length();
 
             text = fileTagString(file) + text;
         }
         insertText(pos, text + content);
     }
 
-    public void insertText(int pos, String s) {
+    public void insertText (int pos, String s) {
         codeArea.insertText(pos, s);
     }
 
-    public void insertTextAtCaret(String s) {
+    public void insertTextAtCaret (String s) {
         insertText(codeArea.getCaretPosition(), s);
     }
 }

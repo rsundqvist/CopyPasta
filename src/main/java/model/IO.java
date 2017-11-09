@@ -40,9 +40,10 @@ public abstract class IO {
     public static final String ENCODING = "UTF-8";
     private static final Gson gson = build();
 
-    private IO() {}
+    private IO () {
+    }
 
-    private static Gson build() {
+    private static Gson build () {
         return new GsonBuilder().disableHtmlEscaping().setPrettyPrinting().create();
     }
 
@@ -51,8 +52,9 @@ public abstract class IO {
      *
      * @param pastaList The list of Pasta to export.
      */
-    public static void exportPastaJSON(File dir, List<Pasta> pastaList) {
-        if (pastaList == null || pastaList.isEmpty()) return;
+    public static void exportPastaJSON (File dir, List<Pasta> pastaList) {
+        if (pastaList == null || pastaList.isEmpty())
+            return;
 
         File file = showJSSONSaveDialog(dir, "pasta");
         exportPastaJSON(pastaList, file);
@@ -64,8 +66,9 @@ public abstract class IO {
      * @param pastaList The list of Pasta to export.
      * @param file The file to export to.
      */
-    public static void exportPastaJSON(List<Pasta> pastaList, File file) {
-        if (file == null || pastaList == null) return;
+    public static void exportPastaJSON (List<Pasta> pastaList, File file) {
+        if (file == null || pastaList == null)
+            return;
 
         ArrayList<Object> tempList = new ArrayList<>();
         tempList.addAll(pastaList);
@@ -79,8 +82,9 @@ public abstract class IO {
      * @param dir The initial directory.
      * @param pasta The pasta item to export.
      */
-    public static void exportPastaJSON(File dir, Pasta pasta) {
-        if (pasta == null) return;
+    public static void exportPastaJSON (File dir, Pasta pasta) {
+        if (pasta == null)
+            return;
 
         ArrayList<Pasta> tempList = new ArrayList<>();
         tempList.add(pasta);
@@ -92,7 +96,7 @@ public abstract class IO {
      *
      * @return A list of Pasta, or {@code null} if import failed.
      */
-    public static List<Pasta> importPasta() {
+    public static List<Pasta> importPasta () {
         File file = showJSONOpenDialog();
         return importPasta(file);
     }
@@ -103,12 +107,10 @@ public abstract class IO {
      * @param file The source file.
      * @return A list of Pasta, or {@code null} if import failed.
      */
-    public static List<Pasta> importPasta(File file) {
+    public static List<Pasta> importPasta (File file) {
         if (file != null) {
             try {
-                InputStreamReader reader =
-                        new InputStreamReader(
-                                new FileInputStream(file), Charset.forName(ENCODING).newDecoder());
+                InputStreamReader reader = new InputStreamReader(new FileInputStream(file), Charset.forName(ENCODING).newDecoder());
                 Pasta pastaArray[] = gson.fromJson(reader, Pasta[].class);
                 return pastaArray == null ? null : Arrays.asList(pastaArray);
             } catch (FileNotFoundException e) {
@@ -125,12 +127,10 @@ public abstract class IO {
      * @param file The file to import from.
      * @return A single Feedback item, or {@code null} if import failed.
      */
-    public static Feedback importFeedbackSingle(File file) {
+    public static Feedback importFeedbackSingle (File file) {
         if (file != null) {
             try {
-                InputStreamReader reader =
-                        new InputStreamReader(
-                                new FileInputStream(file), Charset.forName(ENCODING).newDecoder());
+                InputStreamReader reader = new InputStreamReader(new FileInputStream(file), Charset.forName(ENCODING).newDecoder());
                 Feedback feedback = gson.fromJson(reader, Feedback.class);
                 return feedback;
             } catch (FileNotFoundException e) {
@@ -148,7 +148,7 @@ public abstract class IO {
      * @param feedbackList The list of Feedback to export.
      * @return {@code true} if export was successful, {@code false} otherwise.
      */
-    public static boolean exportFeedbackAsJson(File dir, List<Feedback> feedbackList) {
+    public static boolean exportFeedbackAsJson (File dir, List<Feedback> feedbackList) {
         File file = showJSSONSaveDialog(dir, "feedback");
         return exportFeedbackAsJson(feedbackList, file);
     }
@@ -160,8 +160,9 @@ public abstract class IO {
      * @param file The file to export to.
      * @return {@code true} if export was successful, {@code false} otherwise.
      */
-    public static boolean exportFeedbackAsJson(List<Feedback> feedbackList, File file) {
-        if (file == null) return false;
+    public static boolean exportFeedbackAsJson (List<Feedback> feedbackList, File file) {
+        if (file == null)
+            return false;
 
         ArrayList<Feedback> tempList = new ArrayList<>();
         tempList.addAll(feedbackList);
@@ -176,7 +177,7 @@ public abstract class IO {
      * @param dir The initial directory.
      * @param template The Feedback to export.
      */
-    public static void exportSingleFeedbackAsJson(File dir, Feedback template) {
+    public static void exportSingleFeedbackAsJson (File dir, Feedback template) {
         File file = showJSSONSaveDialog(dir, "template");
         exportSingleFeedbackAsJson(template, file);
     }
@@ -187,8 +188,9 @@ public abstract class IO {
      * @param template The Feedback to export.
      * @param file The file to export to.
      */
-    public static void exportSingleFeedbackAsJson(Feedback template, File file) {
-        if (file == null) return;
+    public static void exportSingleFeedbackAsJson (Feedback template, File file) {
+        if (file == null)
+            return;
 
         String json = gson.toJson(template);
         printStringToFile(json, file);
@@ -201,13 +203,14 @@ public abstract class IO {
      * @param feedbackList A list of Feedback to export as individual .txt and a single .json
      * @return {@code true} if export was successful, {@code false} otherwise.
      */
-    public static boolean exportFeedbackAsTxtAndJson(File dir, List<Feedback> feedbackList) {
+    public static boolean exportFeedbackAsTxtAndJson (File dir, List<Feedback> feedbackList) {
         // Should strip out any weird stuff from derived list types/concurrency issues.
         ArrayList<Feedback> tempList = new ArrayList<>();
         tempList.addAll(feedbackList);
 
         File file = showDirectoryChooser(dir);
-        if (file == null) return false;
+        if (file == null)
+            return false;
         String json = gson.toJson(tempList);
 
         try {
@@ -232,7 +235,7 @@ public abstract class IO {
      * @param directory The target directory.
      * @return {@code true} if export was successful, {@code false} otherwise.
      */
-    public static boolean exportFeedbackAsTxt(Collection<Feedback> c, File directory) {
+    public static boolean exportFeedbackAsTxt (Collection<Feedback> c, File directory) {
         boolean exportSuccessful = true;
         for (Feedback feedback : c) {
             String filename = feedback.getGroup() + ".txt";
@@ -244,8 +247,7 @@ public abstract class IO {
                 e.printStackTrace();
                 return false;
             }
-            exportSuccessful =
-                    exportSuccessful && printStringToFile(feedback.getStylizedContent(), txtFile);
+            exportSuccessful = exportSuccessful && printStringToFile(feedback.getStylizedContent(), txtFile);
         }
 
         return exportSuccessful;
@@ -259,9 +261,10 @@ public abstract class IO {
      * @param c The collection of feedback.
      * @return {@code true} if export was successful, {@code false} otherwise.
      */
-    public static boolean exportFeedbackAsTxt(File dir, Collection<Feedback> c) {
+    public static boolean exportFeedbackAsTxt (File dir, Collection<Feedback> c) {
         File directory = showDirectoryChooser(dir);
-        if (directory == null) return false;
+        if (directory == null)
+            return false;
 
         boolean exportSuccessful = true;
         for (Feedback feedback : c) {
@@ -274,23 +277,23 @@ public abstract class IO {
                 e.printStackTrace();
                 return false;
             }
-            exportSuccessful =
-                    exportSuccessful && printStringToFile(feedback.getStylizedContent(), txtFile);
+            exportSuccessful = exportSuccessful && printStringToFile(feedback.getStylizedContent(), txtFile);
         }
 
         return exportSuccessful;
     }
 
-    private static File getFileInDirectory(File directory, String filename)
-            throws URISyntaxException {
+    private static File getFileInDirectory (File directory, String filename) throws URISyntaxException {
         File txtFile;
         txtFile = new File(new URI((directory.toURI().toString() + "/" + filename)));
         return txtFile;
     }
 
-    private static void ensureAccess(File file) throws IOException {
-        if (!file.canWrite()) file.setWritable(true);
-        if (!file.exists()) file.createNewFile();
+    private static void ensureAccess (File file) throws IOException {
+        if (!file.canWrite())
+            file.setWritable(true);
+        if (!file.exists())
+            file.createNewFile();
     }
 
     /**
@@ -299,7 +302,7 @@ public abstract class IO {
      * @param dir Initial directory.
      * @return The selected file, or {@code null} if the user cancelled.
      */
-    public static File showDirectoryChooser(File dir) {
+    public static File showDirectoryChooser (File dir) {
         DirectoryChooser directoryChooser = new DirectoryChooser();
         directoryChooser.setInitialDirectory(dir);
         return directoryChooser.showDialog(null);
@@ -312,7 +315,7 @@ public abstract class IO {
      * @param fileExtension File extension.
      * @return The user selected file, or {@code null} if user cancelled.
      */
-    public static File showSaveDialog(File dir, String initialFileName, String fileExtension) {
+    public static File showSaveDialog (File dir, String initialFileName, String fileExtension) {
         File file = null;
         switch (fileExtension) {
             case "json":
@@ -333,7 +336,7 @@ public abstract class IO {
      * @param initialFileName The initial file name.
      * @return The selected file, or {@code null} if the user cancelled.
      */
-    public static File showJSSONSaveDialog(File dir, String initialFileName) {
+    public static File showJSSONSaveDialog (File dir, String initialFileName) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setInitialDirectory(dir);
         fileChooser.setInitialFileName(initialFileName);
@@ -352,7 +355,7 @@ public abstract class IO {
      * @param initialFileName The initial file name.
      * @return The selected file, or {@code null} if the user cancelled.
      */
-    public static File showTXTSaveDialog(File dir, String initialFileName) {
+    public static File showTXTSaveDialog (File dir, String initialFileName) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setInitialDirectory(dir);
         fileChooser.setInitialFileName(initialFileName);
@@ -370,7 +373,7 @@ public abstract class IO {
      *
      * @return The selected file, or {@code null} if the user cancelled.
      */
-    public static File showJSONOpenDialog() {
+    public static File showJSONOpenDialog () {
         FileChooser fileChooser = new FileChooser();
 
         FileChooser.ExtensionFilter extFilter;
@@ -389,14 +392,13 @@ public abstract class IO {
      * @param file The file to print to.
      * @return {@code true} if export was successful, {@code false} otherwise.
      */
-    public static boolean printStringToFile(String content, File file) {
-        if (file == null || content == null) return false;
+    public static boolean printStringToFile (String content, File file) {
+        if (file == null || content == null)
+            return false;
 
         try {
             ensureAccess(file);
-            OutputStreamWriter writer =
-                    new OutputStreamWriter(
-                            new FileOutputStream(file), Charset.forName(ENCODING).newEncoder());
+            OutputStreamWriter writer = new OutputStreamWriter(new FileOutputStream(file), Charset.forName(ENCODING).newEncoder());
             writer.write(content);
             writer.close();
             return true;
@@ -413,7 +415,7 @@ public abstract class IO {
      *
      * @return A list of Feedback, or {@code null} if nothing was imported.
      */
-    public static List<Feedback> importFeedback() {
+    public static List<Feedback> importFeedback () {
         File file = showJSONOpenDialog();
         return importFeedback(file);
     }
@@ -424,12 +426,10 @@ public abstract class IO {
      * @param file The file to import from.
      * @return A list of Feedback.
      */
-    public static List<Feedback> importFeedback(File file) {
+    public static List<Feedback> importFeedback (File file) {
         if (file != null) {
             try {
-                InputStreamReader reader =
-                        new InputStreamReader(
-                                new FileInputStream(file), Charset.forName(ENCODING).newDecoder());
+                InputStreamReader reader = new InputStreamReader(new FileInputStream(file), Charset.forName(ENCODING).newDecoder());
                 Feedback feedbackArray[] = gson.fromJson(reader, Feedback[].class);
                 return feedbackArray == null ? null : Arrays.asList(feedbackArray);
             } catch (FileNotFoundException e) {
@@ -445,11 +445,12 @@ public abstract class IO {
      * @param uriString The URI of the desired file.
      * @return A file, or {@code null} if unsuccessful.
      */
-    public static File getFileByURI(String uriString) {
+    public static File getFileByURI (String uriString) {
         URI uri;
         try {
             URL url = Tools.class.getResource(uriString);
-            if (url != null) uri = url.toURI();
+            if (url != null)
+                uri = url.toURI();
             else {
                 System.err.println("Failed to fetch resource with URI: \"" + uriString + "\"");
                 return null;
@@ -467,7 +468,7 @@ public abstract class IO {
      *
      * @param ex The exception to show.
      */
-    public static void showExceptionAlert(Exception ex) {
+    public static void showExceptionAlert (Exception ex) {
         ex.printStackTrace();
 
         Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -509,7 +510,7 @@ public abstract class IO {
      * @param file The file to read from.
      * @return The content of the file, or {@code null} if the extraction failed.
      */
-    public static String getFileAsString(File file) {
+    public static String getFileAsString (File file) {
         String content = null;
 
         try {
@@ -517,7 +518,8 @@ public abstract class IO {
 
             StringBuilder stringBuilder = new StringBuilder();
             String line;
-            while ((line = bufferedReader.readLine()) != null) stringBuilder.append(line + "\n");
+            while ((line = bufferedReader.readLine()) != null)
+                stringBuilder.append(line + "\n");
             bufferedReader.close();
             content = stringBuilder.toString();
         } catch (Exception e) {
@@ -535,7 +537,7 @@ public abstract class IO {
      * @param zipFile The file to extract
      * @throws IOException If an IO exception occurrs.
      */
-    public static void extractFolder(String zipFile) throws IOException {
+    public static void extractFolder (String zipFile) throws IOException {
         System.out.println(zipFile);
         int BUFFER = 2048;
         File file = new File(zipFile);
@@ -590,15 +592,17 @@ public abstract class IO {
      * @param root The directory to clear.
      * @param deleteRoot If {@code true}, delete root folder as well.
      */
-    public static void clearDirectory(File root, boolean deleteRoot) throws IOException {
+    public static void clearDirectory (File root, boolean deleteRoot) throws IOException {
         clearDirectoryWork(root);
 
-        if (deleteRoot) root.delete();
+        if (deleteRoot)
+            root.delete();
     }
 
-    private static void clearDirectoryWork(File dir) throws IOException {
+    private static void clearDirectoryWork (File dir) throws IOException {
         for (File file : dir.listFiles()) {
-            if (file.isDirectory()) clearDirectoryWork(file);
+            if (file.isDirectory())
+                clearDirectoryWork(file);
 
             file.delete();
         }

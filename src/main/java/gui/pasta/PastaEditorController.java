@@ -20,18 +20,22 @@ import org.fxmisc.flowless.VirtualizedScrollPane;
 import java.util.List;
 import java.util.Optional;
 
-/** Created by Richard Sundqvist on 20/02/2017. */
+/**
+ * Created by Richard Sundqvist on 20/02/2017.
+ */
 public class PastaEditorController implements PastaViewController.PastaControllerListener {
-    @FXML private TextField titleField;
     @FXML
-    private ListView currentContentTagView,
-            allContentTagView,
-            currentAssignTagView,
-            allAssignTagView;
-    @FXML private CheckBox autoTitleCheckBox;
-    @FXML private Button saveChangesButton;
-    @FXML private Label assignmentLabel;
-    @FXML private BorderPane borderPane;
+    private TextField titleField;
+    @FXML
+    private ListView currentContentTagView, allContentTagView, currentAssignTagView, allAssignTagView;
+    @FXML
+    private CheckBox autoTitleCheckBox;
+    @FXML
+    private Button saveChangesButton;
+    @FXML
+    private Label assignmentLabel;
+    @FXML
+    private BorderPane borderPane;
 
     private JavaCodeArea pastaEditingTextArea;
     private String currentAssignment;
@@ -40,9 +44,10 @@ public class PastaEditorController implements PastaViewController.PastaControlle
     private boolean autoTitle = true;
     private boolean autoSave = true;
 
-    @FXML private PastaViewController pastaViewController = null;
+    @FXML
+    private PastaViewController pastaViewController = null;
 
-    public void initialize(List<Pasta> pastaList, String currentAssignment) {
+    public void initialize (List<Pasta> pastaList, String currentAssignment) {
         pastaEditingTextArea = new JavaCodeArea();
         pastaEditingTextArea.setPrefHeight(Double.MAX_VALUE);
         borderPane.setCenter(new VirtualizedScrollPane<>(pastaEditingTextArea));
@@ -58,28 +63,26 @@ public class PastaEditorController implements PastaViewController.PastaControlle
         update();
     }
 
-    private void titleChanged() {
-        if (autoSave) savePastaChanges();
+    private void titleChanged () {
+        if (autoSave)
+            savePastaChanges();
     }
 
-    private void contentChanged() {
-        if (autoSave) savePastaChanges();
+    private void contentChanged () {
+        if (autoSave)
+            savePastaChanges();
     }
 
-    private void update() {
+    private void update () {
         clear();
         allContentTagView.getItems().addAll(pastaViewController.getPastaManager().getTagList());
-        allAssignTagView
-                .getItems()
-                .addAll(pastaViewController.getPastaManager().getAssignmentTagList());
+        allAssignTagView.getItems().addAll(pastaViewController.getPastaManager().getAssignmentTagList());
         // Make sure the current assignment tag is available.
-        if (currentAssignment != null
-                && !currentAssignment.isEmpty()
-                && !allAssignTagView.getItems().contains(currentAssignment))
+        if (currentAssignment != null && !currentAssignment.isEmpty() && !allAssignTagView.getItems().contains(currentAssignment))
             allAssignTagView.getItems().add(currentAssignment);
     }
 
-    private void clear() {
+    private void clear () {
         allContentTagView.getItems().clear();
         currentContentTagView.getItems().clear();
         allAssignTagView.getItems().clear();
@@ -90,7 +93,7 @@ public class PastaEditorController implements PastaViewController.PastaControlle
         selectedPastaActual = null;
     }
 
-    public void toggleAutoTitle(Event e) {
+    public void toggleAutoTitle (Event e) {
         CheckBox cb = (CheckBox) e.getSource();
         autoTitle = cb.isSelected();
 
@@ -102,51 +105,55 @@ public class PastaEditorController implements PastaViewController.PastaControlle
         }
     }
 
-    public void toggleAutoSave(Event e) {
+    public void toggleAutoSave (Event e) {
         CheckBox cb = (CheckBox) e.getSource();
         autoSave = cb.isSelected();
         saveChangesButton.setDisable(autoSave);
     }
 
-    public void addContentTag() {
+    public void addContentTag () {
         String selectedItem = (String) allContentTagView.getSelectionModel().getSelectedItem();
 
         if (selectedPastaClone != null && selectedItem != null)
             if (selectedPastaClone.getContentTags().add(selectedItem)) {
                 currentContentTagView.getItems().add(selectedItem);
-                if (autoSave) savePastaChanges();
+                if (autoSave)
+                    savePastaChanges();
             }
     }
 
-    public void removeContentTag() {
+    public void removeContentTag () {
         String selectedItem = (String) currentContentTagView.getSelectionModel().getSelectedItem();
         if (selectedPastaClone != null && selectedItem != null) {
             selectedPastaClone.getContentTags().remove(selectedItem);
             currentContentTagView.getItems().remove(selectedItem);
-            if (autoSave) savePastaChanges();
+            if (autoSave)
+                savePastaChanges();
         }
     }
 
-    public void addAssignTag() {
+    public void addAssignTag () {
         String selectedItem = (String) allAssignTagView.getSelectionModel().getSelectedItem();
 
         if (selectedPastaClone != null && selectedItem != null)
             if (selectedPastaClone.getAssignmentTags().add(selectedItem)) {
                 currentAssignTagView.getItems().add(selectedItem);
-                if (autoSave) savePastaChanges();
+                if (autoSave)
+                    savePastaChanges();
             }
     }
 
-    public void removeAssignTag() {
+    public void removeAssignTag () {
         String selectedItem = (String) currentAssignTagView.getSelectionModel().getSelectedItem();
         if (selectedPastaClone != null && selectedItem != null) {
             selectedPastaClone.getAssignmentTags().remove(selectedItem);
             currentAssignTagView.getItems().remove(selectedItem);
-            if (autoSave) savePastaChanges();
+            if (autoSave)
+                savePastaChanges();
         }
     }
 
-    public void newContentTag() {
+    public void newContentTag () {
         TextInputDialog dialog = new TextInputDialog("New content tag");
         dialog.setTitle("New Tag");
         dialog.setHeaderText("Create new content tag.");
@@ -159,11 +166,7 @@ public class PastaEditorController implements PastaViewController.PastaControlle
             if (!allContentTagView.getItems().contains(newTag)) {
                 allContentTagView.getItems().add(0, newTag);
             } else {
-                Alert alert =
-                        new Alert(
-                                Alert.AlertType.INFORMATION,
-                                "The tag \"" + newTag + "\" already exists.",
-                                ButtonType.OK);
+                Alert alert = new Alert(Alert.AlertType.INFORMATION, "The tag \"" + newTag + "\" already exists.", ButtonType.OK);
                 alert.setHeaderText("Tag already exists.");
                 alert.setTitle("Duplicate found");
                 alert.show();
@@ -171,7 +174,7 @@ public class PastaEditorController implements PastaViewController.PastaControlle
         }
     }
 
-    public void newAssignTag() {
+    public void newAssignTag () {
         TextInputDialog dialog = new TextInputDialog("New assignment tag");
         dialog.setTitle("New Tag");
         dialog.setHeaderText("Create new assignment tag.");
@@ -184,11 +187,7 @@ public class PastaEditorController implements PastaViewController.PastaControlle
             if (!allAssignTagView.getItems().contains(newTag)) {
                 allAssignTagView.getItems().add(0, newTag);
             } else {
-                Alert alert =
-                        new Alert(
-                                Alert.AlertType.INFORMATION,
-                                "The tag \"" + newTag + "\" already exists.",
-                                ButtonType.OK);
+                Alert alert = new Alert(Alert.AlertType.INFORMATION, "The tag \"" + newTag + "\" already exists.", ButtonType.OK);
                 alert.setHeaderText("Tag already exists.");
                 alert.setTitle("Duplicate found");
                 alert.show();
@@ -196,22 +195,23 @@ public class PastaEditorController implements PastaViewController.PastaControlle
         }
     }
 
-    public void createNewPasta() {
+    public void createNewPasta () {
         Pasta newPasta = pastaViewController.createNew();
         select(newPasta);
     }
 
-    public void exportAllPasta() {
+    public void exportAllPasta () {
         pastaViewController.exportAllPasta();
     }
 
-    public void clearAllPasta() {
+    public void clearAllPasta () {
         pastaViewController.clearAllPasta();
         update();
     }
 
-    public void savePastaChanges() {
-        if (selectedPastaActual == null) return;
+    public void savePastaChanges () {
+        if (selectedPastaActual == null)
+            return;
 
         selectedPastaActual.setContent(pastaEditingTextArea.getText());
         selectedPastaActual.setLastModificationDate();
@@ -220,8 +220,10 @@ public class PastaEditorController implements PastaViewController.PastaControlle
         selectedPastaActual.getAssignmentTags().clear();
         selectedPastaActual.getAssignmentTags().addAll(selectedPastaClone.getAssignmentTags());
 
-        if (autoTitle) selectedPastaActual.setTitle(null);
-        else selectedPastaActual.setTitle(titleField.getText());
+        if (autoTitle)
+            selectedPastaActual.setTitle(null);
+        else
+            selectedPastaActual.setTitle(titleField.getText());
 
         pastaViewController.getPastaManager().updateTags();
         pastaViewController.updateFilters();
@@ -229,16 +231,19 @@ public class PastaEditorController implements PastaViewController.PastaControlle
     }
 
     @Override
-    public void select(Pasta pasta) {
-        if (pasta == selectedPastaActual) return;
+    public void select (Pasta pasta) {
+        if (pasta == selectedPastaActual)
+            return;
 
         selectedPastaActual = pasta;
         selectedPastaClone = new Pasta(pasta);
 
         autoTitle = pasta.isAutomaticTitle();
         titleField.setDisable(autoTitle);
-        if (autoTitle) titleField.setText(null);
-        else titleField.setText(selectedPastaClone.getTitle());
+        if (autoTitle)
+            titleField.setText(null);
+        else
+            titleField.setText(selectedPastaClone.getTitle());
 
         autoTitleCheckBox.setSelected(pasta.isAutomaticTitle());
 
@@ -250,19 +255,19 @@ public class PastaEditorController implements PastaViewController.PastaControlle
     }
 
     @Override
-    public void quickInsert(Pasta pasta) {
+    public void quickInsert (Pasta pasta) {
         // Do nothing
     }
 
-    public String getCurrentAssignment() {
+    public String getCurrentAssignment () {
         return currentAssignment;
     }
 
-    public void importPasta() {
+    public void importPasta () {
         pastaViewController.importPasta();
     }
 
-    public UniqueArrayList<Pasta> getPastaList() {
+    public UniqueArrayList<Pasta> getPastaList () {
         return pastaViewController.getPastaList();
     }
 }

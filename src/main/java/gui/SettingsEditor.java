@@ -10,12 +10,14 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import model.IO;
 
-/** Created by Richard Sundqvist on 20/02/2017. */
+/**
+ * Created by Richard Sundqvist on 20/02/2017.
+ */
 public class SettingsEditor {
     private final Stage stage;
     private final SettingsEditorController controller;
 
-    public SettingsEditor() {
+    public SettingsEditor () {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/settingsEditor.fxml"));
         Parent root = null;
         try {
@@ -40,7 +42,7 @@ public class SettingsEditor {
         controller.initialize(stage);
     }
 
-    public void showAndWait() {
+    public void showAndWait () {
         stage.showAndWait();
         ;
     }

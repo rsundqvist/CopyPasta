@@ -1,7 +1,11 @@
 # Copy Pasta: Version History
 ___
-#### Current Version: `PRERELEASE Rev7.3`
+#### Current Version: `PRERELEASE Rev7.4`
+
 ## Patch Notes
+### `PRERELEASE Rev7.4`
+10-11-2017
+* Online version checking added (Help -> About -> Check for Updates)
 
 ### `PRERELEASE Rev7.3`
 09-11-2017

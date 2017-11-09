@@ -33,7 +33,7 @@ public abstract class Tools {
     public static final File SETTINGS_FILE = create("CopyPasta/data", "settings", false);
     public static final File PREVIEW_FILE = Tools.create("CopyPasta/data", "preview.txt", false);
 
-    public static final String VERSION = "PRERELEASE Rev7.3";
+    public static final String VERSION = "PRERELEASE Rev7.4";
 
     public static boolean isNewer (String otherVersion) throws Exception {
         boolean otherIsPrerelease = otherVersion.contains("PRERELEASE");

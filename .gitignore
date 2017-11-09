@@ -78,7 +78,6 @@ fabric.properties
 *.jar
 *.war
 *.ear
-*.zip
 *.tar.gz
 *.rar
 

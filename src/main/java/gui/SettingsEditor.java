@@ -44,6 +44,5 @@ public class SettingsEditor {
 
     public void showAndWait () {
         stage.showAndWait();
-        ;
     }
 }

@@ -29,29 +29,28 @@ public abstract class Settings {
     /*
      * Class stuff
      */
-    public static final Map<String, String[]> about = createAbout();
     public static final Properties properties = new Properties();
     public static final int OPTION_INDEX = 0, ABOUT_INDEX = 1, TYPE_INDEX = 2;
 
     // ================================================================================= //
     // Methods that must be changed every time a new setting variable is introduced
     // ================================================================================= //
-    private static Map<String, String[]> createAbout () {
+    public static Map<String, String[]> getAbout () {
         Map<String, String[]> about = new HashMap<>();
 
         about.put(use_native_txt_editor, // Key
                 new String[]{"Native Preview", // Display name
-                        "Try to use the native editor for some previews. As of 2017-11-09, will cause a crash on Ubuntu 16.04.", // about
-                        Boolean.class.getCanonicalName() + ""});
+                        "Try to use the native editor for some previews. As of 2017-11-09, will cause a crash on Ubuntu 16.04.", // About
+                        Boolean.class.getCanonicalName() + ""}); // Type
 
         about.put(workspace_location, // Key
-                new String[]{"Workspace Location", // Display name
+                new String[]{"Workspace Location",
                         "Default (recommended): \"user.dir\". CopyPasta must be restarted for this to take effect." + "\nDefault location (Windows 10): \"%UserProfile%/CopyPasta/workspace\"", // about
                         String.class.getCanonicalName() + ""});
 
         about.put(file_decoration_width, // Key
                 new String[]{"File Decoration Width", // Display name
-                        "Width of automatic file sections in the feedback view, measured in characters.", // about
+                        "Width of automatically generated file sections in the feedback view, measured in characters.",
                         Integer.class.getCanonicalName() + ""});
 
         return about;

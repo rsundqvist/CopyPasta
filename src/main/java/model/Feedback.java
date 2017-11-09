@@ -108,7 +108,7 @@ public class Feedback implements Comparable<Feedback> {
      * if {@code s} is {@code null}.
      */
     public static boolean checkManual (String s) {
-        return s == null ? false : s.contains(MANUAL);
+        return s != null && s.contains(MANUAL);
     }
 
     // endregion

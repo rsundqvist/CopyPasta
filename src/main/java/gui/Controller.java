@@ -23,8 +23,10 @@ import model.UniqueArrayList;
 import zip.GroupImporter;
 
 import java.awt.*;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.URI;
 import java.net.URL;
 import java.text.DateFormat;
@@ -287,8 +289,43 @@ public class Controller implements PastaViewController.PastaControllerListener {
     }
 
     public void onUpdate () {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION, "Check the Git repository for the latest version.", ButtonType.OK);
-        alert.setHeaderText("Not Implemented");
-        alert.showAndWait();
+        try {
+            //https://docs.oracle.com/javase/tutorial/networking/urls/readingURL.html
+            URL url = new URL("https://raw.githubusercontent.com/whisp91/CopyPasta/master/VERSION");
+            BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
+
+            StringBuilder sb = new StringBuilder();
+            String inputLine;
+            while ((inputLine = in.readLine()) != null)
+                sb.append(inputLine + "\n");
+
+            String version = sb.toString();
+            if(Tools.isNewer(version)) {
+                newVersion(version);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.INFORMATION,
+                    "Operation failed: " + e.getClass().getCanonicalName() + ": " + e.getMessage() +
+                    "\n\nCheck the Git repository for the latest version.", ButtonType.OK);
+            alert.setHeaderText("Check Failed");
+            alert.showAndWait();
+        }
+    }
+
+    private void newVersion (String version) {
+        ButtonType bt = new ButtonType("Download");
+        Alert alert = new Alert(Alert.AlertType.INFORMATION,"The \"Download\" button will open the browser to download the new .zip-file." +
+                " You may safely replace the old file entirely, as none of the data in the zip-archive is user-specific.\n\n New version: " + version, bt, ButtonType.CANCEL);
+        alert.setHeaderText("New version found!");
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.isPresent() && result.get() == bt) {
+            try {
+                Desktop.getDesktop().browse(new URL("https://github.com/whisp91/CopyPasta/blob/master/CopyPasta.zip?raw=true").toURI());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

@@ -9,9 +9,7 @@ import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
+import java.util.Map;
 
 /**
  * Created by Richard Sundqvist on 20/02/2017.
@@ -30,10 +28,11 @@ public class SettingsEditorController {
         fileLabel.setText(Tools.SETTINGS_FILE.getAbsolutePath());
 
         int row = 1;
-        ArrayList<String> keySet = new ArrayList<>(Settings.about.keySet());
+        Map<String, String[]> about = Settings.getAbout();
+        ArrayList<String> keySet = new ArrayList<>(about.keySet());
         keySet.sort(String::compareToIgnoreCase); // Alphabetic order
         for (String key : keySet) {
-            String[] s = Settings.about.get(key);
+            String[] s = about.get(key);
             Label optionlabel = new Label(s[Settings.OPTION_INDEX]);
             TextFlow aboutText = new TextFlow(new Text(s[Settings.ABOUT_INDEX]));
             Label typeLabel = new Label(s[Settings.TYPE_INDEX]);
@@ -49,7 +48,7 @@ public class SettingsEditorController {
         int row = 1;
         int valueCol = 4;
         int numCols = 5;
-        for (String key : Settings.about.keySet()) {
+        for (String key : Settings.getAbout().keySet()) {
             int i = row * numCols + valueCol;
             String value = ((TextField) (optionsGrid.getChildren().get(i))).getText();
             Settings.putValue(key, value);

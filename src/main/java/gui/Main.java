@@ -53,7 +53,10 @@ public class Main extends Application {
             System.err.println("Faulty controlfile detected: " + Tools.SETTINGS_FILE.getAbsolutePath());
             ButtonType bt1 = new ButtonType("I understand the risk. Start anyway.");
 
-            Alert alert = new Alert(Alert.AlertType.WARNING, "Another instance of CopyPasta appears to be running." + " This is not recommended as it may cause data loss. If the program was not shut down properly, this message may be shown erroneously.", new ButtonType("Abort"), bt1);
+            Alert alert = new Alert(Alert.AlertType.WARNING,
+                    "Another instance of CopyPasta appears to be running." +
+                            " This is not recommended as it may cause data loss. If the program was not shut down properly, this message may be shown erroneously.",
+                    new ButtonType("Abort"), bt1);
 
             alert.setHeaderText("Another instance may be running");
 

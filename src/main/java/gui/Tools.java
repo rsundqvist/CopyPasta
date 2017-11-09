@@ -35,6 +35,39 @@ public abstract class Tools {
 
     public static final String VERSION = "PRERELEASE Rev7.3";
 
+    public static boolean isNewer (String otherVersion) throws Exception {
+        boolean otherIsPrerelease = otherVersion.contains("PRERELEASE");
+        boolean isPrerelease = VERSION.contains("PRERELEASE");
+
+        if (!otherIsPrerelease && isPrerelease)
+            return true;
+        else if (otherIsPrerelease && !isPrerelease)
+            return false;
+
+        // Both or either prerelase or non-prerelease.
+        String version = VERSION.replaceAll("PRERELEASE Rev", "");
+        otherVersion = otherVersion.replaceAll("PRERELEASE Rev", "");
+
+        // Current version
+        int[] subversion = new int[3]; //major.minor.hotfix
+        String[] s = version.split("\\.");
+        for (int i = 0; i < s.length; i++)
+            subversion[i] = Integer.parseInt(s[i]);
+
+        // Possible update
+        int[] otherSubversion = new int[3]; //major.minor.hotfix
+        s = otherVersion.split("\\.");
+        for (int i = 0; i < s.length; i++)
+            otherSubversion[i] = Integer.parseInt(s[i]);
+
+        for (int i = 0; i < 3; i++) {
+            if (otherSubversion[i] > subversion[i])
+                return true;
+        }
+
+        return false;
+    }
+
     private Tools () {
     }
 

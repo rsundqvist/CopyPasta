@@ -20,6 +20,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
@@ -110,8 +111,7 @@ public abstract class IO {
     public static List<Pasta> importPasta (File file) {
         if (file != null) {
             try {
-                InputStreamReader reader = new InputStreamReader(new FileInputStream(file), Charset.forName(ENCODING).newDecoder());
-                Pasta pastaArray[] = gson.fromJson(reader, Pasta[].class);
+                Pasta[] pastaArray = extractPasta(new FileInputStream(file));
                 return pastaArray == null ? null : Arrays.asList(pastaArray);
             } catch (FileNotFoundException e) {
                 showExceptionAlert(e);
@@ -119,6 +119,11 @@ public abstract class IO {
         }
 
         return null;
+    }
+
+    public static Pasta[] extractPasta (InputStream is) {
+        InputStreamReader reader = new InputStreamReader(is, Charset.forName(ENCODING).newDecoder());
+        return gson.fromJson(reader, Pasta[].class);
     }
 
     /**
@@ -130,15 +135,17 @@ public abstract class IO {
     public static Feedback importFeedbackSingle (File file) {
         if (file != null) {
             try {
-                InputStreamReader reader = new InputStreamReader(new FileInputStream(file), Charset.forName(ENCODING).newDecoder());
-                Feedback feedback = gson.fromJson(reader, Feedback.class);
-                return feedback;
+                return extractSingleFeedback(new FileInputStream(file));
             } catch (FileNotFoundException e) {
                 showExceptionAlert(e);
             }
         }
-
         return null;
+    }
+
+    public static Feedback extractSingleFeedback (InputStream is) {
+        InputStreamReader reader = new InputStreamReader(is, Charset.forName(ENCODING).newDecoder());
+        return gson.fromJson(reader, Feedback.class);
     }
 
     /**
@@ -429,14 +436,18 @@ public abstract class IO {
     public static List<Feedback> importFeedback (File file) {
         if (file != null) {
             try {
-                InputStreamReader reader = new InputStreamReader(new FileInputStream(file), Charset.forName(ENCODING).newDecoder());
-                Feedback feedbackArray[] = gson.fromJson(reader, Feedback[].class);
+                Feedback[] feedbackArray = extractFeedback(new FileInputStream(file));
                 return feedbackArray == null ? null : Arrays.asList(feedbackArray);
             } catch (FileNotFoundException e) {
                 showExceptionAlert(e);
             }
         }
         return null;
+    }
+
+    public static Feedback[] extractFeedback (InputStream is) {
+        InputStreamReader reader = new InputStreamReader(is, Charset.forName(ENCODING).newDecoder());
+        return gson.fromJson(reader, Feedback[].class);
     }
 
     /**

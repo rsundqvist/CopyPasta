@@ -11,7 +11,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.Label;
@@ -30,11 +29,13 @@ import java.awt.*;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URI;
 import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
@@ -62,19 +63,12 @@ public class Controller implements PastaViewController.PastaControllerListener {
 
     public void initialize () {
         if (extremtFulLsng)
-            return;
-        extremtFulLsng = true;
+            return; extremtFulLsng = true;
 
-        pastaViewController.initialize(this);
-        savedLabel.setOpacity(0);
-        initTimeline(false);
-        initRecentWorkspaces();
+        pastaViewController.initialize(this); savedLabel.setOpacity(0); initTimeline(false); initRecentWorkspaces();
 
-        if (Settings.FIRST_RUN
-                //&& pastaViewController.getPastaList().isEmpty()&& feedbackViewController.getFeedbackList().isEmpty()
-                ) {
+        if (Settings.FIRST_RUN)
             loadExample();
-        }
     }
 
     private void initRecentWorkspaces () {
@@ -85,22 +79,15 @@ public class Controller implements PastaViewController.PastaControllerListener {
             javafx.scene.control.MenuItem mi = new javafx.scene.control.MenuItem(file.getParent());
             if (i == recentWorkspaces.size() - 1) {
                 javafx.scene.image.ImageView iw = GroupImporterController.NodeStatus.BLUE.getImageView();
-                iw.setFitWidth(15);
-                iw.setFitHeight(15);
-                mi.setGraphic(iw);
-            }
-            ; //Mark current directory
-            mi.setOnAction(event -> switchWorkspace(mi.getText()));
-            recentWorkspaceMenu.getItems().add(mi);
+                iw.setFitWidth(15); iw.setFitHeight(15); mi.setGraphic(iw);
+            } ; //Mark current directory
+            mi.setOnAction(event -> switchWorkspace(mi.getText())); recentWorkspaceMenu.getItems().add(mi);
         }
 
         javafx.scene.control.MenuItem clearItem = new javafx.scene.control.MenuItem("Clear All");
         clearItem.setOnAction(event -> {
-            recentWorkspaces.clear();
-            recentWorkspaceMenu.setDisable(true);
-        });
-        recentWorkspaceMenu.getItems().add(new SeparatorMenuItem());
-        recentWorkspaceMenu.getItems().add(clearItem);
+            recentWorkspaces.clear(); recentWorkspaceMenu.setDisable(true);
+        }); recentWorkspaceMenu.getItems().add(new SeparatorMenuItem()); recentWorkspaceMenu.getItems().add(clearItem);
     }
 
     private void readRecentWorkspaces () {
@@ -133,8 +120,7 @@ public class Controller implements PastaViewController.PastaControllerListener {
             save();
 
         autosaveTimeline = new Timeline(new KeyFrame(Duration.minutes(5), ae -> save()));
-        autosaveTimeline.setCycleCount(Timeline.INDEFINITE);
-        autosaveTimeline.play();
+        autosaveTimeline.setCycleCount(Timeline.INDEFINITE); autosaveTimeline.play();
     }
 
     @Override
@@ -142,8 +128,7 @@ public class Controller implements PastaViewController.PastaControllerListener {
     }
 
     public void onChangeWorkspace () {
-        File file = IO.showDirectoryChooser(null);
-        if (file == null || !file.isDirectory())
+        File file = IO.showDirectoryChooser(null); if (file == null || !file.isDirectory())
             return;
 
         try {
@@ -175,16 +160,12 @@ public class Controller implements PastaViewController.PastaControllerListener {
     }
 
     public void save () {
-        pastaViewController.save();
-        feedbackViewController.save();
-        Tools.flashNode(savedLabel);
+        pastaViewController.save(); feedbackViewController.save(); Tools.flashNode(savedLabel);
 
         DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
         lastSaveTimestampLabel.setText("Saved at " + dateFormat.format(Calendar.getInstance().getTime()));
-        FadeTransition ft = new FadeTransition(Duration.seconds(6), lastSaveTimestampLabel);
-        ft.setFromValue(0);
-        ft.setToValue(1.0);
-        ft.play();
+        FadeTransition ft = new FadeTransition(Duration.seconds(6), lastSaveTimestampLabel); ft.setFromValue(0);
+        ft.setToValue(1.0); ft.play();
     }
 
     @Override
@@ -201,12 +182,8 @@ public class Controller implements PastaViewController.PastaControllerListener {
     }
 
     public void shutdown () {
-        pastaViewController.save();
-        feedbackViewController.save();
-        Settings.loadFromProperties();
-        Settings.storeStoreSettingsFile();
-        printRecentWorkspaces();
-        Settings.setRunningFile(false);
+        pastaViewController.save(); feedbackViewController.save(); Settings.loadFromProperties();
+        Settings.storeStoreSettingsFile(); printRecentWorkspaces(); Settings.setRunningFile(false);
     }
 
     public void onDefaultWorkspace () {
@@ -214,8 +191,7 @@ public class Controller implements PastaViewController.PastaControllerListener {
     }
 
     public void switchWorkspace (String workspace) {
-        Settings.putValue(Settings.workspace_location, workspace);
-        Settings.restartForSettingsEffect();
+        Settings.putValue(Settings.workspace_location, workspace); Settings.restartForSettingsEffect();
     }
 
     public void openPastaEditor () {
@@ -230,26 +206,22 @@ public class Controller implements PastaViewController.PastaControllerListener {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Replace current Pasta with editor Pasta?", ButtonType.YES, ButtonType.NO);
             alert.setHeaderText("Replace current pasta?");
 
-            Optional<ButtonType> result = alert.showAndWait();
-            if (result.isPresent() && result.get() == ButtonType.YES)
+            Optional<ButtonType> result = alert.showAndWait(); if (result.isPresent() && result.get() == ButtonType.YES)
                 pastaViewController.setPastaList(pastaList);
         }
     }
 
     public void openGroupImporter () {
-        GroupImporter groupImporter = new GroupImporter();
-        List<Feedback> feedbackList = groupImporter.showAndWait();
+        GroupImporter groupImporter = new GroupImporter(); List<Feedback> feedbackList = groupImporter.showAndWait();
 
         if (!feedbackList.isEmpty()) {
-            ButtonType bt1 = new ButtonType("Nothing");
-            ButtonType bt2 = new ButtonType("Replace ALL groups");
+            ButtonType bt1 = new ButtonType("Nothing"); ButtonType bt2 = new ButtonType("Replace ALL groups");
             ButtonType bt3 = new ButtonType("Import new groups");
 
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "What do you want to do?", bt1, bt2, bt3);
             alert.setHeaderText("Finish Import");
 
-            Optional<ButtonType> result = alert.showAndWait();
-            if (result.isPresent())
+            Optional<ButtonType> result = alert.showAndWait(); if (result.isPresent())
                 if (result.get() == bt2)
                     feedbackViewController.importFeedbackAddTemplateContent(feedbackList, true); // Replace all
                 else if (result.get() == bt3)
@@ -262,25 +234,16 @@ public class Controller implements PastaViewController.PastaControllerListener {
     }
 
     public void about_fxml () {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("About Program");
+        Alert alert = new Alert(Alert.AlertType.INFORMATION); alert.setTitle("About Program");
         alert.setHeaderText("About Copy Pasta");
 
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/fxml/about.fxml"));
-        fxmlLoader.setController(this);
-        Parent root = null;
-        try {
+        fxmlLoader.setController(this); Parent root = null; try {
             root = fxmlLoader.load();
         } catch (IOException e) {
-            IO.showExceptionAlert(e);
-            e.printStackTrace();
-            return;
-        }
-        versionLabel.setText(Tools.VERSION);
-        alert.getDialogPane().setExpandableContent(root);
-        alert.getDialogPane().setExpanded(true);
-        alert.initModality(Modality.NONE);
-        alert.showAndWait();
+            IO.showExceptionAlert(e); e.printStackTrace(); return;
+        } versionLabel.setText(Tools.VERSION); alert.getDialogPane().setExpandableContent(root);
+        alert.getDialogPane().setExpanded(true); alert.initModality(Modality.NONE); alert.showAndWait();
     }
 
     public void onMail () {
@@ -303,34 +266,30 @@ public class Controller implements PastaViewController.PastaControllerListener {
     }
 
     public void onLoadExample () {
-        ButtonType bt = new ButtonType("Load Example");
-        ButtonType bt2 = new ButtonType("Maybe later");
+        ButtonType bt = new ButtonType("Load Example"); ButtonType bt2 = new ButtonType("Maybe later");
 
         String contentText = "All current work will be replaced! You can always load the example again from the Help menu.\nReally load example?";
         Alert alert = new Alert(Alert.AlertType.WARNING, contentText, bt2, bt);
         alert.setHeaderText("All existing work will be deleted!");
 
-        Optional<ButtonType> result = alert.showAndWait();
-        if (result.isPresent() && result.get() == ButtonType.OK)
+        Optional<ButtonType> result = alert.showAndWait(); if (result.isPresent() && result.get() == bt)
             loadExample();
     }
 
     public void loadExample () {
         try {
-            File pasta = new File(Controller.class.getResource("/examples/pasta.json").toURI());
-            File template = new File(Controller.class.getResource("/examples/template.json").toURI());
-            File feedback = new File(Controller.class.getResource("/examples/feedback.json").toURI());
-            pastaViewController.clearAllNoWarning();
-            pastaViewController.importPasta(IO.importPasta(pasta));
+            InputStream pasta = Controller.class.getResourceAsStream("/examples/pasta.json");
+            InputStream template = Controller.class.getResourceAsStream("/examples/template.json");
+            InputStream feedback = Controller.class.getResourceAsStream("/examples/feedback.json");
+            pastaViewController.clearAllNoWarning(); pastaViewController.importPasta(Arrays.asList(IO.extractPasta(pasta)));
 
             feedbackViewController.clearFeedback();
-            feedbackViewController.setFeedbackTemplate(IO.importFeedbackSingle(template));
-            feedbackViewController.importFeedbackAddTemplateContent(IO.importFeedback(feedback), true);
+            feedbackViewController.setFeedbackTemplate(IO.extractSingleFeedback(template));
+            feedbackViewController.importFeedbackAddTemplateContent(Arrays.asList(IO.extractFeedback(feedback)), true);
             feedbackViewController.selectView(1); // Setup tab.
 
         } catch (Exception e) {
-            System.err.println("Failed to load examples.");
-            IO.showExceptionAlert(e);
+            System.err.println("Failed to load examples."); IO.showExceptionAlert(e);
         }
     }
 
@@ -344,24 +303,19 @@ public class Controller implements PastaViewController.PastaControllerListener {
             URL url = new URL("https://raw.githubusercontent.com/whisp91/CopyPasta/master/VERSION");
             BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
 
-            StringBuilder sb = new StringBuilder();
-            String inputLine;
-            while ((inputLine = in.readLine()) != null)
+            StringBuilder sb = new StringBuilder(); String inputLine; while ((inputLine = in.readLine()) != null)
                 sb.append(inputLine + "\n");
 
-            String version = sb.toString();
-            if (Tools.isNewer(version)) {
+            String version = sb.toString(); if (Tools.isNewer(version)) {
                 newVersion(version);
             } else if (alertOnFalse) {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION, "Looks like you have the most recent version." + "\n\n Repository version: " + version + "\n Your version: " + Tools.VERSION, ButtonType.OK);
-                alert.setHeaderText("CopyPasta is up-to-date");
-                alert.showAndWait();
+                alert.setHeaderText("CopyPasta is up-to-date"); alert.showAndWait();
             }
         } catch (Exception e) {
             e.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.ERROR, "Operation failed: " + e.getClass().getCanonicalName() + ": " + e.getMessage() + "\n\nCheck the Git repository for the latest version.", ButtonType.OK);
-            alert.setHeaderText("Version check failed");
-            alert.showAndWait();
+            alert.setHeaderText("Version check failed"); alert.showAndWait();
         }
     }
 
@@ -370,8 +324,7 @@ public class Controller implements PastaViewController.PastaControllerListener {
         Alert alert = new Alert(Alert.AlertType.INFORMATION, "The \"Download\" button will open the browser to download the new version as a .zip-file." + " You                                                                                                               may safely replace the old folder entirely, as none of the data in the zip-archive is user-specific." + "\n\n New version: " + version + "\n Your version: " + Tools.VERSION, bt, ButtonType.CANCEL);
         alert.setHeaderText("CopyPasta can be updated.");
 
-        Optional<ButtonType> result = alert.showAndWait();
-        if (result.isPresent() && result.get() == bt) {
+        Optional<ButtonType> result = alert.showAndWait(); if (result.isPresent() && result.get() == bt) {
             try {
                 Desktop.getDesktop().browse(new URL("https://github.com/whisp91/CopyPasta/blob/master/CopyPasta.zip?raw=true").toURI());
             } catch (Exception e) {

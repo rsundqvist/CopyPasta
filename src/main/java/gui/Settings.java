@@ -16,13 +16,14 @@ public abstract class Settings {
     private Settings () {
     }
 
+    public static boolean FIRST_RUN = true;
+
     /*
      * Settings
      */
     public static boolean USE_NATIVE_TXT_EDITOR = false;
     private static final String use_native_txt_editor = "use_native_txt_editor";
 
-    public static String NEXT_WORKSPACE_LOCATION = "user.dir";
     public static String WORKSPACE_LOCATION = "user.dir";
     static final String workspace_location = "workspace_location";
 
@@ -79,11 +80,12 @@ public abstract class Settings {
 
             FILE_DECORATION_WIDTH = Integer.parseInt((String) properties.get(file_decoration_width));
         } catch (Exception e) {
-            IO.showExceptionAlert(e);
+            if (!FIRST_RUN)
+                IO.showExceptionAlert(e);
         }
     }
 
-    public static void restartForSettingsEffect() {
+    public static void restartForSettingsEffect () {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setHeaderText("Settings saved");
         alert.setContentText("The new settings will take effect once you restart the program.");
@@ -131,6 +133,7 @@ public abstract class Settings {
     }
 
     public static boolean getRunningFile () {
+        FIRST_RUN = Tools.IS_RUNNING_FILE.exists();
         return Boolean.parseBoolean(IO.getFileAsString(Tools.IS_RUNNING_FILE).replaceAll("\\s+", ""));
     }
 }

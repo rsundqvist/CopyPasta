@@ -282,7 +282,7 @@ public class GroupImporterController {
         return feedbackManager.getFeedbackList();
     }
 
-    private enum NodeStatus {
+    public enum NodeStatus {
         RED, GREEN, BLUE;
 
         public static NodeStatus getCombinedStatus (NodeStatus... status) {

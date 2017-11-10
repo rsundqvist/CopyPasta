@@ -19,6 +19,8 @@ public class Main extends Application {
         launch(args);
     }
 
+    private Controller controller;
+
     @Override
     public void start (Stage primaryStage) throws Exception {
         checkRunning();
@@ -28,7 +30,7 @@ public class Main extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/fxml/main.fxml"));
         Parent root = fxmlLoader.load();
 
-        primaryStage.setTitle("Copy Pasta \u00a9 Richard Sundqvist" + "          -          Workspace: \"" + Tools.AUTO_SAVE_FEEDBACK_FILE.getParent() + "\"");
+        primaryStage.setTitle("Copy Pasta \u00a9 Richard Sundqvist" + "          -          Workspace: \"" + Tools.AUTO_SAVE_FEEDBACK_FILE.getParentFile().getAbsolutePath() + "\"");
         primaryStage.getIcons().add(new Image(Main.class.getResourceAsStream("/icon.png")));
 
         Rectangle2D screenSize = Screen.getPrimary().getVisualBounds();
@@ -39,9 +41,7 @@ public class Main extends Application {
         primaryStage.setScene(scene);
 
         primaryStage.show();
-
-        final Controller controller = fxmlLoader.getController();
-        Runtime.getRuntime().addShutdownHook(new Thread(() -> shutdown(controller)));
+        controller = fxmlLoader.getController();
 
         System.out.println("Workspace location: " + Tools.AUTO_SAVE_FEEDBACK_FILE.getParent());
     }
@@ -68,7 +68,7 @@ public class Main extends Application {
         Settings.setRunningFile(true);
     }
 
-    public void shutdown (Controller controller) {
+    public void stop () {
         controller.shutdown();
     }
 }

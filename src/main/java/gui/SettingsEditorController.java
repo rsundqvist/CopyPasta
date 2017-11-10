@@ -57,7 +57,7 @@ public class SettingsEditorController {
             Settings.putValue(key, value);
             row++;
         }
-        Settings.loadFromProperties();
+        Settings.restartForSettingsEffect();
         stage.close();
     }
 

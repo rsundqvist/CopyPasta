@@ -14,6 +14,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.Label;
+import javafx.scene.control.Menu;
+import javafx.scene.control.SeparatorMenuItem;
 import javafx.stage.Modality;
 import javafx.util.Duration;
 import model.Feedback;
@@ -24,6 +26,7 @@ import zip.GroupImporter;
 
 import java.awt.*;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URI;
@@ -42,6 +45,10 @@ public class Controller implements PastaViewController.PastaControllerListener {
     private FeedbackViewController feedbackViewController = null;
     @FXML
     private Label savedLabel, lastSaveTimestampLabel, versionLabel;
+    @FXML
+    private Menu recentWorkspaceMenu;
+
+    private static final UniqueArrayList<String> recentWorkspaces = new UniqueArrayList();
 
     private Timeline autosaveTimeline = null;
 
@@ -55,6 +62,53 @@ public class Controller implements PastaViewController.PastaControllerListener {
         initTimeline(false);
         if (Settings.STARTUP_VERSION_CHECK)
             checkUpdates(true);
+
+        initRecentWorkspaces();
+    }
+
+    private void initRecentWorkspaces () {
+        readRecentWorkspaces();
+
+
+        for (int i = recentWorkspaces.size() - 1; i >= 0; i--) {
+            File file = new File(recentWorkspaces.get(i));
+            javafx.scene.control.MenuItem mi = new javafx.scene.control.MenuItem(file.getParent());
+            mi.setOnAction(event -> switchWorkspace(mi.getText()));
+            recentWorkspaceMenu.getItems().add(mi);
+        }
+
+        javafx.scene.control.MenuItem clearItem = new javafx.scene.control.MenuItem("Clear All");
+        clearItem.setOnAction(event -> {
+            recentWorkspaces.clear();
+            recentWorkspaceMenu.setDisable(true);
+        });
+        recentWorkspaceMenu.getItems().add(new SeparatorMenuItem());
+        recentWorkspaceMenu.getItems().add(clearItem);
+    }
+
+    private void readRecentWorkspaces () {
+        String s[] = IO.getFileAsString(Tools.RECENT_WORKSPACES_FILE).split("\n");
+
+        for (String str : s) {
+            if (str != null && !str.isEmpty())
+                recentWorkspaces.add(str);
+        }
+
+        String current = Tools.AUTO_SAVE_TEMPLATE_FILE.getParentFile().getParent();
+        recentWorkspaces.remove(current); // Remove to ensure it's last
+        recentWorkspaces.add(current); // Add current
+
+        if (recentWorkspaces.size() > 5)
+            recentWorkspaces.remove(0); // Remove the first (oldest element)
+    }
+
+    private void printRecentWorkspaces () {
+        StringBuilder sb = new StringBuilder();
+
+        for (String s : recentWorkspaces)
+            sb.append(s + "\n"); // Newest is first
+
+        IO.printStringToFile(sb.toString(), Tools.RECENT_WORKSPACES_FILE);
     }
 
     public void initTimeline (boolean saveNow) {
@@ -68,6 +122,18 @@ public class Controller implements PastaViewController.PastaControllerListener {
 
     @Override
     public void select (Pasta pasta) {
+    }
+
+    public void onChangeWorkspace () {
+        File file = IO.showDirectoryChooser(null);
+        if (file == null || !file.isDirectory())
+            return;
+
+        try {
+            switchWorkspace(file.getCanonicalPath());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void selectFeedback () {
@@ -120,8 +186,19 @@ public class Controller implements PastaViewController.PastaControllerListener {
     public void shutdown () {
         pastaViewController.save();
         feedbackViewController.save();
+        Settings.loadFromProperties();
         Settings.storeStoreSettingsFile();
+        printRecentWorkspaces();
         Settings.setRunningFile(false);
+    }
+
+    public void onDefaultWorkspace () {
+        switchWorkspace("user.dir");
+    }
+
+    public void switchWorkspace (String workspace) {
+        Settings.putValue(Settings.workspace_location, workspace);
+        Settings.restartForSettingsEffect();
     }
 
     public void openPastaEditor () {

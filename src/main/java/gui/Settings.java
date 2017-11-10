@@ -1,5 +1,6 @@
 package gui;
 
+import javafx.scene.control.Alert;
 import model.IO;
 
 import java.io.FileOutputStream;
@@ -21,8 +22,9 @@ public abstract class Settings {
     public static boolean USE_NATIVE_TXT_EDITOR = false;
     private static final String use_native_txt_editor = "use_native_txt_editor";
 
+    public static String NEXT_WORKSPACE_LOCATION = "user.dir";
     public static String WORKSPACE_LOCATION = "user.dir";
-    private static final String workspace_location = "workspace_location";
+    static final String workspace_location = "workspace_location";
 
     public static int FILE_DECORATION_WIDTH = 80;
     private static final String file_decoration_width = "file_decoration_width";
@@ -79,6 +81,13 @@ public abstract class Settings {
         } catch (Exception e) {
             IO.showExceptionAlert(e);
         }
+    }
+
+    public static void restartForSettingsEffect() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setHeaderText("Settings saved");
+        alert.setContentText("The new settings will take effect once you restart the program.");
+        alert.showAndWait();
     }
 
     public static void putToProperties () {

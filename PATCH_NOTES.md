@@ -1,8 +1,11 @@
 # Copy Pasta: Version History
 ___
-#### Current Version: `PRERELEASE Rev7.4.1`
 
 ## Patch Notes
+### `PRERELEASE Rev8`
+10-11-2017
+* Full workspace support
+
 ### `PRERELEASE Rev7.4.1`
 10-11-2017
 * Settings panel hotfix.

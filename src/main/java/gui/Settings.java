@@ -65,12 +65,16 @@ public abstract class Settings {
 
         about.put(first_run, // Key
                 new String[]{"First Run", // Display name
-                        "Indicates that the program is running for the first time", Boolean.class.getCanonicalName() + ""});
+                        "Indicates that the program is running for the first time, showing startup help and overriding previous settings.", Boolean.class.getCanonicalName() + ""});
 
         return about;
     }
 
     public static void loadFromProperties () {
+        if (FIRST_RUN) {
+            putToProperties(); // Put default values, overriding whatever is written in settings.
+            return;
+        }
         try {
             USE_NATIVE_TXT_EDITOR = Boolean.parseBoolean((String) properties.get(use_native_txt_editor));
 
@@ -91,8 +95,6 @@ public abstract class Settings {
         } catch (Exception e) {
             IO.showExceptionAlert(e);
         }
-        if (FIRST_RUN)
-            putToProperties();
     }
 
     public static void putToProperties () {

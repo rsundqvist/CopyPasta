@@ -277,7 +277,7 @@ public class Controller implements PastaViewController.PastaControllerListener {
         alert.showAndWait();
 
 
-        loadExample();
+        loadExample(); //TODO remove
     }
 
     public void onMail () {
@@ -301,11 +301,12 @@ public class Controller implements PastaViewController.PastaControllerListener {
 
     public void loadExample () {
         try {
-            System.out.println(Controller.class.getResource("isrunning").getFile());
-            System.out.println(Controller.class.getResource("/isrunning").getFile());
+            //System.out.println(Controller.class.getResource("isrunning").getFile());
+            //System.out.println(Controller.class.getResource("/isrunning").getFile());
             //File template = new File(Controller.class.getResource("example/template.json").toURI());
             //System.out.println("file = " + template);
             //feedbackViewController.setFeedbackTemplate(IO.importFeedbackSingle(template));
+            feedbackViewController.selectView(1); // Setup tab.
 
         } catch (Exception e) {
             e.printStackTrace();

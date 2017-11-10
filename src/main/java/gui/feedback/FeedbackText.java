@@ -67,6 +67,10 @@ public class FeedbackText extends BorderPane implements StudentFileViewerControl
         return codeArea.getText();
     }
 
+    public void setText(String text) {
+        codeArea.replaceText(0, 0, text);
+    }
+
     public void updateColor () {
         if (feedback.isDone())
             codeArea.setStyle("-fx-font-family: consolas; -fx-font-size: 11pt; -fx-background-color: #55e055;");

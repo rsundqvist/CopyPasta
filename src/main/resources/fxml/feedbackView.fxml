@@ -117,7 +117,7 @@
                         </VBox>
                     </right>
                <center>
-                  <SplitPane dividerPositions="0.3, 0.8" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0" BorderPane.alignment="CENTER">
+                  <SplitPane fx:id="templateTextPane" dividerPositions="0.3, 0.8" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0" BorderPane.alignment="CENTER">
                      <items>
                         <VBox prefHeight="146.0" prefWidth="394.0">
                            <children>

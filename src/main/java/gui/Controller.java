@@ -311,11 +311,9 @@ public class Controller implements PastaViewController.PastaControllerListener {
       Optional<ButtonType> result = alert.showAndWait();
       if (result.isPresent())
         if (result.get() == bt2)
-          feedbackViewController.importFeedbackAddTemplateContent(
-              feedbackList, true, true); // Replace all
+          feedbackViewController.importFeedback(feedbackList, true, true); // Replace all
         else if (result.get() == bt3)
-          feedbackViewController.importFeedbackAddTemplateContent(
-              feedbackList, false, true); // Add new only
+          feedbackViewController.importFeedback(feedbackList, false, true); // Add new only
     }
   }
 
@@ -389,7 +387,7 @@ public class Controller implements PastaViewController.PastaControllerListener {
       pastaViewController.importPasta(Arrays.asList(IO.extractPasta(pasta)));
 
       feedbackViewController.setFeedbackTemplate(IO.extractSingleFeedback(template));
-      feedbackViewController.importFeedbackAddTemplateContent(
+      feedbackViewController.importFeedback(
           Arrays.asList(IO.extractFeedback(feedback)), true, false);
       selectSetup();
 

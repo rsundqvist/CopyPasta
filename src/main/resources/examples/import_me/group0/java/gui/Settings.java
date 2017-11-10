@@ -30,6 +30,7 @@ public abstract class Settings {
   public static int FILE_DECORATION_WIDTH = 80;
   public static boolean STARTUP_VERSION_CHECK = true;
   public static boolean FIRST_RUN = true;
+
   private Settings() {}
 
   // ================================================================================= //

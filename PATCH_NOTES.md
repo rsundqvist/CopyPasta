@@ -9,6 +9,10 @@ Given a version number MAJOR.MINOR.PATCH:
 * PATCH version denote backwards-compatible bug fixes.
 
 ## Patch Notes
+### Version `1.0.1`
+10-11-2017
+* Fix loading examples outside IDE.
+
 ### Version `1.0.0`
 10-11-2017
 * Initial prod release

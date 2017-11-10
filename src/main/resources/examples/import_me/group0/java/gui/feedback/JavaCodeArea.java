@@ -122,10 +122,6 @@ public class JavaCodeArea extends CodeArea {
     if (initialContent != null) replaceText(0, 0, initialContent);
   }
 
-  public void setText(String s) {
-    if (getText() != null && s != null && s.length() > 0) replaceText(0, getText().length(), s);
-  }
-
   // @formatter:off
   private static StyleSpans<Collection<String>> computeHighlighting(String text) {
     Matcher matcher = PATTERN.matcher(text);
@@ -155,6 +151,10 @@ public class JavaCodeArea extends CodeArea {
     }
     spansBuilder.add(Collections.emptyList(), text.length() - lastKwEnd);
     return spansBuilder.create();
+  }
+
+  public void setText(String s) {
+    if (getText() != null && s != null && s.length() > 0) replaceText(0, getText().length(), s);
   }
   // @formatter:on
 }

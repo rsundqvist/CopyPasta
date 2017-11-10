@@ -12,31 +12,25 @@ import java.util.Properties;
 
 public abstract class Settings {
 
-  private Settings() {}
-
-  /*
-   * Settings. The assigned values are used as defaults if no properties entry is found.
-   */
-  public static boolean USE_NATIVE_TXT_EDITOR = false;
-  private static final String use_native_txt_editor = "use_native_txt_editor";
-
-  public static String WORKSPACE_LOCATION = "user.dir";
-  static final String workspace_location = "workspace_location";
-
-  public static int FILE_DECORATION_WIDTH = 80;
-  private static final String file_decoration_width = "file_decoration_width";
-
-  public static boolean STARTUP_VERSION_CHECK = true;
-  private static final String startup_version_check = "startup_version_check";
-
-  public static boolean FIRST_RUN = true;
   public static final String first_run = "first_run";
-
   /*
    * Class stuff
    */
   public static final Properties properties = new Properties();
   public static final int OPTION_INDEX = 0, ABOUT_INDEX = 1, TYPE_INDEX = 2;
+  static final String workspace_location = "workspace_location";
+  private static final String use_native_txt_editor = "use_native_txt_editor";
+  private static final String file_decoration_width = "file_decoration_width";
+  private static final String startup_version_check = "startup_version_check";
+  /*
+   * Settings. The assigned values are used as defaults if no properties entry is found.
+   */
+  public static boolean USE_NATIVE_TXT_EDITOR = false;
+  public static String WORKSPACE_LOCATION = "user.dir";
+  public static int FILE_DECORATION_WIDTH = 80;
+  public static boolean STARTUP_VERSION_CHECK = true;
+  public static boolean FIRST_RUN = true;
+  private Settings() {}
 
   // ================================================================================= //
   // Methods that must be changed every time a new setting variable is introduced
@@ -162,12 +156,12 @@ public abstract class Settings {
     }
   }
 
-  public static void setRunningFile(boolean value) {
-    IO.printStringToFile(value + "", Tools.IS_RUNNING_FILE);
-  }
-
   public static boolean getRunningFile() {
     FIRST_RUN = Tools.IS_RUNNING_FILE.exists();
     return Boolean.parseBoolean(IO.getFileAsString(Tools.IS_RUNNING_FILE).replaceAll("\\s+", ""));
+  }
+
+  public static void setRunningFile(boolean value) {
+    IO.printStringToFile(value + "", Tools.IS_RUNNING_FILE);
   }
 }

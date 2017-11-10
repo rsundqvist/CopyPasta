@@ -15,11 +15,39 @@ import java.util.Optional;
 
 public class Main extends Application {
 
+  private Controller controller;
+
   public static void main(String[] args) {
     launch(args);
   }
 
-  private Controller controller;
+  public static void checkRunning() {
+    boolean isRunning = Settings.getRunningFile();
+
+    if (isRunning) {
+      System.err.println("Faulty controlfile detected: " + Tools.SETTINGS_FILE.getAbsolutePath());
+      ButtonType bt1 = new ButtonType("I understand the risk. Start anyway.");
+
+      Alert alert =
+          new Alert(
+              Alert.AlertType.WARNING,
+              "Another instance of CopyPasta appears to be running."
+                  + " This is not recommended as it may cause data loss. If the program was not shut down properly, this message may be shown erroneously.",
+              new ButtonType("Abort"),
+              bt1);
+
+      alert.setHeaderText("Another instance may be running");
+
+      Optional<ButtonType> result = alert.showAndWait();
+      if (result.isPresent() && result.get() == bt1) {
+        System.err.println("Continuing in spite of faulty controlfile.");
+      } else {
+        System.err.println("Shutting down: faulty controlfile.");
+        System.exit(-1);
+      }
+    }
+    Settings.setRunningFile(true);
+  }
 
   @Override
   public void start(Stage primaryStage) throws Exception {
@@ -53,34 +81,6 @@ public class Main extends Application {
     System.out.println("Workspace location: " + Tools.AUTO_SAVE_FEEDBACK_FILE.getParent());
     Settings.FIRST_RUN = false;
     Settings.putValue(Settings.first_run, Settings.FIRST_RUN + "");
-  }
-
-  public static void checkRunning() {
-    boolean isRunning = Settings.getRunningFile();
-
-    if (isRunning) {
-      System.err.println("Faulty controlfile detected: " + Tools.SETTINGS_FILE.getAbsolutePath());
-      ButtonType bt1 = new ButtonType("I understand the risk. Start anyway.");
-
-      Alert alert =
-          new Alert(
-              Alert.AlertType.WARNING,
-              "Another instance of CopyPasta appears to be running."
-                  + " This is not recommended as it may cause data loss. If the program was not shut down properly, this message may be shown erroneously.",
-              new ButtonType("Abort"),
-              bt1);
-
-      alert.setHeaderText("Another instance may be running");
-
-      Optional<ButtonType> result = alert.showAndWait();
-      if (result.isPresent() && result.get() == bt1) {
-        System.err.println("Continuing in spite of faulty controlfile.");
-      } else {
-        System.err.println("Shutting down: faulty controlfile.");
-        System.exit(-1);
-      }
-    }
-    Settings.setRunningFile(true);
   }
 
   public void stop() {

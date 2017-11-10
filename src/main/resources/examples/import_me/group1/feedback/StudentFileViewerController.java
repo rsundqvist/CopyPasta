@@ -20,14 +20,13 @@ import java.util.Map;
 
 /** Created by Richard Sundqvist on 26/03/2017. */
 public class StudentFileViewerController {
+  private final FileFeedbackListener listener;
+  private final Feedback feedback;
   @FXML private Label fileLabel = null;
   @FXML private TabPane sourceTabs = null;
   @FXML private Label copiedLabel = null;
-
   private FileTab currentFileTab = null;
   private boolean feedbackLine = true, feedbackColumn = false;
-  private final FileFeedbackListener listener;
-  private final Feedback feedback;
   private boolean editable = false;
 
   public StudentFileViewerController(FileFeedbackListener listener, Feedback feedback) {
@@ -153,13 +152,13 @@ public class StudentFileViewerController {
     return currentFileTab;
   }
 
+  public void flashCopiedlabel() {
+    Tools.flashNode(copiedLabel);
+  }
+
   public interface FileFeedbackListener {
     void feedbackAt(String file, int caretLine, int caretColumn, int caretPosition);
 
     void feedbackAt(String file, String content, int caretLine, int caretColumn, int caretPosition);
-  }
-
-  public void flashCopiedlabel() {
-    Tools.flashNode(copiedLabel);
   }
 }

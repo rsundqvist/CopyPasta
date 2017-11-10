@@ -33,23 +33,50 @@ import java.util.List;
 
 /** Created by Richard Sundqvist on 17/04/2017. */
 public class GroupImporterController {
+  private final JavaCodeArea codeArea;
+  private final FeedbackManager feedbackManager = new FeedbackManager();
+  private final Stage stage;
   @FXML private TextField rootDirectoryField;
   @FXML private ListView groupListView, filesListView;
   @FXML private TreeView treeView;
   @FXML private BorderPane previewContainer;
   @FXML private TextArea filePatternsTextArea;
   @FXML private Label filePreviewLabel;
-
   private List<String> fileEndingList;
   private boolean openArchives = true;
-  private final JavaCodeArea codeArea;
-  private final FeedbackManager feedbackManager = new FeedbackManager();
-  private final Stage stage;
 
   public GroupImporterController(Stage stage) {
     codeArea = new JavaCodeArea();
     codeArea.setEditable(false);
     this.stage = stage;
+  }
+
+  private static void removeItem(FeedbackTreeItem treeItem, Feedback feedback) {
+    File file = treeItem.getValue();
+
+    if (file.isDirectory())
+      treeItem
+          .getChildren()
+          .forEach(childItem -> removeItem((FeedbackTreeItem) childItem, feedback));
+    else feedback.removeFile(file.getName());
+  }
+
+  private static void addItem(FeedbackTreeItem treeItem, Feedback feedback) {
+    File file = treeItem.getValue();
+
+    if (file.isDirectory())
+      treeItem.getChildren().forEach(childItem -> addItem((FeedbackTreeItem) childItem, feedback));
+    else {
+      String content = IO.getFileAsString(file);
+      feedback.addFile(file.getName(), content);
+    }
+  }
+
+  private static void setNodeIcon(TreeItem node, ImageView iw) {
+    iw.setFitWidth(18);
+    iw.setFitHeight(18);
+    iw.setOpacity(0.7);
+    node.setGraphic(iw);
   }
 
   private void onGroupSelectionChanged() {
@@ -149,27 +176,6 @@ public class GroupImporterController {
     update();
   }
 
-  private static void removeItem(FeedbackTreeItem treeItem, Feedback feedback) {
-    File file = treeItem.getValue();
-
-    if (file.isDirectory())
-      treeItem
-          .getChildren()
-          .forEach(childItem -> removeItem((FeedbackTreeItem) childItem, feedback));
-    else feedback.removeFile(file.getName());
-  }
-
-  private static void addItem(FeedbackTreeItem treeItem, Feedback feedback) {
-    File file = treeItem.getValue();
-
-    if (file.isDirectory())
-      treeItem.getChildren().forEach(childItem -> addItem((FeedbackTreeItem) childItem, feedback));
-    else {
-      String content = IO.getFileAsString(file);
-      feedback.addFile(file.getName(), content);
-    }
-  }
-
   private void addItem(boolean pickGroup) {
     FeedbackTreeItem selectedItem =
         (FeedbackTreeItem) treeView.getSelectionModel().getSelectedItem();
@@ -261,13 +267,6 @@ public class GroupImporterController {
     setNodeIcon(root, nodeStatus.getImageView());
     if (nodeStatus != NodeStatus.RED) root.setExpanded(true);
     return nodeStatus;
-  }
-
-  private static void setNodeIcon(TreeItem node, ImageView iw) {
-    iw.setFitWidth(18);
-    iw.setFitHeight(18);
-    iw.setOpacity(0.7);
-    node.setGraphic(iw);
   }
 
   public void onToggleOpenArchives(Event event) {

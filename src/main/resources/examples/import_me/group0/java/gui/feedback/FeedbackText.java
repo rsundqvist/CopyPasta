@@ -69,23 +69,6 @@ public class FeedbackText extends BorderPane
     return spansBuilder.create();
   }
 
-  public String getText() {
-    return codeArea.getText();
-  }
-
-  public void setText(String text) {
-    codeArea.replaceText(0, 0, text);
-  }
-
-  public void updateColor() {
-    if (feedback.isDone())
-      codeArea.setStyle(
-          "-fx-font-family: consolas; -fx-font-size: 11pt; -fx-background-color: #55e055;");
-    else
-      codeArea.setStyle(
-          "-fx-font-family: consolas; -fx-font-size: 11pt; -fx-background-color: #dddddd;");
-  }
-
   private static String caretString(int caretLine, int caretColumn) {
     StringBuilder stringBuilder = new StringBuilder();
 
@@ -96,22 +79,6 @@ public class FeedbackText extends BorderPane
     if (caretColumn != -1) stringBuilder.append("C" + caretColumn);
 
     return stringBuilder.toString();
-  }
-
-  @Override
-  public void feedbackAt(String file, int caretLine, int caretColumn, int caretPosition) {
-    int pos = feedback.getFilePosition(file);
-
-    String caretInfo = caretString(caretLine, caretColumn);
-    String text = "\nAt " + caretInfo + ":  \n";
-    if (pos < 0) { // No FILE-tag
-      pos = feedback.getContent().indexOf(Feedback.FOOTER) - 1; // Place above footer, if it exists.
-      if (pos < 0) // No footer - place at end of file.
-      pos = feedback.getContent().length();
-
-      text = fileTagString(file) + text;
-    }
-    insertText(pos, text);
   }
 
   private static String fileTagString(String file) {
@@ -135,6 +102,39 @@ public class FeedbackText extends BorderPane
         + border
         + "\n"
         + Feedback.getFileTag(file);
+  }
+
+  public String getText() {
+    return codeArea.getText();
+  }
+
+  public void setText(String text) {
+    codeArea.replaceText(0, 0, text);
+  }
+
+  public void updateColor() {
+    if (feedback.isDone())
+      codeArea.setStyle(
+          "-fx-font-family: consolas; -fx-font-size: 11pt; -fx-background-color: #55e055;");
+    else
+      codeArea.setStyle(
+          "-fx-font-family: consolas; -fx-font-size: 11pt; -fx-background-color: #dddddd;");
+  }
+
+  @Override
+  public void feedbackAt(String file, int caretLine, int caretColumn, int caretPosition) {
+    int pos = feedback.getFilePosition(file);
+
+    String caretInfo = caretString(caretLine, caretColumn);
+    String text = "\nAt " + caretInfo + ":  \n";
+    if (pos < 0) { // No FILE-tag
+      pos = feedback.getContent().indexOf(Feedback.FOOTER) - 1; // Place above footer, if it exists.
+      if (pos < 0) // No footer - place at end of file.
+      pos = feedback.getContent().length();
+
+      text = fileTagString(file) + text;
+    }
+    insertText(pos, text);
   }
 
   public void feedbackAt(

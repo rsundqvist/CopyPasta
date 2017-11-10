@@ -20,20 +20,20 @@ import java.util.Optional;
 
 /** Created by Richard Sundqvist on 19/02/2017. */
 public abstract class Tools {
-  // Work data
-  public static File AUTO_SAVE_PASTA_FILE = null;
-  public static File AUTO_SAVE_TEMPLATE_FILE = null;
-  public static File AUTO_SAVE_FEEDBACK_FILE = null;
-  public static File GROUP_IMPORT_FILE_PATTERNS = null;
-
   // Program data
   public static final File IS_RUNNING_FILE = create("CopyPasta/data", "isrunning", false);
   public static final File SETTINGS_FILE = create("CopyPasta/data", "settings", false);
   public static final File PREVIEW_FILE = Tools.create("CopyPasta/data", "preview.txt", false);
   public static final File RECENT_WORKSPACES_FILE =
       Tools.create("CopyPasta/data", "recent_workspaces.txt", false);
-
   public static final String VERSION = "1.0.0";
+  // Work data
+  public static File AUTO_SAVE_PASTA_FILE = null;
+  public static File AUTO_SAVE_TEMPLATE_FILE = null;
+  public static File AUTO_SAVE_FEEDBACK_FILE = null;
+  public static File GROUP_IMPORT_FILE_PATTERNS = null;
+
+  private Tools() {}
 
   public static boolean isNewer(String otherVersion) throws Exception {
     boolean otherIsPrerelease = otherVersion.contains("PRERELEASE");
@@ -62,8 +62,6 @@ public abstract class Tools {
 
     return false;
   }
-
-  private Tools() {}
 
   public static void initializeWorkspaceFiles() {
     AUTO_SAVE_PASTA_FILE = create("CopyPasta/workspace", "pasta.json", true);

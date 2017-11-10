@@ -42,20 +42,86 @@ import java.util.Optional;
 
 public class Controller implements PastaViewController.PastaControllerListener {
 
+  private static final UniqueArrayList<String> recentWorkspaces = new UniqueArrayList();
   @FXML private PastaViewController pastaViewController = null;
   @FXML private FeedbackViewController feedbackViewController = null;
   @FXML private Label savedLabel, lastSaveTimestampLabel, versionLabel;
   @FXML private Menu recentWorkspaceMenu;
-
-  private static final UniqueArrayList<String> recentWorkspaces = new UniqueArrayList();
-
   private Timeline autosaveTimeline = null;
+  private boolean extremtFulLsng = false; // Todo proper import of About fxml.
+
+  public static void checkUpdates(boolean alertOnFalse) {
+    try {
+      // https://docs.oracle.com/javase/tutorial/networking/urls/readingURL.html
+      URL url = new URL("https://raw.githubusercontent.com/whisp91/CopyPasta/master/VERSION");
+      BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
+
+      StringBuilder sb = new StringBuilder();
+      String inputLine;
+      while ((inputLine = in.readLine()) != null) sb.append(inputLine + "\n");
+
+      String version = sb.toString();
+      if (Tools.isNewer(version)) {
+        newVersion(version);
+      } else if (alertOnFalse) {
+        Alert alert =
+            new Alert(
+                Alert.AlertType.INFORMATION,
+                "Looks like you have the most recent version."
+                    + "\n\n Repository version: "
+                    + version
+                    + "\n Your version: "
+                    + Tools.VERSION,
+                ButtonType.OK);
+        alert.setHeaderText("CopyPasta is up-to-date");
+        alert.showAndWait();
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+      Alert alert =
+          new Alert(
+              Alert.AlertType.ERROR,
+              "Operation failed: "
+                  + e.getClass().getCanonicalName()
+                  + ": "
+                  + e.getMessage()
+                  + "\n\nCheck the Git repository for the latest version.",
+              ButtonType.OK);
+      alert.setHeaderText("Version check failed");
+      alert.showAndWait();
+    }
+  }
+
+  private static void newVersion(String version) {
+    ButtonType bt = new ButtonType("Download from Repository");
+    Alert alert =
+        new Alert(
+            Alert.AlertType.INFORMATION,
+            "The \"Download\" button will open the browser to download the new version as a .zip-file. You may safely replace the old folder entirely, as none of the data in the zip-archive is user-specific."
+                + "\n\n New version: "
+                + version
+                + "\n Your version: "
+                + Tools.VERSION,
+            bt,
+            ButtonType.CANCEL);
+    alert.setHeaderText("CopyPasta can be updated.");
+
+    Optional<ButtonType> result = alert.showAndWait();
+    if (result.isPresent() && result.get() == bt) {
+      try {
+        Desktop.getDesktop()
+            .browse(
+                new URL("https://github.com/whisp91/CopyPasta/blob/master/CopyPasta.zip?raw=true")
+                    .toURI());
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
+    }
+  }
 
   public void exit() {
     System.exit(0);
   }
-
-  private boolean extremtFulLsng = false; // Todo proper import of About fxml.
 
   public void initialize() {
     if (extremtFulLsng) return;
@@ -76,12 +142,13 @@ public class Controller implements PastaViewController.PastaControllerListener {
       File file = new File(recentWorkspaces.get(i));
       javafx.scene.control.MenuItem mi = new javafx.scene.control.MenuItem(file.getParent());
       if (i == recentWorkspaces.size() - 1) {
-        javafx.scene.image.ImageView iw = GroupImporterController.NodeStatus.BLUE.getImageView();
+        javafx.scene.image.ImageView iw =
+            GroupImporterController.NodeStatus.BLUE.getImageView(); // Mark current directory
         iw.setFitWidth(15);
         iw.setFitHeight(15);
         mi.setGraphic(iw);
       }
-      ; // Mark current directory
+
       mi.setOnAction(event -> switchWorkspace(mi.getText()));
       recentWorkspaceMenu.getItems().add(mi);
     }
@@ -326,7 +393,7 @@ public class Controller implements PastaViewController.PastaControllerListener {
           IO.extractSingleFeedback(template)); // Should be dont first
       feedbackViewController.importFeedbackAddTemplateContent(
           Arrays.asList(IO.extractFeedback(feedback)), true);
-      feedbackViewController.selectView(1); // Setup tab.
+      selectSetup();
 
     } catch (Exception e) {
       System.err.println("Failed to load examples.");
@@ -336,76 +403,6 @@ public class Controller implements PastaViewController.PastaControllerListener {
 
   public void onUpdate() {
     checkUpdates(true);
-  }
-
-  public static void checkUpdates(boolean alertOnFalse) {
-    try {
-      // https://docs.oracle.com/javase/tutorial/networking/urls/readingURL.html
-      URL url = new URL("https://raw.githubusercontent.com/whisp91/CopyPasta/master/VERSION");
-      BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
-
-      StringBuilder sb = new StringBuilder();
-      String inputLine;
-      while ((inputLine = in.readLine()) != null) sb.append(inputLine + "\n");
-
-      String version = sb.toString();
-      if (Tools.isNewer(version)) {
-        newVersion(version);
-      } else if (alertOnFalse) {
-        Alert alert =
-            new Alert(
-                Alert.AlertType.INFORMATION,
-                "Looks like you have the most recent version."
-                    + "\n\n Repository version: "
-                    + version
-                    + "\n Your version: "
-                    + Tools.VERSION,
-                ButtonType.OK);
-        alert.setHeaderText("CopyPasta is up-to-date");
-        alert.showAndWait();
-      }
-    } catch (Exception e) {
-      e.printStackTrace();
-      Alert alert =
-          new Alert(
-              Alert.AlertType.ERROR,
-              "Operation failed: "
-                  + e.getClass().getCanonicalName()
-                  + ": "
-                  + e.getMessage()
-                  + "\n\nCheck the Git repository for the latest version.",
-              ButtonType.OK);
-      alert.setHeaderText("Version check failed");
-      alert.showAndWait();
-    }
-  }
-
-  private static void newVersion(String version) {
-    ButtonType bt = new ButtonType("Download from Repository");
-    Alert alert =
-        new Alert(
-            Alert.AlertType.INFORMATION,
-            "The \"Download\" button will open the browser to download the new version as a .zip-file."
-                + " You                                                                                                               may safely replace the old folder entirely, as none of the data in the zip-archive is user-specific."
-                + "\n\n New version: "
-                + version
-                + "\n Your version: "
-                + Tools.VERSION,
-            bt,
-            ButtonType.CANCEL);
-    alert.setHeaderText("CopyPasta can be updated.");
-
-    Optional<ButtonType> result = alert.showAndWait();
-    if (result.isPresent() && result.get() == bt) {
-      try {
-        Desktop.getDesktop()
-            .browse(
-                new URL("https://github.com/whisp91/CopyPasta/blob/master/CopyPasta.zip?raw=true")
-                    .toURI());
-      } catch (Exception e) {
-        e.printStackTrace();
-      }
-    }
   }
 
   public void importPasta() {

@@ -25,13 +25,12 @@ public class Feedback implements Comparable<Feedback> {
   /** Tag indicating that the pasta is incomplete and should be modified by the teacher. */
   public static final transient String MANUAL = "%MANUAL%";
   // endregion
-
+  private final Map<String, String> files;
   // region Field
   // ================================================================================= //
   // Field
   // ================================================================================= //
   private String content, header, footer, signature, group, assignment;
-  private final Map<String, String> files;
   private boolean done;
   // endregion
 
@@ -112,6 +111,16 @@ public class Feedback implements Comparable<Feedback> {
   // Getters and setters
   // ================================================================================= //
 
+  /**
+   * Returns a {@link #FILE} tag for the argument filename.
+   *
+   * @param file The file.
+   * @return A {@link #FILE} tag for the argument filename.
+   */
+  public static String getFileTag(String file) {
+    return FILE.replace("<file>", file);
+  }
+
   /** Returns a copy of this pasta. */
   public Feedback copy() {
     return new Feedback(this);
@@ -173,16 +182,6 @@ public class Feedback implements Comparable<Feedback> {
 
     if (matcher.find()) return matcher.end(); // First match only
     else return -1;
-  }
-
-  /**
-   * Returns a {@link #FILE} tag for the argument filename.
-   *
-   * @param file The file.
-   * @return A {@link #FILE} tag for the argument filename.
-   */
-  public static String getFileTag(String file) {
-    return FILE.replace("<file>", file);
   }
 
   /**

@@ -272,7 +272,9 @@ public class Controller implements PastaViewController.PastaControllerListener {
         Alert alert = new Alert(Alert.AlertType.WARNING, contentText, bt2, bt);
         alert.setHeaderText("All existing work will be deleted!");
 
-        Optional<ButtonType> result = alert.showAndWait(); if (result.isPresent() && result.get() == bt)
+        Optional<ButtonType> result = alert.showAndWait();
+
+        if (result.isPresent() && result.get() == bt)
             loadExample();
     }
 
@@ -281,10 +283,12 @@ public class Controller implements PastaViewController.PastaControllerListener {
             InputStream pasta = Controller.class.getResourceAsStream("/examples/pasta.json");
             InputStream template = Controller.class.getResourceAsStream("/examples/template.json");
             InputStream feedback = Controller.class.getResourceAsStream("/examples/feedback.json");
-            pastaViewController.clearAllNoWarning(); pastaViewController.importPasta(Arrays.asList(IO.extractPasta(pasta)));
+
+            pastaViewController.clearAllNoWarning();
+            pastaViewController.importPasta(Arrays.asList(IO.extractPasta(pasta)));
 
             feedbackViewController.clearFeedback();
-            feedbackViewController.setFeedbackTemplate(IO.extractSingleFeedback(template));
+            feedbackViewController.setFeedbackTemplate(IO.extractSingleFeedback(template)); // Should be dont first
             feedbackViewController.importFeedbackAddTemplateContent(Arrays.asList(IO.extractFeedback(feedback)), true);
             feedbackViewController.selectView(1); // Setup tab.
 

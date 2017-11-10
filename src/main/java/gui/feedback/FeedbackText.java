@@ -114,7 +114,7 @@ public class FeedbackText extends BorderPane implements StudentFileViewerControl
         String extra = sz % 2 == 0 ? "" : "<>";
 
         String around = new String(new char[numRepeats]).replace("\0", "<>");
-        String border = new String(new char[80]).replace("\0", "="); // Width 80
+        String border = new String(new char[Settings.FILE_DECORATION_WIDTH]).replace("\0", "=");
         return "\n\n" + border + "\n" + around + file + around + extra + "\n" + border + "\n" + Feedback.getFileTag(file);
     }
 

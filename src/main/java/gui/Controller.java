@@ -275,6 +275,9 @@ public class Controller implements PastaViewController.PastaControllerListener {
         alert.getDialogPane().setExpanded(true);
         alert.initModality(Modality.NONE);
         alert.showAndWait();
+
+
+        loadExample();
     }
 
     public void onMail () {
@@ -291,6 +294,19 @@ public class Controller implements PastaViewController.PastaControllerListener {
     public void onRepo () {
         try {
             Desktop.getDesktop().browse(new URL("https://github.com/whisp91/CopyPasta").toURI());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void loadExample () {
+        try {
+            System.out.println(Controller.class.getResource("isrunning").getFile());
+            System.out.println(Controller.class.getResource("/isrunning").getFile());
+            //File template = new File(Controller.class.getResource("example/template.json").toURI());
+            //System.out.println("file = " + template);
+            //feedbackViewController.setFeedbackTemplate(IO.importFeedbackSingle(template));
+
         } catch (Exception e) {
             e.printStackTrace();
         }

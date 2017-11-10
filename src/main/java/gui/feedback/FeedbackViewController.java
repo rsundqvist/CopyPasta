@@ -64,8 +64,6 @@ public class FeedbackViewController {
     @FXML
     /** Container for the actual feedback tabs. */ private ListView feedbackTabListView;
 
-    @FXML
-    private TitledPane bodyPane;
     private FeedbackManager feedbackManager = new FeedbackManager();
     private List<GroupTab> groupTabs = new ArrayList<>();
     // endregion
@@ -214,7 +212,6 @@ public class FeedbackViewController {
     public void importTemplate () {
         File file = IO.showJSONOpenDialog();
         Feedback template = IO.importFeedbackSingle(file);
-        bodyPane.setExpanded(true);
         setFeedbackTemplate(template);
     }
 
@@ -447,7 +444,6 @@ public class FeedbackViewController {
         if (feedbackManager.getFeedbackList().isEmpty())
             rootTabPane.getSelectionModel().select(setupTab);
 
-        bodyPane.setExpanded(true);
         updateFeedbackTabLockStatus();
     }
 

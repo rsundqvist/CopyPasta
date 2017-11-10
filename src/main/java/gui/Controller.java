@@ -312,10 +312,10 @@ public class Controller implements PastaViewController.PastaControllerListener {
       if (result.isPresent())
         if (result.get() == bt2)
           feedbackViewController.importFeedbackAddTemplateContent(
-              feedbackList, true); // Replace all
+              feedbackList, true, true); // Replace all
         else if (result.get() == bt3)
           feedbackViewController.importFeedbackAddTemplateContent(
-              feedbackList, false); // Add new only
+              feedbackList, false, true); // Add new only
     }
   }
 
@@ -388,11 +388,9 @@ public class Controller implements PastaViewController.PastaControllerListener {
       pastaViewController.clearAllNoWarning();
       pastaViewController.importPasta(Arrays.asList(IO.extractPasta(pasta)));
 
-      feedbackViewController.clearFeedback();
-      feedbackViewController.setFeedbackTemplate(
-          IO.extractSingleFeedback(template)); // Should be dont first
+      feedbackViewController.setFeedbackTemplate(IO.extractSingleFeedback(template));
       feedbackViewController.importFeedbackAddTemplateContent(
-          Arrays.asList(IO.extractFeedback(feedback)), true);
+          Arrays.asList(IO.extractFeedback(feedback)), true, false);
       selectSetup();
 
     } catch (Exception e) {

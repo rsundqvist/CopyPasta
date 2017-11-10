@@ -407,11 +407,11 @@ public class FeedbackViewController {
    * @param feedbackList The feedback to import.
    * @param replaceAll if {@code true}, old feedback is cleared.
    */
-  public void importFeedbackAddTemplateContent(List<Feedback> feedbackList, boolean replaceAll) {
+  public void importFeedbackAddTemplateContent(List<Feedback> feedbackList, boolean replaceAll, boolean setTemplateContent) {
     updateTemplate();
     if (replaceAll) clearFeedback();
 
-    List<Feedback> newFeedbackList = feedbackManager.importFeedback(feedbackList, true);
+    List<Feedback> newFeedbackList = feedbackManager.importFeedback(feedbackList, setTemplateContent);
     updateAfterFeedbackImport(newFeedbackList);
   }
 

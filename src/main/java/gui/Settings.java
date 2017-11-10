@@ -16,8 +16,6 @@ public abstract class Settings {
     private Settings () {
     }
 
-    public static boolean FIRST_RUN = true;
-
     /*
      * Settings. The assigned values are used as defaults if no properties entry is found.
      */
@@ -32,6 +30,9 @@ public abstract class Settings {
 
     public static boolean STARTUP_VERSION_CHECK = true;
     private static final String startup_version_check = "startup_version_check";
+
+    public static boolean FIRST_RUN = true;
+    public static final String first_run = "first_run";
 
     /*
      * Class stuff
@@ -62,6 +63,10 @@ public abstract class Settings {
                 new String[]{"Startup Version Check", // Display name
                         "Check for updates on startup.", Boolean.class.getCanonicalName() + ""});
 
+        about.put(first_run, // Key
+                new String[]{"First Run", // Display name
+                        "Indicates that the program is running for the first time", Boolean.class.getCanonicalName() + ""});
+
         return about;
     }
 
@@ -73,6 +78,10 @@ public abstract class Settings {
             if (s != null && !s.isEmpty())
                 STARTUP_VERSION_CHECK = Boolean.parseBoolean(s);
 
+            s = (String) properties.get(first_run);
+            if (s != null && !s.isEmpty())
+                FIRST_RUN = Boolean.parseBoolean(s);
+
             WORKSPACE_LOCATION = (String) properties.get(workspace_location);
 
             if (WORKSPACE_LOCATION == null || WORKSPACE_LOCATION.isEmpty() || WORKSPACE_LOCATION.equals("null"))
@@ -80,16 +89,10 @@ public abstract class Settings {
 
             FILE_DECORATION_WIDTH = Integer.parseInt((String) properties.get(file_decoration_width));
         } catch (Exception e) {
-            if (!FIRST_RUN)
-                IO.showExceptionAlert(e);
+            IO.showExceptionAlert(e);
         }
-    }
-
-    public static void restartForSettingsEffect () {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setHeaderText("Settings saved");
-        alert.setContentText("The new settings will take effect once you restart the program.");
-        alert.showAndWait();
+        if (FIRST_RUN)
+            putToProperties();
     }
 
     public static void putToProperties () {
@@ -97,12 +100,20 @@ public abstract class Settings {
         putValue(workspace_location, "" + WORKSPACE_LOCATION);
         putValue(file_decoration_width, "" + FILE_DECORATION_WIDTH);
         putValue(startup_version_check, "" + STARTUP_VERSION_CHECK);
+        putValue(first_run, "" + FIRST_RUN);
     }
     // endregion
 
     // ================================================================================= //
     // Other stuff
     // ================================================================================= //
+
+    public static void restartForSettingsEffect () {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setHeaderText("Settings saved");
+        alert.setContentText("The new settings will take effect once you restart the program.");
+        alert.showAndWait();
+    }
 
     public static final void loadSettingsFile () {
         try {

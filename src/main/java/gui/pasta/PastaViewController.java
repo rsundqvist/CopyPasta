@@ -149,11 +149,14 @@ public class PastaViewController {
     public void clearAllPasta () {
         int numItems = pastaManager.getPastaList().size();
 
-        if (Tools.confirmDelete(numItems)) {
-            pastaManager.clear();
-            filterFlowPane.getChildren().clear();
-            listView.getItems().clear();
-        }
+        if (Tools.confirmDelete(numItems))
+            clearAllNoWarning();
+    }
+
+    public void clearAllNoWarning () {
+        pastaManager.clear();
+        filterFlowPane.getChildren().clear();
+        listView.getItems().clear();
     }
 
     public void clearTagFilters () {

@@ -11,6 +11,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.Label;
@@ -67,8 +68,13 @@ public class Controller implements PastaViewController.PastaControllerListener {
         pastaViewController.initialize(this);
         savedLabel.setOpacity(0);
         initTimeline(false);
-
         initRecentWorkspaces();
+
+        if (Settings.FIRST_RUN
+                //&& pastaViewController.getPastaList().isEmpty()&& feedbackViewController.getFeedbackList().isEmpty()
+                ) {
+            loadExample();
+        }
     }
 
     private void initRecentWorkspaces () {
@@ -275,9 +281,6 @@ public class Controller implements PastaViewController.PastaControllerListener {
         alert.getDialogPane().setExpanded(true);
         alert.initModality(Modality.NONE);
         alert.showAndWait();
-
-
-        loadExample(); //TODO remove
     }
 
     public void onMail () {
@@ -299,17 +302,35 @@ public class Controller implements PastaViewController.PastaControllerListener {
         }
     }
 
+    public void onLoadExample () {
+        ButtonType bt = new ButtonType("Load Example");
+        ButtonType bt2 = new ButtonType("Maybe later");
+
+        String contentText = "All current work will be replaced! You can always load the example again from the Help menu.\nReally load example?";
+        Alert alert = new Alert(Alert.AlertType.WARNING, contentText, bt2, bt);
+        alert.setHeaderText("All existing work will be deleted!");
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.isPresent() && result.get() == ButtonType.OK)
+            loadExample();
+    }
+
     public void loadExample () {
         try {
-            //System.out.println(Controller.class.getResource("isrunning").getFile());
-            //System.out.println(Controller.class.getResource("/isrunning").getFile());
-            //File template = new File(Controller.class.getResource("example/template.json").toURI());
-            //System.out.println("file = " + template);
-            //feedbackViewController.setFeedbackTemplate(IO.importFeedbackSingle(template));
+            File pasta = new File(Controller.class.getResource("/examples/pasta.json").toURI());
+            File template = new File(Controller.class.getResource("/examples/template.json").toURI());
+            File feedback = new File(Controller.class.getResource("/examples/feedback.json").toURI());
+            pastaViewController.clearAllNoWarning();
+            pastaViewController.importPasta(IO.importPasta(pasta));
+
+            feedbackViewController.clearFeedback();
+            feedbackViewController.setFeedbackTemplate(IO.importFeedbackSingle(template));
+            feedbackViewController.importFeedbackAddTemplateContent(IO.importFeedback(feedback), true);
             feedbackViewController.selectView(1); // Setup tab.
 
         } catch (Exception e) {
-            e.printStackTrace();
+            System.err.println("Failed to load examples.");
+            IO.showExceptionAlert(e);
         }
     }
 

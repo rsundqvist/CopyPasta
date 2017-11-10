@@ -20,7 +20,6 @@ import javafx.scene.control.TabPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
-import javafx.scene.control.TitledPane;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
@@ -487,7 +486,7 @@ public class FeedbackViewController {
             clearFeedback();
     }
 
-    private void clearFeedback () {
+    public void clearFeedback () {
         feedbackTabPane.getTabs().removeAll(groupTabs);
         feedbackTabListView.getItems().clear();
         feedbackManager.clear();
@@ -745,6 +744,10 @@ public class FeedbackViewController {
 
     public void selectView (int i) {
         rootTabPane.getSelectionModel().select(i);
+    }
+
+    public List<Feedback> getFeedbackList () {
+        return feedbackManager.getFeedbackList();
     }
     // endregion
 }

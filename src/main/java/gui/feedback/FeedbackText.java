@@ -67,7 +67,7 @@ public class FeedbackText extends BorderPane implements StudentFileViewerControl
         return codeArea.getText();
     }
 
-    public void setText(String text) {
+    public void setText (String text) {
         codeArea.replaceText(0, 0, text);
     }
 

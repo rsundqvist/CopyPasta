@@ -34,10 +34,10 @@
                                 </MenuItem>
                                 <CheckMenuItem mnemonicParsing="false" onAction="#toggleAutoSave" selected="true" text="Autosave (5 min)" />
                                 <SeparatorMenuItem mnemonicParsing="false" />
-                        <MenuItem mnemonicParsing="false" onAction="#onChangeWorkspace" text="Change Workspace" />
-                        <MenuItem mnemonicParsing="false" onAction="#onDefaultWorkspace" text="Default Workspace" />
-                        <Menu fx:id="recentWorkspaceMenu" mnemonicParsing="false" text="Recent workspaces" />
-                        <SeparatorMenuItem mnemonicParsing="false" />
+                                <MenuItem mnemonicParsing="false" onAction="#onChangeWorkspace" text="Change Workspace" />
+                                <MenuItem mnemonicParsing="false" onAction="#onDefaultWorkspace" text="Default Workspace" />
+                                <Menu fx:id="recentWorkspaceMenu" mnemonicParsing="false" text="Recent workspaces" />
+                                <SeparatorMenuItem mnemonicParsing="false" />
                                 <MenuItem mnemonicParsing="false" onAction="#settings" text="Settings">
                                     <accelerator>
                                         <KeyCodeCombination alt="ANY" code="F2" control="UP" meta="UP" shift="UP" shortcut="UP" />
@@ -113,6 +113,7 @@
                                         <KeyCodeCombination alt="ANY" code="F1" control="UP" meta="UP" shift="UP" shortcut="UP" />
                                     </accelerator>
                                 </MenuItem>
+                        <MenuItem mnemonicParsing="false" onAction="#onLoadExample" text="Load example" />
                             </items>
                         </Menu>
                     </menus>

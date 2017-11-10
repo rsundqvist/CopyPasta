@@ -45,6 +45,7 @@ public class Main extends Application {
         primaryStage.show();
         controller = fxmlLoader.getController();
 
+        System.out.println("Workspace location: " + Tools.AUTO_SAVE_FEEDBACK_FILE.getParent());
         Settings.FIRST_RUN = false;
         Settings.putValue(Settings.first_run, Settings.FIRST_RUN+"");
     }

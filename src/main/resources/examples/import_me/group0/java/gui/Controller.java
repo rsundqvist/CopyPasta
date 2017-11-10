@@ -350,6 +350,7 @@ public class Controller implements PastaViewController.PastaControllerListener {
                 sb.append(inputLine + "\n");
 
             String version = sb.toString();
+            System.out.println("version = " + version);
             if (Tools.isNewer(version)) {
                 newVersion(version);
             } else if (alertOnFalse) {

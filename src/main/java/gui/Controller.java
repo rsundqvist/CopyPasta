@@ -9,7 +9,6 @@ import javafx.animation.Timeline;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
@@ -26,7 +25,6 @@ import model.UniqueArrayList;
 import zip.GroupImporter;
 import zip.GroupImporterController;
 
-import javax.swing.text.html.ImageView;
 import java.awt.*;
 import java.io.BufferedReader;
 import java.io.File;
@@ -59,19 +57,22 @@ public class Controller implements PastaViewController.PastaControllerListener {
         System.exit(0);
     }
 
+    private boolean extremtFulLsng = false; //Todo proper import of About fxml.
+
     public void initialize () {
+        if (extremtFulLsng)
+            return;
+        extremtFulLsng = true;
+
         pastaViewController.initialize(this);
         savedLabel.setOpacity(0);
         initTimeline(false);
-        if (Settings.STARTUP_VERSION_CHECK)
-            checkUpdates(false);
 
         initRecentWorkspaces();
     }
 
     private void initRecentWorkspaces () {
         readRecentWorkspaces();
-
 
         for (int i = recentWorkspaces.size() - 1; i >= 0; i--) {
             File file = new File(recentWorkspaces.get(i));
@@ -82,7 +83,7 @@ public class Controller implements PastaViewController.PastaControllerListener {
                 iw.setFitHeight(15);
                 mi.setGraphic(iw);
             }
-                ; //Mark current directory
+            ; //Mark current directory
             mi.setOnAction(event -> switchWorkspace(mi.getText()));
             recentWorkspaceMenu.getItems().add(mi);
         }
@@ -254,7 +255,6 @@ public class Controller implements PastaViewController.PastaControllerListener {
         about_fxml();
     }
 
-
     public void about_fxml () {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("About Program");
@@ -312,11 +312,12 @@ public class Controller implements PastaViewController.PastaControllerListener {
                 sb.append(inputLine + "\n");
 
             String version = sb.toString();
+            System.out.println("version = " + version);
             if (Tools.isNewer(version)) {
                 newVersion(version);
             } else if (alertOnFalse) {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION, "Looks like you have the latest version.", ButtonType.OK);
-                alert.setHeaderText("No updates found");
+                Alert alert = new Alert(Alert.AlertType.INFORMATION, "Looks like you have the most recent version." + "\n\n Repository version: " + version + "\n Your version: " + Tools.VERSION, ButtonType.OK);
+                alert.setHeaderText("CopyPasta is up-to-date");
                 alert.showAndWait();
             }
         } catch (Exception e) {
@@ -328,9 +329,9 @@ public class Controller implements PastaViewController.PastaControllerListener {
     }
 
     private static void newVersion (String version) {
-        ButtonType bt = new ButtonType("Download");
-        Alert alert = new Alert(Alert.AlertType.INFORMATION, "The \"Download\" button will open the browser to download the new .zip-file." + " You may safely replace the old file entirely, as none of the data in the zip-archive is user-specific.\n\n New version: " + version, bt, ButtonType.CANCEL);
-        alert.setHeaderText("New version found!");
+        ButtonType bt = new ButtonType("Download from Repository");
+        Alert alert = new Alert(Alert.AlertType.INFORMATION, "The \"Download\" button will open the browser to download the new version as a .zip-file." + " You                                                                                                               may safely replace the old folder entirely, as none of the data in the zip-archive is user-specific." + "\n\n New version: " + version + "\n Your version: " + Tools.VERSION, bt, ButtonType.CANCEL);
+        alert.setHeaderText("CopyPasta can be updated.");
 
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent() && result.get() == bt) {

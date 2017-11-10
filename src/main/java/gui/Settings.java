@@ -19,7 +19,7 @@ public abstract class Settings {
     public static boolean FIRST_RUN = true;
 
     /*
-     * Settings
+     * Settings. The assigned values are used as defaults if no properties entry is found.
      */
     public static boolean USE_NATIVE_TXT_EDITOR = false;
     private static final String use_native_txt_editor = "use_native_txt_editor";

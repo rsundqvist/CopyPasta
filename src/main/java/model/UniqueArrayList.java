@@ -32,6 +32,7 @@ public class UniqueArrayList<E> extends ArrayList<E> {
     ArrayList<E> uniqueList = new ArrayList<>(c.size());
 
     for (E e : c) if (!(super.contains(e) || uniqueList.contains(e))) uniqueList.add(e);
+
     return uniqueList;
   }
 }

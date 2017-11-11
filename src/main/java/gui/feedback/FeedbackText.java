@@ -16,20 +16,17 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /** Created by Richard Sundqvist on 12/04/2017. */
-public class FeedbackText extends BorderPane
-    implements StudentFileViewerController.FileFeedbackListener {
+public class FeedbackText extends BorderPane implements FileViewController.FileFeedbackListener {
 
   // region strings
   private static final String TAG_PATTERN = "\\%(.*?)\\%";
-
   private static final Pattern PATTERN = Pattern.compile("(?<TAG>" + TAG_PATTERN + ")");
   // endregion
 
   private final CodeArea codeArea;
-  private final Feedback feedback;
+  private Feedback feedback;
 
-  public FeedbackText(Feedback feedback) {
-    this.feedback = feedback;
+  public FeedbackText() {
     codeArea = new CodeArea();
     codeArea.setParagraphGraphicFactory(LineNumberFactory.get(codeArea));
     codeArea.setShowCaret(ViewActions.CaretVisibility.ON);
@@ -50,8 +47,12 @@ public class FeedbackText extends BorderPane
               codeArea.setStyleSpans(0, computeHighlighting(text));
             });
     setCenter(new VirtualizedScrollPane<>(codeArea));
-    codeArea.replaceText(0, 0, feedback.getContent());
+  }
+
+  public void setFeedback(Feedback feedback) {
+    this.feedback = feedback;
     updateColor();
+    setText(feedback.getContent());
   }
 
   private static StyleSpans<Collection<String>> computeHighlighting(String text) {
@@ -85,12 +86,13 @@ public class FeedbackText extends BorderPane
     file = " " + file + " ";
     if (file.length() % 2 != 0) file = file + " ";
 
-    int sz = (Settings.FILE_DECORATION_WIDTH - file.length()) / 2; // space per side
+    int width = Settings.FILE_DECORATION_WIDTH;
+    int sz = (width - file.length()) / 2; // space per side
     int numRepeats = sz / 2;
     String extra = sz % 2 == 0 ? "" : "<>";
 
     String around = new String(new char[numRepeats]).replace("\0", "<>");
-    String border = new String(new char[Settings.FILE_DECORATION_WIDTH]).replace("\0", "=");
+    String border = new String(new char[width]).replace("\0", "=");
     return "\n\n"
         + border
         + "\n"
@@ -115,10 +117,10 @@ public class FeedbackText extends BorderPane
   public void updateColor() {
     if (feedback.isDone())
       codeArea.setStyle(
-          "-fx-font-family: monospace; -fx-font-size: 11pt; -fx-background-color: #55e055;");
+          "-fx-font-family: monospaced regular; -fx-font-size: 11pt; -fx-background-color: #55e055;");
     else
       codeArea.setStyle(
-          "-fx-font-family: monospace; -fx-font-size: 11pt; -fx-background-color: #dddddd;");
+          "-fx-font-family: monospaced regular; -fx-font-size: 11pt; -fx-background-color: #dddddd;");
   }
 
   @Override

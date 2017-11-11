@@ -22,20 +22,15 @@ import java.io.File;
 import java.util.Map;
 
 /** Created by Richard Sundqvist on 26/03/2017. */
-public class StudentFileViewerController {
-  private final FileFeedbackListener listener;
-  private final Feedback feedback;
+public class FileViewController {
+  private FileFeedbackListener listener;
+  private Feedback feedback;
   @FXML private Label fileLabel = null;
   @FXML private TabPane sourceTabs = null;
   @FXML private Label copiedLabel = null;
   private FileTab currentFileTab = null;
   private boolean feedbackLine = true, feedbackColumn = false;
   private boolean editable = false;
-
-  public StudentFileViewerController(FileFeedbackListener listener, Feedback feedback) {
-    this.listener = listener;
-    this.feedback = feedback;
-  }
 
   @FXML
   private void initialize() {
@@ -50,7 +45,10 @@ public class StudentFileViewerController {
               if (currentFileTab == null) fileLabel.setText("Drag and drop to add files!");
               else fileLabel.setText(currentFileTab.getText());
             });
+  }
 
+  public void update() {
+    sourceTabs.getTabs().clear();
     Map<String, String> files = feedback.getFiles();
     for (String key : files.keySet()) sourceTabs.getTabs().add(new FileTab(key, files.get(key)));
   }
@@ -65,7 +63,6 @@ public class StudentFileViewerController {
   }
 
   public void toggleEditable(Event e) {
-
     if (!sourceTabs.getTabs().isEmpty()) {
       ToggleButton toggleButton = (ToggleButton) e.getSource();
       editable = toggleButton.isSelected();
@@ -143,27 +140,36 @@ public class StudentFileViewerController {
       try {
         String fileName = currentFileTab.getFileName();
         String fileContent = feedback.getFiles().get(fileName);
-
-        switch (Settings.INDENTATION_STYLE) {
-          case "google":
-            fileContent = new Formatter().formatSource(fileContent);
-            break;
-          default:
-            System.err.println(
-                "Unknown indentation style: \""
-                    + Settings.INDENTATION_STYLE
-                    + "\". Using default (\"google\").");
-            fileContent = new Formatter().formatSource(fileContent);
-            break;
-        }
-
-        feedback.getFiles().put(fileName, fileContent);
+        feedback.getFiles().put(fileName, indent(fileContent));
         currentFileTab.setContent(fileContent);
       } catch (FormatterException e) {
         e.printStackTrace();
         IO.showExceptionAlert(e);
       }
     }
+  }
+
+  /**
+   * Indent a String using Google-style java indentation.
+   *
+   * @param javaSource The source to format.
+   * @return Formatted source.
+   * @throws FormatterException If {@code javaSource} contains syntax errors.
+   */
+  public static String indent(String javaSource) throws FormatterException {
+    switch (Settings.INDENTATION_STYLE) {
+      case "google":
+        javaSource = new Formatter().formatSource(javaSource);
+        break;
+      default:
+        System.err.println(
+            "Unknown indentation style: \""
+                + Settings.INDENTATION_STYLE
+                + "\". Using default (\"google\").");
+        javaSource = new Formatter().formatSource(javaSource);
+        break;
+    }
+    return javaSource;
   }
 
   public void addFile(String fileName, String content) {
@@ -179,17 +185,24 @@ public class StudentFileViewerController {
     return new Pair(file, pos);
   }
 
-  public FileTab getCurrentFileTab() {
-    return currentFileTab;
-  }
-
   public void flashCopiedlabel() {
     Tools.flashNode(copiedLabel);
   }
 
+  public void setFeedback(Feedback feedback) {
+    this.feedback = feedback;
+    update();
+  }
+
+  public void setListener(FileFeedbackListener listener) {
+    this.listener = listener;
+  }
+
   public interface FileFeedbackListener {
+    /** Indicates the user wants enter feedback at the given position */
     void feedbackAt(String file, int caretLine, int caretColumn, int caretPosition);
 
+    /** Insert content at the given position */
     void feedbackAt(String file, String content, int caretLine, int caretColumn, int caretPosition);
   }
 }

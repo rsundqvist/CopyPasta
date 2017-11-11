@@ -1,5 +1,6 @@
 package gui.feedback;
 
+import gui.feedback.JavaCodeArea;
 import javafx.scene.control.Tab;
 import org.fxmisc.flowless.VirtualizedScrollPane;
 import org.fxmisc.richtext.CodeArea;
@@ -11,7 +12,7 @@ public class FileTab extends Tab {
   private final CodeArea codeArea;
   private final int firstNumber; // Set to 1 to set the first line to 1.
 
-  public FileTab(String fileName, String content) {
+  public FileTab (String fileName, String content) {
     this(fileName, content, false);
   }
 
@@ -20,7 +21,7 @@ public class FileTab extends Tab {
    * @param content Content of the file
    * @param startFromZero If {@code true}, row count begins at zero.
    */
-  public FileTab(String fileName, String content, boolean startFromZero) {
+  public FileTab (String fileName, String content, boolean startFromZero) {
     firstNumber = startFromZero ? 0 : 1;
 
     setText(fileName);

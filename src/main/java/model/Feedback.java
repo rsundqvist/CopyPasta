@@ -1,10 +1,19 @@
 package model;
 
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.control.TextInputDialog;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -131,6 +140,69 @@ public class Feedback implements Comparable<Feedback> {
    */
   public static String getFileTag(String file) {
     return FILE.replace("<file>", file);
+  }
+
+  /** Returns true if the user wishes to abort. */
+public static boolean checkManualTags(List<Feedback> feedbackList) {
+  List<Feedback> badFeedbackList = checkManual(feedbackList);
+
+  if (badFeedbackList.isEmpty()) return false;
+
+  List<String> groups = FeedbackManager.getGroups(badFeedbackList);
+  Alert alert = new Alert(Alert.AlertType.INFORMATION);
+  alert.getButtonTypes().clear();
+  alert.getButtonTypes().addAll(ButtonType.YES, ButtonType.NO);
+  alert.setTitle("Incomplete items found");
+  alert.setHeaderText(
+      "Found "
+          + badFeedbackList.size()
+          + " incomplete items (of "
+          + feedbackList.size()
+          + " items total)");
+  alert.setContentText(
+      "It looks like you're trying to export items with the "
+          + MANUAL
+          + " tag present, "
+          + "indicating that some items have content not meant for the student. Rectify before exporting?");
+
+  // Content tags
+  Label contentLabel = new Label("Groups: ");
+  contentLabel.setMaxHeight(Double.MAX_VALUE);
+
+  String badGroups = groups.toString();
+  badGroups = badGroups.substring(1, badGroups.length() - 1);
+
+  TextField badGroupsTextField = new TextField(badGroups);
+  badGroupsTextField.setEditable(false);
+  badGroupsTextField.setMaxWidth(Double.MAX_VALUE);
+  HBox.setHgrow(badGroupsTextField, Priority.ALWAYS);
+
+  HBox contentTagsHBox = new HBox();
+  contentTagsHBox.getChildren().addAll(contentLabel, badGroupsTextField);
+  HBox.setHgrow(badGroupsTextField, Priority.ALWAYS);
+
+  // Set expandable Exception into the dialog pane.
+  alert.getDialogPane().setExpandableContent(contentTagsHBox);
+  alert.getDialogPane().setExpanded(true);
+
+  Optional<ButtonType> result = alert.showAndWait();
+  return (!result.isPresent() // Default to assuming user wants to fix content.
+      || result.get() != ButtonType.NO);
+}
+
+  public static boolean changeFeedbackGroup(Feedback feedback) {
+    TextInputDialog dialog = new TextInputDialog(feedback.getGroup());
+    dialog.setTitle("Change group");
+    dialog.setHeaderText("Change group: \"" + feedback.getGroup() + "\"");
+    dialog.setContentText("Enter new group: ");
+    Optional<String> result = dialog.showAndWait();
+
+    if (result.isPresent() && result.get() != null) {
+      String newGroup = result.get();
+      feedback.setGroup(newGroup);
+      return true;
+    }
+    return false;
   }
 
   /** Returns a copy of this pasta. */
@@ -305,6 +377,11 @@ public class Feedback implements Comparable<Feedback> {
     this.done = done;
   }
 
+  /** Toggle the done status of this Feedback. Equivalent to calling {@code setDone(!isDone());}. */
+  public void toggleDone() {
+    done = !done;
+  }
+
   @Override
   public int compareTo(Feedback other) {
     return group.compareTo(other.group);
@@ -382,5 +459,6 @@ public class Feedback implements Comparable<Feedback> {
   public List<String> getPossibleGrades() {
     return possibleGrades;
   }
+
   // endregion
 }

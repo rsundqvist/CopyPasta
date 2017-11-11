@@ -256,7 +256,7 @@ public class PastaViewController {
   // Interface declaration
   // ====================================================
 
-  /** Listener interface for the controller. */
+  /** FeedbackListListener interface for the controller. */
   public interface PastaControllerListener {
     /**
      * Called when an item is selected.

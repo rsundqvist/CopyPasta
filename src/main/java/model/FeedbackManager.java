@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 
 /** Created by Richard Sundqvist on 22/02/2017. */
 public class FeedbackManager {
@@ -109,6 +110,29 @@ public class FeedbackManager {
     return groups;
   }
 
+  public static boolean deleteFeedback (List<Feedback> selectedItems, FeedbackManager feedbackManager) {
+  int numberOfItems = selectedItems.size();
+  if (numberOfItems > 1 && !Tools.confirmDelete(numberOfItems)) return false;
+
+  if (numberOfItems == 1) {
+    Feedback feedback = selectedItems.get(0);
+    if (feedbackManager.isContentModified(feedback)) {
+
+      String contentText = "The content of this feedback seems to have been modified.";
+      Alert alert =
+          new Alert(Alert.AlertType.CONFIRMATION, contentText, ButtonType.OK, ButtonType.CANCEL);
+
+      alert.setHeaderText("Really delete feedback for group \"" + feedback.getGroup() + "\"?");
+
+      Optional<ButtonType> result = alert.showAndWait();
+      if (!result.isPresent() || result.get() != ButtonType.OK) return false;
+    }
+  }
+
+  feedbackManager.deleteFeedback(selectedItems);
+  return true;
+}
+
   /** Clear all feedback from the manager. */
   public void clear() {
     feedbackList.clear();
@@ -153,7 +177,7 @@ public class FeedbackManager {
    *
    * @param feedback The feedback to remove.
    */
-  public void removeFeedback(Feedback feedback) {
+  public void deleteFeedback (Feedback feedback) {
     feedbackList.remove(feedback);
     doneFeedbackList.remove(feedback);
     notDoneFeedbackList.remove(feedback);
@@ -164,7 +188,7 @@ public class FeedbackManager {
    *
    * @param feedbackList The list of feedback to remove.
    */
-  public void removeFeedback(List<Feedback> feedbackList) {
+  public void deleteFeedback (List<Feedback> feedbackList) {
     feedbackList = new ArrayList<>(feedbackList);
     this.feedbackList.removeAll(feedbackList);
     doneFeedbackList.removeAll(feedbackList);
@@ -183,7 +207,7 @@ public class FeedbackManager {
     for (Feedback feedback : feedbackList)
       if (groupList.contains(feedback.getGroup())) removedFeedbackList.add(feedback);
 
-    removeFeedback(removedFeedbackList);
+    deleteFeedback(removedFeedbackList);
     return removedFeedbackList;
   }
 
@@ -434,5 +458,6 @@ public class FeedbackManager {
     feedback.setFooter(template.getFooter());
     feedback.setSignature(template.getSignature());
   }
+
   // endregion
 }

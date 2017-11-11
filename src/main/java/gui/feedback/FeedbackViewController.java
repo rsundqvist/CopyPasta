@@ -19,7 +19,6 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TextInputDialog;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
@@ -113,10 +112,10 @@ public class FeedbackViewController {
       if (!result.isPresent() || result.get() == ButtonType.CANCEL) return;
 
       if (result.get() == replaceAll) {
-        feedbackManager.removeFeedback(existing);
+        feedbackManager.deleteFeedback(existing);
         removeFeedbackTabs(existing);
       } else if (result.get() == replaceUnchanged) {
-        feedbackManager.removeFeedback(existingUnmodified);
+        feedbackManager.deleteFeedback(existingUnmodified);
         removeFeedbackTabs(existingUnmodified);
       } else {
         throw new IllegalStateException("Unhandled case: " + result.get());
@@ -402,7 +401,7 @@ public class FeedbackViewController {
     feedbackTabPane.getTabs().remove(tab);
     feedbackTabListView.getItems().remove(tab);
     groupTabs.remove(tab);
-    feedbackManager.removeFeedback(tab.getFeedback());
+    feedbackManager.deleteFeedback(tab.getFeedback());
     updateFeedbackTabLockStatus();
   }
 
@@ -518,19 +517,7 @@ public class FeedbackViewController {
 
   private void changeFeedbackGroup(GroupView tab) {
     Feedback feedback = tab.getFeedback();
-
-    TextInputDialog dialog = new TextInputDialog(feedback.getGroup());
-    dialog.setTitle("Change group number");
-    dialog.setHeaderText("Change group number");
-    dialog.setContentText("Enter new group number: ");
-    Optional<String> result = dialog.showAndWait();
-
-    if (result.isPresent() && result.get() != null) {
-      String newGroup = result.get();
-      tab.setTitle(newGroup);
-      feedback.setGroup(newGroup);
-      feedbackTabListView.refresh();
-    }
+    if (Feedback.changeFeedbackGroup(feedback)) feedbackTabListView.refresh();
   }
 
   public void save() {
@@ -697,7 +684,7 @@ public class FeedbackViewController {
   public void clearDone() {
     List<Feedback> feedbackList = feedbackManager.getDoneFeedbackList();
     if (suppressClearDoneDialog || Tools.confirmDelete(feedbackList.size())) {
-      feedbackManager.removeFeedback(feedbackList);
+      feedbackManager.deleteFeedback(feedbackList);
       updateStatusLists();
       removeFeedbackTabs(feedbackList);
     }
@@ -722,7 +709,7 @@ public class FeedbackViewController {
   public void clearAllNotDone() {
     List<Feedback> feedbackList = feedbackManager.getNotDoneFeedbackList();
     if (suppressClearNotDoneDialog || Tools.confirmDelete(feedbackList.size())) {
-      feedbackManager.removeFeedback(feedbackList);
+      feedbackManager.deleteFeedback(feedbackList);
       updateStatusLists();
       removeFeedbackTabs(feedbackList);
     }

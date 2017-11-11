@@ -28,7 +28,7 @@ public abstract class Tools {
   public static final File PREVIEW_FILE = Tools.create("CopyPasta/data", "preview.txt", false);
   public static final File RECENT_WORKSPACES_FILE =
       Tools.create("CopyPasta/data", "recent_workspaces.txt", false);
-  public static final String VERSION = "1.1.1";
+  public static final String VERSION = "1.2.0";
   // Work data
   public static File AUTO_SAVE_PASTA_FILE = null;
   public static File AUTO_SAVE_TEMPLATE_FILE = null;

@@ -608,27 +608,27 @@ public abstract class IO {
     }
   }
 
-    /** Returns true if feedback is exported. */
-    public static boolean exportFeedback (List<Feedback> feedbackList, boolean asTxt, boolean asJson) {
-      if (feedbackList == null || feedbackList.isEmpty() || !(asTxt || asJson)) return false;
+  /** Returns true if feedback is exported. */
+  public static boolean exportFeedback(List<Feedback> feedbackList, boolean asTxt, boolean asJson) {
+    if (feedbackList == null || feedbackList.isEmpty() || !(asTxt || asJson)) return false;
 
-      if (Feedback.checkManualTags(feedbackList)) return false;
+    if (Feedback.checkManualTags(feedbackList)) return false;
 
-      boolean exportSuccessful;
-      if (asTxt && asJson) {
-        exportSuccessful = exportFeedbackAsTxtAndJson(null, feedbackList);
-      } else if (feedbackList.size() == 1) { // Only one item
-        Feedback feedback = feedbackList.get(0);
-        String initialFileName = feedback.getGroup();
-        File file = showSaveDialog(null, initialFileName, asTxt ? "txt" : "json");
+    boolean exportSuccessful;
+    if (asTxt && asJson) {
+      exportSuccessful = exportFeedbackAsTxtAndJson(null, feedbackList);
+    } else if (feedbackList.size() == 1) { // Only one item
+      Feedback feedback = feedbackList.get(0);
+      String initialFileName = feedback.getGroup();
+      File file = showSaveDialog(null, initialFileName, asTxt ? "txt" : "json");
 
-        if (asTxt) exportSuccessful = printStringToFile(feedback.getStylizedContent(), file);
-        else exportSuccessful = exportFeedbackAsJson(feedbackList, file);
-      } else {
-        if (asTxt) exportSuccessful = exportFeedbackAsTxt(null, feedbackList);
-        else exportSuccessful = exportFeedbackAsJson(null, feedbackList);
-      }
-
-      return exportSuccessful;
+      if (asTxt) exportSuccessful = printStringToFile(feedback.getStylizedContent(), file);
+      else exportSuccessful = exportFeedbackAsJson(feedbackList, file);
+    } else {
+      if (asTxt) exportSuccessful = exportFeedbackAsTxt(null, feedbackList);
+      else exportSuccessful = exportFeedbackAsJson(null, feedbackList);
     }
+
+    return exportSuccessful;
+  }
 }

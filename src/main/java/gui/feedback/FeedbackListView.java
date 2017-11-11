@@ -21,9 +21,7 @@ public class FeedbackListView extends ListView<Feedback> {
   private final FeedbackListListener listener;
 
   public FeedbackListView(
-      List<Feedback> feedbackList,
-      FeedbackManager feedbackManager,
-      FeedbackListListener listener) {
+      List<Feedback> feedbackList, FeedbackManager feedbackManager, FeedbackListListener listener) {
     this.feedbackList = feedbackList;
     this.feedbackManager = feedbackManager;
     this.listener = listener;

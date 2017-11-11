@@ -11,7 +11,6 @@ import model.Pasta;
 
 public class GroupViewController implements FileViewController.FileFeedbackListener {
   public static final boolean SWITCH_TO_FEEDBACK_ON_QUICKINSERT = false;
-  public static final String GRADE_NOT_SET_OPTION = "Not set";
 
   @FXML Tab feedbackTab, filesTab;
   @FXML TabPane viewsPane;
@@ -34,19 +33,19 @@ public class GroupViewController implements FileViewController.FileFeedbackListe
   public void initialize() {
     feedbackTab.setContent(feedbackText);
     fileViewController.setListener(this);
-    gradeChoiceBox.getItems().add(GRADE_NOT_SET_OPTION);
-    gradeChoiceBox.getSelectionModel().select(GRADE_NOT_SET_OPTION);
+    gradeChoiceBox.getItems().add(Feedback.GRADE_NOT_SET_OPTION);
+    gradeChoiceBox.getSelectionModel().select(Feedback.GRADE_NOT_SET_OPTION);
   }
 
   private void gradeChanged() {
     String newGrade = gradeChoiceBox.getSelectionModel().getSelectedItem();
     if (feedback == null || newGrade == null || newGrade.isEmpty()) return;
-    feedback.setGrade(newGrade.equals(GRADE_NOT_SET_OPTION) ? null : newGrade);
+    feedback.setGrade(Feedback.stylizeGrade(newGrade));
   }
 
   public void updatePossibleGrades(FeedbackManager feedbackManager) {
     gradeChoiceBox.getItems().clear();
-    gradeChoiceBox.getItems().add(GRADE_NOT_SET_OPTION);
+    gradeChoiceBox.getItems().add(Feedback.GRADE_NOT_SET_OPTION);
     gradeChoiceBox.getItems().addAll(feedbackManager.getTemplate().getPossibleGrades());
     updateGradeChoiceBox();
   }
@@ -64,7 +63,7 @@ public class GroupViewController implements FileViewController.FileFeedbackListe
     String grade = feedback.getGrade();
     gradeChoiceBox
         .getSelectionModel()
-        .select((grade == null || grade.isEmpty()) ? GRADE_NOT_SET_OPTION : grade);
+        .select((grade == null || grade.isEmpty()) ? Feedback.GRADE_NOT_SET_OPTION : grade);
   }
 
   @Override
@@ -97,6 +96,10 @@ public class GroupViewController implements FileViewController.FileFeedbackListe
       fileViewController.flashCopiedlabel();
       if (SWITCH_TO_FEEDBACK_ON_QUICKINSERT) viewsPane.getSelectionModel().select(feedbackTab);
     }
+  }
+
+  public void onPreview() {
+    FeedbackManager.preview(feedback);
   }
 
   public void updateFeedbackTextColor() {

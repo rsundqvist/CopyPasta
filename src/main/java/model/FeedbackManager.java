@@ -110,28 +110,29 @@ public class FeedbackManager {
     return groups;
   }
 
-  public static boolean deleteFeedback (List<Feedback> selectedItems, FeedbackManager feedbackManager) {
-  int numberOfItems = selectedItems.size();
-  if (numberOfItems > 1 && !Tools.confirmDelete(numberOfItems)) return false;
+  public static boolean deleteFeedback(
+      List<Feedback> selectedItems, FeedbackManager feedbackManager) {
+    int numberOfItems = selectedItems.size();
+    if (numberOfItems > 1 && !Tools.confirmDelete(numberOfItems)) return false;
 
-  if (numberOfItems == 1) {
-    Feedback feedback = selectedItems.get(0);
-    if (feedbackManager.isContentModified(feedback)) {
+    if (numberOfItems == 1) {
+      Feedback feedback = selectedItems.get(0);
+      if (feedbackManager.isContentModified(feedback)) {
 
-      String contentText = "The content of this feedback seems to have been modified.";
-      Alert alert =
-          new Alert(Alert.AlertType.CONFIRMATION, contentText, ButtonType.OK, ButtonType.CANCEL);
+        String contentText = "The content of this feedback seems to have been modified.";
+        Alert alert =
+            new Alert(Alert.AlertType.CONFIRMATION, contentText, ButtonType.OK, ButtonType.CANCEL);
 
-      alert.setHeaderText("Really delete feedback for group \"" + feedback.getGroup() + "\"?");
+        alert.setHeaderText("Really delete feedback for group \"" + feedback.getGroup() + "\"?");
 
-      Optional<ButtonType> result = alert.showAndWait();
-      if (!result.isPresent() || result.get() != ButtonType.OK) return false;
+        Optional<ButtonType> result = alert.showAndWait();
+        if (!result.isPresent() || result.get() != ButtonType.OK) return false;
+      }
     }
-  }
 
-  feedbackManager.deleteFeedback(selectedItems);
-  return true;
-}
+    feedbackManager.deleteFeedback(selectedItems);
+    return true;
+  }
 
   /** Clear all feedback from the manager. */
   public void clear() {
@@ -177,7 +178,7 @@ public class FeedbackManager {
    *
    * @param feedback The feedback to remove.
    */
-  public void deleteFeedback (Feedback feedback) {
+  public void deleteFeedback(Feedback feedback) {
     feedbackList.remove(feedback);
     doneFeedbackList.remove(feedback);
     notDoneFeedbackList.remove(feedback);
@@ -188,7 +189,7 @@ public class FeedbackManager {
    *
    * @param feedbackList The list of feedback to remove.
    */
-  public void deleteFeedback (List<Feedback> feedbackList) {
+  public void deleteFeedback(List<Feedback> feedbackList) {
     feedbackList = new ArrayList<>(feedbackList);
     this.feedbackList.removeAll(feedbackList);
     doneFeedbackList.removeAll(feedbackList);

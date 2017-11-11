@@ -11,9 +11,9 @@ import model.FeedbackManager;
 import java.util.List;
 
 public class ProgressViewController {
+  @FXML VBox vBox1, vBox2;
   @FXML private ProgressBar progressBar;
   @FXML private Label progressLabel, numFeedback, numDone, numNotDone;
-  @FXML VBox vBox1, vBox2;
 
   public void initialize() {}
 

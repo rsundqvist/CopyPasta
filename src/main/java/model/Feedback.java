@@ -29,18 +29,18 @@ public class Feedback implements Comparable<Feedback> {
   public static final transient String SIGNATURE = "%SIGNATURE%";
   public static final transient String GROUP = "%GROUP%";
   public static final transient String GRADE = "%GRADE%";
+  public static final transient String GRADE_NOT_SET_OPTION = "Not set";
   public static final transient String FILE = "%FILE: <file>%";
   public static final transient String FILE_REGEX = "%[ \t]*([Ff]ile|FILE):[ \t]*\\S+[ \t]*%";
-
-  /** Tag indicating that the pasta is incomplete and should be modified by the teacher. */
   public static final transient String MANUAL = "%MANUAL%";
   // endregion
-  private final Map<String, String> files;
-  private final UniqueArrayList possibleGrades;
+
   // region Field
   // ================================================================================= //
   // Field
   // ================================================================================= //
+  private final Map<String, String> files;
+  private final UniqueArrayList possibleGrades;
   private String content;
   private String header;
   private String footer;
@@ -99,6 +99,10 @@ public class Feedback implements Comparable<Feedback> {
     return copy;
   }
 
+  public static final String stylizeGrade(String grade) {
+    return (grade == null || grade.equals(Feedback.GRADE_NOT_SET_OPTION)) ? "" : grade;
+  }
+
   /**
    * Check whether there are any %MANUAL% tags present.
    *
@@ -143,52 +147,52 @@ public class Feedback implements Comparable<Feedback> {
   }
 
   /** Returns true if the user wishes to abort. */
-public static boolean checkManualTags(List<Feedback> feedbackList) {
-  List<Feedback> badFeedbackList = checkManual(feedbackList);
+  public static boolean checkManualTags(List<Feedback> feedbackList) {
+    List<Feedback> badFeedbackList = checkManual(feedbackList);
 
-  if (badFeedbackList.isEmpty()) return false;
+    if (badFeedbackList.isEmpty()) return false;
 
-  List<String> groups = FeedbackManager.getGroups(badFeedbackList);
-  Alert alert = new Alert(Alert.AlertType.INFORMATION);
-  alert.getButtonTypes().clear();
-  alert.getButtonTypes().addAll(ButtonType.YES, ButtonType.NO);
-  alert.setTitle("Incomplete items found");
-  alert.setHeaderText(
-      "Found "
-          + badFeedbackList.size()
-          + " incomplete items (of "
-          + feedbackList.size()
-          + " items total)");
-  alert.setContentText(
-      "It looks like you're trying to export items with the "
-          + MANUAL
-          + " tag present, "
-          + "indicating that some items have content not meant for the student. Rectify before exporting?");
+    List<String> groups = FeedbackManager.getGroups(badFeedbackList);
+    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+    alert.getButtonTypes().clear();
+    alert.getButtonTypes().addAll(ButtonType.YES, ButtonType.NO);
+    alert.setTitle("Incomplete items found");
+    alert.setHeaderText(
+        "Found "
+            + badFeedbackList.size()
+            + " incomplete items (of "
+            + feedbackList.size()
+            + " items total)");
+    alert.setContentText(
+        "It looks like you're trying to export items with the "
+            + MANUAL
+            + " tag present, "
+            + "indicating that some items have content not meant for the student. Rectify before exporting?");
 
-  // Content tags
-  Label contentLabel = new Label("Groups: ");
-  contentLabel.setMaxHeight(Double.MAX_VALUE);
+    // Content tags
+    Label contentLabel = new Label("Groups: ");
+    contentLabel.setMaxHeight(Double.MAX_VALUE);
 
-  String badGroups = groups.toString();
-  badGroups = badGroups.substring(1, badGroups.length() - 1);
+    String badGroups = groups.toString();
+    badGroups = badGroups.substring(1, badGroups.length() - 1);
 
-  TextField badGroupsTextField = new TextField(badGroups);
-  badGroupsTextField.setEditable(false);
-  badGroupsTextField.setMaxWidth(Double.MAX_VALUE);
-  HBox.setHgrow(badGroupsTextField, Priority.ALWAYS);
+    TextField badGroupsTextField = new TextField(badGroups);
+    badGroupsTextField.setEditable(false);
+    badGroupsTextField.setMaxWidth(Double.MAX_VALUE);
+    HBox.setHgrow(badGroupsTextField, Priority.ALWAYS);
 
-  HBox contentTagsHBox = new HBox();
-  contentTagsHBox.getChildren().addAll(contentLabel, badGroupsTextField);
-  HBox.setHgrow(badGroupsTextField, Priority.ALWAYS);
+    HBox contentTagsHBox = new HBox();
+    contentTagsHBox.getChildren().addAll(contentLabel, badGroupsTextField);
+    HBox.setHgrow(badGroupsTextField, Priority.ALWAYS);
 
-  // Set expandable Exception into the dialog pane.
-  alert.getDialogPane().setExpandableContent(contentTagsHBox);
-  alert.getDialogPane().setExpanded(true);
+    // Set expandable Exception into the dialog pane.
+    alert.getDialogPane().setExpandableContent(contentTagsHBox);
+    alert.getDialogPane().setExpanded(true);
 
-  Optional<ButtonType> result = alert.showAndWait();
-  return (!result.isPresent() // Default to assuming user wants to fix content.
-      || result.get() != ButtonType.NO);
-}
+    Optional<ButtonType> result = alert.showAndWait();
+    return (!result.isPresent() // Default to assuming user wants to fix content.
+        || result.get() != ButtonType.NO);
+  }
 
   public static boolean changeFeedbackGroup(Feedback feedback) {
     TextInputDialog dialog = new TextInputDialog(feedback.getGroup());
@@ -243,7 +247,7 @@ public static boolean checkManualTags(List<Feedback> feedbackList) {
       s = s.replace(FOOTER, footer);
     }
 
-    s = s.replace(GRADE, getGrade());
+    s = s.replace(GRADE, grade);
     s = s.replace(SIGNATURE, signature);
     s = s.replace(GROUP, group);
     if (replaceTabs) s = s.replace("\t", "    ");

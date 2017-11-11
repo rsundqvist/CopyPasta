@@ -32,6 +32,29 @@ public class FileViewController {
   private boolean feedbackLine = true, feedbackColumn = false;
   private boolean editable = false;
 
+  /**
+   * Indent a String using Google-style java indentation.
+   *
+   * @param javaSource The source to format.
+   * @return Formatted source.
+   * @throws FormatterException If {@code javaSource} contains syntax errors.
+   */
+  public static String indent(String javaSource) throws FormatterException {
+    switch (Settings.INDENTATION_STYLE) {
+      case "google":
+        javaSource = new Formatter().formatSource(javaSource);
+        break;
+      default:
+        System.err.println(
+            "Unknown indentation style: \""
+                + Settings.INDENTATION_STYLE
+                + "\". Using default (\"google\").");
+        javaSource = new Formatter().formatSource(javaSource);
+        break;
+    }
+    return javaSource;
+  }
+
   @FXML
   private void initialize() {
     copiedLabel.setOpacity(0);
@@ -147,29 +170,6 @@ public class FileViewController {
         IO.showExceptionAlert(e);
       }
     }
-  }
-
-  /**
-   * Indent a String using Google-style java indentation.
-   *
-   * @param javaSource The source to format.
-   * @return Formatted source.
-   * @throws FormatterException If {@code javaSource} contains syntax errors.
-   */
-  public static String indent(String javaSource) throws FormatterException {
-    switch (Settings.INDENTATION_STYLE) {
-      case "google":
-        javaSource = new Formatter().formatSource(javaSource);
-        break;
-      default:
-        System.err.println(
-            "Unknown indentation style: \""
-                + Settings.INDENTATION_STYLE
-                + "\". Using default (\"google\").");
-        javaSource = new Formatter().formatSource(javaSource);
-        break;
-    }
-    return javaSource;
   }
 
   public void addFile(String fileName, String content) {

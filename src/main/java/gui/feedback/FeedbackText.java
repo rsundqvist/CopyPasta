@@ -49,12 +49,6 @@ public class FeedbackText extends BorderPane implements FileViewController.FileF
     setCenter(new VirtualizedScrollPane<>(codeArea));
   }
 
-  public void setFeedback(Feedback feedback) {
-    this.feedback = feedback;
-    updateColor();
-    setText(feedback.getContent());
-  }
-
   private static StyleSpans<Collection<String>> computeHighlighting(String text) {
     Matcher matcher = PATTERN.matcher(text);
     int lastKwEnd = 0;
@@ -104,6 +98,12 @@ public class FeedbackText extends BorderPane implements FileViewController.FileF
         + border
         + "\n"
         + Feedback.getFileTag(file);
+  }
+
+  public void setFeedback(Feedback feedback) {
+    this.feedback = feedback;
+    updateColor();
+    setText(feedback.getContent());
   }
 
   public String getText() {

@@ -366,12 +366,12 @@ public class Controller implements PastaViewController.PastaControllerListener {
 
   public void onLoadExample() {
     ButtonType bt = new ButtonType("Load Example");
-    ButtonType bt2 = new ButtonType("Maybe later");
+    ButtonType bt2 = new ButtonType("Maybe Later");
 
     String contentText =
-        "All current work will be replaced! You can always load the example again from the Help menu.\nReally load example?";
+        "All current work (pasta, feedback, template) will be replaced! Are you sure?";
     Alert alert = new Alert(Alert.AlertType.WARNING, contentText, bt2, bt);
-    alert.setHeaderText("All existing work will be deleted!");
+    alert.setHeaderText("Current work will be lost");
 
     Optional<ButtonType> result = alert.showAndWait();
 

@@ -43,7 +43,7 @@ public class GroupImporterController {
   @FXML private TextArea filePatternsTextArea;
   @FXML private Label filePreviewLabel;
   private List<String> fileEndingList;
-  private boolean openArchives = true;
+  private boolean openArchives = false;
 
   public GroupImporterController(Stage stage) {
     codeArea = new JavaCodeArea();
@@ -156,8 +156,8 @@ public class GroupImporterController {
 
     MenuItem add = new MenuItem("Add");
     add.setOnAction(event -> addItem(false));
-    MenuItem addTo = new MenuItem("Add to group"); // TODO: Allow user to pick group.
-    addTo.setOnAction(event -> addItem(true));
+    // MenuItem addTo = new MenuItem("Add to group"); // TODO: Allow user to pick group.
+    // addTo.setOnAction(event -> addItem(true));
     MenuItem remove = new MenuItem("Remove");
     remove.setOnAction(event -> removeItem());
 
@@ -188,8 +188,6 @@ public class GroupImporterController {
       alert.setContentText(
           "Items must be located in a child folder to add. I might fix this in the future. Maybe.");
       alert.show();
-
-      // TODO: Handle adding of files in root folder.
       return;
     }
 
@@ -296,13 +294,13 @@ public class GroupImporterController {
 
       switch (this) {
         case RED:
-          s = "/red_circle.png";
+          s = "/img/red_circle.png";
           break;
         case GREEN:
-          s = "/green_circle.png";
+          s = "/img/green_circle.png";
           break;
         case BLUE:
-          s = "/blue_circle.png";
+          s = "/img/blue_circle.png";
           break;
       }
       return new ImageView(new Image(getClass().getResourceAsStream(s)));

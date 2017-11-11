@@ -1,7 +1,0 @@
-Manifest-Version: 1.0
-Class-Path: undofx-1.2.2.jar wellbehavedfx-0.3.jar sevenzipjbinding-9.
- 20-2.00beta.jar flowless-0.5.2.jar gson-2.8.0.jar richtextfx-0.7-M5.j
- ar reactfx-2.0-M5.jar commons-compress-1.14.jar sevenzipjbinding-all-
- platforms-9.20-2.00beta.jar
-Main-Class: gui.Main
-

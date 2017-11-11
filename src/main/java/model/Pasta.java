@@ -147,10 +147,9 @@ public class Pasta implements Comparable<Pasta>, Cloneable {
   public String getTitle() {
     if (!isAutomaticTitle()) return title;
 
-    // TODO improve regex \n\r into single expression
     if (content != null && !content.isEmpty()) {
       String content = this.content;
-      content = content.replaceAll("\n", "").replaceAll("\r", "").replaceAll("\\s+", " ").trim();
+      content = content.replaceAll("\n|\r", "").replaceAll("\\s+", " ").trim();
       return content.substring(0, Math.min(CONTENT_SNIPPET_LENGTH, Math.max(0, content.length())));
     } else {
       return "<No content>";

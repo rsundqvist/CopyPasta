@@ -34,7 +34,7 @@ public class GroupImporter {
     }
 
     stage.setTitle("Group Importer \u00a9 Richard Sundqvist");
-    stage.getIcons().add(new Image(PastaEditor.class.getResourceAsStream("/icon.png")));
+    stage.getIcons().add(new Image(PastaEditor.class.getResourceAsStream("/img/icon.png")));
 
     Rectangle2D screenSize = Screen.getPrimary().getVisualBounds();
     double windowWidth = screenSize.getWidth() * .8;

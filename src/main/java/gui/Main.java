@@ -63,7 +63,7 @@ public class Main extends Application {
             + "          -          Workspace: \""
             + Tools.AUTO_SAVE_FEEDBACK_FILE.getParentFile().getAbsolutePath()
             + "\"");
-    primaryStage.getIcons().add(new Image(Main.class.getResourceAsStream("/icon.png")));
+    primaryStage.getIcons().add(new Image(Main.class.getResourceAsStream("/img/icon.png")));
 
     Rectangle2D screenSize = Screen.getPrimary().getVisualBounds();
     double windowWidth = screenSize.getWidth() * .9;

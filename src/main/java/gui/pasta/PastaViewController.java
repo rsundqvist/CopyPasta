@@ -192,8 +192,6 @@ public class PastaViewController {
   }
 
   private void updateFilteredList() {
-    // pastaManager.updateFilteredList(); //TODO probably not needed?
-
     listView.getItems().clear();
     listView.getItems().addAll(pastaManager.getFilteredPastaList());
   }

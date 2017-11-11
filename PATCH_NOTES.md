@@ -6,7 +6,7 @@ Given a version number MAJOR.MINOR.PATCH:
 
 * MAJOR versions generally introduce backwards-incompatible changes.
 * MINOR versions add functionality in a backwards-compatible manner.
-* PATCH version denote backwards-compatible bug fixes.
+* PATCH versions denote backwards-compatible bug fixes.
 
 ## Patch Notes
 ### Version `1.1.0`

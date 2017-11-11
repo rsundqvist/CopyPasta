@@ -439,7 +439,6 @@ public class FeedbackViewController {
     // Feedback
     List<Feedback> feedbackList = feedbackManager.importSavedFeedback();
     if (feedbackList != null)
-      // feedbackManager.importFeedback(feedbackList); //TODO
       for (Feedback feedback : feedbackList) createFeedbackTab(feedback);
 
     if (feedbackManager.getFeedbackList().isEmpty())
@@ -566,10 +565,6 @@ public class FeedbackViewController {
 
   /** Toggle done for the list. */
   public void toggleDone() {
-    // TODO focus
-    // if (!feedbackTabListView.isFocused())
-    //    return;
-
     List<Object> selectedItems = feedbackTabListView.getSelectionModel().getSelectedItems();
 
     if (!selectedItems.isEmpty()) {

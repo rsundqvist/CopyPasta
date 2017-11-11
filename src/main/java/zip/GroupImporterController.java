@@ -216,7 +216,7 @@ public class GroupImporterController {
 
   private FeedbackTreeItem crawl(File file, int level, Feedback feedback) throws Exception {
     if (level == 1 && file.isDirectory()) {
-      String group = file.getName().replaceAll("[^0-9]", "");
+      String group = file.getName(); // .replaceAll("[^0-9]", "");
       feedback = new Feedback();
       feedback.setGroup(group);
       groupListView.getItems().add(feedback.getGroup());

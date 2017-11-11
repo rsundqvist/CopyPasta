@@ -9,6 +9,11 @@ Given a version number MAJOR.MINOR.PATCH:
 * PATCH version denote backwards-compatible bug fixes.
 
 ## Patch Notes
+### Version `1.0.2`
+10-11-2017
+* Replaced regex comment pattern which sometimes caused a stack overflow.
+[Credit](https://stackoverflow.com/a/1740692).
+
 ### Version `1.0.1`
 10-11-2017
 * Fix loading examples outside IDE.

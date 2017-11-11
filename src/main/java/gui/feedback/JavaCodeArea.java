@@ -77,7 +77,10 @@ public class JavaCodeArea extends CodeArea {
   private static final String BRACKET_PATTERN = "\\[|\\]";
   private static final String SEMICOLON_PATTERN = "\\;";
   private static final String STRING_PATTERN = "\"([^\"\\\\]|\\\\.)*\"";
-  private static final String COMMENT_PATTERN = "//[^\n]*" + "|" + "/\\*(.|\\R)*?\\*/";
+  private static final String COMMENT_PATTERN_OLD =
+      "//[^\n]*" + "|" + "/\\*(.|\\R)*?\\*/"; // //.*|(\"(?:\\\\[^\"]|\\\\\"|.)*?\")|(?s)/\\*.*?\\*/
+  private static final String COMMENT_PATTERN =
+      "//.*|(\"(?:\\\\[^\"]|\\\\\"|.)*?\")|(?s)/\\*.*?\\*/"; // https://stackoverflow.com/a/1740692
 
   private static final Pattern PATTERN =
       Pattern.compile(
@@ -122,7 +125,6 @@ public class JavaCodeArea extends CodeArea {
     if (initialContent != null) replaceText(0, 0, initialContent);
   }
 
-  // @formatter:off
   private static StyleSpans<Collection<String>> computeHighlighting(String text) {
     Matcher matcher = PATTERN.matcher(text);
     int lastKwEnd = 0;
@@ -156,5 +158,4 @@ public class JavaCodeArea extends CodeArea {
   public void setText(String s) {
     if (getText() != null && s != null && s.length() > 0) replaceText(0, getText().length(), s);
   }
-  // @formatter:on
 }

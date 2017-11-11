@@ -9,6 +9,10 @@ Given a version number MAJOR.MINOR.PATCH:
 * PATCH version denote backwards-compatible bug fixes.
 
 ## Patch Notes
+### Version `1.1.0`
+10-11-2017
+* Added indent option in the student files view.
+
 ### Version `1.0.2`
 10-11-2017
 * Replaced regex comment pattern which sometimes caused a stack overflow.

@@ -168,14 +168,14 @@ public class Feedback implements Comparable<Feedback> {
   }
 
   /**
-   * Looks for the {@link #FILE} tag, ant returns the position <it>after</it> the final '%'. For
+   * Looks for the {@link #FILE} tag, and returns the position <it>after</it> the final '%'. For
    * example, if this function were called with arg {@code file = "main.cpp"}, the it would return
    * the index after the string "{@code %FILE: main.cpp%}". Whitespace is not permitted.
    *
    * @param file The file to look for.
    * @return The position after the sought tag, or -1 if it could not be found.
    */
-  public int getFilePosition(String file) {
+  public int getFileTagPosition(String file) {
     String file_regex = "%([Ff]ile|FILE):[ \t]*" + file + "[ \t]*%";
     Pattern pattern = Pattern.compile(file_regex);
     Matcher matcher = pattern.matcher(content);

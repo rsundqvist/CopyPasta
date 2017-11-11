@@ -123,7 +123,7 @@ public class FeedbackText extends BorderPane
 
   @Override
   public void feedbackAt(String file, int caretLine, int caretColumn, int caretPosition) {
-    int pos = feedback.getFilePosition(file);
+    int pos = feedback.getFileTagPosition(file);
 
     String caretInfo = caretString(caretLine, caretColumn);
     String text = "\nAt " + caretInfo + ":  \n";
@@ -143,7 +143,7 @@ public class FeedbackText extends BorderPane
     if (caretLine < 0 && caretColumn < 0) text = "\n";
     else text = "\nAt " + caretString(caretLine, caretColumn) + ":\n";
 
-    int pos = feedback.getFilePosition(file);
+    int pos = feedback.getFileTagPosition(file);
     if (pos < 0) { // No FILE-tag or footer present.
       pos = feedback.getContent().indexOf(Feedback.FOOTER) - 1; // Place above footer, if it exists.
       if (pos < 0) // No footer - place at end of file.

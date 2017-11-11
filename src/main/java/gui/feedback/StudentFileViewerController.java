@@ -1,5 +1,8 @@
 package gui.feedback;
 
+import com.google.googlejavaformat.java.Formatter;
+import com.google.googlejavaformat.java.FormatterException;
+import gui.Settings;
 import gui.Tools;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -132,6 +135,34 @@ public class StudentFileViewerController {
     if (currentFileTab != null) {
       feedback.removeFile(currentFileTab.getFileName());
       sourceTabs.getTabs().remove(currentFileTab);
+    }
+  }
+
+  public void onIndent() {
+    if (currentFileTab != null) {
+      try {
+        String fileName = currentFileTab.getFileName();
+        String fileContent = feedback.getFiles().get(fileName);
+
+        switch (Settings.INDENTATION_STYLE) {
+          case "google":
+            fileContent = new Formatter().formatSource(fileContent);
+            break;
+          default:
+            System.err.println(
+                "Unknown indentation style: \""
+                    + Settings.INDENTATION_STYLE
+                    + "\". Using default (\"google\")");
+            fileContent = new Formatter().formatSource(fileContent);
+            break;
+        }
+
+        feedback.getFiles().put(fileName, fileContent);
+        currentFileTab.setContent(fileContent);
+      } catch (FormatterException e) {
+        e.printStackTrace();
+        IO.showExceptionAlert(e);
+      }
     }
   }
 

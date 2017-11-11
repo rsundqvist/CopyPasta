@@ -6,6 +6,7 @@
 <?import javafx.scene.control.ContextMenu?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.control.Tooltip?>
@@ -16,10 +17,11 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <BorderPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
-            minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0"
+            minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0"
             xmlns="http://javafx.com/javafx/8">
     <top>
         <GridPane maxWidth="1.7976931348623157E308" BorderPane.alignment="CENTER">
@@ -40,69 +42,96 @@
                         <Font name="System Bold" size="17.0"/>
                     </font>
                 </Label>
-                <HBox maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity"
-                      prefHeight="35.0" prefWidth="200.0" GridPane.columnSpan="2147483647" GridPane.hgrow="ALWAYS"
-                      GridPane.rowIndex="1">
+                <StackPane GridPane.rowIndex="1">
                     <children>
-                        <Button maxHeight="1.7976931348623157E308" mnemonicParsing="false" onAction="#onFeedback"
-                                prefWidth="80.0" text="Feedback">
-                            <HBox.margin>
-                                <Insets right="5.0"/>
-                            </HBox.margin>
-                            <tooltip>
-                                <Tooltip
-                                        text="Create feedback at the caret. The program will attempt to find the file in the feedback by looking for the %FILE:&lt;filename&gt;% tag."/>
-                            </tooltip>
-                        </Button>
-                        <VBox prefHeight="200.0">
+                        <HBox maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity"
+                              minWidth="-Infinity" prefHeight="35.0" prefWidth="200.0" GridPane.columnSpan="2147483647"
+                              GridPane.hgrow="ALWAYS" GridPane.rowIndex="1">
                             <children>
-                                <CheckBox mnemonicParsing="false" onAction="#toggleFeedbackLine" selected="true"
-                                          text="Line"/>
-                                <CheckBox mnemonicParsing="false" onAction="#toggleFeedbackColumn" text="Column"/>
+                                <Button maxHeight="1.7976931348623157E308" mnemonicParsing="false"
+                                        onAction="#onFeedback" prefWidth="80.0" text="Feedback">
+                                    <HBox.margin>
+                                        <Insets right="5.0"/>
+                                    </HBox.margin>
+                                    <tooltip>
+                                        <Tooltip
+                                                text="Create feedback at the caret. The program will attempt to find the file in the feedback by looking for the %FILE:&lt;filename&gt;% tag."/>
+                                    </tooltip>
+                                </Button>
+                                <VBox prefHeight="200.0">
+                                    <children>
+                                        <CheckBox mnemonicParsing="false" onAction="#toggleFeedbackLine" selected="true"
+                                                  text="Line"/>
+                                        <CheckBox mnemonicParsing="false" onAction="#toggleFeedbackColumn"
+                                                  text="Column"/>
+                                    </children>
+                                </VBox>
+                                <Pane maxHeight="0.0" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0"
+                                      prefHeight="0.0" HBox.hgrow="ALWAYS"/>
+                                <Pane maxHeight="0.0" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0"
+                                      prefHeight="0.0" HBox.hgrow="ALWAYS"/>
+                                <Button maxHeight="1.7976931348623157E308" mnemonicParsing="false" onAction="#onIndent"
+                                        prefWidth="80.0" text="Indent">
+                                    <tooltip>
+                                        <Tooltip
+                                                text="Indent using the currently selected indentation style. Default is &quot;google&quot;."/>
+                                    </tooltip>
+                                    <HBox.margin>
+                                        <Insets right="5.0"/>
+                                    </HBox.margin>
+                                </Button>
+                                <ToggleButton maxHeight="1.7976931348623157E308" mnemonicParsing="false"
+                                              onAction="#toggleEditable" prefWidth="80.0" text="Edit">
+                                    <HBox.margin>
+                                        <Insets right="3.0"/>
+                                    </HBox.margin>
+                                    <tooltip>
+                                        <Tooltip text="Edit the file manually."/>
+                                    </tooltip>
+                                </ToggleButton>
+                                <Separator orientation="VERTICAL" prefHeight="200.0">
+                                    <HBox.margin>
+                                        <Insets left="2.0" right="2.0"/>
+                                    </HBox.margin>
+                                </Separator>
+                                <Button maxHeight="1.7976931348623157E308" mnemonicParsing="false" onAction="#onAdd"
+                                        prefWidth="80.0" text="Add">
+                                    <tooltip>
+                                        <Tooltip
+                                                text="Delete the file from the feedback. The original file will not be altered."/>
+                                    </tooltip>
+                                    <HBox.margin>
+                                        <Insets right="5.0"/>
+                                    </HBox.margin>
+                                </Button>
+                                <Button maxHeight="1.7976931348623157E308" mnemonicParsing="false" onAction="#onDelete"
+                                        prefWidth="80.0" text="Delete">
+                                    <tooltip>
+                                        <Tooltip
+                                                text="Delete the file from the feedback. The original file will not be altered."/>
+                                    </tooltip>
+                                </Button>
                             </children>
-                        </VBox>
-                        <Pane maxHeight="0.0" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0"
-                              prefHeight="0.0" HBox.hgrow="ALWAYS"/>
-                        <Label fx:id="copiedLabel" focusTraversable="false" maxHeight="1.7976931348623157E308"
-                               maxWidth="1.7976931348623157E308" mouseTransparent="true" text="Feedback Inserted!"
-                               textFill="RED">
+                            <padding>
+                                <Insets top="1.0"/>
+                            </padding>
+                            <GridPane.margin>
+                                <Insets bottom="2.0" left="2.0" right="2.0" top="2.0"/>
+                            </GridPane.margin>
+                        </HBox>
+                        <Label fx:id="copiedLabel" alignment="CENTER" contentDisplay="CENTER" focusTraversable="false"
+                               maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                               mouseTransparent="true" text="Feedback Inserted!" textFill="RED"
+                               StackPane.alignment="CENTER">
                             <font>
                                 <Font name="System Bold" size="16.0"/>
                             </font>
                         </Label>
-                        <Pane maxHeight="0.0" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0"
-                              prefHeight="0.0" HBox.hgrow="ALWAYS"/>
-                        <Button maxHeight="1.7976931348623157E308" mnemonicParsing="false" onAction="#onAdd"
-                                prefWidth="80.0" text="Add">
-                            <tooltip>
-                                <Tooltip
-                                        text="Delete the file from the feedback. The original file will not be altered."/>
-                            </tooltip>
-                            <HBox.margin>
-                                <Insets right="5.0"/>
-                            </HBox.margin>
-                        </Button>
-                        <ToggleButton maxHeight="1.7976931348623157E308" mnemonicParsing="false"
-                                      onAction="#toggleEditable" prefWidth="80.0" text="Edit">
-                            <HBox.margin>
-                                <Insets right="5.0"/>
-                            </HBox.margin>
-                        </ToggleButton>
-                        <Button maxHeight="1.7976931348623157E308" mnemonicParsing="false" onAction="#onDelete"
-                                prefWidth="80.0" text="Delete">
-                            <tooltip>
-                                <Tooltip
-                                        text="Delete the file from the feedback. The original file will not be altered."/>
-                            </tooltip>
-                        </Button>
                     </children>
-                    <padding>
-                        <Insets top="1.0"/>
-                    </padding>
                     <GridPane.margin>
-                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0"/>
+                        <Insets bottom="2.0"/>
                     </GridPane.margin>
-                </HBox>
+                </StackPane>
             </children>
         </GridPane>
     </top>

@@ -31,6 +31,10 @@ public class FileTab extends Tab {
     setContent(new VirtualizedScrollPane<>(codeArea));
   }
 
+  public void setContent(String content) {
+    codeArea.replaceText(content);
+  }
+
   public String getFileName() {
     return getText();
   }

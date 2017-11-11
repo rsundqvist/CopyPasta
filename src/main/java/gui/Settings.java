@@ -12,12 +12,13 @@ import java.util.Properties;
 
 public abstract class Settings {
 
-  public static final String first_run = "first_run";
   /*
    * Class stuff
    */
   public static final Properties properties = new Properties();
   public static final int OPTION_INDEX = 0, ABOUT_INDEX = 1, TYPE_INDEX = 2;
+  public static final String first_run = "first_run";
+  public static final String indentation_style = "indentation_style";
   static final String workspace_location = "workspace_location";
   private static final String use_native_txt_editor = "use_native_txt_editor";
   private static final String file_decoration_width = "file_decoration_width";
@@ -30,6 +31,7 @@ public abstract class Settings {
   public static int FILE_DECORATION_WIDTH = 80;
   public static boolean STARTUP_VERSION_CHECK = true;
   public static boolean FIRST_RUN = true;
+  public static String INDENTATION_STYLE = "google";
 
   private Settings() {}
 
@@ -80,6 +82,14 @@ public abstract class Settings {
           Boolean.class.getCanonicalName() + ""
         });
 
+    about.put(
+        indentation_style, // Key
+        new String[] {
+          "Indentation Style", // Display name
+          "The type of indentation styles used when clicking \"Indent \" in the \"Student Files\" view. Default is \"google\". Options: google",
+          String.class.getCanonicalName() + ""
+        });
+
     return about;
   }
 
@@ -100,6 +110,7 @@ public abstract class Settings {
       if (s != null && !s.isEmpty()) FIRST_RUN = Boolean.parseBoolean(s);
 
       WORKSPACE_LOCATION = (String) properties.get(workspace_location);
+      INDENTATION_STYLE = (String) properties.get(indentation_style);
 
       if (WORKSPACE_LOCATION == null
           || WORKSPACE_LOCATION.isEmpty()
@@ -117,6 +128,7 @@ public abstract class Settings {
     putValue(file_decoration_width, "" + FILE_DECORATION_WIDTH);
     putValue(startup_version_check, "" + STARTUP_VERSION_CHECK);
     putValue(first_run, "" + FIRST_RUN);
+    putValue(indentation_style, "" + INDENTATION_STYLE);
   }
   // endregion
 
@@ -135,6 +147,7 @@ public abstract class Settings {
     try {
       properties.load(new FileReader(Tools.SETTINGS_FILE));
     } catch (IOException e) {
+      IO.showExceptionAlert(e);
     }
     loadFromProperties();
   }

@@ -262,7 +262,7 @@ public class Controller implements PastaViewController.PastaControllerListener {
     Settings.setRunningFile(false);
   }
 
-  public void saveWorkspace () {
+  public void saveWorkspace() {
     pastaViewController.save();
     feedbackViewController.save();
   }

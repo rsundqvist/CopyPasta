@@ -26,7 +26,8 @@ public class Feedback implements Comparable<Feedback> {
   /** Tag indicating that the pasta is incomplete and should be modified by the teacher. */
   public static final transient String MANUAL = "%MANUAL%";
   // endregion
-
+  private final Map<String, String> files;
+  private final UniqueArrayList possibleGrades;
   // region Field
   // ================================================================================= //
   // Field
@@ -39,8 +40,6 @@ public class Feedback implements Comparable<Feedback> {
   private String assignment;
   private String grade;
   private boolean done;
-  private final Map<String, String> files;
-  private final UniqueArrayList possibleGrades;
   // endregion
 
   // region Constructor

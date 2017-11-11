@@ -26,12 +26,15 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.text.TextFlow?>
-
-<TabPane fx:id="rootTabPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.feedback.FeedbackViewController">
+<TabPane xmlns:fx="http://javafx.com/fxml/1" fx:id="rootTabPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+         minHeight="0.0" minWidth="0.0" prefHeight="800.0" prefWidth="1200.0"
+         xmlns="http://javafx.com/javafx/9.0.1" fx:controller="gui.feedback.FeedbackViewController">
     <tabs>
         <Tab fx:id="groupTab" closable="false" text="Student Feedback">
             <content>
-                <TabPane fx:id="feedbackTabPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" onKeyPressed="#feedbackKeyTyped" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="ALL_TABS" />
+                <TabPane fx:id="feedbackTabPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                         minHeight="0.0" minWidth="0.0" onKeyPressed="#feedbackKeyTyped" prefHeight="400.0"
+                         prefWidth="600.0" tabClosingPolicy="ALL_TABS"/>
             </content>
         </Tab>
         <Tab fx:id="setupTab" closable="false" text="Setup">
@@ -40,129 +43,174 @@
                     <right>
                         <VBox maxWidth="-Infinity" prefHeight="371.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                             <children>
-                                <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#createFeedbackItems" text="Create Feedback" VBox.vgrow="ALWAYS" />
+                                <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false"
+                                        onAction="#createFeedbackItems" text="Create Feedback" VBox.vgrow="ALWAYS"/>
                                 <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="Student Group(s)">
                                     <font>
-                                        <Font name="System Bold" size="12.0" />
+                                        <Font name="System Bold" size="12.0"/>
                                     </font>
                                 </Label>
-                                <TextField fx:id="studentGroupField" maxWidth="1.7976931348623157E308" promptText="E.g.: 3 5, 6  9, potato" VBox.vgrow="NEVER" />
+                                <TextField fx:id="studentGroupField" maxWidth="1.7976931348623157E308"
+                                           promptText="E.g.: 3 5, 6  9, potato" VBox.vgrow="NEVER"/>
                                 <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="Signature">
                                     <font>
-                                        <Font name="System Bold" size="12.0" />
+                                        <Font name="System Bold" size="12.0"/>
                                     </font>
                                 </Label>
-                                <TextArea fx:id="signatureInput" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="150.0" promptText="Replaces the %SIGNATURE% tag." text="Sincerely,&#10;Richard Sundqvist&#10;richard.sundqvist@live.se" />
-                        <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="Assignment">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Label>
-                                <TextField fx:id="assignmentField" maxWidth="1.7976931348623157E308" promptText="Current assignment." VBox.vgrow="NEVER" />
-                        <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="Possible grades">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Label>
-                        <TextArea fx:id="possibleGradesInput" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="150.0" promptText="E.g.: A+, A, A-, B+, B, B-, C+, C, C-, D+, D, D-, F" wrapText="true" />
-                                <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#exportTemplate" text="Export Template" />
-                                <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#importTemplate" text="Import Template" />
+                                <TextArea fx:id="signatureInput" maxHeight="1.7976931348623157E308"
+                                          maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity"
+                                          prefHeight="60.0" prefWidth="150.0" promptText="Replaces the %SIGNATURE% tag."
+                                          text="Sincerely,&#10;Richard Sundqvist&#10;richard.sundqvist@live.se"/>
+                                <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="Assignment">
+                                    <font>
+                                        <Font name="System Bold" size="12.0"/>
+                                    </font>
+                                </Label>
+                                <TextField fx:id="assignmentField" maxWidth="1.7976931348623157E308"
+                                           promptText="Current assignment." VBox.vgrow="NEVER"/>
+                                <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="Possible grades">
+                                    <font>
+                                        <Font name="System Bold" size="12.0"/>
+                                    </font>
+                                </Label>
+                                <TextArea fx:id="possibleGradesInput" maxHeight="1.7976931348623157E308"
+                                          maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity"
+                                          prefHeight="60.0" prefWidth="150.0"
+                                          promptText="E.g.: A+, A, A-, B+, B, B-, C+, C, C-, D+, D, D-, F"
+                                          wrapText="true"/>
+                                <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false"
+                                        onAction="#exportTemplate" text="Export Template"/>
+                                <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false"
+                                        onAction="#importTemplate" text="Import Template"/>
                                 <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="All Feedback">
                                     <font>
-                                        <Font name="System Bold" size="12.0" />
+                                        <Font name="System Bold" size="12.0"/>
                                     </font>
                                 </Label>
-                                <CheckBox mnemonicParsing="false" onAction="#toggleHideDoneItems" text="Hide done items">
+                                <CheckBox mnemonicParsing="false" onAction="#toggleHideDoneItems"
+                                          text="Hide done items">
                                     <VBox.margin>
-                                        <Insets />
+                                        <Insets/>
                                     </VBox.margin>
                                 </CheckBox>
-                                <ListView fx:id="feedbackTabListView" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" onMouseClicked="#onMouseClicked" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+                                <ListView fx:id="feedbackTabListView" maxHeight="1.7976931348623157E308"
+                                          maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0"
+                                          onMouseClicked="#onMouseClicked" prefHeight="200.0" prefWidth="200.0"
+                                          VBox.vgrow="ALWAYS">
                                     <contextMenu>
                                         <ContextMenu>
                                             <items>
-                                                <MenuItem mnemonicParsing="false" onAction="#changeFeedbackGroup" text="Change group" />
-                                                <MenuItem mnemonicParsing="false" onAction="#toggleDone" text="Toggle done" />
-                                                <MenuItem mnemonicParsing="false" onAction="#preview" text="Preview" />
-                                                <SeparatorMenuItem mnemonicParsing="false" />
-                                                <MenuItem mnemonicParsing="false" onAction="#exportFeedbackAsTxt" text="Export .txt" />
-                                                <MenuItem mnemonicParsing="false" onAction="#exportFeedbackAsJson" text="Export .json" />
-                                                <SeparatorMenuItem mnemonicParsing="false" />
-                                                <MenuItem mnemonicParsing="false" onAction="#deleteFeedback" text="Delete">
+                                                <MenuItem mnemonicParsing="false" onAction="#changeFeedbackGroup"
+                                                          text="Change group"/>
+                                                <MenuItem mnemonicParsing="false" onAction="#toggleDone"
+                                                          text="Toggle done"/>
+                                                <MenuItem mnemonicParsing="false" onAction="#preview" text="Preview"/>
+                                                <SeparatorMenuItem mnemonicParsing="false"/>
+                                                <MenuItem mnemonicParsing="false" onAction="#exportFeedbackAsTxt"
+                                                          text="Export .txt"/>
+                                                <MenuItem mnemonicParsing="false" onAction="#exportFeedbackAsJson"
+                                                          text="Export .json"/>
+                                                <SeparatorMenuItem mnemonicParsing="false"/>
+                                                <MenuItem mnemonicParsing="false" onAction="#deleteFeedback"
+                                                          text="Delete">
                                                     <accelerator>
-                                                        <KeyCodeCombination alt="UP" code="DELETE" control="ANY" meta="UP" shift="UP" shortcut="UP" />
+                                                        <KeyCodeCombination alt="UP" code="DELETE" control="ANY"
+                                                                            meta="UP" shift="UP" shortcut="UP"/>
                                                     </accelerator>
                                                 </MenuItem>
                                             </items>
                                         </ContextMenu>
                                     </contextMenu>
                                 </ListView>
-                                <TextFlow maxWidth="1.7976931348623157E308" minWidth="0.0" prefHeight="35.0" prefWidth="200.0" textAlignment="CENTER" VBox.vgrow="NEVER">
+                                <TextFlow maxWidth="1.7976931348623157E308" minWidth="0.0" prefHeight="35.0"
+                                          prefWidth="200.0" textAlignment="CENTER" VBox.vgrow="NEVER">
                                     <children>
-                                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Click a group to it add to the &quot;Student Feedback&quot; panel." textAlignment="CENTER" />
+                                        <Text strokeType="OUTSIDE" strokeWidth="0.0"
+                                              text="Click a group to it add to the &quot;Student Feedback&quot; panel."
+                                              textAlignment="CENTER"/>
                                     </children>
                                 </TextFlow>
-                                <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#exportAllFeedback" text="Export All">
+                                <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false"
+                                        onAction="#exportAllFeedback" text="Export All">
                                     <tooltip>
-                                        <Tooltip text="Export the feedback of all currently open tabs, as a human-readable .txt file for each group and as a single file feedback.json for import." />
+                                        <Tooltip
+                                                text="Export the feedback of all currently open tabs, as a human-readable .txt file for each group and as a single file feedback.json for import."/>
                                     </tooltip>
                                 </Button>
-                                <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#importFeedback" text="Import" />
-                                <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#clear" text="Clear All" />
+                                <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false"
+                                        onAction="#importFeedback" text="Import"/>
+                                <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#clear"
+                                        text="Clear All"/>
                             </children>
                             <BorderPane.margin>
-                                <Insets bottom="2.0" left="2.0" right="2.0" />
+                                <Insets bottom="2.0" left="2.0" right="2.0"/>
                             </BorderPane.margin>
                         </VBox>
                     </right>
                     <center>
-                        <SplitPane fx:id="templateTextPane" dividerPositions="0.3, 0.8" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0" BorderPane.alignment="CENTER">
+                        <SplitPane fx:id="templateTextPane" dividerPositions="0.3, 0.8" orientation="VERTICAL"
+                                   prefHeight="200.0" prefWidth="160.0" BorderPane.alignment="CENTER">
                             <items>
                                 <VBox prefHeight="146.0" prefWidth="394.0">
                                     <children>
-                                        <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="~ Template Header ~" VBox.vgrow="NEVER">
+                                        <Label alignment="CENTER" maxWidth="1.7976931348623157E308"
+                                               text="~ Template Header ~" VBox.vgrow="NEVER">
                                             <font>
-                                                <Font name="System Bold" size="12.0" />
+                                                <Font name="System Bold" size="12.0"/>
                                             </font>
                                         </Label>
-                                        <TextArea fx:id="templateHeaderInput" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" text="Hello! This is the header.&#10;&#10;This is usally a good place to put information which doesn't change between assignments,&#10;such as grading policy. I'm gonna use it to tell you about some features instead:&#10;&#10;Import a template (Feedback -&gt; Import Template), but not quite yet. It will replace&#10;what you're readining now.&#10;&#10;Import groups from folder structures&#10;    1. A single root folder is assumed to contain a single root folder per group. Any subfolders&#10;       of these top-level subfolders are considered group property.&#10;    2. Set file filters (e.g. *.java) to select the types of files to import.&#10;    3. Click done or close the window. The program will ask you if you want to clear old groups&#10;       or just import the new ones. Feedback will be created for each group, based on the template.&#10;&#10;Sick of writing the same thing over and over again?&#10;    1. Open the Pasta Editor (Ctrl+G) and click &quot;New Pasta&quot;&#10;    2. Create and add tags to organize items by content and by assignment.&#10;    3. Close the window. The program will ask if you want to use the new pasta.&#10;&#10;Quick insert (Pasta) at caret&#10;    1. Select a Pasta item (the search function is your friend) and select a position in a student file&#10;    2. Press (Ctrl+Q) or right-click the pasta list. The pasta will be pasted into&#10;       the student feedback referencing the current file and position.&#10;Some examples are included to let you try this out.&#10;&#10;When youre done, you can export everything as individual files using (Ctrl+E). You can also&#10;double-click (or right click) a group in the list to get a preview. Use the &quot;Toggle done&quot;&#10;function (CTRL+D) to keep track of your progress.&#10;" VBox.vgrow="ALWAYS">
+                                        <TextArea fx:id="templateHeaderInput" maxHeight="1.7976931348623157E308"
+                                                  maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0"
+                                                  prefHeight="200.0" prefWidth="200.0"
+                                                  text="Hello! This is the header.&#10;&#10;This is usally a good place to put information which doesn't change between assignments,&#10;such as grading policy. I'm gonna use it to tell you about some features instead:&#10;&#10;Import a template (Feedback -&gt; Import Template), but not quite yet. It will replace&#10;what you're readining now.&#10;&#10;Import groups from folder structures&#10;    1. A single root folder is assumed to contain a single root folder per group. Any subfolders&#10;       of these top-level subfolders are considered group property.&#10;    2. Set file filters (e.g. *.java) to select the types of files to import.&#10;    3. Click done or close the window. The program will ask you if you want to clear old groups&#10;       or just import the new ones. Feedback will be created for each group, based on the template.&#10;&#10;Sick of writing the same thing over and over again?&#10;    1. Open the Pasta Editor (Ctrl+G) and click &quot;New Pasta&quot;&#10;    2. Create and add tags to organize items by content and by assignment.&#10;    3. Close the window. The program will ask if you want to use the new pasta.&#10;&#10;Quick insert (Pasta) at caret&#10;    1. Select a Pasta item (the search function is your friend) and select a position in a student file&#10;    2. Press (Ctrl+Q) or right-click the pasta list. The pasta will be pasted into&#10;       the student feedback referencing the current file and position.&#10;Some examples are included to let you try this out.&#10;&#10;When youre done, you can export everything as individual files using (Ctrl+E). You can also&#10;double-click (or right click) a group in the list to get a preview. Use the &quot;Toggle done&quot;&#10;function (CTRL+D) to keep track of your progress.&#10;"
+                                                  VBox.vgrow="ALWAYS">
                                             <font>
-                                                <Font name="Monospaced Regular" size="12.0" />
+                                                <Font name="Monospaced Regular" size="12.0"/>
                                             </font>
                                         </TextArea>
                                     </children>
                                 </VBox>
                                 <VBox prefHeight="200.0" prefWidth="100.0">
                                     <children>
-                                        <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="~ Template Body ~" VBox.vgrow="NEVER">
+                                        <Label alignment="CENTER" maxWidth="1.7976931348623157E308"
+                                               text="~ Template Body ~" VBox.vgrow="NEVER">
                                             <font>
-                                                <Font name="System Bold" size="12.0" />
+                                                <Font name="System Bold" size="12.0"/>
                                             </font>
                                         </Label>
-                                        <TextArea fx:id="tempateBodyInput" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" text="&#10;%HEADER%&#10;&#10;This is the body. There are a few tags you should know about:&#10;&#10;The %GROUP% tag simply indicates the name of the group being graded. It is the same&#10;as the values shown in the feedback lists.&#10;&#10;The %MANUAL% tag indicates that some text not to be exported as-is. For example,&#10;it may include code snippets that should be altered to fit the current group being&#10;graded. This is the ONLY tag which will not be removed when exporting.&#10;&#10;The %FILE: &lt;Filename&gt;% tag is special. It can be used to give feedback referencing an&#10;appropriate row and file (and column, if you like). If you did not use the automatic&#10;import function (Ctrl+I), files can be dragged-and-dropped onto the file view of a group&#10;to add it. &#10;&#10;About files:&#10;================================================================================&#10;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt; Main.java  &lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&#10;================================================================================&#10;%FILE:  Main.java  % &lt;-- This is a file tag. It's what the program actually looks for.&#10;&#10;This is what an automatic file section looks like (the width can be changed in the settings).&#10;It will be created the the bottom of the document if no footer tag is present. The tags&#10;are created automatically if they are not present when a file related function is used.&#10;&#10;&#10;%FOOTER%&#10;" VBox.vgrow="ALWAYS">
+                                        <TextArea fx:id="tempateBodyInput" maxHeight="1.7976931348623157E308"
+                                                  maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0"
+                                                  prefHeight="200.0" prefWidth="200.0"
+                                                  text="&#10;%HEADER%&#10;&#10;This is the body. There are a few tags you should know about:&#10;&#10;The %GROUP% tag simply indicates the name of the group being graded. It is the same&#10;as the values shown in the feedback lists.&#10;&#10;The %MANUAL% tag indicates that some text not to be exported as-is. For example,&#10;it may include code snippets that should be altered to fit the current group being&#10;graded. This is the ONLY tag which will not be removed when exporting.&#10;&#10;The %FILE: &lt;Filename&gt;% tag is special. It can be used to give feedback referencing an&#10;appropriate row and file (and column, if you like). If you did not use the automatic&#10;import function (Ctrl+I), files can be dragged-and-dropped onto the file view of a group&#10;to add it. &#10;&#10;About files:&#10;================================================================================&#10;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt; Main.java  &lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&#10;================================================================================&#10;%FILE:  Main.java  % &lt;-- This is a file tag. It's what the program actually looks for.&#10;&#10;This is what an automatic file section looks like (the width can be changed in the settings).&#10;It will be created the the bottom of the document if no footer tag is present. The tags&#10;are created automatically if they are not present when a file related function is used.&#10;&#10;&#10;%FOOTER%&#10;"
+                                                  VBox.vgrow="ALWAYS">
                                             <font>
-                                                <Font name="Monospaced Regular" size="12.0" />
+                                                <Font name="Monospaced Regular" size="12.0"/>
                                             </font>
                                         </TextArea>
                                     </children>
                                 </VBox>
                                 <VBox prefHeight="200.0" prefWidth="100.0">
                                     <children>
-                                        <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="~ Template Footer ~" VBox.vgrow="NEVER">
+                                        <Label alignment="CENTER" maxWidth="1.7976931348623157E308"
+                                               text="~ Template Footer ~" VBox.vgrow="NEVER">
                                             <font>
-                                                <Font name="System Bold" size="12.0" />
+                                                <Font name="System Bold" size="12.0"/>
                                             </font>
                                         </Label>
-                                        <TextArea fx:id="templateFooterInput" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" text="&#10;This is the footer. This is a good place to include the signature tag.&#10;Simply including it in the body may cause issues with the automatic&#10;creation of file tags. If the file tags are already present, its not an issue.&#10;&#10;Thank you for using CopyPasta!&#10;%SIGNATURE%&#10;&#10;Here's Tux:&#10;         _nnnn_&#10;        dGGGGMMb&#10;       @p~qp~~qMb&#10;       M|@||@) M|&#10;       @,----.JM|&#10;      JS^\__/  qKL&#10;     dZP        qKRb&#10;    dZP          qKKb&#10;   fZP            SMMb&#10;   HZM            MMMM&#10;   FqM            MMMM&#10; __| &quot;.        |\dS&quot;qML&#10; |    `.       | `' \Zq&#10;_)      \.___.,|     .'&#10;\____   )MMMMMP|   .'&#10;     `-'       `--' hjm" VBox.vgrow="ALWAYS">
+                                        <TextArea fx:id="templateFooterInput" maxHeight="1.7976931348623157E308"
+                                                  maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0"
+                                                  prefHeight="200.0" prefWidth="200.0"
+                                                  text="&#10;This is the footer. This is a good place to include the signature tag.&#10;Simply including it in the body may cause issues with the automatic&#10;creation of file tags. If the file tags are already present, its not an issue.&#10;&#10;Thank you for using CopyPasta!&#10;%SIGNATURE%&#10;&#10;Here's Tux:&#10;         _nnnn_&#10;        dGGGGMMb&#10;       @p~qp~~qMb&#10;       M|@||@) M|&#10;       @,----.JM|&#10;      JS^\__/  qKL&#10;     dZP        qKRb&#10;    dZP          qKKb&#10;   fZP            SMMb&#10;   HZM            MMMM&#10;   FqM            MMMM&#10; __| &quot;.        |\dS&quot;qML&#10; |    `.       | `' \Zq&#10;_)      \.___.,|     .'&#10;\____   )MMMMMP|   .'&#10;     `-'       `--' hjm"
+                                                  VBox.vgrow="ALWAYS">
                                             <font>
-                                                <Font name="Monospaced Regular" size="12.0" />
+                                                <Font name="Monospaced Regular" size="12.0"/>
                                             </font>
                                         </TextArea>
                                     </children>
                                 </VBox>
                             </items>
                             <BorderPane.margin>
-                                <Insets left="5.0" right="5.0" />
+                                <Insets left="5.0" right="5.0"/>
                             </BorderPane.margin>
                         </SplitPane>
                     </center>
@@ -173,67 +221,85 @@
             <content>
                 <BorderPane>
                     <center>
-                        <VBox maxHeight="1.7976931348623157E308" maxWidth="-Infinity" minWidth="300.0" BorderPane.alignment="CENTER">
+                        <VBox maxHeight="1.7976931348623157E308" maxWidth="-Infinity" minWidth="300.0"
+                              BorderPane.alignment="CENTER">
                             <children>
                                 <GridPane maxWidth="1.7976931348623157E308">
                                     <columnConstraints>
-                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0"/>
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0"/>
                                     </columnConstraints>
                                     <rowConstraints>
-                                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
+                                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
+                                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
+                                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
+                                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
+                                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
                                     </rowConstraints>
                                     <children>
                                         <Label minWidth="-Infinity" text="#Total" GridPane.rowIndex="2">
                                             <font>
-                                                <Font name="System Bold" size="12.0" />
+                                                <Font name="System Bold" size="12.0"/>
                                             </font>
                                         </Label>
                                         <Label minWidth="-Infinity" text="#Complete" GridPane.rowIndex="3">
                                             <font>
-                                                <Font name="System Bold" size="12.0" />
+                                                <Font name="System Bold" size="12.0"/>
                                             </font>
                                         </Label>
                                         <Label minWidth="-Infinity" text="#Remaining" GridPane.rowIndex="4">
                                             <font>
-                                                <Font name="System Bold" size="12.0" />
+                                                <Font name="System Bold" size="12.0"/>
                                             </font>
                                         </Label>
-                                        <Label fx:id="numFeedback" alignment="CENTER_RIGHT" maxWidth="1.7976931348623157E308" minWidth="-Infinity" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                        <Label fx:id="numFeedback" alignment="CENTER_RIGHT"
+                                               maxWidth="1.7976931348623157E308" minWidth="-Infinity" text="Label"
+                                               GridPane.columnIndex="1" GridPane.rowIndex="2">
                                             <GridPane.margin>
-                                                <Insets right="2.0" />
+                                                <Insets right="2.0"/>
                                             </GridPane.margin>
                                         </Label>
-                                        <Label fx:id="numDone" alignment="CENTER_RIGHT" maxWidth="1.7976931348623157E308" minWidth="-Infinity" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                        <Label fx:id="numDone" alignment="CENTER_RIGHT"
+                                               maxWidth="1.7976931348623157E308" minWidth="-Infinity" text="Label"
+                                               GridPane.columnIndex="1" GridPane.rowIndex="3">
                                             <GridPane.margin>
-                                                <Insets right="2.0" />
+                                                <Insets right="2.0"/>
                                             </GridPane.margin>
                                         </Label>
-                                        <Label fx:id="numNotDone" alignment="CENTER_RIGHT" maxWidth="1.7976931348623157E308" minWidth="-Infinity" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                                        <Label fx:id="numNotDone" alignment="CENTER_RIGHT"
+                                               maxWidth="1.7976931348623157E308" minWidth="-Infinity" text="Label"
+                                               GridPane.columnIndex="1" GridPane.rowIndex="4">
                                             <GridPane.margin>
-                                                <Insets right="2.0" />
+                                                <Insets right="2.0"/>
                                             </GridPane.margin>
                                         </Label>
-                                        <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="Feedback Status" GridPane.columnSpan="2147483647">
+                                        <Label alignment="CENTER" maxWidth="1.7976931348623157E308"
+                                               text="Feedback Status" GridPane.columnSpan="2147483647">
                                             <font>
-                                                <Font name="System Bold" size="14.0" />
+                                                <Font name="System Bold" size="14.0"/>
                                             </font>
                                         </Label>
-                                        <HBox GridPane.columnSpan="2147483647" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1">
+                                        <HBox GridPane.columnSpan="2147483647" GridPane.hgrow="ALWAYS"
+                                              GridPane.rowIndex="1">
                                             <children>
-                                                <ProgressBar fx:id="progressBar" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="20.0" prefWidth="138.0" progress="0.0" GridPane.columnSpan="2147483647" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" HBox.hgrow="ALWAYS">
+                                                <ProgressBar fx:id="progressBar" maxWidth="1.7976931348623157E308"
+                                                             minHeight="-Infinity" prefHeight="20.0" prefWidth="138.0"
+                                                             progress="0.0" GridPane.columnSpan="2147483647"
+                                                             GridPane.hgrow="ALWAYS" GridPane.rowIndex="1"
+                                                             HBox.hgrow="ALWAYS">
                                                     <HBox.margin>
-                                                        <Insets right="5.0" />
+                                                        <Insets right="5.0"/>
                                                     </HBox.margin>
                                                 </ProgressBar>
-                                                <Label fx:id="progressLabel" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="35.0" text="100 %" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.rowIndex="1" HBox.hgrow="NEVER">
+                                                <Label fx:id="progressLabel" alignment="CENTER" contentDisplay="CENTER"
+                                                       maxHeight="1.7976931348623157E308" maxWidth="-Infinity"
+                                                       minHeight="-Infinity" minWidth="-Infinity" prefWidth="35.0"
+                                                       text="100 %" textAlignment="CENTER" GridPane.columnIndex="1"
+                                                       GridPane.columnSpan="2147483647" GridPane.rowIndex="1"
+                                                       HBox.hgrow="NEVER">
                                                     <font>
-                                                        <Font name="System Bold Italic" size="12.0" />
+                                                        <Font name="System Bold Italic" size="12.0"/>
                                                     </font>
                                                 </Label>
                                             </children>
@@ -244,41 +310,57 @@
                                     <children>
                                         <VBox prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
                                             <children>
-                                                <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="Complete" VBox.vgrow="NEVER">
+                                                <Label alignment="CENTER" maxWidth="1.7976931348623157E308"
+                                                       text="Complete" VBox.vgrow="NEVER">
                                                     <font>
-                                                        <Font name="System Bold" size="12.0" />
+                                                        <Font name="System Bold" size="12.0"/>
                                                     </font>
                                                 </Label>
-                                                <ListView fx:id="doneListView" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
-                                                <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#exportAllDone" text="Export All" VBox.vgrow="NEVER" />
-                                                <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#clearDone" text="Clear" VBox.vgrow="NEVER" />
+                                                <ListView fx:id="doneListView" maxHeight="1.7976931348623157E308"
+                                                          maxWidth="1.7976931348623157E308" minHeight="0.0"
+                                                          minWidth="0.0" prefHeight="200.0" prefWidth="200.0"
+                                                          VBox.vgrow="ALWAYS"/>
+                                                <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false"
+                                                        onAction="#exportAllDone" text="Export All" VBox.vgrow="NEVER"/>
+                                                <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false"
+                                                        onAction="#clearDone" text="Clear" VBox.vgrow="NEVER"/>
                                             </children>
                                         </VBox>
-                                        <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
+                                        <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                                              prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
                                             <children>
-                                                <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="Remaining" VBox.vgrow="NEVER">
+                                                <Label alignment="CENTER" maxWidth="1.7976931348623157E308"
+                                                       text="Remaining" VBox.vgrow="NEVER">
                                                     <font>
-                                                        <Font name="System Bold" size="12.0" />
+                                                        <Font name="System Bold" size="12.0"/>
                                                     </font>
                                                 </Label>
-                                                <ListView fx:id="notDoneListView" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
-                                                <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#exportAllNotDone" text="Export All" VBox.vgrow="NEVER" />
-                                                <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#clearAllNotDone" text="Clear" VBox.vgrow="NEVER" />
+                                                <ListView fx:id="notDoneListView" maxHeight="1.7976931348623157E308"
+                                                          maxWidth="1.7976931348623157E308" minHeight="0.0"
+                                                          minWidth="0.0" prefHeight="200.0" prefWidth="200.0"
+                                                          VBox.vgrow="ALWAYS"/>
+                                                <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false"
+                                                        onAction="#exportAllNotDone" text="Export All"
+                                                        VBox.vgrow="NEVER"/>
+                                                <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false"
+                                                        onAction="#clearAllNotDone" text="Clear" VBox.vgrow="NEVER"/>
                                             </children>
                                         </VBox>
                                     </children>
                                 </HBox>
                             </children>
                             <BorderPane.margin>
-                                <Insets bottom="2.0" left="2.0" right="2.0" />
+                                <Insets bottom="2.0" left="2.0" right="2.0"/>
                             </BorderPane.margin>
                         </VBox>
                     </center>
                     <left>
-                        <Pane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="0.0" BorderPane.alignment="CENTER" />
+                        <Pane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0"
+                              minWidth="0.0" prefHeight="200.0" prefWidth="0.0" BorderPane.alignment="CENTER"/>
                     </left>
                     <right>
-                        <Pane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="0.0" BorderPane.alignment="CENTER" />
+                        <Pane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0"
+                              minWidth="0.0" prefHeight="200.0" prefWidth="0.0" BorderPane.alignment="CENTER"/>
                     </right>
                 </BorderPane>
             </content>

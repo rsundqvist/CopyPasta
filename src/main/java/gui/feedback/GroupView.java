@@ -45,7 +45,9 @@ public class GroupView extends Tab {
   }
 
   public void updateTabText() {
-    setText(feedback.getGroup());
+    String title = feedback.getGroup();
+    if (feedback.isDone()) title += " " + "\u2713";
+    setText(title);
   }
 
   public void updateTitle() {

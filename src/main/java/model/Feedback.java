@@ -383,7 +383,7 @@ public class Feedback implements Comparable<Feedback> {
 
   /** Toggle the done status of this Feedback. Equivalent to calling {@code setDone(!isDone());}. */
   public void toggleDone() {
-    done = !done;
+    setDone(!done);
   }
 
   @Override
@@ -463,6 +463,5 @@ public class Feedback implements Comparable<Feedback> {
   public List<String> getPossibleGrades() {
     return possibleGrades;
   }
-
   // endregion
 }

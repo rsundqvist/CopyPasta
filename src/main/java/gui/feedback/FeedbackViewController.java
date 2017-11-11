@@ -46,7 +46,7 @@ public class FeedbackViewController {
   // ================================================================================= //
   // Field
   // ================================================================================= //
-  @FXML private Tab groupTab, setupTab, progressTab;
+  @FXML private Tab studentFeedbackTab, setupTab, progressTab;
   @FXML private TextField studentGroupField, assignmentField;
   @FXML private Label progressLabel;
   @FXML private TabPane feedbackTabPane, rootTabPane;
@@ -73,8 +73,12 @@ public class FeedbackViewController {
 
   public void updateFeedbackTabLockStatus() {
     boolean empty = feedbackTabPane.getTabs().isEmpty();
-    groupTab.setDisable(empty);
+    studentFeedbackTab.setDisable(empty);
     if (empty) rootTabPane.getSelectionModel().select(setupTab);
+  }
+
+  public void updateTabTitles() {
+    feedbackTabPane.getTabs().forEach(groupView -> ((GroupView) groupView).updateTabText());
   }
 
   public void createFeedbackItems(List<String> groups) {
@@ -126,7 +130,7 @@ public class FeedbackViewController {
     if (newFeedbackList != null) {
       for (Feedback feedback : newFeedbackList) createFeedbackTab(feedback);
 
-      if (newFeedbackList.size() > 1) rootTabPane.getSelectionModel().select(groupTab);
+      if (newFeedbackList.size() > 1) rootTabPane.getSelectionModel().select(studentFeedbackTab);
     }
 
     updateFeedbackTabLockStatus();
@@ -335,7 +339,7 @@ public class FeedbackViewController {
       feedbackTabPane.getTabs().removeAll(badGroupViews);
       feedbackTabPane.getTabs().addAll(0, badGroupViews);
       feedbackTabPane.getSelectionModel().select(0);
-      rootTabPane.getSelectionModel().select(groupTab);
+      rootTabPane.getSelectionModel().select(studentFeedbackTab);
       updateFeedbackTabLockStatus();
       return true;
     }
@@ -431,7 +435,7 @@ public class FeedbackViewController {
   private void updateAfterFeedbackImport(List<Feedback> feedbackList) {
     for (Feedback feedback : feedbackList) createFeedbackTab(feedback);
 
-    rootTabPane.getSelectionModel().select(groupTab);
+    rootTabPane.getSelectionModel().select(studentFeedbackTab);
     updateFeedbackTabLockStatus();
   }
 

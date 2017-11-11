@@ -29,7 +29,7 @@
          minHeight="0.0" minWidth="0.0" prefHeight="800.0" prefWidth="1200.0"
          xmlns="http://javafx.com/javafx/9.0.1" fx:controller="gui.feedback.FeedbackViewController">
     <tabs>
-        <Tab fx:id="groupTab" closable="false" text="Student Feedback">
+        <Tab fx:id="studentFeedbackTab" closable="false" onSelectionChanged="#updateTabTitles" text="Student Feedback">
             <content>
                 <TabPane fx:id="feedbackTabPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
                          minHeight="0.0" minWidth="0.0" onKeyPressed="#feedbackKeyTyped" prefHeight="400.0"

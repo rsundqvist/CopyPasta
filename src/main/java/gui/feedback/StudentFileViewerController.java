@@ -152,7 +152,7 @@ public class StudentFileViewerController {
             System.err.println(
                 "Unknown indentation style: \""
                     + Settings.INDENTATION_STYLE
-                    + "\". Using default (\"google\")");
+                    + "\". Using default (\"google\").");
             fileContent = new Formatter().formatSource(fileContent);
             break;
         }

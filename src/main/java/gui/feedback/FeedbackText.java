@@ -115,10 +115,10 @@ public class FeedbackText extends BorderPane
   public void updateColor() {
     if (feedback.isDone())
       codeArea.setStyle(
-          "-fx-font-family: consolas; -fx-font-size: 11pt; -fx-background-color: #55e055;");
+          "-fx-font-family: monospace; -fx-font-size: 11pt; -fx-background-color: #55e055;");
     else
       codeArea.setStyle(
-          "-fx-font-family: consolas; -fx-font-size: 11pt; -fx-background-color: #dddddd;");
+          "-fx-font-family: monospace; -fx-font-size: 11pt; -fx-background-color: #dddddd;");
   }
 
   @Override

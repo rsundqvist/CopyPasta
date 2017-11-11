@@ -53,8 +53,7 @@ public abstract class Settings {
         workspace_location, // Key
         new String[] {
           "Workspace Location",
-          "Default (recommended): \"user.dir\". CopyPasta must be restarted for this to take effect."
-              + "\nDefault location (Windows 10): \"%UserProfile%/CopyPasta/workspace\"", // about
+          "Default (recommended): \"user.dir\". Default location (Windows 10): \"%UserProfile%/CopyPasta/workspace\"", // about
           String.class.getCanonicalName() + ""
         });
 
@@ -86,7 +85,8 @@ public abstract class Settings {
         indentation_style, // Key
         new String[] {
           "Indentation Style", // Display name
-          "The type of indentation styles used when clicking \"Indent \" in the \"Student Files\" view. Default is \"google\". Options: google",
+          "The type of indentation styles used when clicking \"Indent \" in the \"Student Files\" view."
+              + "Default is \"google\". Options: \"google\".",
           String.class.getCanonicalName() + ""
         });
 

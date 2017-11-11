@@ -27,7 +27,6 @@ public class StudentFileViewer extends BorderPane {
     maxWidth(-1);
     maxHeight(-1);
     setStyle("-fx-background: rgb(225, 228, 203);");
-    // setStyle("-fx-background: #123456;");
     controller = fxmlLoader.getController();
   }
 

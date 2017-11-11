@@ -13,7 +13,7 @@ public class StudentFileViewer extends BorderPane {
   public StudentFileViewer(
       StudentFileViewerController.FileFeedbackListener listener, Feedback feedback) {
 
-    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/studentFileViewer.fxml"));
+    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/fileView.fxml"));
     fxmlLoader.setController(new StudentFileViewerController(listener, feedback));
     BorderPane root;
     try {

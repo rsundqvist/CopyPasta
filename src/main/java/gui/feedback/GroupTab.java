@@ -29,7 +29,7 @@ public class GroupTab extends Tab implements StudentFileViewerController.FileFee
 
     studentFileViewer = new StudentFileViewer(this, feedback);
     fileView = new Tab();
-    updateStudentFilesText(); // TODO: Update after import through drag-and-drop, etc
+    updateStudentFilesText();
     fileView.setContent(studentFileViewer);
     fileView.setClosable(false);
 

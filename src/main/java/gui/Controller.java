@@ -105,7 +105,7 @@ public class Controller implements PastaViewController.PastaControllerListener {
                 + Tools.VERSION,
             bt,
             new ButtonType("Maybe Later"));
-    alert.setHeaderText("CopyPasta can be updated.");
+    alert.setHeaderText("A new version of CopyPasta is available!");
 
     Optional<ButtonType> result = alert.showAndWait();
     if (result.isPresent() && result.get() == bt) {

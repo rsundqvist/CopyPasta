@@ -438,8 +438,7 @@ public class FeedbackViewController {
 
     // Feedback
     List<Feedback> feedbackList = feedbackManager.importSavedFeedback();
-    if (feedbackList != null)
-      for (Feedback feedback : feedbackList) createFeedbackTab(feedback);
+    if (feedbackList != null) for (Feedback feedback : feedbackList) createFeedbackTab(feedback);
 
     if (feedbackManager.getFeedbackList().isEmpty())
       rootTabPane.getSelectionModel().select(setupTab);

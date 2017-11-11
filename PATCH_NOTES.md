@@ -9,6 +9,11 @@ Given a version number MAJOR.MINOR.PATCH:
 * PATCH versions denote backwards-compatible bug fixes.
 
 ## Patch Notes
+### Version `1.1.1`
+10-11-2017
+* Switched font: consolas -> monospace. Will hopefully work better on Linux.
+
+## Patch Notes
 ### Version `1.1.0`
 10-11-2017
 * Added indent option in the student files view.

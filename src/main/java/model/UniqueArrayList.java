@@ -6,10 +6,15 @@ import java.util.Collection;
 /** Created by Richard Sundqvist on 20/02/2017. */
 public class UniqueArrayList<E> extends ArrayList<E> {
 
+  public UniqueArrayList(Collection c) {
+    this.addAll(ensureUnique(c));
+  }
+
+  public UniqueArrayList() {}
+
   @Override
   public boolean add(E e) {
     if (super.contains(e)) return false;
-
     return super.add(e);
   }
 

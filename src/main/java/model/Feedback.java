@@ -19,19 +19,28 @@ public class Feedback implements Comparable<Feedback> {
   public static final transient String FOOTER = "%FOOTER%";
   public static final transient String SIGNATURE = "%SIGNATURE%";
   public static final transient String GROUP = "%GROUP%";
+  public static final transient String GRADE = "%GRADE%";
   public static final transient String FILE = "%FILE: <file>%";
   public static final transient String FILE_REGEX = "%[ \t]*([Ff]ile|FILE):[ \t]*\\S+[ \t]*%";
 
   /** Tag indicating that the pasta is incomplete and should be modified by the teacher. */
   public static final transient String MANUAL = "%MANUAL%";
   // endregion
-  private final Map<String, String> files;
+
   // region Field
   // ================================================================================= //
   // Field
   // ================================================================================= //
-  private String content, header, footer, signature, group, assignment;
+  private String content;
+  private String header;
+  private String footer;
+  private String signature;
+  private String group;
+  private String assignment;
+  private String grade;
   private boolean done;
+  private final Map<String, String> files;
+  private final UniqueArrayList possibleGrades;
   // endregion
 
   // region Constructor
@@ -45,7 +54,9 @@ public class Feedback implements Comparable<Feedback> {
     signature = "";
     group = "";
     assignment = "";
+    setGrade("");
     files = new HashMap<>();
+    possibleGrades = new UniqueArrayList();
     done = false;
   }
 
@@ -60,7 +71,9 @@ public class Feedback implements Comparable<Feedback> {
     footer = orig.footer;
     signature = orig.signature;
     group = orig.group;
+    setGrade(orig.grade);
     files = new HashMap<>(orig.files); // Shallow copy
+    possibleGrades = new UniqueArrayList(orig.possibleGrades);
     done = orig.done;
   }
 
@@ -159,6 +172,7 @@ public class Feedback implements Comparable<Feedback> {
       s = s.replace(FOOTER, footer);
     }
 
+    s = s.replace(GRADE, getGrade());
     s = s.replace(SIGNATURE, signature);
     s = s.replace(GROUP, group);
     if (replaceTabs) s = s.replace("\t", "    ");
@@ -341,6 +355,33 @@ public class Feedback implements Comparable<Feedback> {
    */
   public Map<String, String> getFiles() {
     return files;
+  }
+
+  /**
+   * Returns the grade for this Feedback.
+   *
+   * @return The grade.
+   */
+  public String getGrade() {
+    return grade;
+  }
+
+  /**
+   * Set the grade for this Feedback;
+   *
+   * @param grade A grade;
+   */
+  public void setGrade(String grade) {
+    this.grade = grade;
+  }
+
+  /**
+   * Return a map of possible grades. Generally only used by the template.
+   *
+   * @return The list of possible grades.
+   */
+  public List<String> getPossibleGrades() {
+    return possibleGrades;
   }
   // endregion
 }

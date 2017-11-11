@@ -52,7 +52,11 @@ public class FeedbackViewController {
   @FXML private Label progressLabel;
   @FXML private TabPane feedbackTabPane, rootTabPane;
   @FXML
-  private TextArea teacherField, templateTextArea, templateHeaderTextArea, templateFooterTextArea;
+  private TextArea signatureInput,
+      possibleGradesInput,
+      tempateBodyInput,
+      templateHeaderInput,
+      templateFooterInput;
 
   @FXML
   /** Container for the actual feedback tabs. */
@@ -132,7 +136,7 @@ public class FeedbackViewController {
   /** FXML onAction for "Create Feedback" button. */
   public void createFeedbackItems() {
     String str = studentGroupField.getText();
-    List<String> groups = FeedbackManager.parseGroupString(str);
+    List<String> groups = Tools.parseString(str);
     createFeedbackItems(groups);
   }
 
@@ -154,20 +158,27 @@ public class FeedbackViewController {
   }
 
   private void updateTemplate() {
-    Feedback template = feedbackManager.getTemplate();
-    template.setContent(templateTextArea.getText());
-    template.setHeader(templateHeaderTextArea.getText());
-    template.setFooter(templateFooterTextArea.getText());
-    template.setSignature(teacherField.getText());
+    updateTemplateFromInput(feedbackManager.getTemplate());
+  }
+
+  private void updateTemplateFromInput(Feedback template) {
+    template.setContent(tempateBodyInput.getText());
+    template.setHeader(templateHeaderInput.getText());
+    template.setFooter(templateFooterInput.getText());
+    template.setSignature(signatureInput.getText());
     template.setAssignment(getAssignment());
-    feedbackManager.setTemplate(template);
+    template.getPossibleGrades().clear();
+    template.getPossibleGrades().addAll(Tools.parseString(possibleGradesInput.getText()));
   }
 
   private void createFeedbackTab(Feedback feedback) {
     GroupView tab = new GroupView(feedback);
     tab.setContextMenu(createFeedbackTabContextMenu(tab));
     tab.setOnClosed(event -> updateFeedbackTabLockStatus());
+    tab.updatePossibleGrades(feedbackManager);
+
     if (!feedback.isDone()) feedbackTabPane.getTabs().add(tab);
+
     feedbackTabListView.getItems().add(tab);
     groupTabs.add(tab);
   }
@@ -426,6 +437,7 @@ public class FeedbackViewController {
   }
 
   public void initialize() {
+    System.out.println(possibleGradesInput.getText());
     feedbackTabListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
     doneListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
     notDoneListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
@@ -454,11 +466,14 @@ public class FeedbackViewController {
 
   private void updateTemplate(Feedback template) {
     feedbackManager.setTemplate(template);
-    teacherField.setText((template.getSignature()));
+    signatureInput.setText((template.getSignature()));
     assignmentField.setText(template.getAssignment());
-    templateTextArea.setText(template.getContent());
-    templateHeaderTextArea.setText(template.getHeader());
-    templateFooterTextArea.setText(template.getFooter());
+    tempateBodyInput.setText(template.getContent());
+    templateHeaderInput.setText(template.getHeader());
+    templateFooterInput.setText(template.getFooter());
+    String possibleGradesString = template.getPossibleGrades().toString();
+    possibleGradesString = possibleGradesString.substring(1, possibleGradesString.length() - 1);
+    possibleGradesInput.setText(possibleGradesString);
   }
 
   public void onMouseClicked(MouseEvent event) {
@@ -520,14 +535,8 @@ public class FeedbackViewController {
 
   public void save() {
     Tools.exportSavedFeedback(feedbackManager.getFeedbackList());
-
-    // Feedback
-    Feedback template = new Feedback();
-    template.setSignature(teacherField.getText());
-    template.setContent(templateTextArea.getText());
-    template.setHeader(templateHeaderTextArea.getText());
-    template.setFooter(templateFooterTextArea.getText());
-    template.setAssignment(getAssignment());
+    Feedback template = feedbackManager.getTemplate();
+    updateTemplateFromInput(template);
     Tools.exportSavedTemplate(template);
   }
 

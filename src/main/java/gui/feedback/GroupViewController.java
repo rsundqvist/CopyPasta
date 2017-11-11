@@ -1,17 +1,21 @@
 package gui.feedback;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.util.Pair;
 import model.Feedback;
+import model.FeedbackManager;
 import model.Pasta;
 
 public class GroupViewController implements FileViewController.FileFeedbackListener {
   public static final boolean SWITCH_TO_FEEDBACK_ON_QUICKINSERT = false;
+  public static final String GRADE_NOT_SET_OPTION = "Not set";
 
   @FXML Tab feedbackTab, filesTab;
   @FXML TabPane viewsPane;
+  @FXML ChoiceBox<String> gradeChoiceBox;
 
   @FXML
   FileViewController fileViewController; // Controller of an included file = fx:id + "Controller"
@@ -30,13 +34,37 @@ public class GroupViewController implements FileViewController.FileFeedbackListe
   public void initialize() {
     feedbackTab.setContent(feedbackText);
     fileViewController.setListener(this);
+    gradeChoiceBox.getItems().add(GRADE_NOT_SET_OPTION);
+    gradeChoiceBox.getSelectionModel().select(GRADE_NOT_SET_OPTION);
+  }
+
+  private void gradeChanged() {
+    String newGrade = gradeChoiceBox.getSelectionModel().getSelectedItem();
+    if (feedback == null || newGrade == null || newGrade.isEmpty()) return;
+    feedback.setGrade(newGrade.equals(GRADE_NOT_SET_OPTION) ? null : newGrade);
+  }
+
+  public void updatePossibleGrades(FeedbackManager feedbackManager) {
+    gradeChoiceBox.getItems().clear();
+    gradeChoiceBox.getItems().add(GRADE_NOT_SET_OPTION);
+    gradeChoiceBox.getItems().addAll(feedbackManager.getTemplate().getPossibleGrades());
+    updateGradeChoiceBox();
   }
 
   public void setFeedback(Feedback feedback) {
     this.feedback = feedback;
     feedbackText.setFeedback(feedback);
     fileViewController.setFeedback(feedback);
+    updateGradeChoiceBox();
     updateFilesTabTitle();
+    gradeChoiceBox.getSelectionModel().selectedItemProperty().addListener(event -> gradeChanged());
+  }
+
+  public void updateGradeChoiceBox() {
+    String grade = feedback.getGrade();
+    gradeChoiceBox
+        .getSelectionModel()
+        .select((grade == null || grade.isEmpty()) ? GRADE_NOT_SET_OPTION : grade);
   }
 
   @Override

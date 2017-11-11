@@ -10,11 +10,13 @@ import javafx.util.Duration;
 import model.Feedback;
 import model.IO;
 import model.Pasta;
+import model.UniqueArrayList;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -188,6 +190,24 @@ public abstract class Tools {
 
     ParallelTransition pt = new ParallelTransition(ft, st);
     pt.play();
+  }
+
+  /**
+   * Parse a string, splitting on ',' and spaces (including consecutive spaces. Doubles are removed.
+   *
+   * @param s The string to parse.
+   * @return An array of parsed designations.
+   */
+  public static List<String> parseString(String s) {
+    s = s.replaceAll(",|\\s+", " ");
+
+    UniqueArrayList<String> tokens = new UniqueArrayList<>();
+    tokens.addAll(Arrays.asList(s.split(" ")));
+
+    tokens.forEach(String::trim);
+    tokens.removeIf(String::isEmpty);
+
+    return tokens;
   }
   // endregion
 }

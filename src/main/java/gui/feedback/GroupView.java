@@ -3,6 +3,7 @@ package gui.feedback;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Tab;
 import model.Feedback;
+import model.FeedbackManager;
 import model.IO;
 import model.Pasta;
 
@@ -25,6 +26,10 @@ public class GroupView extends Tab {
     }
     controller = fxmlLoader.getController();
     controller.setFeedback(feedback);
+  }
+
+  public void updatePossibleGrades(FeedbackManager feedbackManager) {
+    controller.updatePossibleGrades(feedbackManager);
   }
 
   public void setTitle(String title) {

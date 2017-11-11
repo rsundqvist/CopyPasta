@@ -229,8 +229,7 @@ public class Controller implements PastaViewController.PastaControllerListener {
   }
 
   public void save() {
-    pastaViewController.save();
-    feedbackViewController.save();
+    saveWorkspace();
     Tools.flashNode(savedLabel);
 
     DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
@@ -256,12 +255,16 @@ public class Controller implements PastaViewController.PastaControllerListener {
   }
 
   public void shutdown() {
-    pastaViewController.save();
-    feedbackViewController.save();
+    saveWorkspace();
     Settings.loadFromProperties();
     Settings.storeStoreSettingsFile();
     printRecentWorkspaces();
     Settings.setRunningFile(false);
+  }
+
+  public void saveWorkspace () {
+    pastaViewController.save();
+    feedbackViewController.save();
   }
 
   public void onDefaultWorkspace() {

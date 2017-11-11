@@ -81,21 +81,6 @@ public class FeedbackManager {
   // ================================================================================= //
 
   /**
-   * Parse a group string, splitting on ',' and spaces (including consecutive spaces. Doubles are
-   * removed.
-   *
-   * @param s The string to parse.
-   * @return An array of parsed group designations.
-   */
-  public static UniqueArrayList<String> parseGroupString(String s) {
-    s = s.replaceAll(",", " ");
-    s = s.replaceAll("\\s+", " ");
-    UniqueArrayList<String> groups = new UniqueArrayList<>();
-    groups.addAll(Arrays.asList(s.split(" ")));
-    return groups;
-  }
-
-  /**
    * Parse an assignment string. This string is almost never visible to the user but rather as a
    * member of {@link Pasta#assignmentTags}. Will return all whitespace and convert to lower case.
    *

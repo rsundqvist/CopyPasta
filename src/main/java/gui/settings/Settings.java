@@ -1,5 +1,6 @@
-package gui;
+package gui.settings;
 
+import gui.Tools;
 import javafx.scene.control.Alert;
 import model.IO;
 
@@ -19,7 +20,7 @@ public abstract class Settings {
   public static final int OPTION_INDEX = 0, ABOUT_INDEX = 1, TYPE_INDEX = 2;
   public static final String first_run = "first_run";
   public static final String indentation_style = "indentation_style";
-  static final String workspace_location = "workspace_location";
+  public static final String workspace_location = "workspace_location";
   private static final String use_native_txt_editor = "use_native_txt_editor";
   private static final String file_decoration_width = "file_decoration_width";
   private static final String startup_version_check = "startup_version_check";

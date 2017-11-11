@@ -2,13 +2,12 @@ package gui.feedback;
 
 import javafx.scene.control.Tab;
 import org.fxmisc.flowless.VirtualizedScrollPane;
-import org.fxmisc.richtext.CodeArea;
 import org.fxmisc.richtext.model.TwoDimensional;
 
 /** Created by Richard Sundqvist on 12/04/2017. */
 public class FileTab extends Tab {
 
-  private final CodeArea codeArea;
+  private final JavaCodeArea jca;
   private final int firstNumber; // Set to 1 to set the first line to 1.
 
   public FileTab(String fileName, String content) {
@@ -26,13 +25,13 @@ public class FileTab extends Tab {
     setText(fileName);
     setClosable(false);
 
-    codeArea = new JavaCodeArea(content);
-    codeArea.setEditable(false);
-    setContent(new VirtualizedScrollPane<>(codeArea));
+    jca = new JavaCodeArea(content);
+    jca.setEditable(false);
+    setContent(new VirtualizedScrollPane<>(jca));
   }
 
-  public void setContent(String content) {
-    codeArea.replaceText(content);
+  public void setContentText(String text) {
+    jca.replaceText(text);
   }
 
   public String getFileName() {
@@ -40,26 +39,26 @@ public class FileTab extends Tab {
   }
 
   public int getCaretLine() {
-    int offset = codeArea.getCaretPosition();
-    TwoDimensional.Position pos = codeArea.offsetToPosition(offset, TwoDimensional.Bias.Forward);
+    int offset = jca.getCaretPosition();
+    TwoDimensional.Position pos = jca.offsetToPosition(offset, TwoDimensional.Bias.Forward);
     return pos.getMajor() + firstNumber;
   }
 
   public String getCodeAreaContent() {
-    return codeArea.getText();
+    return jca.getText();
   }
 
   public int getCaretColumn() {
-    int offset = codeArea.getCaretPosition();
-    TwoDimensional.Position pos = codeArea.offsetToPosition(offset, TwoDimensional.Bias.Forward);
+    int offset = jca.getCaretPosition();
+    TwoDimensional.Position pos = jca.offsetToPosition(offset, TwoDimensional.Bias.Forward);
     return pos.getMinor() + firstNumber;
   }
 
   public int getCaretPosition() {
-    return codeArea.getCaretPosition();
+    return jca.getCaretPosition();
   }
 
   public void setEditable(boolean value) {
-    codeArea.setEditable(value);
+    jca.setEditable(value);
   }
 }

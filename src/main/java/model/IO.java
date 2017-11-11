@@ -119,7 +119,13 @@ public abstract class IO {
 
   public static Pasta[] extractPasta(InputStream is) {
     InputStreamReader reader = new InputStreamReader(is, Charset.forName(ENCODING).newDecoder());
-    return gson.fromJson(reader, Pasta[].class);
+    try {
+      return gson.fromJson(reader, Pasta[].class);
+    } catch (Exception e) {
+      IO.showExceptionAlert(e);
+      e.printStackTrace();
+      return new Pasta[0];
+    }
   }
 
   /**
@@ -141,7 +147,13 @@ public abstract class IO {
 
   public static Feedback extractSingleFeedback(InputStream is) {
     InputStreamReader reader = new InputStreamReader(is, Charset.forName(ENCODING).newDecoder());
-    return gson.fromJson(reader, Feedback.class);
+    try {
+      return gson.fromJson(reader, Feedback.class);
+    } catch (Exception e) {
+      IO.showExceptionAlert(e);
+      e.printStackTrace();
+      return new Feedback();
+    }
   }
 
   /**
@@ -441,7 +453,13 @@ public abstract class IO {
 
   public static Feedback[] extractFeedback(InputStream is) {
     InputStreamReader reader = new InputStreamReader(is, Charset.forName(ENCODING).newDecoder());
-    return gson.fromJson(reader, Feedback[].class);
+    try {
+      return gson.fromJson(reader, Feedback[].class);
+    } catch (Exception e) {
+      IO.showExceptionAlert(e);
+      e.printStackTrace();
+      return new Feedback[0];
+    }
   }
 
   /**

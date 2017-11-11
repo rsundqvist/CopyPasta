@@ -2,8 +2,8 @@ package gui.feedback;
 
 import com.google.googlejavaformat.java.Formatter;
 import com.google.googlejavaformat.java.FormatterException;
-import gui.Settings;
 import gui.Tools;
+import gui.settings.Settings;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
@@ -163,8 +163,9 @@ public class FileViewController {
       try {
         String fileName = currentFileTab.getFileName();
         String fileContent = feedback.getFiles().get(fileName);
-        feedback.getFiles().put(fileName, indent(fileContent));
-        currentFileTab.setContent(fileContent);
+        fileContent = indent(fileContent);
+        feedback.getFiles().put(fileName, fileContent);
+        currentFileTab.setContentText(fileContent);
       } catch (FormatterException e) {
         e.printStackTrace();
         IO.showExceptionAlert(e);

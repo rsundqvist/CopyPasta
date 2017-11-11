@@ -8,7 +8,7 @@ import model.IO;
 import model.Pasta;
 
 public class GroupView extends Tab {
-  public static final int MIN_TITLE_LENGTH = 6;
+  public static final int MIN_TITLE_LENGTH = 8;
   private final Feedback feedback;
 
   private final GroupViewController controller;
@@ -28,26 +28,29 @@ public class GroupView extends Tab {
     controller.setFeedback(feedback);
   }
 
+  private static String stylizeTitle(String title) {
+    if (title == null || title.isEmpty()) title = "<Unknown group>";
+    else if (title.length() < MIN_TITLE_LENGTH)
+      title += new String(new char[MIN_TITLE_LENGTH - title.length()]).replace("\0", " ");
+    return title;
+  }
+
   public void updatePossibleGrades(FeedbackManager feedbackManager) {
     controller.updatePossibleGrades(feedbackManager);
   }
 
   public void setTitle(String title) {
-    if (title == null || title.isEmpty()) title = "<Unknown group>";
-    else if (title.length() < MIN_TITLE_LENGTH)
-      title += new String(new char[MIN_TITLE_LENGTH - title.length()]).replace("\0", "0");
-
-    setText(title);
+    setText(stylizeTitle(title));
   }
 
   public String toString() {
-    return getText();
+    return getText(); // Needed to make ListViews work properly
   }
 
   public void updateTabText() {
     String title = feedback.getGroup();
     if (feedback.isDone()) title += " " + "\u2713";
-    setText(title);
+    setTitle(stylizeTitle(title));
   }
 
   public void updateTitle() {

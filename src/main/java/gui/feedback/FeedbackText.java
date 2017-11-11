@@ -1,6 +1,6 @@
 package gui.feedback;
 
-import gui.Settings;
+import gui.settings.Settings;
 import javafx.scene.layout.BorderPane;
 import model.Feedback;
 import org.fxmisc.flowless.VirtualizedScrollPane;

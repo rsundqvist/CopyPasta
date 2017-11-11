@@ -3,6 +3,8 @@ package gui;
 import gui.feedback.FeedbackViewController;
 import gui.pasta.PastaEditor;
 import gui.pasta.PastaViewController;
+import gui.settings.Settings;
+import gui.settings.SettingsEditor;
 import javafx.animation.FadeTransition;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;

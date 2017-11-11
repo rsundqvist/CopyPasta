@@ -1,4 +1,4 @@
-package gui;
+package gui.settings;
 
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;

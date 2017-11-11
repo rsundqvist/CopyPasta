@@ -1,8 +1,8 @@
 package model;
 
-import gui.Settings;
 import gui.Tools;
 import gui.feedback.JavaCodeArea;
+import gui.settings.Settings;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import org.fxmisc.flowless.VirtualizedScrollPane;

@@ -12,6 +12,7 @@ Given a version number MAJOR.MINOR.PATCH:
 ### Version `1.1.0`
 10-11-2017
 * Added indent option in the student files view.
+* Fixed a bug in version checking, causing faulty update prompts.
 
 ### Version `1.0.2`
 10-11-2017

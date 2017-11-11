@@ -57,10 +57,11 @@ public abstract class Tools {
     for (int i = 0; i < s.length; i++) otherSubversion[i] = Integer.parseInt(s[i].trim());
 
     for (int i = 0; i < 3; i++) {
-      if (otherSubversion[i] > subversion[i]) return true;
+      if (subversion[i] > otherSubversion[i]) return false;
+      if (subversion[i] < otherSubversion[i]) return true;
     }
 
-    return false;
+    return false; // All equal - same version
   }
 
   public static void initializeWorkspaceFiles() {

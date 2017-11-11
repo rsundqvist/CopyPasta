@@ -97,13 +97,14 @@ public class Controller implements PastaViewController.PastaControllerListener {
     Alert alert =
         new Alert(
             Alert.AlertType.INFORMATION,
-            "The \"Download\" button will open the browser to download the new version as a .zip-file. You may safely replace the old folder entirely, as none of the data in the zip-archive is user-specific."
+            "The \"Download\" button will open the browser to download the new version as a .zip-file."
+                + "You may safely replace the old folder entirely, as none of the data in the zip-archive is user-specific."
                 + "\n\n New version: "
                 + version
                 + "\n Your version: "
                 + Tools.VERSION,
             bt,
-            ButtonType.CANCEL);
+            new ButtonType("Maybe Later"));
     alert.setHeaderText("CopyPasta can be updated.");
 
     Optional<ButtonType> result = alert.showAndWait();

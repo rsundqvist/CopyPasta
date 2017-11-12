@@ -76,7 +76,7 @@ public class FeedbackText extends BorderPane implements FileViewController.FileF
     return stringBuilder.toString();
   }
 
-  private static String getFileTagHeadline (String s) {
+  private static String getFileTagHeadline(String s) {
     return Tools.getDecoratedHeadline(s) + "\n" + Feedback.getFileTag(s);
   }
 

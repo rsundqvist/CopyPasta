@@ -1,6 +1,6 @@
 package gui;
 
-import gui.feedback.FeedbackViewController;
+import gui.feedback.workspaceViewController;
 import gui.pasta.PastaEditor;
 import gui.pasta.PastaViewController;
 import gui.settings.Settings;
@@ -46,7 +46,7 @@ public class Controller implements PastaViewController.PastaControllerListener {
 
   private static final UniqueArrayList<String> recentWorkspaces = new UniqueArrayList();
   @FXML private PastaViewController pastaViewController = null;
-  @FXML private FeedbackViewController feedbackViewController = null;
+  @FXML private workspaceViewController workspaceViewController = null;
   @FXML private Label savedLabel, lastSaveTimestampLabel, versionLabel;
   @FXML private Menu recentWorkspaceMenu;
   private Timeline autosaveTimeline = null;
@@ -212,15 +212,15 @@ public class Controller implements PastaViewController.PastaControllerListener {
   }
 
   public void selectFeedback() {
-    feedbackViewController.selectView(0);
+    workspaceViewController.selectView(0);
   }
 
   public void selectSetup() {
-    feedbackViewController.selectView(1);
+    workspaceViewController.selectView(1);
   }
 
   public void selectProgress() {
-    feedbackViewController.selectView(2);
+    workspaceViewController.selectView(2);
   }
 
   public void toggleAutoSave(Event event) {
@@ -245,11 +245,11 @@ public class Controller implements PastaViewController.PastaControllerListener {
 
   @Override
   public void quickInsert(Pasta pasta) {
-    feedbackViewController.quickInsert(pasta);
+    workspaceViewController.quickInsert(pasta);
   }
 
   public String getCurrentAssignment() {
-    return feedbackViewController.getAssignment();
+    return workspaceViewController.getAssignment();
   }
 
   public void settings() {
@@ -266,7 +266,11 @@ public class Controller implements PastaViewController.PastaControllerListener {
 
   public void saveWorkspace() {
     pastaViewController.save();
-    feedbackViewController.save();
+    workspaceViewController.save();
+  }
+
+  public void showRemaining() {
+    workspaceViewController.showIncompleteFeedback();
   }
 
   public void onDefaultWorkspace() {
@@ -282,7 +286,7 @@ public class Controller implements PastaViewController.PastaControllerListener {
     UniqueArrayList<Pasta> pastaList = pastaViewController.getPastaList();
 
     List<Pasta> copy = Pasta.copy(pastaList);
-    PastaEditor pastaEditor = new PastaEditor(copy, feedbackViewController.getAssignment());
+    PastaEditor pastaEditor = new PastaEditor(copy, workspaceViewController.getAssignment());
     UniqueArrayList<Pasta> editorPastaList = pastaEditor.showAndWait();
 
     if (!editorPastaList.equals(pastaList)) {
@@ -317,9 +321,9 @@ public class Controller implements PastaViewController.PastaControllerListener {
       Optional<ButtonType> result = alert.showAndWait();
       if (result.isPresent())
         if (result.get() == bt2)
-          feedbackViewController.importFeedback(feedbackList, true, true); // Replace all
+          workspaceViewController.importFeedback(feedbackList, true, true); // Replace all
         else if (result.get() == bt3)
-          feedbackViewController.importFeedback(feedbackList, false, true); // Add new only
+          workspaceViewController.importFeedback(feedbackList, false, true); // Add new only
     }
   }
 
@@ -392,8 +396,8 @@ public class Controller implements PastaViewController.PastaControllerListener {
       pastaViewController.clearAllNoWarning();
       pastaViewController.importPasta(Arrays.asList(IO.extractPasta(pasta)));
 
-      feedbackViewController.setFeedbackTemplate(IO.extractSingleFeedback(template));
-      feedbackViewController.importFeedback(
+      workspaceViewController.setFeedbackTemplate(IO.extractSingleFeedback(template));
+      workspaceViewController.importFeedback(
           Arrays.asList(IO.extractFeedback(feedback)), true, false);
       selectSetup();
 
@@ -420,26 +424,26 @@ public class Controller implements PastaViewController.PastaControllerListener {
   }
 
   public void exportFeedback() {
-    feedbackViewController.exportAllFeedback();
+    workspaceViewController.exportAllFeedback();
   }
 
   public void importFeedback() {
-    feedbackViewController.importFeedback();
+    workspaceViewController.importFeedback();
   }
 
   public void exportTemplate() {
-    feedbackViewController.exportTemplate();
+    workspaceViewController.exportTemplate();
   }
 
   public void importTemplate() {
-    feedbackViewController.importTemplate();
+    workspaceViewController.importTemplate();
   }
 
   public void clearFeedback() {
-    feedbackViewController.clear();
+    workspaceViewController.clear();
   }
 
   public void toggleFeedbackDone() {
-    feedbackViewController.toggleDoneTab();
+    workspaceViewController.toggleDoneTab();
   }
 }

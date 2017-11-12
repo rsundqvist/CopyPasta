@@ -9,6 +9,8 @@ import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
 import model.Feedback;
 import model.FeedbackListListener;
 import model.FeedbackManager;
@@ -28,6 +30,8 @@ public class FeedbackListView extends ListView<Feedback> {
     this.feedbackManager = feedbackManager;
     getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
     setContextMenu(createContextMenu());
+    setMaxHeight(Double.MAX_VALUE);
+    VBox.setVgrow(this, Priority.ALWAYS);
 
     setCellFactory(
         param ->

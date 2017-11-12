@@ -10,6 +10,11 @@ Given a version number MAJOR.MINOR.PATCH:
 
 ## Patch Notes
 
+### Version `1.2.2`
+13-11-2017
+* Added more statistics.
+* Lots of under-the-hood changes, GUI changes.
+
 ### Version `1.2.1`
 12-11-2017
 * Added Notes to feedback.

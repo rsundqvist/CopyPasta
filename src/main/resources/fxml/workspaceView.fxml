@@ -17,9 +17,9 @@
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.text.TextFlow?>
 
-<TabPane fx:id="rootTabPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.feedback.FeedbackViewController">
+<TabPane fx:id="rootTabPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.feedback.workspaceViewController">
     <tabs>
-        <Tab fx:id="groupViewsTab" closable="false" onSelectionChanged="#updateTabTitles" text="Student Feedback">
+        <Tab fx:id="groupViewsTab" closable="false" onSelectionChanged="#updateTabTitles" text="Feedback">
             <content>
                 <TabPane fx:id="groupViewsTabPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" onKeyPressed="#feedbackKeyTyped" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="ALL_TABS" />
             </content>
@@ -57,7 +57,7 @@
                                 <TextArea fx:id="possibleGradesInput" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="150.0" promptText="E.g.: A+, A, A-, B+, B, B-, C+, C, C-, D+, D, D-, F" wrapText="true" />
                                 <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#exportTemplate" text="Export Template" />
                                 <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#importTemplate" text="Import Template" />
-                        <VBox maxHeight="1.7976931348623157E308" VBox.vgrow="ALWAYS">
+                        <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
                            <VBox.margin>
                               <Insets left="2.0" right="2.0" />
                            </VBox.margin>
@@ -72,15 +72,21 @@
                                             <CheckBox maxWidth="1.7976931348623157E308" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" onAction="#toggleHideDoneItems" selected="true" text="Hide done items" HBox.hgrow="ALWAYS" />
                                  </children>
                               </HBox>
-                                      <TextFlow maxWidth="1.7976931348623157E308" minWidth="0.0" prefHeight="35.0" prefWidth="200.0" textAlignment="CENTER" VBox.vgrow="NEVER">
-                                          <children>
-                                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Click a group to add it to the &quot;Student Feedback&quot; view." textAlignment="CENTER" wrappingWidth="177.806640625" />
-                                          </children>
-                                      </TextFlow>
+                              <Label fx:id="visibleCountLabel" alignment="CENTER" maxWidth="1.7976931348623157E308" text="visibleCountLabel" VBox.vgrow="NEVER">
+                                 <font>
+                                    <Font name="System Italic" size="12.0" />
+                                 </font></Label>
                               <VBox fx:id="feedbackListViewContainer" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="100.0" VBox.vgrow="ALWAYS" />
-                              <Label fx:id="visibleCountLabel" alignment="CENTER" maxWidth="1.7976931348623157E308" text="visibleCountLabel" VBox.vgrow="NEVER" />
                            </children>
                         </VBox>
+                                <TextFlow maxWidth="1.7976931348623157E308" minWidth="0.0" prefHeight="35.0" prefWidth="200.0" textAlignment="CENTER" VBox.vgrow="NEVER">
+                                    <children>
+                                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Click a group to add it to the &quot;Feedback&quot; view." textAlignment="CENTER" wrappingWidth="177.806640625">
+                                 <font>
+                                    <Font name="System Italic" size="12.0" />
+                                 </font></Text>
+                                    </children>
+                                </TextFlow>
                                 <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#exportAllFeedback" text="Export All">
                                     <tooltip>
                                         <Tooltip text="Export the feedback of all currently open tabs, as a human-readable .txt file for each group and as a single file feedback.json for import." />
@@ -148,9 +154,9 @@
                 </BorderPane>
             </content>
         </Tab>
-        <Tab fx:id="progressTab" closable="false" onSelectionChanged="#onSelectionChanged" text="Progress">
+        <Tab fx:id="progressTab" closable="false" onSelectionChanged="#onSelectionChanged" text="Statistics">
          <content>
-                <fx:include fx:id="progressView" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" source="progressView.fxml" />
+                <fx:include fx:id="statisticsView" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" source="statisticsView.fxml" />
          </content></Tab>
     </tabs>
 </TabPane>

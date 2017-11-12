@@ -63,14 +63,26 @@
                                     </accelerator>
                                 </MenuItem>
                                 <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem mnemonicParsing="false" onAction="#showRemaining" text="Show incomplete">
+                           <accelerator>
+                              <KeyCodeCombination alt="UP" code="R" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                           </accelerator>
+                        </MenuItem>
+                        <SeparatorMenuItem mnemonicParsing="false" />
                                 <MenuItem mnemonicParsing="false" onAction="#exportFeedback" text="Export All">
                                     <accelerator>
                                         <KeyCodeCombination alt="UP" code="E" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                                     </accelerator>
                                 </MenuItem>
                                 <MenuItem mnemonicParsing="false" onAction="#importFeedback" text="Import" />
-                                <MenuItem mnemonicParsing="false" onAction="#exportTemplate" text="Export Template" />
-                                <MenuItem mnemonicParsing="false" onAction="#importTemplate" text="Import Template" />
+                                <MenuItem mnemonicParsing="false" onAction="#exportTemplate" text="Export Template">
+                           <accelerator>
+                              <KeyCodeCombination alt="UP" code="E" control="DOWN" meta="UP" shift="DOWN" shortcut="UP" />
+                           </accelerator></MenuItem>
+                                <MenuItem mnemonicParsing="false" onAction="#importTemplate" text="Import Template">
+                           <accelerator>
+                              <KeyCodeCombination alt="UP" code="I" control="DOWN" meta="UP" shift="DOWN" shortcut="UP" />
+                           </accelerator></MenuItem>
                                 <SeparatorMenuItem mnemonicParsing="false" />
                                 <MenuItem mnemonicParsing="false" onAction="#toggleFeedbackDone" text="Toggle done">
                                     <accelerator>
@@ -93,7 +105,7 @@
                                         <KeyCodeCombination alt="UP" code="DIGIT2" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                                     </accelerator>
                                 </MenuItem>
-                                <MenuItem mnemonicParsing="false" onAction="#selectProgress" text="Progress">
+                                <MenuItem mnemonicParsing="false" onAction="#selectProgress" text="Statistics">
                                     <accelerator>
                                         <KeyCodeCombination alt="UP" code="DIGIT3" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                                     </accelerator>
@@ -140,7 +152,7 @@
         <SplitPane dividerPositions="0.8" prefHeight="160.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
             <items>
                 <fx:include fx:id="pastaView" source="pastaView.fxml" />
-                <fx:include fx:id="feedbackView" source="feedbackView.fxml" />
+                <fx:include fx:id="workspaceView" source="workspaceView.fxml" />
             </items>
         </SplitPane>
     </children>

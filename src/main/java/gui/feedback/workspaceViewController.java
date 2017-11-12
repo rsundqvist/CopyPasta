@@ -33,7 +33,7 @@ import java.util.List;
 import java.util.Optional;
 
 /** Created by Richard Sundqvist on 19/02/2017. */
-public class FeedbackViewController implements FeedbackListListener {
+public class workspaceViewController implements FeedbackListListener {
   // region Field
   // ================================================================================= //
   // Field
@@ -48,7 +48,7 @@ public class FeedbackViewController implements FeedbackListListener {
       tempateBodyInput,
       templateHeaderInput,
       templateFooterInput;
-  @FXML private ProgressViewController progressViewController;
+  @FXML private StatisticsViewController statisticsViewController;
   @FXML private VBox feedbackListViewContainer;
 
   @FXML
@@ -208,35 +208,48 @@ public class FeedbackViewController implements FeedbackListListener {
     setFeedbackTemplate(template);
   }
 
-  public void exportAllFeedback() {}
-
-  public void exportFeedbackAsTxt(Feedback feedback) {}
-
-  public void exportFeedbackAsJson(Feedback feedback) {}
-
-  public void exportFeedbackAsTxt() {
-    exportFeedback(extractFeedback(true), true, false);
+  public void exportAllFeedback() {
+    exportFeedback(feedbackManager.getFeedbackList(), true, true);
   }
 
-  public void exportFeedbackAsJson() {
-    exportFeedback(extractFeedback(true), false, true);
+  public void exportFeedbackAsTxt(Feedback feedback) {
+    ArrayList<Feedback> list = new ArrayList(1);
+    list.add(feedback);
+    exportFeedback(list, true, false);
+  }
+
+  public void exportFeedbackAsJson(Feedback feedback) {
+    ArrayList<Feedback> list = new ArrayList(1);
+    list.add(feedback);
+    exportFeedback(list, false, true);
   }
 
   private boolean exportFeedback(List<Feedback> feedbackList, boolean asTxt, boolean asJson) {
     if (feedbackList == null || feedbackList.isEmpty() || !(asTxt || asJson)) return false;
     feedbackAboutToExport(null);
+
+    if (Feedback.checkManualTags(feedbackList)) {
+      showIncompleteFeedback();
+      return false;
+    }
+
     return IO.exportFeedback(feedbackList, asTxt, asJson);
   }
 
-  /**
-   * Extract feedback from {@link #feedbackListView}, or copy the list from the manager.
-   *
-   * @param selectedOnly If {@true}, extract selection only. Otherwise extract everything in them
-   *     manager.
-   * @return A list of feedback.
-   */
-  private List<Feedback> extractFeedback(boolean selectedOnly) {
-    return null;
+  public void showIncompleteFeedback () {
+    // Mark items with manual tag as incomplete
+    List<Feedback> incompleteItems = feedbackManager.checkManual();
+    incompleteItems.forEach(feedback -> feedback.setDone(false));
+
+    // Get incomplete feedback
+    feedbackManager.updateDoneUndoneLists();
+    incompleteItems = feedbackManager.getNotDoneFeedback();
+    if (incompleteItems.isEmpty()) return;
+
+    // Add and select
+    List<GroupView> incompletGroupsView = getFeedbackTabs(incompleteItems);
+    groupViewsTabPane.getTabs().setAll(incompletGroupsView);
+    rootTabPane.getSelectionModel().select(groupViewsTab);
   }
 
   public void importFeedback() {
@@ -279,7 +292,7 @@ public class FeedbackViewController implements FeedbackListListener {
 
     if (feedbackManager.getFeedbackList().isEmpty())
       rootTabPane.getSelectionModel().select(setupTab);
-    progressViewController.initialize(feedbackManager, this);
+    statisticsViewController.initialize(feedbackManager, this);
     groupViewsTabPane.getTabs().addListener((InvalidationListener) event -> updateLockStatus());
     feedbackListViewContainer.getChildren().add(feedbackListView);
     update();
@@ -408,7 +421,7 @@ public class FeedbackViewController implements FeedbackListListener {
   /** Called when one of the three major tabs are selected. */
   public void onSelectionChanged() {
     updateTemplate();
-    progressViewController.update();
+    statisticsViewController.update();
   }
 
   public void updateLockStatus() {

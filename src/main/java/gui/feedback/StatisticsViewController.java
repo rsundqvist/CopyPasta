@@ -14,7 +14,7 @@ import model.IO;
 import java.util.HashMap;
 import java.util.List;
 
-public class ProgressViewController implements FeedbackListListener {
+public class StatisticsViewController implements FeedbackListListener {
   @FXML VBox vBox1, vBox2;
   @FXML private ProgressBar progressBar;
   @FXML private Label progressLabel, numFeedback, numDone, numNotDone;
@@ -138,9 +138,8 @@ public class ProgressViewController implements FeedbackListListener {
   }
 
   private void updateGroupTable() {
-    String hdline =
-        String.format(" %-25s| %-8s| %-7s| %-5s\n", "Group", "Grade", "#Files", "Done");
-    String format = " %-25s| %-8s| %-7d| %-5b\n";
+    String hdline = String.format(" %-25s| %-8s| %-7s| %-4s\n", "Group", "Grade", "#Files", "Done");
+    String format = " %-25s| %-8s| %-7d| %4s\n";
 
     StringBuilder sb = new StringBuilder(hdline);
     sb.append(new String(new char[hdline.length()]).replace("\0", "-") + "\n");
@@ -152,7 +151,7 @@ public class ProgressViewController implements FeedbackListListener {
               f.getGroup(),
               Feedback.stylizeGrade(f.getGrade()),
               f.getFiles().size(),
-              f.isDone()));
+              (f.isDone() ? " \u2713  " : "")));
     }
 
     groupText.setText(sb.toString());

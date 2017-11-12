@@ -630,8 +630,6 @@ public abstract class IO {
   public static boolean exportFeedback(List<Feedback> feedbackList, boolean asTxt, boolean asJson) {
     if (feedbackList == null || feedbackList.isEmpty() || !(asTxt || asJson)) return false;
 
-    if (Feedback.checkManualTags(feedbackList)) return false;
-
     boolean exportSuccessful;
     if (asTxt && asJson) {
       exportSuccessful = exportFeedbackAsTxtAndJson(null, feedbackList);

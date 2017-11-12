@@ -40,7 +40,7 @@ public class FeedbackViewController implements FeedbackListListener {
   // ================================================================================= //
   @FXML private Tab groupViewsTab, setupTab, progressTab;
   @FXML private TextField studentGroupField, assignmentField;
-  @FXML private TabPane groupViewTabPane, rootTabPane;
+  @FXML private TabPane groupViewsTabPane, rootTabPane;
   @FXML private Label visibleCountLabel;
   @FXML
   private TextArea signatureInput,
@@ -62,7 +62,7 @@ public class FeedbackViewController implements FeedbackListListener {
   private boolean hideDoneItems = true;
 
   public void updateTabTitles() {
-    groupViewTabPane.getTabs().forEach(groupView -> ((GroupView) groupView).updateTabText());
+    groupViewsTabPane.getTabs().forEach(groupView -> ((GroupView) groupView).updateTabText());
   }
 
   public void createFeedbackItems(List<String> groups) {
@@ -280,7 +280,7 @@ public class FeedbackViewController implements FeedbackListListener {
     if (feedbackManager.getFeedbackList().isEmpty())
       rootTabPane.getSelectionModel().select(setupTab);
     progressViewController.initialize(feedbackManager, this);
-    groupViewTabPane.getTabs().addListener((InvalidationListener) event -> updateLockStatus());
+    groupViewsTabPane.getTabs().addListener((InvalidationListener) event -> updateLockStatus());
     feedbackListViewContainer.getChildren().add(feedbackListView);
     update();
     updateLockStatus();
@@ -294,8 +294,8 @@ public class FeedbackViewController implements FeedbackListListener {
   private void addSelectedTabs() {
     List<Feedback> selectedItems = feedbackListView.getSelectionModel().getSelectedItems();
     List<GroupView> views = getFeedbackTabs(selectedItems);
-    views.removeAll(groupViewTabPane.getTabs());
-    groupViewTabPane.getTabs().addAll(views);
+    views.removeAll(groupViewsTabPane.getTabs());
+    groupViewsTabPane.getTabs().addAll(views);
   }
 
   public void setFeedbackTemplate(Feedback template) {
@@ -347,7 +347,7 @@ public class FeedbackViewController implements FeedbackListListener {
   }
 
   public void quickInsert(Pasta pasta) {
-    GroupView groupView = (GroupView) groupViewTabPane.getSelectionModel().getSelectedItem();
+    GroupView groupView = (GroupView) groupViewsTabPane.getSelectionModel().getSelectedItem();
     if (groupView == null) return;
     groupView.quickInsert(pasta);
   }
@@ -359,7 +359,7 @@ public class FeedbackViewController implements FeedbackListListener {
 
   /** Called from main controller. */
   public void toggleDoneTab() {
-    Tab tab = groupViewTabPane.getSelectionModel().getSelectedItem();
+    Tab tab = groupViewsTabPane.getSelectionModel().getSelectedItem();
     toggleDone((GroupView) tab, true);
   }
 
@@ -370,7 +370,7 @@ public class FeedbackViewController implements FeedbackListListener {
     feedbackManager.setDoneStatus(feedback, !feedback.isDone());
     tab.updateTitle();
 
-    if (feedback.isDone()) groupViewTabPane.getTabs().remove(tab);
+    if (feedback.isDone()) groupViewsTabPane.getTabs().remove(tab);
     if (hideDoneItems) feedbackListView.getItems().remove(tab);
     else feedbackListView.refresh();
 
@@ -396,9 +396,9 @@ public class FeedbackViewController implements FeedbackListListener {
   }
 
   public void feedbackKeyTyped(KeyEvent event) {
-    if (!groupViewTabPane.isFocused()) return;
+    if (!groupViewsTabPane.isFocused()) return;
 
-    Tab tab = groupViewTabPane.getSelectionModel().getSelectedItem();
+    Tab tab = groupViewsTabPane.getSelectionModel().getSelectedItem();
     if (tab != null && event.isControlDown() && event.getCode() == KeyCode.D) {
       toggleDone((GroupView) tab, true);
       event.consume();
@@ -412,7 +412,7 @@ public class FeedbackViewController implements FeedbackListListener {
   }
 
   public void updateLockStatus() {
-    boolean empty = groupViewTabPane.getTabs().isEmpty();
+    boolean empty = groupViewsTabPane.getTabs().isEmpty();
     groupViewsTab.setDisable(empty);
     progressTab.setDisable(feedbackManager.getFeedbackList().isEmpty());
     if (empty) rootTabPane.getSelectionModel().select(setupTab);
@@ -445,7 +445,7 @@ public class FeedbackViewController implements FeedbackListListener {
             + " items.");
     List<GroupView> visibleViews = getFeedbackTabs(visibleFeedback);
 
-    if (updateTabs) groupViewTabPane.getTabs().setAll(visibleViews);
+    if (updateTabs) groupViewsTabPane.getTabs().setAll(visibleViews);
     feedbackListView.update(visibleFeedback);
   }
 

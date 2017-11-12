@@ -38,7 +38,7 @@ public class workspaceViewController implements FeedbackListListener {
   // ================================================================================= //
   // Field
   // ================================================================================= //
-  @FXML private Tab groupViewsTab, setupTab, progressTab;
+  @FXML private Tab groupViewsTab, setupTab, statisticsTab;
   @FXML private TextField studentGroupField, assignmentField;
   @FXML private TabPane groupViewsTabPane, rootTabPane;
   @FXML private Label visibleCountLabel;
@@ -60,10 +60,6 @@ public class workspaceViewController implements FeedbackListListener {
       new FeedbackListView(feedbackManager.getFeedbackList(), feedbackManager, this);
   // endregion
   private boolean hideDoneItems = true;
-
-  public void updateTabTitles() {
-    groupViewsTabPane.getTabs().forEach(groupView -> ((GroupView) groupView).updateTabText());
-  }
 
   public void createFeedbackItems(List<String> groups) {
     // Groups exist already? Modified?
@@ -236,7 +232,7 @@ public class workspaceViewController implements FeedbackListListener {
     return IO.exportFeedback(feedbackList, asTxt, asJson);
   }
 
-  public void showIncompleteFeedback () {
+  public void showIncompleteFeedback() {
     // Mark items with manual tag as incomplete
     List<Feedback> incompleteItems = feedbackManager.checkManual();
     incompleteItems.forEach(feedback -> feedback.setDone(false));
@@ -419,15 +415,26 @@ public class workspaceViewController implements FeedbackListListener {
   }
 
   /** Called when one of the three major tabs are selected. */
-  public void onSelectionChanged() {
-    updateTemplate();
-    statisticsViewController.update();
+  public void onSelectionChanged(Event e) {
+    Tab source = (Tab) e.getSource();
+    if (!source.isSelected()) return;
+
+    if (source == groupViewsTab) {
+      groupViewsTabPane
+          .getTabs()
+          .forEach(groupView -> ((GroupView) groupView).updateTabText()); // student view
+    } else if (source == statisticsTab) {
+      updateTemplate();
+      statisticsViewController.update();
+    } else if (source == setupTab) {
+      update(false);
+    }
   }
 
   public void updateLockStatus() {
     boolean empty = groupViewsTabPane.getTabs().isEmpty();
     groupViewsTab.setDisable(empty);
-    progressTab.setDisable(feedbackManager.getFeedbackList().isEmpty());
+    statisticsTab.setDisable(feedbackManager.getFeedbackList().isEmpty());
     if (empty) rootTabPane.getSelectionModel().select(setupTab);
   }
 
@@ -450,16 +457,16 @@ public class workspaceViewController implements FeedbackListListener {
     if (hideDoneItems) visibleFeedback = feedbackManager.getNotDoneFeedback();
     else visibleFeedback = feedbackManager.getFeedbackList();
 
+    feedbackListView.update(visibleFeedback);
+
     visibleCountLabel.setText(
         "Showing "
             + visibleFeedback.size()
             + "/"
             + feedbackManager.getFeedbackList().size()
             + " items.");
-    List<GroupView> visibleViews = getFeedbackTabs(visibleFeedback);
 
-    if (updateTabs) groupViewsTabPane.getTabs().setAll(visibleViews);
-    feedbackListView.update(visibleFeedback);
+    if (updateTabs) groupViewsTabPane.getTabs().setAll(getFeedbackTabs(visibleFeedback));
   }
 
   @Override

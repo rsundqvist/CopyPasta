@@ -17,6 +17,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.SeparatorMenuItem;
 import javafx.stage.Modality;
 import javafx.util.Duration;
@@ -257,11 +258,30 @@ public class Controller implements PastaViewController.PastaControllerListener {
   }
 
   public void shutdown() {
+    ProgressIndicator progressIndicator = new ProgressIndicator();
+
+    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+    alert.getButtonTypes().clear();
+    alert.setTitle("Exiting");
+    alert.getDialogPane().setExpandableContent(progressIndicator);
+    alert.getDialogPane().setExpanded(true);
+    //alert.initModality(Modality.WINDOW_MODAL);
+    //alert.show();
+
+    alert.setHeaderText("Saving workspace");
     saveWorkspace();
+    progressIndicator.setProgress(0.5);
+    alert.setHeaderText("Saving settings");
     Settings.loadFromProperties();
+    progressIndicator.setProgress(0.6);
     Settings.storeStoreSettingsFile();
+    progressIndicator.setProgress(0.8);
     printRecentWorkspaces();
+    progressIndicator.setProgress(0.9);
+    progressIndicator.setProgress(1);
     Settings.setRunningFile(false);
+
+    alert.close();
   }
 
   public void saveWorkspace() {

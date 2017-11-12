@@ -52,7 +52,7 @@ public class FeedbackListView extends ListView<Feedback> {
     listeners.add(listener);
   }
 
-  public void removeListner(FeedbackListListener listener) {
+  public void removeListener (FeedbackListListener listener) {
     listeners.remove(listener);
   }
 
@@ -113,7 +113,6 @@ public class FeedbackListView extends ListView<Feedback> {
 
     FeedbackManager.deleteFeedback(selectedItems, feedbackManager);
     for (FeedbackListListener fl : listeners) fl.listChanged(selectedItems);
-    update();
   }
 
   private void preview() {
@@ -131,7 +130,6 @@ public class FeedbackListView extends ListView<Feedback> {
     for (Feedback feedback : selectedItems) Feedback.changeFeedbackGroup(feedback);
 
     for (FeedbackListListener fl : listeners) fl.listChanged(selectedItems);
-    update();
   }
 
   private void toggleDone() {
@@ -142,7 +140,6 @@ public class FeedbackListView extends ListView<Feedback> {
     feedbackManager.updateDoneUndoneLists();
 
     for (FeedbackListListener fl : listeners) fl.listChanged(selectedItems);
-    update();
   }
 
   private List<Feedback> getSelectedItems() {

@@ -219,7 +219,7 @@ public class Feedback implements Comparable<Feedback> {
    * @return A String representation of this Feedback.
    */
   public String toString() {
-    return getStylizedContent();
+      return getStylizedContent();
   }
 
   /**
@@ -481,4 +481,15 @@ public class Feedback implements Comparable<Feedback> {
     this.notes = notes;
   }
   // endregion
+
+  /**
+   * Returns the group number. Adds a checkmark (\u2713) if done.
+   *
+   * @return A stylized group number.
+   */
+  public String getStylizedGroup() {
+    String group = this.group;
+    if (isDone()) group += " " + "\u2713";
+    return group;
+  }
 }

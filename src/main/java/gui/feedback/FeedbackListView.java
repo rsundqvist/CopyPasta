@@ -1,6 +1,7 @@
 package gui.feedback;
 
 import javafx.scene.control.ContextMenu;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SelectionMode;
@@ -12,21 +13,42 @@ import model.Feedback;
 import model.FeedbackListListener;
 import model.FeedbackManager;
 import model.IO;
+import model.UniqueArrayList;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class FeedbackListView extends ListView<Feedback> {
   private final List<Feedback> feedbackList;
   private final FeedbackManager feedbackManager;
-  private final FeedbackListListener listener;
+  private final List<FeedbackListListener> listeners = new UniqueArrayList<>();
 
   public FeedbackListView(
       List<Feedback> feedbackList, FeedbackManager feedbackManager, FeedbackListListener listener) {
     this.feedbackList = feedbackList;
     this.feedbackManager = feedbackManager;
-    this.listener = listener;
     getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
     setContextMenu(createContextMenu());
+
+    setCellFactory(param -> new ListCell() {
+      protected void updateItem(Object item, boolean empty) {
+        super.updateItem(item, empty);
+
+        if (empty || item == null || item.getWord() == null) {
+          setText(null);
+        } else {
+          setText(item.getWord());
+        }
+      }
+    });
+  }
+
+  public void addListener(FeedbackListListener listener) {
+    listeners.add(listener);
+  }
+
+  public void removeListner(FeedbackListListener listener) {
+    listeners.remove(listener);
   }
 
   private ContextMenu createContextMenu() {
@@ -68,26 +90,24 @@ public class FeedbackListView extends ListView<Feedback> {
 
   private void exportFeedbackAsJson() {
     List<Feedback> selectedItems = getSelectedItems();
-    if (selectedItems == null) return;
-
-    listener.feedbackAboutToExport();
-    IO.exportFeedback(feedbackList, false, true);
+    for (FeedbackListListener fl : listeners) fl.feedbackAboutToExport(selectedItems);
+    IO.exportFeedback(selectedItems, false, true);
   }
 
   private void exportFeedbackAsTxt() {
     List<Feedback> selectedItems = getSelectedItems();
     if (selectedItems == null) return;
 
-    listener.feedbackAboutToExport();
-    IO.exportFeedback(feedbackList, true, false);
+    for (FeedbackListListener fl : listeners) fl.feedbackAboutToExport(selectedItems);
+    IO.exportFeedback(selectedItems, true, false);
   }
 
   private void deleteFeedback() {
     List<Feedback> selectedItems = getSelectedItems();
     if (selectedItems == null) return;
 
-    FeedbackManager.deleteFeedback(feedbackList, feedbackManager);
-    listener.listChanged();
+    FeedbackManager.deleteFeedback(selectedItems, feedbackManager);
+    for (FeedbackListListener fl : listeners) fl.listChanged(selectedItems);
     update();
   }
 
@@ -95,6 +115,7 @@ public class FeedbackListView extends ListView<Feedback> {
     List<Feedback> selectedItems = getSelectedItems();
     if (selectedItems == null) return;
 
+    for (FeedbackListListener fl : listeners) fl.feedbackAboutToExport(selectedItems);
     FeedbackManager.preview(selectedItems.get(0));
   }
 
@@ -104,7 +125,7 @@ public class FeedbackListView extends ListView<Feedback> {
 
     for (Feedback feedback : selectedItems) Feedback.changeFeedbackGroup(feedback);
 
-    listener.listChanged();
+    for (FeedbackListListener fl : listeners) fl.listChanged(selectedItems);
     update();
   }
 
@@ -113,17 +134,37 @@ public class FeedbackListView extends ListView<Feedback> {
     if (selectedItems == null) return;
 
     for (Feedback feedback : selectedItems) feedback.setDone(!feedback.isDone());
+    feedbackManager.updateDoneUndoneLists();
 
-    listener.listChanged();
+    for (FeedbackListListener fl : listeners) fl.listChanged(selectedItems);
     update();
   }
 
   private List<Feedback> getSelectedItems() {
-    List<Feedback> selectedItems = getSelectionModel().getSelectedItems();
+    List<FeedbackWrapper> selectedWrappers = getSelectionModel().getSelectedItems();
+    List<Feedback> selectedItems = new ArrayList<>(selectedWrappers.size());
+
+    for (FeedbackWrapper wrapper : selectedWrappers) selectedItems.add(wrapper.feedback);
+
     return selectedItems.isEmpty() ? null : selectedItems;
   }
 
   public void update() {
-    getItems().setAll(feedbackList);
+    List<FeedbackWrapper> list = new ArrayList<>(feedbackList.size());
+    for (Feedback feedback : feedbackList) list.add(new FeedbackWrapper(feedback));
+
+    getItems().setAll(list);
+  }
+
+  private static class FeedbackWrapper {
+    private final Feedback feedback;
+
+    private FeedbackWrapper(Feedback feedback) {
+      this.feedback = feedback;
+    }
+
+    public String toString() {
+      return feedback.getStylizedGroup();
+    }
   }
 }

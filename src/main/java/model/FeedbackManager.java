@@ -23,10 +23,11 @@ public class FeedbackManager {
   // ================================================================================= //
   // Field
   // ================================================================================= //
-  private UniqueArrayList<Feedback> feedbackList = new UniqueArrayList<>();
-  private UniqueArrayList<Feedback> doneFeedbackList = new UniqueArrayList<>();
-  private UniqueArrayList<Feedback> notDoneFeedbackList = new UniqueArrayList<>();
+  private final UniqueArrayList<Feedback> feedbackList = new UniqueArrayList<>();
+  private final UniqueArrayList<Feedback> doneFeedbackList = new UniqueArrayList<>();
+  private final UniqueArrayList<Feedback> notDoneFeedbackList = new UniqueArrayList<>();
   private Feedback template = null;
+  // endregion
 
   /**
    * Produce a preview of a Feedback item, displayed in an Alert dialog.
@@ -73,7 +74,6 @@ public class FeedbackManager {
       e.printStackTrace();
     }
   }
-  // endregion
 
   // region Control
   // ================================================================================= //
@@ -429,11 +429,11 @@ public class FeedbackManager {
     return getGroups(feedbackList);
   }
 
-  public List<Feedback> getDoneFeedbackList() {
+  public List<Feedback> getDoneFeedback () {
     return Collections.unmodifiableList(doneFeedbackList);
   }
 
-  public List<Feedback> getNotDoneFeedbackList() {
+  public List<Feedback> getNotDoneFeedback () {
     return Collections.unmodifiableList(notDoneFeedbackList);
   }
 

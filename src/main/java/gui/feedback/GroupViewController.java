@@ -1,5 +1,6 @@
 package gui.feedback;
 
+import javafx.beans.InvalidationListener;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
@@ -39,6 +40,9 @@ public class GroupViewController implements FileViewController.FileFeedbackListe
     fileViewController.setListener(this);
     gradeChoiceBox.getItems().add(Feedback.GRADE_NOT_SET_OPTION);
     gradeChoiceBox.getSelectionModel().select(Feedback.GRADE_NOT_SET_OPTION);
+    fileViewController
+        .getSourceTabs()
+        .addListener((InvalidationListener) event -> updateFilesTabTitle());
   }
 
   private void gradeChanged() {

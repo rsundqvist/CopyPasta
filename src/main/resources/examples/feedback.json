@@ -30,7 +30,7 @@
     "group": "group_with_no_files",
     "grade": "F",
     "signature": "Richard Sundqvist (richard.sundqvist@live.se)",
-    "notes": "You may drag-and-drop files to add them to the group",
+    "notes": "You may drag-and-drop files onto the files tab to add them to the group.",
     "assignment": "",
     "done": true
   }

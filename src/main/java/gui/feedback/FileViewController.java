@@ -4,10 +4,12 @@ import com.google.googlejavaformat.java.Formatter;
 import com.google.googlejavaformat.java.FormatterException;
 import gui.Tools;
 import gui.settings.Settings;
+import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.input.DragEvent;
@@ -68,6 +70,10 @@ public class FileViewController {
               if (currentFileTab == null) fileLabel.setText("Drag and drop to add files!");
               else fileLabel.setText(currentFileTab.getText());
             });
+  }
+
+  public ObservableList getSourceTabs() {
+    return sourceTabs.getTabs();
   }
 
   public void update() {

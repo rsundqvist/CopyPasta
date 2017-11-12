@@ -265,8 +265,8 @@ public class Controller implements PastaViewController.PastaControllerListener {
     alert.setTitle("Exiting");
     alert.getDialogPane().setExpandableContent(progressIndicator);
     alert.getDialogPane().setExpanded(true);
-    //alert.initModality(Modality.WINDOW_MODAL);
-    //alert.show();
+    // alert.initModality(Modality.WINDOW_MODAL);
+    // alert.show();
 
     alert.setHeaderText("Saving workspace");
     saveWorkspace();

@@ -34,6 +34,12 @@ import java.util.Optional;
 
 /** Created by Richard Sundqvist on 19/02/2017. */
 public class workspaceViewController implements FeedbackListListener {
+  @FXML
+  /** Container for the actual feedback tabs. */
+  private final FeedbackManager feedbackManager = new FeedbackManager();
+  private final List<GroupView> groupTabs = new ArrayList<>();
+  private final FeedbackListView feedbackListView =
+      new FeedbackListView(feedbackManager.getFeedbackList(), feedbackManager, this);
   // region Field
   // ================================================================================= //
   // Field
@@ -50,14 +56,6 @@ public class workspaceViewController implements FeedbackListListener {
       templateFooterInput;
   @FXML private StatisticsViewController statisticsViewController;
   @FXML private VBox feedbackListViewContainer;
-
-  @FXML
-  /** Container for the actual feedback tabs. */
-  private final FeedbackManager feedbackManager = new FeedbackManager();
-
-  private final List<GroupView> groupTabs = new ArrayList<>();
-  private final FeedbackListView feedbackListView =
-      new FeedbackListView(feedbackManager.getFeedbackList(), feedbackManager, this);
   // endregion
   private boolean hideDoneItems = true;
 

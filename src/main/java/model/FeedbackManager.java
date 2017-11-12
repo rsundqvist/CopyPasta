@@ -429,11 +429,11 @@ public class FeedbackManager {
     return getGroups(feedbackList);
   }
 
-  public List<Feedback> getDoneFeedback () {
+  public List<Feedback> getDoneFeedback() {
     return Collections.unmodifiableList(doneFeedbackList);
   }
 
-  public List<Feedback> getNotDoneFeedback () {
+  public List<Feedback> getNotDoneFeedback() {
     return Collections.unmodifiableList(notDoneFeedbackList);
   }
 

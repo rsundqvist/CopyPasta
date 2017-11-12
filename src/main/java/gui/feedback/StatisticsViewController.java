@@ -102,14 +102,6 @@ public class StatisticsViewController implements FeedbackListListener {
     updateGradeTable();
   }
 
-  private static class Counter {
-    private int count = 0;
-
-    public String toString() {
-      return "" + count;
-    }
-  }
-
   private void updateGradeTable() {
     List<String> possibleGrades = feedbackManager.getTemplate().getPossibleGrades();
     HashMap<String, Counter> map = new HashMap<>(possibleGrades.size());
@@ -165,6 +157,14 @@ public class StatisticsViewController implements FeedbackListListener {
   @Override
   public void feedbackAboutToExport(List<Feedback> feedbackList) {
     // Do nothing
+  }
+
+  private static class Counter {
+    private int count = 0;
+
+    public String toString() {
+      return "" + count;
+    }
   }
 
   private class GradeRow {}

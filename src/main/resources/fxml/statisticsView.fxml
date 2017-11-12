@@ -13,8 +13,9 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.text.TextFlow?>
-
-<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.feedback.StatisticsViewController">
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0"
+            minWidth="0.0" prefHeight="500.0" prefWidth="800.0"
+            xmlns="http://javafx.com/javafx/9.0.1" fx:controller="gui.feedback.StatisticsViewController">
     <left>
         <VBox maxHeight="1.7976931348623157E308" maxWidth="-Infinity" minWidth="300.0" BorderPane.alignment="CENTER">
             <children>
@@ -22,141 +23,164 @@
                     <children>
                         <Label minWidth="-Infinity" text="#Total" GridPane.rowIndex="2">
                             <font>
-                                <Font name="System Bold" size="12.0" />
+                                <Font name="System Bold" size="12.0"/>
                             </font>
                         </Label>
                         <Label minWidth="-Infinity" text="#Complete" GridPane.rowIndex="3">
                             <font>
-                                <Font name="System Bold" size="12.0" />
+                                <Font name="System Bold" size="12.0"/>
                             </font>
                         </Label>
                         <Label minWidth="-Infinity" text="#Remaining" GridPane.rowIndex="4">
                             <font>
-                                <Font name="System Bold" size="12.0" />
+                                <Font name="System Bold" size="12.0"/>
                             </font>
                         </Label>
-                        <Label fx:id="numFeedback" alignment="CENTER_RIGHT" maxWidth="1.7976931348623157E308" minWidth="-Infinity" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                        <Label fx:id="numFeedback" alignment="CENTER_RIGHT" maxWidth="1.7976931348623157E308"
+                               minWidth="-Infinity" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2">
                             <GridPane.margin>
-                                <Insets right="2.0" />
+                                <Insets right="2.0"/>
                             </GridPane.margin>
                         </Label>
-                        <Label fx:id="numDone" alignment="CENTER_RIGHT" maxWidth="1.7976931348623157E308" minWidth="-Infinity" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                        <Label fx:id="numDone" alignment="CENTER_RIGHT" maxWidth="1.7976931348623157E308"
+                               minWidth="-Infinity" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3">
                             <GridPane.margin>
-                                <Insets right="2.0" />
+                                <Insets right="2.0"/>
                             </GridPane.margin>
                         </Label>
-                        <Label fx:id="numNotDone" alignment="CENTER_RIGHT" maxWidth="1.7976931348623157E308" minWidth="-Infinity" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                        <Label fx:id="numNotDone" alignment="CENTER_RIGHT" maxWidth="1.7976931348623157E308"
+                               minWidth="-Infinity" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="4">
                             <GridPane.margin>
-                                <Insets right="2.0" />
+                                <Insets right="2.0"/>
                             </GridPane.margin>
                         </Label>
-                        <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="Overview" GridPane.columnSpan="2147483647">
+                        <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="Overview"
+                               GridPane.columnSpan="2147483647">
                             <font>
-                                <Font name="System Bold" size="14.0" />
+                                <Font name="System Bold" size="14.0"/>
                             </font>
                         </Label>
                         <HBox GridPane.columnSpan="2147483647" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1">
                             <children>
-                                <ProgressBar fx:id="progressBar" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="20.0" prefWidth="138.0" progress="0.0" GridPane.columnSpan="2147483647" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" HBox.hgrow="ALWAYS">
+                                <ProgressBar fx:id="progressBar" maxWidth="1.7976931348623157E308" minHeight="-Infinity"
+                                             prefHeight="20.0" prefWidth="138.0" progress="0.0"
+                                             GridPane.columnSpan="2147483647" GridPane.hgrow="ALWAYS"
+                                             GridPane.rowIndex="1" HBox.hgrow="ALWAYS">
                                     <HBox.margin>
-                                        <Insets right="5.0" />
+                                        <Insets right="5.0"/>
                                     </HBox.margin>
                                 </ProgressBar>
-                                <Label fx:id="progressLabel" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="35.0" text="100 %" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.rowIndex="1" HBox.hgrow="NEVER">
+                                <Label fx:id="progressLabel" alignment="CENTER" contentDisplay="CENTER"
+                                       maxHeight="1.7976931348623157E308" maxWidth="-Infinity" minHeight="-Infinity"
+                                       minWidth="-Infinity" prefWidth="35.0" text="100 %" textAlignment="CENTER"
+                                       GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.rowIndex="1"
+                                       HBox.hgrow="NEVER">
                                     <font>
-                                        <Font name="System Bold Italic" size="12.0" />
+                                        <Font name="System Bold Italic" size="12.0"/>
                                     </font>
                                 </Label>
                             </children>
                         </HBox>
                     </children>
                     <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0"/>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0"/>
                     </columnConstraints>
                     <rowConstraints>
-                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
+                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
+                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
+                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
+                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
+                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
                     </rowConstraints>
                 </GridPane>
                 <HBox VBox.vgrow="ALWAYS">
                     <children>
-                        <VBox fx:id="vBox1" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
+                        <VBox fx:id="vBox1" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                              prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
                             <children>
-                                <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="Complete" VBox.vgrow="NEVER">
+                                <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="Complete"
+                                       VBox.vgrow="NEVER">
                                     <font>
-                                        <Font name="System Bold" size="12.0" />
+                                        <Font name="System Bold" size="12.0"/>
                                     </font>
                                 </Label>
-                                <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#exportAllDone" text="Export All" VBox.vgrow="NEVER" />
-                                <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#clearAllDone" text="Clear" VBox.vgrow="NEVER" />
+                                <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false"
+                                        onAction="#exportAllDone" text="Export All" VBox.vgrow="NEVER"/>
+                                <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false"
+                                        onAction="#clearAllDone" text="Clear" VBox.vgrow="NEVER"/>
                             </children>
                         </VBox>
-                        <VBox fx:id="vBox2" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
+                        <VBox fx:id="vBox2" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                              prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
                             <children>
-                                <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="Remaining" VBox.vgrow="NEVER">
+                                <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="Remaining"
+                                       VBox.vgrow="NEVER">
                                     <font>
-                                        <Font name="System Bold" size="12.0" />
+                                        <Font name="System Bold" size="12.0"/>
                                     </font>
                                 </Label>
-                                <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#exportAllNotDone" text="Export All" VBox.vgrow="NEVER" />
-                                <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#clearAllNotDone" text="Clear" VBox.vgrow="NEVER" />
+                                <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false"
+                                        onAction="#exportAllNotDone" text="Export All" VBox.vgrow="NEVER"/>
+                                <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false"
+                                        onAction="#clearAllNotDone" text="Clear" VBox.vgrow="NEVER"/>
                             </children>
                         </VBox>
                     </children>
                 </HBox>
             </children>
             <BorderPane.margin>
-                <Insets left="2.0" right="2.0" />
+                <Insets left="2.0" right="2.0"/>
             </BorderPane.margin>
         </VBox>
     </left>
     <opaqueInsets>
-        <Insets />
+        <Insets/>
     </opaqueInsets>
-   <center>
-        <GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" BorderPane.alignment="CENTER">
+    <center>
+        <GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0"
+                  BorderPane.alignment="CENTER">
             <columnConstraints>
-                <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" prefWidth="10.0" />
-            <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" prefWidth="10.0" />
+                <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" prefWidth="10.0"/>
+                <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" prefWidth="10.0"/>
             </columnConstraints>
             <rowConstraints>
-            <RowConstraints minHeight="-Infinity" vgrow="NEVER" />
-            <RowConstraints minHeight="-Infinity" vgrow="NEVER" />
-                <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="100.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="-Infinity" vgrow="NEVER"/>
+                <RowConstraints minHeight="-Infinity" vgrow="NEVER"/>
+                <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="100.0"
+                                vgrow="SOMETIMES"/>
             </rowConstraints>
-         <children>
-            <Label text="Group statistics">
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font>
-            </Label>
-            <Label text="Grade statistics" GridPane.columnIndex="1">
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font>
-            </Label>
-            <TextFlow prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
-               <children>
-                  <Text fx:id="gradeText" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
-                     <font>
-                        <Font name="Monospaced Regular" size="12.0" />
-                     </font></Text>
-               </children>
-            </TextFlow>
-            <TextFlow prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2">
-               <children>
-                  <Text fx:id="groupText" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
-                     <font>
-                        <Font name="Monospaced Regular" size="12.0" />
-                     </font></Text>
-               </children>
-            </TextFlow>
-         </children>
+            <children>
+                <Label text="Group statistics">
+                    <font>
+                        <Font name="System Bold" size="12.0"/>
+                    </font>
+                </Label>
+                <Label text="Grade statistics" GridPane.columnIndex="1">
+                    <font>
+                        <Font name="System Bold" size="12.0"/>
+                    </font>
+                </Label>
+                <TextFlow prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                    <children>
+                        <Text fx:id="gradeText" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+                            <font>
+                                <Font name="Monospaced Regular" size="12.0"/>
+                            </font>
+                        </Text>
+                    </children>
+                </TextFlow>
+                <TextFlow prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2">
+                    <children>
+                        <Text fx:id="groupText" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+                            <font>
+                                <Font name="Monospaced Regular" size="12.0"/>
+                            </font>
+                        </Text>
+                    </children>
+                </TextFlow>
+            </children>
         </GridPane>
-   </center>
+    </center>
 </BorderPane>

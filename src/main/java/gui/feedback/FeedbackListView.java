@@ -52,7 +52,7 @@ public class FeedbackListView extends ListView<Feedback> {
     listeners.add(listener);
   }
 
-  public void removeListener (FeedbackListListener listener) {
+  public void removeListener(FeedbackListListener listener) {
     listeners.remove(listener);
   }
 

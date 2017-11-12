@@ -15,7 +15,6 @@ import model.FeedbackManager;
 import model.IO;
 import model.UniqueArrayList;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class FeedbackListView extends ListView<Feedback> {
@@ -30,17 +29,19 @@ public class FeedbackListView extends ListView<Feedback> {
     getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
     setContextMenu(createContextMenu());
 
-    setCellFactory(param -> new ListCell() {
-      protected void updateItem(Object item, boolean empty) {
-        super.updateItem(item, empty);
-
-        if (empty || item == null || item.getWord() == null) {
-          setText(null);
-        } else {
-          setText(item.getWord());
-        }
-      }
-    });
+    setCellFactory(
+        param ->
+            new ListCell<Feedback>() {
+              protected void updateItem(Feedback item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null || item == null) {
+                  setText(null);
+                } else {
+                  setText(item.getStylizedGroup());
+                }
+              }
+            });
+    if (listener != null) listeners.add(listener);
   }
 
   public void addListener(FeedbackListListener listener) {
@@ -141,30 +142,15 @@ public class FeedbackListView extends ListView<Feedback> {
   }
 
   private List<Feedback> getSelectedItems() {
-    List<FeedbackWrapper> selectedWrappers = getSelectionModel().getSelectedItems();
-    List<Feedback> selectedItems = new ArrayList<>(selectedWrappers.size());
-
-    for (FeedbackWrapper wrapper : selectedWrappers) selectedItems.add(wrapper.feedback);
-
+    List<Feedback> selectedItems = getSelectionModel().getSelectedItems();
     return selectedItems.isEmpty() ? null : selectedItems;
   }
 
   public void update() {
-    List<FeedbackWrapper> list = new ArrayList<>(feedbackList.size());
-    for (Feedback feedback : feedbackList) list.add(new FeedbackWrapper(feedback));
-
-    getItems().setAll(list);
+    update(feedbackList);
   }
 
-  private static class FeedbackWrapper {
-    private final Feedback feedback;
-
-    private FeedbackWrapper(Feedback feedback) {
-      this.feedback = feedback;
-    }
-
-    public String toString() {
-      return feedback.getStylizedGroup();
-    }
+  public void update(List<Feedback> feedbackList) {
+    getItems().setAll(feedbackList);
   }
 }

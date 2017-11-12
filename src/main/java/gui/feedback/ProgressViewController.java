@@ -5,17 +5,20 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import model.Feedback;
 import model.FeedbackListListener;
 import model.FeedbackManager;
 import model.IO;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class ProgressViewController implements FeedbackListListener {
   @FXML VBox vBox1, vBox2;
   @FXML private ProgressBar progressBar;
   @FXML private Label progressLabel, numFeedback, numDone, numNotDone;
+  @FXML private Text groupText, gradeText;
 
   private FeedbackManager feedbackManager;
   private FeedbackListView doneListView, notDoneListView;
@@ -95,13 +98,68 @@ public class ProgressViewController implements FeedbackListListener {
     }
 
     updateStatusLists();
+    updateGroupTable();
+    updateGradeTable();
+  }
+
+  private static class Counter {
+    private int count = 0;
+
+    public String toString() {
+      return "" + count;
+    }
+  }
+
+  private void updateGradeTable() {
+    List<String> possibleGrades = feedbackManager.getTemplate().getPossibleGrades();
+    HashMap<String, Counter> map = new HashMap<>(possibleGrades.size());
+    for (String grade : possibleGrades) map.put(grade, new Counter());
+    map.put(Feedback.GRADE_NOT_SET_OPTION, new Counter());
+
+    for (Feedback feedback : feedbackManager.getFeedbackList())
+      map.get(Feedback.stylizeGrade(feedback.getGrade())).count++;
+
+    String hdline = String.format(" %-10s | %-10s | %-8s\n", "Grade", "#Groups", " Percent");
+    String format = " %-11s| %-11d| %8.2f\n";
+
+    StringBuilder sb = new StringBuilder(hdline);
+    sb.append(new String(new char[hdline.length()]).replace("\0", "-") + "\n");
+
+    for (String key : possibleGrades) {
+      int c = map.get(Feedback.stylizeGrade(key)).count;
+      double f = (100 * ((double) c) / feedbackManager.getFeedbackList().size());
+      sb.append(String.format(format, key, c, f));
+    }
+    int c = map.get(Feedback.stylizeGrade(Feedback.GRADE_NOT_SET_OPTION)).count;
+    double f = (100 * ((double) c) / feedbackManager.getFeedbackList().size());
+    sb.append(String.format(format, Feedback.GRADE_NOT_SET_OPTION, c, f));
+
+    gradeText.setText(sb.toString());
+  }
+
+  private void updateGroupTable() {
+    String hdline =
+        String.format(" %-25s| %-8s| %-7s| %-5s\n", "Group", "Grade", "#Files", "Done");
+    String format = " %-25s| %-8s| %-7d| %-5b\n";
+
+    StringBuilder sb = new StringBuilder(hdline);
+    sb.append(new String(new char[hdline.length()]).replace("\0", "-") + "\n");
+
+    for (Feedback f : feedbackManager.getFeedbackList()) {
+      sb.append(
+          String.format(
+              format,
+              f.getGroup(),
+              Feedback.stylizeGrade(f.getGrade()),
+              f.getFiles().size(),
+              f.isDone()));
+    }
+
+    groupText.setText(sb.toString());
   }
 
   @Override
   public void listChanged(List<Feedback> feedbackList) {
-    System.out.println("feedbackList = " + feedbackList.size());
-    System.out.println(
-        "feedbackManager.getDoneFeedback() = " + feedbackManager.getDoneFeedback().size());
     update();
   }
 
@@ -109,4 +167,8 @@ public class ProgressViewController implements FeedbackListListener {
   public void feedbackAboutToExport(List<Feedback> feedbackList) {
     // Do nothing
   }
+
+  private class GradeRow {}
+
+  private class GroupRow {}
 }

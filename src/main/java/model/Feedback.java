@@ -98,8 +98,12 @@ public class Feedback implements Comparable<Feedback> {
     return copy;
   }
 
-  public static final String stylizeGrade(String grade) {
-    return (grade == null || grade.equals(Feedback.GRADE_NOT_SET_OPTION)) ? "" : grade;
+  public static String destylizeGrade(String grade) {
+    return (grade == null || grade.equals(GRADE_NOT_SET_OPTION)) ? "" : grade;
+  }
+
+  public static String stylizeGrade(String grade) {
+    return (grade == null || grade.equals("")) ? GRADE_NOT_SET_OPTION : grade;
   }
 
   /**
@@ -219,7 +223,7 @@ public class Feedback implements Comparable<Feedback> {
    * @return A String representation of this Feedback.
    */
   public String toString() {
-      return getStylizedContent();
+    return getStylizedContent();
   }
 
   /**

@@ -48,7 +48,7 @@ public class GroupViewController implements FileViewController.FileFeedbackListe
   private void gradeChanged() {
     String newGrade = gradeChoiceBox.getSelectionModel().getSelectedItem();
     if (feedback == null || newGrade == null || newGrade.isEmpty()) return;
-    feedback.setGrade(Feedback.stylizeGrade(newGrade));
+    feedback.setGrade(Feedback.destylizeGrade(newGrade));
   }
 
   public void updatePossibleGrades(FeedbackManager feedbackManager) {

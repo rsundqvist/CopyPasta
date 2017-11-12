@@ -14,7 +14,7 @@
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.text.TextFlow?>
 
-<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="500.0" prefWidth="800.0" style="-fx-background-color: #123456;" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.feedback.ProgressViewController">
+<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.feedback.ProgressViewController">
     <left>
         <VBox maxHeight="1.7976931348623157E308" maxWidth="-Infinity" minWidth="300.0" BorderPane.alignment="CENTER">
             <children>
@@ -119,15 +119,15 @@
         <Insets />
     </opaqueInsets>
    <center>
-        <GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" style="-fx-background-color: #CCCCCC;" BorderPane.alignment="CENTER">
+        <GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" BorderPane.alignment="CENTER">
             <columnConstraints>
                 <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" prefWidth="10.0" />
             <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" prefWidth="10.0" />
             </columnConstraints>
             <rowConstraints>
             <RowConstraints minHeight="-Infinity" vgrow="NEVER" />
-                <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="100.0" vgrow="ALWAYS" />
             <RowConstraints minHeight="-Infinity" vgrow="NEVER" />
+                <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="100.0" vgrow="SOMETIMES" />
             </rowConstraints>
          <children>
             <Label text="Group statistics">
@@ -140,7 +140,7 @@
                   <Font name="System Bold" size="12.0" />
                </font>
             </Label>
-            <TextFlow prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <TextFlow prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <children>
                   <Text fx:id="gradeText" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
                      <font>
@@ -148,7 +148,7 @@
                      </font></Text>
                </children>
             </TextFlow>
-            <TextFlow prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
+            <TextFlow prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2">
                <children>
                   <Text fx:id="groupText" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
                      <font>

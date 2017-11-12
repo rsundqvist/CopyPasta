@@ -67,7 +67,7 @@ public class FeedbackViewController {
   private boolean hideDoneItems;
   @FXML private Label numFeedback, numDone, numNotDone;
   @FXML private ProgressBar progressBar;
-  @FXML private ListView doneListView, notDoneListView;
+  @FXML private ListView doneListView, notDoneListView; //TODO move to own class
   private boolean suppressClearDoneDialog = false;
   private boolean suppressClearNotDoneDialog = false;
 

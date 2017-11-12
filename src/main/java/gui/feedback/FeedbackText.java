@@ -1,6 +1,6 @@
 package gui.feedback;
 
-import gui.settings.Settings;
+import gui.Tools;
 import javafx.scene.layout.BorderPane;
 import model.Feedback;
 import org.fxmisc.flowless.VirtualizedScrollPane;
@@ -76,28 +76,8 @@ public class FeedbackText extends BorderPane implements FileViewController.FileF
     return stringBuilder.toString();
   }
 
-  private static String fileTagString(String file) {
-    file = " " + file + " ";
-    if (file.length() % 2 != 0) file = file + " ";
-
-    int width = Settings.FILE_DECORATION_WIDTH;
-    int sz = (width - file.length()) / 2; // space per side
-    int numRepeats = sz / 2;
-    String extra = sz % 2 == 0 ? "" : "<>";
-
-    String around = new String(new char[numRepeats]).replace("\0", "<>");
-    String border = new String(new char[width]).replace("\0", "=");
-    return "\n\n"
-        + border
-        + "\n"
-        + around
-        + file
-        + around
-        + extra
-        + "\n"
-        + border
-        + "\n"
-        + Feedback.getFileTag(file);
+  private static String getFileTagHeadline (String s) {
+    return Tools.getDecoratedHeadline(s) + "\n" + Feedback.getFileTag(s);
   }
 
   public void setFeedback(Feedback feedback) {
@@ -134,7 +114,7 @@ public class FeedbackText extends BorderPane implements FileViewController.FileF
       if (pos < 0) // No footer - place at end of file.
       pos = feedback.getContent().length();
 
-      text = fileTagString(file) + text;
+      text = getFileTagHeadline(file) + text;
     }
     insertText(pos, text);
   }
@@ -151,7 +131,7 @@ public class FeedbackText extends BorderPane implements FileViewController.FileF
       if (pos < 0) // No footer - place at end of file.
       pos = feedback.getContent().length();
 
-      text = fileTagString(file) + text;
+      text = getFileTagHeadline(file) + text;
     }
     insertText(pos, text + content);
   }

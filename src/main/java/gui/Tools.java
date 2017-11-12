@@ -210,5 +210,25 @@ public abstract class Tools {
 
     return tokens;
   }
+
+  /**
+   * Width is determined by {@link Settings#FILE_DECORATION_WIDTH}.
+   *
+   * @param headline The headline to decorated.
+   * @return A decorated headline.
+   */
+  public static String getDecoratedHeadline(String headline) {
+    headline = " " + headline + " ";
+    if (headline.length() % 2 != 0) headline = headline + " ";
+
+    int width = Settings.FILE_DECORATION_WIDTH;
+    int sz = (width - headline.length()) / 2; // space per side
+    int numRepeats = sz / 2;
+    String extra = sz % 2 == 0 ? "" : "<>";
+
+    String around = new String(new char[numRepeats]).replace("\0", "<>");
+    String border = new String(new char[width]).replace("\0", "=");
+    return "\n\n" + border + "\n" + around + headline + around + extra + "\n" + border;
+  }
   // endregion
 }

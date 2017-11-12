@@ -24,15 +24,16 @@ public class Feedback implements Comparable<Feedback> {
   // ================================================================================= //
   // Constant
   // ================================================================================= //
-  public static final transient String HEADER = "%HEADER%";
-  public static final transient String FOOTER = "%FOOTER%";
-  public static final transient String SIGNATURE = "%SIGNATURE%";
+  public static final transient String HEADER = "%HEADER%", FOOTER = "%FOOTER%";
+
   public static final transient String GROUP = "%GROUP%";
-  public static final transient String GRADE = "%GRADE%";
-  public static final transient String GRADE_NOT_SET_OPTION = "Not set";
+  public static final transient String GRADE = "%GRADE%", GRADE_NOT_SET_OPTION = "Not set";
+
   public static final transient String FILE = "%FILE: <file>%";
   public static final transient String FILE_REGEX = "%[ \t]*([Ff]ile|FILE):[ \t]*\\S+[ \t]*%";
+
   public static final transient String MANUAL = "%MANUAL%";
+  public static final transient String SIGNATURE = "%SIGNATURE%";
   // endregion
 
   // region Field
@@ -41,13 +42,9 @@ public class Feedback implements Comparable<Feedback> {
   // ================================================================================= //
   private final Map<String, String> files;
   private final UniqueArrayList possibleGrades;
-  private String content;
-  private String header;
-  private String footer;
-  private String signature;
-  private String group;
+  private String header, content, footer, group, grade;
+  private String signature, notes;
   private String assignment;
-  private String grade;
   private boolean done;
   // endregion
 
@@ -62,6 +59,7 @@ public class Feedback implements Comparable<Feedback> {
     signature = "";
     group = "";
     assignment = "";
+    setNotes("");
     setGrade("");
     files = new HashMap<>();
     possibleGrades = new UniqueArrayList();
@@ -80,6 +78,7 @@ public class Feedback implements Comparable<Feedback> {
     signature = orig.signature;
     group = orig.group;
     setGrade(orig.grade);
+    setNotes(orig.getNotes());
     files = new HashMap<>(orig.files); // Shallow copy
     possibleGrades = new UniqueArrayList(orig.possibleGrades);
     done = orig.done;
@@ -462,6 +461,24 @@ public class Feedback implements Comparable<Feedback> {
    */
   public List<String> getPossibleGrades() {
     return possibleGrades;
+  }
+
+  /**
+   * Returns the teacher notes for this Feedback.
+   *
+   * @return The notes.
+   */
+  public String getNotes() {
+    return notes;
+  }
+
+  /**
+   * Set the teacher notes for this Feedback.
+   *
+   * @param notes A string.
+   */
+  public void setNotes(String notes) {
+    this.notes = notes;
   }
   // endregion
 }

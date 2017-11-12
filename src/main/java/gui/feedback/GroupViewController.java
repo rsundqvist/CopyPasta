@@ -1,9 +1,12 @@
 package gui.feedback;
 
+import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.control.TextArea;
 import javafx.util.Pair;
 import model.Feedback;
 import model.FeedbackManager;
@@ -15,6 +18,7 @@ public class GroupViewController implements FileViewController.FileFeedbackListe
   @FXML Tab feedbackTab, filesTab;
   @FXML TabPane viewsPane;
   @FXML ChoiceBox<String> gradeChoiceBox;
+  @FXML TextArea notesArea;
 
   @FXML
   FileViewController fileViewController; // Controller of an included file = fx:id + "Controller"
@@ -57,6 +61,15 @@ public class GroupViewController implements FileViewController.FileFeedbackListe
     updateGradeChoiceBox();
     updateFilesTabTitle();
     gradeChoiceBox.getSelectionModel().selectedItemProperty().addListener(event -> gradeChanged());
+    notesArea.setText(feedback.getNotes());
+  }
+
+  public void updateNotes() {
+    feedback.setNotes(notesArea.getText());
+  }
+
+  public void toggleTextWrap(Event e) {
+    notesArea.setWrapText(((CheckBox) e.getSource()).isSelected());
   }
 
   public void updateGradeChoiceBox() {

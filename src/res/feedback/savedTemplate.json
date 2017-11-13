@@ -1,7 +1,0 @@
-{
-  "content": "%HEADER%\n\nLab 3 kan ge max 6p.\n\nGrupp: %GROUP%, inlämning 1\nPoäng: xx, accepterad\n\nBra, här är mina kommentar(er):\n\nAllmänt: \n\nSteg3:\n\nCrystalControl: \n\nCrystalView:\n\nCrystalModel:\n\n%TEACHER%",
-  "header": "Kommentarerna som vi ger är försedda med ett prefix i form av ett tecken:\nFörstår du inte vad rättaren menar? Maila och fråga - vi bits inte :-)\n\nAlla kommentarer skall du rätta. Inga felanmärkningar skall naturligtvis \nupprepas i senare labbar.\n\n\"-\"   markerar en allvarlig kommentar som antagligen har resulterat i en retur.\n\"\u003d\"   markerar en allvarlig kommentar som *inte* har resulterat i en retur utan\n\t  enbart poängavdrag. Många \"\u003d\" kan också resultera i en retur.\n\"#\"   markerar en mindre allvarlig kommentar.\n\"*\"   kommentar, behöver ej åtgärdas.\n\"+\"   extra bra\n-------------------------------------------------------------------------------\nPoäng och returpolicy finns beskrivet under \"assignments-\u003eLab acceptance rules\".\naccept på labben innebär att man inte kan lämna in igen \n(men inte att det är \"godkänd\")\nreject på labben att man kan eller måste lämna in igen och kan ev. få 1p till.\nOm du får retur på bara en uppgift, lämna bara in den uppgiften nästa gång.\n-------------------------------------------------------------------------------",
-  "teacher": "Richard Sundqvist",
-  "group": "%GROUP%",
-  "done": false
-}

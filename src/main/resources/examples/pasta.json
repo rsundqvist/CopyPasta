@@ -1,0 +1,27 @@
+[
+  {
+    "creationDate": "Nov 10, 2017 7:33:18 AM",
+    "contentTags": [
+      "basic",
+      "convention"
+    ],
+    "assignmentTags": [
+      "example"
+    ],
+    "lastModificationDate": "Nov 10, 2017 8:23:18 AM",
+    "title": "80 char limit",
+    "content": "Break long statements and strings into several rows,\nthe code becomes difficult to read otherwise."
+  },
+  {
+    "creationDate": "Nov 10, 2017 4:36:44 AM",
+    "contentTags": [
+      "arrays",
+      "basic"
+    ],
+    "assignmentTags": [
+      "example"
+    ],
+    "lastModificationDate": "Nov 10, 2017 4:41:43 AM",
+    "content": "Indices in Java start from 0: \"i <= a.length\" will cause an Exception!"
+  }
+]

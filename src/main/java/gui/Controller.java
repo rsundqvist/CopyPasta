@@ -1,6 +1,6 @@
 package gui;
 
-import gui.feedback.workspaceViewController;
+import gui.feedback.WorkspaceViewController;
 import gui.pasta.PastaEditor;
 import gui.pasta.PastaViewController;
 import gui.settings.Settings;
@@ -47,7 +47,7 @@ public class Controller implements PastaViewController.PastaControllerListener {
 
   private static final UniqueArrayList<String> recentWorkspaces = new UniqueArrayList();
   @FXML private PastaViewController pastaViewController = null;
-  @FXML private workspaceViewController workspaceViewController = null;
+  @FXML private WorkspaceViewController workspaceViewController = null;
   @FXML private Label savedLabel, lastSaveTimestampLabel, versionLabel;
   @FXML private Menu recentWorkspaceMenu;
   private Timeline autosaveTimeline = null;

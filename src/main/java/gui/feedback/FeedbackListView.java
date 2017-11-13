@@ -9,12 +9,12 @@ import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
+import javafx.scene.input.MouseButton;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import model.Feedback;
-import model.FeedbackListListener;
+import model.FeedbackListener;
 import model.FeedbackManager;
-import model.IO;
 import model.UniqueArrayList;
 
 import java.util.List;
@@ -22,16 +22,17 @@ import java.util.List;
 public class FeedbackListView extends ListView<Feedback> {
   private final List<Feedback> feedbackList;
   private final FeedbackManager feedbackManager;
-  private final List<FeedbackListListener> listeners = new UniqueArrayList<>();
+  private final List<FeedbackListener> listeners = new UniqueArrayList<>();
 
   public FeedbackListView(
-      List<Feedback> feedbackList, FeedbackManager feedbackManager, FeedbackListListener listener) {
+      List<Feedback> feedbackList, FeedbackManager feedbackManager, FeedbackListener listener) {
     this.feedbackList = feedbackList;
     this.feedbackManager = feedbackManager;
+
     getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
     setContextMenu(createContextMenu());
     setMaxHeight(Double.MAX_VALUE);
-    VBox.setVgrow(this, Priority.ALWAYS);
+    VBox.setVgrow(this, Priority.ALWAYS); // lazy way to do it, but it works
 
     setCellFactory(
         param ->
@@ -45,14 +46,24 @@ public class FeedbackListView extends ListView<Feedback> {
                 }
               }
             });
+
+    setOnMouseClicked(
+        mouseEvent -> {
+          if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
+            if (mouseEvent.getClickCount() == 2) {
+              preview();
+            }
+          }
+        });
+
     if (listener != null) listeners.add(listener);
   }
 
-  public void addListener(FeedbackListListener listener) {
+  public void addListener(FeedbackListener listener) {
     listeners.add(listener);
   }
 
-  public void removeListener(FeedbackListListener listener) {
+  public void removeListener(FeedbackListener listener) {
     listeners.remove(listener);
   }
 
@@ -60,7 +71,7 @@ public class FeedbackListView extends ListView<Feedback> {
     ContextMenu contextMenu = new ContextMenu();
 
     MenuItem changeGroup = new MenuItem("Change group");
-    changeGroup.setOnAction(event -> changeFeedbackGroup());
+    changeGroup.setOnAction(event -> changeGroup());
 
     MenuItem toggleDone = new MenuItem("Toggle done");
     toggleDone.setAccelerator(new KeyCodeCombination(KeyCode.D, KeyCombination.CONTROL_DOWN));
@@ -95,16 +106,15 @@ public class FeedbackListView extends ListView<Feedback> {
 
   private void exportFeedbackAsJson() {
     List<Feedback> selectedItems = getSelectedItems();
-    for (FeedbackListListener fl : listeners) fl.feedbackAboutToExport(selectedItems);
-    IO.exportFeedback(selectedItems, false, true);
+    if (selectedItems == null) return;
+    for (FeedbackListener fl : listeners) fl.exportFeedback(selectedItems, false, true);
   }
 
   private void exportFeedbackAsTxt() {
     List<Feedback> selectedItems = getSelectedItems();
     if (selectedItems == null) return;
 
-    for (FeedbackListListener fl : listeners) fl.feedbackAboutToExport(selectedItems);
-    IO.exportFeedback(selectedItems, true, false);
+    for (FeedbackListener fl : listeners) fl.exportFeedback(selectedItems, true, false);
   }
 
   private void deleteFeedback() {
@@ -112,34 +122,26 @@ public class FeedbackListView extends ListView<Feedback> {
     if (selectedItems == null) return;
 
     FeedbackManager.deleteFeedback(selectedItems, feedbackManager);
-    for (FeedbackListListener fl : listeners) fl.listChanged(selectedItems);
+    for (FeedbackListener fl : listeners) fl.listChanged();
   }
 
   private void preview() {
     List<Feedback> selectedItems = getSelectedItems();
     if (selectedItems == null) return;
 
-    for (FeedbackListListener fl : listeners) fl.feedbackAboutToExport(selectedItems);
-    FeedbackManager.preview(selectedItems.get(0));
+    for (FeedbackListener fl : listeners) fl.preview(getSelectedItems().get(0));
   }
 
-  public void changeFeedbackGroup() {
+  public void changeGroup() {
     List<Feedback> selectedItems = getSelectedItems();
     if (selectedItems == null) return;
-
-    for (Feedback feedback : selectedItems) Feedback.changeFeedbackGroup(feedback);
-
-    for (FeedbackListListener fl : listeners) fl.listChanged(selectedItems);
+    for (FeedbackListener fl : listeners) fl.changeGroup(selectedItems);
   }
 
   private void toggleDone() {
     List<Feedback> selectedItems = getSelectedItems();
     if (selectedItems == null) return;
-
-    for (Feedback feedback : selectedItems) feedback.setDone(!feedback.isDone());
-    feedbackManager.updateDoneUndoneLists();
-
-    for (FeedbackListListener fl : listeners) fl.listChanged(selectedItems);
+    for (FeedbackListener fl : listeners) fl.toggleDone(selectedItems);
   }
 
   private List<Feedback> getSelectedItems() {

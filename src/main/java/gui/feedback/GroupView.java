@@ -3,6 +3,7 @@ package gui.feedback;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Tab;
 import model.Feedback;
+import model.FeedbackListener;
 import model.FeedbackManager;
 import model.IO;
 import model.Pasta;
@@ -13,7 +14,7 @@ public class GroupView extends Tab {
 
   private final GroupViewController controller;
 
-  public GroupView(Feedback feedback) {
+  public GroupView(Feedback feedback, FeedbackListener listener) {
     this.feedback = feedback;
 
     FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/groupView.fxml"));
@@ -24,7 +25,7 @@ public class GroupView extends Tab {
       e.printStackTrace();
     }
     controller = fxmlLoader.getController();
-    controller.setFeedback(feedback);
+    controller.initialize(feedback, listener);
     update();
   }
 
@@ -50,7 +51,7 @@ public class GroupView extends Tab {
   public void update() {
     String title = feedback.getStylizedGroup();
     setTitle(stylizeTitle(title));
-    controller.updateFeedbackTextColor();
+    controller.update();
   }
 
   public Feedback getFeedback() {

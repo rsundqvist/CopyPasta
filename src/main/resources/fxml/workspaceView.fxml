@@ -19,7 +19,7 @@
 <TabPane xmlns:fx="http://javafx.com/fxml/1" fx:id="rootTabPane" maxHeight="1.7976931348623157E308"
          maxWidth="1.7976931348623157E308"
          minHeight="0.0" minWidth="0.0" prefHeight="800.0" prefWidth="1200.0"
-         xmlns="http://javafx.com/javafx/9.0.1" fx:controller="gui.feedback.workspaceViewController">
+         xmlns="http://javafx.com/javafx/9.0.1" fx:controller="gui.feedback.WorkspaceViewController">
     <tabs>
         <Tab fx:id="groupViewsTab" closable="false" onSelectionChanged="#onSelectionChanged" text="Feedback">
             <content>

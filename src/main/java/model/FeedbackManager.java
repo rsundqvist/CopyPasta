@@ -142,15 +142,14 @@ public class FeedbackManager {
   }
 
   /**
-   * Generate new feedback from the current template. The template, returned by {@link
-   * #getTemplate()}.
+   * Generate new feedback from the current template. See {@link #setTemplate(Feedback)}.
    *
    * @param groupList The list of groups to create feedback for.
    * @return The list of Feedback which was created.
    * @throws IllegalStateException If template has not been set.
    */
   public List<Feedback> generateFeedback(List<String> groupList) {
-    if (template == null) throw new IllegalStateException("Feedback not set.");
+    if (template == null) throw new IllegalStateException("Template not set.");
     ArrayList<Feedback> newFeedbackList = new ArrayList<>(groupList.size());
 
     for (String group : groupList) {

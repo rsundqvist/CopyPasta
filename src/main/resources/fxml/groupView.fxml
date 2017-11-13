@@ -8,6 +8,7 @@
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -54,19 +55,21 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
                     </rowConstraints>
                     <children>
-                        <Button disable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
-                                mnemonicParsing="false" text="Change group" GridPane.rowIndex="1"/>
-                        <Button disable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
-                                mnemonicParsing="false" text="Toggle done" GridPane.columnIndex="1"
+                        <ToggleButton fx:id="toggleDoneButton" maxHeight="1.7976931348623157E308"
+                                      maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onToggleDone"
+                                      text="Toggle done" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                        <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                                mnemonicParsing="false" onAction="#onChangeGroup" text="Change group"
                                 GridPane.rowIndex="1"/>
                         <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
                                 mnemonicParsing="false" onAction="#onPreview" text="Preview"
                                 GridPane.columnSpan="2147483647" GridPane.rowIndex="2"/>
-                        <Button disable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
-                                mnemonicParsing="false" text="Export .txt" GridPane.rowIndex="3"/>
-                        <Button disable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
-                                mnemonicParsing="false" text="Export .json" GridPane.columnIndex="1"
+                        <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                                mnemonicParsing="false" onAction="#onExportTxt" text="Export .txt"
                                 GridPane.rowIndex="3"/>
+                        <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                                mnemonicParsing="false" onAction="#onExportJson" text="Export .json"
+                                GridPane.columnIndex="1" GridPane.rowIndex="3"/>
                         <HBox GridPane.columnSpan="2147483647">
                             <children>
                                 <Label maxHeight="1.7976931348623157E308" prefWidth="60.0" text="Grade:">

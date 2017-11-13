@@ -3,6 +3,16 @@ ___
 
 ## Patch Notes
 
+### Version `1.2.4`
+13-11-2017
+* Enable buttons on GroupView
+* Double click to preview feedback
+
+### Version `1.2.3`
+12-11-2017
+* Some bugfixes and minor GUI changes
+* Removed some obsolete code.
+
 ### Version `1.2.3`
 12-11-2017
 * Some bugfixes and minor GUI changes

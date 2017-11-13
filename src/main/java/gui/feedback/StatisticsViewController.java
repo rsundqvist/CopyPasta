@@ -7,14 +7,13 @@ import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import model.Feedback;
-import model.FeedbackListListener;
+import model.FeedbackListener;
 import model.FeedbackManager;
-import model.IO;
 
 import java.util.HashMap;
 import java.util.List;
 
-public class StatisticsViewController implements FeedbackListListener {
+public class StatisticsViewController implements FeedbackListener {
   @FXML VBox vBox1, vBox2;
   @FXML private ProgressBar progressBar;
   @FXML private Label progressLabel, numFeedback, numDone, numNotDone;
@@ -22,9 +21,9 @@ public class StatisticsViewController implements FeedbackListListener {
 
   private FeedbackManager feedbackManager;
   private FeedbackListView doneListView, notDoneListView;
-  private FeedbackListListener listener;
+  private FeedbackListener listener;
 
-  public void initialize(FeedbackManager feedbackManager, FeedbackListListener listener) {
+  public void initialize(FeedbackManager feedbackManager, FeedbackListener listener) {
 
     this.listener = listener;
     this.feedbackManager = feedbackManager;
@@ -44,16 +43,12 @@ public class StatisticsViewController implements FeedbackListListener {
 
   public void exportAllDone() {
     List<Feedback> feedbackList = feedbackManager.getDoneFeedback();
-    listener.feedbackAboutToExport(feedbackList);
-    IO.exportFeedback(feedbackList, true, true);
-    update();
+    exportFeedback(feedbackList, true, true);
   }
 
   public void exportAllNotDone() {
     List<Feedback> feedbackList = feedbackManager.getNotDoneFeedback();
-    listener.feedbackAboutToExport(feedbackList);
-    IO.exportFeedback(feedbackList, true, true);
-    update();
+    exportFeedback(feedbackList, true, true);
   }
 
   public void clearAllDone() {
@@ -61,7 +56,7 @@ public class StatisticsViewController implements FeedbackListListener {
 
     if (Tools.confirmDelete(feedbackList.size())) {
       feedbackManager.deleteFeedback(feedbackList);
-      listener.listChanged(feedbackList);
+      listener.listChanged();
       update();
     }
   }
@@ -70,7 +65,7 @@ public class StatisticsViewController implements FeedbackListListener {
     List<Feedback> feedbackList = feedbackManager.getNotDoneFeedback();
     if (Tools.confirmDelete(feedbackList.size())) {
       feedbackManager.deleteFeedback(feedbackList);
-      listener.listChanged(feedbackList);
+      listener.listChanged();
       update();
     }
   }
@@ -115,13 +110,16 @@ public class StatisticsViewController implements FeedbackListListener {
     String format = " %-11s| %-11d| %8.2f\n";
 
     StringBuilder sb = new StringBuilder(hdline);
-    sb.append(new String(new char[hdline.length()]).replace("\0", "-") + "\n");
+    String dashdashdash = new String(new char[hdline.length()]).replace("\0", "-") + "\n";
+    sb.append(dashdashdash);
 
     for (String key : possibleGrades) {
       int c = map.get(Feedback.stylizeGrade(key)).count;
       double f = (100 * ((double) c) / feedbackManager.getFeedbackList().size());
       sb.append(String.format(format, key, c, f));
     }
+
+    sb.append(dashdashdash);
     int c = map.get(Feedback.stylizeGrade(Feedback.GRADE_NOT_SET_OPTION)).count;
     double f = (100 * ((double) c) / feedbackManager.getFeedbackList().size());
     sb.append(String.format(format, Feedback.GRADE_NOT_SET_OPTION, c, f));
@@ -150,13 +148,30 @@ public class StatisticsViewController implements FeedbackListListener {
   }
 
   @Override
-  public void listChanged(List<Feedback> feedbackList) {
-    update();
+  public void changeGroup(List<Feedback> feedbackList) {
+    listener.changeGroup(feedbackList);
+    listChanged();
   }
 
   @Override
-  public void feedbackAboutToExport(List<Feedback> feedbackList) {
-    // Do nothing
+  public void toggleDone(List<Feedback> feedbackList) {
+    listener.toggleDone(feedbackList);
+    listChanged();
+  }
+
+  @Override
+  public void preview(Feedback feedback) {
+    // listener.preview(feedback);
+  }
+
+  @Override
+  public boolean exportFeedback(List<Feedback> feedback, boolean asTxt, boolean asJson) {
+    return listener.exportFeedback(feedback, asTxt, asJson);
+  }
+
+  @Override
+  public void listChanged() {
+    update();
   }
 
   private static class Counter {
@@ -166,8 +181,4 @@ public class StatisticsViewController implements FeedbackListListener {
       return "" + count;
     }
   }
-
-  private class GradeRow {}
-
-  private class GroupRow {}
 }

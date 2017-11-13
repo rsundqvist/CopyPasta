@@ -172,7 +172,7 @@ public class Pasta implements Comparable<Pasta>, Cloneable {
    * @return The automatic title setting.
    */
   public boolean isAutomaticTitle() {
-    return title == null || title.length() == 0;
+    return title == null || title.isEmpty();
   }
 
   /**
@@ -204,7 +204,7 @@ public class Pasta implements Comparable<Pasta>, Cloneable {
   }
 
   /**
-   * Compares: {@link #content}, {@link #contentTags}, {@link #title}
+   * Compares: {@link #content}, {@link #contentTags}, {@link #assignmentTags}, {@link #title}
    *
    * @param other The object to compare to.
    * @return {@code true} if the given object represents a {@code Pasta} equivalent to this pasta,

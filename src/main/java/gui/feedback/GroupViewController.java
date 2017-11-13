@@ -8,24 +8,30 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.ToggleButton;
 import javafx.util.Pair;
 import model.Feedback;
+import model.FeedbackListener;
 import model.FeedbackManager;
 import model.Pasta;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class GroupViewController implements FileViewController.FileFeedbackListener {
   public static final boolean SWITCH_TO_FEEDBACK_ON_QUICKINSERT = false;
 
-  @FXML Tab feedbackTab, filesTab;
-  @FXML TabPane viewsPane;
-  @FXML ChoiceBox<String> gradeChoiceBox;
-  @FXML TextArea notesArea;
-
   @FXML
   FileViewController fileViewController; // Controller of an included file = fx:id + "Controller"
 
+  @FXML private Tab feedbackTab, filesTab;
+  @FXML private TabPane viewsPane;
+  @FXML private ChoiceBox<String> gradeChoiceBox;
+  @FXML private TextArea notesArea;
+  @FXML private ToggleButton toggleDoneButton;
   private Feedback feedback;
   private FeedbackText feedbackText;
+  private FeedbackListener listener;
 
   public GroupViewController() {
     feedbackText = new FeedbackText();
@@ -51,6 +57,27 @@ public class GroupViewController implements FileViewController.FileFeedbackListe
     feedback.setGrade(Feedback.destylizeGrade(newGrade));
   }
 
+  public void onChangeGroup() {
+    listener.changeGroup(Arrays.asList(feedback));
+  }
+
+  public void onToggleDone() {
+    listener.toggleDone(Arrays.asList(feedback));
+    update();
+  }
+
+  public void onExportTxt() {
+    ArrayList<Feedback> feedbackList = new ArrayList<>(1);
+    feedbackList.add(feedback);
+    listener.exportFeedback(feedbackList, true, false);
+  }
+
+  public void onExportJson() {
+    ArrayList<Feedback> feedbackList = new ArrayList<>(1);
+    feedbackList.add(feedback);
+    listener.exportFeedback(feedbackList, false, true);
+  }
+
   public void updatePossibleGrades(FeedbackManager feedbackManager) {
     gradeChoiceBox.getItems().clear();
     gradeChoiceBox.getItems().add(Feedback.GRADE_NOT_SET_OPTION);
@@ -58,7 +85,8 @@ public class GroupViewController implements FileViewController.FileFeedbackListe
     updateGradeChoiceBox();
   }
 
-  public void setFeedback(Feedback feedback) {
+  public void initialize(Feedback feedback, FeedbackListener listener) {
+    this.listener = listener;
     this.feedback = feedback;
     feedbackText.setFeedback(feedback);
     fileViewController.setFeedback(feedback);
@@ -119,8 +147,9 @@ public class GroupViewController implements FileViewController.FileFeedbackListe
     FeedbackManager.preview(feedback);
   }
 
-  public void updateFeedbackTextColor() {
+  public void update() {
     feedbackText.updateColor();
+    toggleDoneButton.setSelected(feedback.isDone());
   }
 
   public void updateFeedbackContent() {

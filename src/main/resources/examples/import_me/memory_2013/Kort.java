@@ -1,13 +1,13 @@
 /** @author Richard Sundqvist, Erik Pihl @Group 64 */
-
 import javax.swing.*;
 import java.awt.*;
 
 @SuppressWarnings("serial")
 public class Kort extends JButton {
 
-    private Status status;;
+  private Status status;;
   private Icon picture;
+
   public Kort(Icon pic) {
     this(pic, Status.SAKNAS);
   }
@@ -55,7 +55,7 @@ public class Kort extends JButton {
     }
   }
 
-// MISC
+  // MISC
   public enum Status {
     DOLT,
     SYNLIGT,

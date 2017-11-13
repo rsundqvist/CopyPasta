@@ -23,6 +23,7 @@ public class TetrisModel extends GameModel {
   private static final GameTile BLACK_TILE = new RectangularTile(new Color(0, 0, 0));
   /** Colors for the different tetrominos. Based on http://en.wikipedia.org/wiki/tetromino */
   private static final GameTile I_TILE = new RectangularTile(new Color(0, 255, 255));
+
   private static final GameTile O_TILE = new RectangularTile(new Color(255, 255, 0));
   private static final GameTile T_TILE = new RectangularTile(new Color(255, 0, 255));
   private static final GameTile J_TILE = new RectangularTile(new Color(0, 0, 255));
@@ -34,6 +35,7 @@ public class TetrisModel extends GameModel {
   final int board_height = getGameboardSize().height;
   /** Temporary coordinates for a given piece. */
   int[][] tmpCoordinates = new int[4][2];
+
   int rotationPointX; // defines x-coord of the tile to rotate around.
   int rotationPointY; // defines y-coord of the tile to rotate around.
   /** Calculated based on the number of rows destroyed. */
@@ -44,6 +46,7 @@ public class TetrisModel extends GameModel {
   private boolean gameOver = false;
   /** The shape currently falling. */
   private GameTile currentTetrominoTile = O_TILE;
+
   private Tetromino currentTetromino = Tetromino.O;
   /** The (x, y) coordinates at which the tetromino will be drawn next. */
   private int nextTetrominoCoordinates[][] = new int[4][2];

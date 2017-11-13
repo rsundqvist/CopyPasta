@@ -1,5 +1,4 @@
 /** @author Richard Sundqvist, Erik Pihl @Group 64 */
-
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;

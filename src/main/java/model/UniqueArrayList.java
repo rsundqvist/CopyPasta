@@ -7,7 +7,7 @@ import java.util.Collection;
 public class UniqueArrayList<E> extends ArrayList<E> {
 
   public UniqueArrayList(Collection c) {
-    this.addAll(ensureUnique(c));
+    addAll(c);
   }
 
   public UniqueArrayList() {}

@@ -141,10 +141,10 @@ public class Controller implements PastaViewController.PastaControllerListener {
 
   private void initRecentWorkspaces() {
     readRecentWorkspaces();
-
     for (int i = recentWorkspaces.size() - 1; i >= 0; i--) {
       File file = new File(recentWorkspaces.get(i));
       javafx.scene.control.MenuItem mi = new javafx.scene.control.MenuItem(file.getParent());
+
       if (i == recentWorkspaces.size() - 1) {
         javafx.scene.image.ImageView iw =
             GroupImporterController.NodeStatus.BLUE.getImageView(); // Mark current directory
@@ -294,7 +294,7 @@ public class Controller implements PastaViewController.PastaControllerListener {
   }
 
   public void onDefaultWorkspace() {
-    switchWorkspace("user.dir");
+    switchWorkspace(Tools.DEFAULT_WORKSPACE.getAbsolutePath());
   }
 
   public void switchWorkspace(String workspace) {

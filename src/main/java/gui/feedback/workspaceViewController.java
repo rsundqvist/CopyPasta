@@ -37,6 +37,7 @@ public class workspaceViewController implements FeedbackListListener {
   @FXML
   /** Container for the actual feedback tabs. */
   private final FeedbackManager feedbackManager = new FeedbackManager();
+
   private final List<GroupView> groupTabs = new ArrayList<>();
   private final FeedbackListView feedbackListView =
       new FeedbackListView(feedbackManager.getFeedbackList(), feedbackManager, this);
@@ -115,7 +116,7 @@ public class workspaceViewController implements FeedbackListListener {
   /** FXML onAction for "Create Feedback" button. */
   public void createFeedbackItems() {
     String str = studentGroupField.getText();
-    List<String> groups = Tools.parseString(str);
+    List<String> groups = Tools.extractTokens(str);
     createFeedbackItems(groups);
   }
 
@@ -138,7 +139,7 @@ public class workspaceViewController implements FeedbackListListener {
     template.setSignature(signatureInput.getText());
     template.setAssignment(getAssignment());
     template.getPossibleGrades().clear();
-    template.getPossibleGrades().addAll(Tools.parseString(possibleGradesInput.getText()));
+    template.getPossibleGrades().addAll(Tools.extractTokens(possibleGradesInput.getText()));
   }
 
   private void createFeedbackTab(Feedback feedback) {
@@ -241,8 +242,9 @@ public class workspaceViewController implements FeedbackListListener {
     if (incompleteItems.isEmpty()) return;
 
     // Add and select
-    List<GroupView> incompletGroupsView = getFeedbackTabs(incompleteItems);
-    groupViewsTabPane.getTabs().setAll(incompletGroupsView);
+    List<GroupView> incompleteGroups = getFeedbackTabs(incompleteItems);
+    incompleteGroups.forEach(groupView -> groupView.update());
+    groupViewsTabPane.getTabs().setAll(incompleteGroups);
     rootTabPane.getSelectionModel().select(groupViewsTab);
   }
 
@@ -375,7 +377,7 @@ public class workspaceViewController implements FeedbackListListener {
 
     Feedback feedback = tab.getFeedback();
     feedbackManager.setDoneStatus(feedback, !feedback.isDone());
-    tab.updateTitle();
+    tab.update();
 
     if (feedback.isDone()) groupViewsTabPane.getTabs().remove(tab);
     if (hideDoneItems) feedbackListView.getItems().remove(tab);
@@ -420,7 +422,7 @@ public class workspaceViewController implements FeedbackListListener {
     if (source == groupViewsTab) {
       groupViewsTabPane
           .getTabs()
-          .forEach(groupView -> ((GroupView) groupView).updateTabText()); // student view
+          .forEach(groupView -> ((GroupView) groupView).update()); // student view
     } else if (source == statisticsTab) {
       updateTemplate();
       statisticsViewController.update();

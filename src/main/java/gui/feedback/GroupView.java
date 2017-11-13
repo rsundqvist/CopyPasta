@@ -15,7 +15,6 @@ public class GroupView extends Tab {
 
   public GroupView(Feedback feedback) {
     this.feedback = feedback;
-    updateTabText();
 
     FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/groupView.fxml"));
     try {
@@ -26,6 +25,7 @@ public class GroupView extends Tab {
     }
     controller = fxmlLoader.getController();
     controller.setFeedback(feedback);
+    update();
   }
 
   private static String stylizeTitle(String title) {
@@ -47,14 +47,10 @@ public class GroupView extends Tab {
     return getText(); // Needed to make ListViews work properly
   }
 
-  public void updateTabText() {
-    String title = feedback.getGroup();
-    setTitle(stylizeTitle(feedback.getStylizedGroup()));
-  }
-
-  public void updateTitle() {
+  public void update() {
+    String title = feedback.getStylizedGroup();
+    setTitle(stylizeTitle(title));
     controller.updateFeedbackTextColor();
-    setTitle(feedback.getGroup() + (feedback.isDone() ? " \u2713" : ""));
   }
 
   public Feedback getFeedback() {

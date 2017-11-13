@@ -1,14 +1,12 @@
 # Copy Pasta: Version History
 ___
-The patches follow the [Semantic Versioning](http://semver.org/) format:
-
-Given a version number MAJOR.MINOR.PATCH:
-
-* MAJOR versions generally introduce backwards-incompatible changes.
-* MINOR versions add functionality in a backwards-compatible manner.
-* PATCH versions denote backwards-compatible bug fixes.
 
 ## Patch Notes
+
+### Version `1.2.3`
+12-11-2017
+* Some bugfixes and minor GUI changes
+* Removed some obsolete code.
 
 ### Version `1.2.2`
 12-11-2017

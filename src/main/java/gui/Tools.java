@@ -23,39 +23,35 @@ import java.util.Optional;
 
 /** Created by Richard Sundqvist on 19/02/2017. */
 public abstract class Tools {
+
   // Program data
+  public static final String DEFAULT_WORKSPACE_STRING = "user.home"; // System.getProperty("..");
+  public static final File DEFAULT_WORKSPACE =
+      new File(System.getProperty(DEFAULT_WORKSPACE_STRING));
+
   public static final File IS_RUNNING_FILE = create("CopyPasta/data", "isrunning", false);
   public static final File SETTINGS_FILE = create("CopyPasta/data", "settings", false);
   public static final File PREVIEW_FILE = Tools.create("CopyPasta/data", "preview.txt", false);
   public static final File RECENT_WORKSPACES_FILE =
       Tools.create("CopyPasta/data", "recent_workspaces.txt", false);
-  public static final String VERSION = "1.2.2";
+  public static final String VERSION = "1.2.3";
+
   // Work data
-  public static File AUTO_SAVE_PASTA_FILE = null;
-  public static File AUTO_SAVE_TEMPLATE_FILE = null;
-  public static File AUTO_SAVE_FEEDBACK_FILE = null;
-  public static File GROUP_IMPORT_FILE_PATTERNS = null;
+  public static File AUTO_SAVE_PASTA_FILE,
+      AUTO_SAVE_TEMPLATE_FILE,
+      AUTO_SAVE_FEEDBACK_FILE; // Main workspace
+  public static File GROUP_IMPORT_FILE_PATTERNS;
 
   private Tools() {}
 
   public static boolean isNewer(String otherVersion) throws Exception {
-    boolean otherIsPrerelease = otherVersion.contains("PRERELEASE");
-    boolean isPrerelease = VERSION.contains("PRERELEASE");
-
-    if (!otherIsPrerelease && isPrerelease) return true;
-    else if (otherIsPrerelease && !isPrerelease) return false;
-
-    // Both or either prerelase or non-prerelease.
-    String version = VERSION.replaceAll("PRERELEASE Rev", "");
-    otherVersion = otherVersion.replaceAll("PRERELEASE Rev", "");
-
     // Current version
-    int[] subversion = new int[3]; // major.minor.hotfix
-    String[] s = version.split("\\.");
+    int[] subversion = new int[3]; // major.minor.patch
+    String[] s = VERSION.split("\\.");
     for (int i = 0; i < s.length; i++) subversion[i] = Integer.parseInt(s[i].trim());
 
     // Possible update
-    int[] otherSubversion = new int[3]; // major.minor.hotfix
+    int[] otherSubversion = new int[3]; // major.minor.patch
     s = otherVersion.split("\\.");
     for (int i = 0; i < s.length; i++) otherSubversion[i] = Integer.parseInt(s[i].trim());
 
@@ -82,7 +78,7 @@ public abstract class Tools {
         && !Settings.WORKSPACE_LOCATION.startsWith("user.")) {
       baseDir = new File(Settings.WORKSPACE_LOCATION);
     } else {
-      baseDir = new File(System.getProperty("user.home"));
+      baseDir = DEFAULT_WORKSPACE;
     }
 
     File d = new File(baseDir, dir);
@@ -197,9 +193,9 @@ public abstract class Tools {
    * Parse a string, splitting on ',' and spaces (including consecutive spaces. Doubles are removed.
    *
    * @param s The string to parse.
-   * @return An array of parsed designations.
+   * @return An array of parsed tokens.
    */
-  public static List<String> parseString(String s) {
+  public static List<String> extractTokens(String s) {
     s = s.replaceAll(",|\\s+", " ");
 
     UniqueArrayList<String> tokens = new UniqueArrayList<>();

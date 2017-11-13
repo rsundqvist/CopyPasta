@@ -6,7 +6,6 @@ import model.Feedback;
 import org.fxmisc.flowless.VirtualizedScrollPane;
 import org.fxmisc.richtext.CodeArea;
 import org.fxmisc.richtext.LineNumberFactory;
-import org.fxmisc.richtext.ViewActions;
 import org.fxmisc.richtext.model.StyleSpans;
 import org.fxmisc.richtext.model.StyleSpansBuilder;
 
@@ -17,19 +16,15 @@ import java.util.regex.Pattern;
 
 /** Created by Richard Sundqvist on 12/04/2017. */
 public class FeedbackText extends BorderPane implements FileViewController.FileFeedbackListener {
-
   // region strings
-  private static final String TAG_PATTERN = "\\%(.*?)\\%";
+  private static final String TAG_PATTERN = createTagPattern(); // "\\%(.*?)\\%";
   private static final Pattern PATTERN = Pattern.compile("(?<TAG>" + TAG_PATTERN + ")");
-  // endregion
-
   private final CodeArea codeArea;
+  // endregion
   private Feedback feedback;
-
   public FeedbackText() {
     codeArea = new CodeArea();
     codeArea.setParagraphGraphicFactory(LineNumberFactory.get(codeArea));
-    codeArea.setShowCaret(ViewActions.CaretVisibility.ON);
     codeArea
         .textProperty()
         .addListener(
@@ -47,6 +42,23 @@ public class FeedbackText extends BorderPane implements FileViewController.FileF
               codeArea.setStyleSpans(0, computeHighlighting(text));
             });
     setCenter(new VirtualizedScrollPane<>(codeArea));
+  }
+
+  private static String createTagPattern() {
+    StringBuilder sb = new StringBuilder();
+
+    String[] s = {
+      Feedback.HEADER,
+      Feedback.FOOTER,
+      Feedback.GROUP,
+      Feedback.GRADE,
+      Feedback.MANUAL,
+      Feedback.SIGNATURE,
+      Feedback.FILE_REGEX
+    };
+    for (String regex : s) sb.append(regex + "|");
+
+    return sb.toString();
   }
 
   private static StyleSpans<Collection<String>> computeHighlighting(String text) {

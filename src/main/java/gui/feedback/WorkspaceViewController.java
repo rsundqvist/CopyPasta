@@ -185,13 +185,8 @@ public class WorkspaceViewController implements FeedbackListener {
     return contextMenu;
   }
 
-  private void deleteFeedback(GroupView tab) {
-    Feedback feedback = tab.getFeedback();
-    deleteFeedback(feedback);
-  }
-
-  public void deleteFeedback(Feedback feedback) {
-    feedbackManager.deleteFeedback(feedback);
+  private void deleteFeedback(GroupView groupView) {
+    FeedbackManager.deleteFeedbackSafe(Arrays.asList(groupView.getFeedback()), feedbackManager);
     update();
   }
 
@@ -349,7 +344,7 @@ public class WorkspaceViewController implements FeedbackListener {
 
   private void preview(GroupView tab) {
     if (tab == null) return;
-    preview(tab.getFeedback());
+    preview(Arrays.asList(tab.getFeedback()));
   }
 
   public void quickInsert(Pasta pasta) {
@@ -461,7 +456,10 @@ public class WorkspaceViewController implements FeedbackListener {
 
   @Override
   public void changeGroup(List<Feedback> feedbackList) {
-    feedbackList.forEach(Feedback::changeFeedbackGroup);
+    feedbackList.forEach(
+        feedback -> {
+          feedbackManager.changeFeedbackGroup(feedback);
+        });
     feedbackListView.refresh();
     update(false);
   }
@@ -478,9 +476,9 @@ public class WorkspaceViewController implements FeedbackListener {
   }
 
   @Override
-  public void preview(Feedback feedback) {
+  public void preview(List<Feedback> feedbackList) {
     updateTemplate();
-    FeedbackManager.preview(feedback);
+    feedbackList.forEach(FeedbackManager::preview);
   }
 
   // endregion

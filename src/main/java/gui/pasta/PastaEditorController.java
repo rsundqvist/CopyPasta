@@ -16,6 +16,7 @@ import model.FeedbackManager;
 import model.Pasta;
 import model.UniqueArrayList;
 import org.fxmisc.flowless.VirtualizedScrollPane;
+import org.fxmisc.richtext.ViewActions;
 
 import java.util.List;
 import java.util.Optional;
@@ -30,7 +31,7 @@ public class PastaEditorController implements PastaViewController.PastaControlle
   @FXML private Label assignmentLabel;
   @FXML private BorderPane borderPane;
 
-  private JavaCodeArea pastaEditingTextArea;
+  private JavaCodeArea javaCodeArea;
   private String currentAssignment;
   private Pasta selectedPastaActual = null;
   private Pasta selectedPastaClone = null;
@@ -40,9 +41,9 @@ public class PastaEditorController implements PastaViewController.PastaControlle
   @FXML private PastaViewController pastaViewController = null;
 
   public void initialize(List<Pasta> pastaList, String currentAssignment) {
-    pastaEditingTextArea = new JavaCodeArea();
-    pastaEditingTextArea.setPrefHeight(Double.MAX_VALUE);
-    borderPane.setCenter(new VirtualizedScrollPane<>(pastaEditingTextArea));
+    javaCodeArea = new JavaCodeArea();
+    javaCodeArea.setShowCaret(ViewActions.CaretVisibility.AUTO);
+    borderPane.setCenter(new VirtualizedScrollPane<>(javaCodeArea));
 
     pastaViewController.importPasta(pastaList);
     pastaViewController.setListener(this);
@@ -51,7 +52,7 @@ public class PastaEditorController implements PastaViewController.PastaControlle
     currentAssignment = currentAssignment.length() == 0 ? "<None>" : currentAssignment;
     assignmentLabel.setText(currentAssignment);
     titleField.textProperty().addListener(event -> titleChanged());
-    pastaEditingTextArea.textProperty().addListener(event -> contentChanged());
+    javaCodeArea.textProperty().addListener(event -> contentChanged());
     update();
   }
 
@@ -82,7 +83,7 @@ public class PastaEditorController implements PastaViewController.PastaControlle
     allAssignTagView.getItems().clear();
     currentAssignTagView.getItems().clear();
     titleField.clear();
-    pastaEditingTextArea.clear();
+    javaCodeArea.clear();
     selectedPastaClone = null;
     selectedPastaActual = null;
   }
@@ -210,7 +211,7 @@ public class PastaEditorController implements PastaViewController.PastaControlle
   public void savePastaChanges() {
     if (selectedPastaActual == null) return;
 
-    selectedPastaActual.setContent(pastaEditingTextArea.getText());
+    selectedPastaActual.setContent(javaCodeArea.getText());
     selectedPastaActual.setLastModificationDate();
     selectedPastaActual.getContentTags().clear();
     selectedPastaActual.getContentTags().addAll(selectedPastaClone.getContentTags());
@@ -239,7 +240,7 @@ public class PastaEditorController implements PastaViewController.PastaControlle
 
     autoTitleCheckBox.setSelected(pasta.isAutomaticTitle());
 
-    pastaEditingTextArea.setText(selectedPastaClone.getContent());
+    javaCodeArea.setText(selectedPastaClone.getContent());
     currentContentTagView.getItems().clear();
     currentAssignTagView.getItems().clear();
     currentContentTagView.getItems().addAll(selectedPastaClone.getContentTags());

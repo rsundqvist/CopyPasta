@@ -3,8 +3,12 @@ package model;
 import gui.Tools;
 import gui.feedback.JavaCodeArea;
 import gui.settings.Settings;
+import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
 import org.fxmisc.flowless.VirtualizedScrollPane;
 
 import java.awt.*;
@@ -110,7 +114,7 @@ public class FeedbackManager {
     return groups;
   }
 
-  public static boolean deleteFeedback(
+  public static boolean deleteFeedbackSafe(
       List<Feedback> selectedItems, FeedbackManager feedbackManager) {
     int numberOfItems = selectedItems.size();
     if (numberOfItems > 1 && !Tools.confirmDelete(numberOfItems)) return false;
@@ -132,6 +136,67 @@ public class FeedbackManager {
 
     feedbackManager.deleteFeedback(selectedItems);
     return true;
+  }
+
+  /**
+   * Returns {@code true} if the group was changed.
+   *
+   * @param feedback The feedback to change group for.
+   * @return {@code true} if the group was changed.
+   */
+  public boolean changeFeedbackGroup(Feedback feedback) {
+    String oldGroup = feedback.getGroup();
+
+    String digitsOnly = oldGroup.replaceAll("[^0-9]", "");
+    ButtonType digitsOnlyBt = new ButtonType("Digits only");
+
+    boolean hasDigits = !digitsOnly.isEmpty();
+    if (!hasDigits) {
+      digitsOnly = "<Empty string not permitted>";
+    }
+
+    Alert alert =
+        new Alert(
+            Alert.AlertType.CONFIRMATION,
+            "Will not permit duplicates, empty strings, or strings with only whitespace.",
+            ButtonType.CANCEL,
+            ButtonType.OK,
+            digitsOnlyBt);
+    alert.setTitle("Change group");
+    alert.setHeaderText("Change group: \"" + oldGroup + "\"");
+
+    javafx.scene.control.Label label1 = new javafx.scene.control.Label("New group: ");
+    javafx.scene.control.Label label2 = new javafx.scene.control.Label("Digits only: ");
+    label1.setMaxHeight(Double.MAX_VALUE);
+    label2.setMaxHeight(Double.MAX_VALUE);
+
+    javafx.scene.control.TextField textField1 = new javafx.scene.control.TextField(oldGroup);
+    GridPane.setHgrow(textField1, Priority.ALWAYS);
+
+    javafx.scene.control.TextField textField2 = new TextField(digitsOnly);
+    textField2.setEditable(false);
+    textField2.setDisable(true);
+    GridPane.setHgrow(textField1, Priority.ALWAYS);
+
+    GridPane gridPane = new GridPane();
+    gridPane.addRow(0, label1, textField1);
+    gridPane.addRow(1, label2, textField2);
+    alert.getDialogPane().setExpandableContent(gridPane);
+    alert.getDialogPane().setExpanded(true);
+
+    Platform.runLater(() -> textField1.requestFocus());
+    Optional<ButtonType> result = alert.showAndWait();
+    if (!result.isPresent() || result.get() == ButtonType.CANCEL) return false;
+
+    String newGroup = oldGroup;
+
+    if (result.get() == ButtonType.OK) newGroup = textField1.getText().trim();
+    else if (hasDigits && result.get() == digitsOnlyBt) newGroup = textField2.getText();
+
+    ArrayList<String> groups = (ArrayList) getGroups();
+    if (!groups.contains(newGroup) && !newGroup.isEmpty()) feedback.setGroup(newGroup);
+
+    return oldGroup.equals(newGroup);
   }
 
   /** Clear all feedback from the manager. */

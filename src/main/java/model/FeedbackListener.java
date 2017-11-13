@@ -9,7 +9,7 @@ public interface FeedbackListener {
   /** Will not call {@link #listChanged()} also - this is implicit */
   void toggleDone(List<Feedback> feedbackList);
 
-  void preview(Feedback feedback);
+  void preview(List<Feedback> feedback);
 
   boolean exportFeedback(List<Feedback> feedback, boolean asTxt, boolean asJson);
 

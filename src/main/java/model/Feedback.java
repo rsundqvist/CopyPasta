@@ -4,7 +4,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 
@@ -25,15 +24,14 @@ public class Feedback implements Comparable<Feedback> {
   // Constant
   // ================================================================================= //
   public static final transient String HEADER = "%HEADER%", FOOTER = "%FOOTER%";
-
   public static final transient String GROUP = "%GROUP%";
   public static final transient String GRADE = "%GRADE%", GRADE_NOT_SET_OPTION = "Not set";
-
-  public static final transient String FILE = "%FILE: <file>%";
-  public static final transient String FILE_REGEX = "%[ \t]*([Ff]ile|FILE):[ \t]*\\S+[ \t]*%";
-
   public static final transient String MANUAL = "%MANUAL%";
   public static final transient String SIGNATURE = "%SIGNATURE%";
+
+  public static final transient String FILE = "%FILE: <file>%";
+  public static final transient String FILE_REGEX = "(%[ \t]*([Ff]ile|FILE):[ \t]*\\S+[ \t]*%)";
+
   // endregion
 
   // region Field
@@ -195,21 +193,6 @@ public class Feedback implements Comparable<Feedback> {
     Optional<ButtonType> result = alert.showAndWait();
     return (!result.isPresent() // Default to assuming user wants to fix content.
         || result.get() != ButtonType.NO);
-  }
-
-  public static boolean changeFeedbackGroup(Feedback feedback) {
-    TextInputDialog dialog = new TextInputDialog(feedback.getGroup());
-    dialog.setTitle("Change group");
-    dialog.setHeaderText("Change group: \"" + feedback.getGroup() + "\"");
-    dialog.setContentText("Enter new group: ");
-    Optional<String> result = dialog.showAndWait();
-
-    if (result.isPresent() && result.get() != null) {
-      String newGroup = result.get();
-      feedback.setGroup(newGroup);
-      return true;
-    }
-    return false;
   }
 
   /** Returns a copy of this pasta. */

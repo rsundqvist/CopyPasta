@@ -160,7 +160,7 @@ public class StatisticsViewController implements FeedbackListener {
   }
 
   @Override
-  public void preview(Feedback feedback) {
+  public void preview(List<Feedback> feedback) {
     // listener.preview(feedback);
   }
 

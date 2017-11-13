@@ -121,7 +121,7 @@ public class FeedbackListView extends ListView<Feedback> {
     List<Feedback> selectedItems = getSelectedItems();
     if (selectedItems == null) return;
 
-    FeedbackManager.deleteFeedback(selectedItems, feedbackManager);
+    FeedbackManager.deleteFeedbackSafe(selectedItems, feedbackManager);
     for (FeedbackListener fl : listeners) fl.listChanged();
   }
 
@@ -129,7 +129,7 @@ public class FeedbackListView extends ListView<Feedback> {
     List<Feedback> selectedItems = getSelectedItems();
     if (selectedItems == null) return;
 
-    for (FeedbackListener fl : listeners) fl.preview(getSelectedItems().get(0));
+    for (FeedbackListener fl : listeners) fl.preview(getSelectedItems());
   }
 
   public void changeGroup() {

@@ -2,6 +2,13 @@
 ___
 
 ## Patch Notes
+### Version `1.0.2`
+14-11-2017
+* Updated the Group Importer. Should be safer to use.
+* Fix "Download .zip-file" link in version view.
+* Somewhat improved Linux support.
+* Other minor stuff that I didn't write down.
+
 ### Version `1.0.1`
 14-11-2017
 * Several GUI behaviour fixes.

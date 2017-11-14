@@ -9,7 +9,7 @@ import model.IO;
 import model.Pasta;
 
 public class GroupView extends Tab {
-  public static final int MIN_TITLE_LENGTH = 8;
+  private static final int MIN_TITLE_LENGTH = 8;
   private final Feedback feedback;
 
   private final GroupViewController controller;
@@ -49,8 +49,7 @@ public class GroupView extends Tab {
   }
 
   public void update() {
-    String title = feedback.getStylizedGroup();
-    setTitle(stylizeTitle(title));
+    setTitle(feedback.getStylizedGroup());
     controller.update();
   }
 

@@ -23,7 +23,7 @@ public abstract class Settings {
   public static final String workspace_location = "workspace_location";
   private static final String use_native_txt_editor = "use_native_txt_editor";
   private static final String file_decoration_width = "file_decoration_width";
-  private static final String startup_version_check = "startup_version_check";
+  public static final String startup_version_check = "startup_version_check";
   /*
    * Settings. The assigned values are used as defaults if no properties entry is found.
    */

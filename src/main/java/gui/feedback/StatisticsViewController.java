@@ -149,19 +149,16 @@ public class StatisticsViewController implements FeedbackListener {
 
   @Override
   public void changeGroup(List<Feedback> feedbackList) {
-    listener.changeGroup(feedbackList);
-    listChanged();
+    update();
   }
 
   @Override
   public void toggleDone(List<Feedback> feedbackList) {
-    listener.toggleDone(feedbackList);
-    listChanged();
+    update();
   }
 
   @Override
   public void preview(List<Feedback> feedback) {
-    // listener.preview(feedback);
   }
 
   @Override

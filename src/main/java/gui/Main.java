@@ -54,7 +54,7 @@ public class Main extends Application {
     checkRunning();
     Settings.loadSettingsFile();
     Tools.initializeWorkspaceFiles();
-    if (Settings.STARTUP_VERSION_CHECK) Controller.checkUpdates(false);
+    if (Settings.STARTUP_VERSION_CHECK) UpdateView.checkUpdates(false);
 
     FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/fxml/main.fxml"));
     Parent root = fxmlLoader.load();

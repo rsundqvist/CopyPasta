@@ -360,8 +360,10 @@ public class WorkspaceViewController implements FeedbackListener {
 
   /** Called from main controller. */
   public void toggleDoneTab() {
-    GroupView groupView = (GroupView) groupViewsTabPane.getSelectionModel().getSelectedItem();
-    toggleDone(Arrays.asList(groupView.getFeedback()));
+    if (rootTabPane.getSelectionModel().getSelectedItem() == groupViewsTab) {
+      GroupView groupView = (GroupView) groupViewsTabPane.getSelectionModel().getSelectedItem();
+      toggleDone(Arrays.asList(groupView.getFeedback()));
+    }
   }
 
   private void checkFeedbackDone() {

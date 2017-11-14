@@ -2,6 +2,11 @@
 ___
 
 ## Patch Notes
+### Version `1.0.1`
+14-11-2017
+* Several GUI behaviour fixes.
+* Improved version handling.
+
 ### Version `1.0.0`
 14-11-2017
 * Initial release.

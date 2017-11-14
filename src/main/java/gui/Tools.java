@@ -13,6 +13,7 @@ import model.IO;
 import model.Pasta;
 import model.UniqueArrayList;
 
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.net.InetAddress;
@@ -34,7 +35,7 @@ public abstract class Tools {
   public static final File PREVIEW_FILE = Tools.create("CopyPasta/data", "preview.txt", false);
   public static final File RECENT_WORKSPACES_FILE =
       Tools.create("CopyPasta/data", "recent_workspaces.txt", false);
-  public static final String VERSION = "1.0.1";
+  public static final String VERSION = "1.0.2";
 
   // Work data
   public static File AUTO_SAVE_PASTA_FILE,
@@ -225,6 +226,22 @@ public abstract class Tools {
     String around = new String(new char[numRepeats]).replace("\0", "<>");
     String border = new String(new char[width]).replace("\0", "=");
     return "\n\n" + border + "\n" + around + headline + around + extra + "\n" + border;
+  }
+
+  public static boolean isDesktopSupported() {
+    boolean supported = Desktop.isDesktopSupported();
+
+    if (!supported) {
+      Alert alert =
+          new Alert(
+              Alert.AlertType.ERROR,
+              "The java Desktop class does not support this system :(.",
+              ButtonType.CLOSE);
+      alert.setHeaderText("Not supported");
+      alert.showAndWait();
+    }
+
+    return supported;
   }
   // endregion
 }

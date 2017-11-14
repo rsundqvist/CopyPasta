@@ -31,6 +31,7 @@ public class UpdateViewController {
   }
 
   public void onDownload() {
+    if (!Tools.isDesktopSupported()) return;
     try {
       Desktop.getDesktop().browse(url.toURI());
     } catch (Exception e) {
@@ -72,7 +73,6 @@ public class UpdateViewController {
   }
 
   public boolean getCheckOnStartup() {
-    System.out.println("UpdateViewController.getCheckUpdatesOnStartup");
     return startupCheckCheckBox.isSelected();
   }
 

@@ -5,6 +5,8 @@ import gui.feedback.JavaCodeArea;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -19,39 +21,41 @@ import javafx.scene.control.TreeView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
-import javafx.stage.Stage;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import model.Feedback;
 import model.FeedbackManager;
 import model.IO;
+import org.fxmisc.richtext.ViewActions;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.IOException;
-import java.io.StringReader;
-import java.util.ArrayList;
 import java.util.List;
 
 /** Created by Richard Sundqvist on 17/04/2017. */
 public class GroupImporterController {
   private final JavaCodeArea codeArea;
-  private final FeedbackManager feedbackManager = new FeedbackManager();
-  private final Stage stage;
-  @FXML private TextField rootDirectoryField;
+  private FeedbackManager tmpManager = new FeedbackManager(), realManager;
+  @FXML private TextField rootDirectoryField, currentGroupsTextField;
   @FXML private ListView groupListView, filesListView;
   @FXML private TreeView treeView;
   @FXML private BorderPane previewContainer;
   @FXML private TextArea filePatternsTextArea;
   @FXML private Label filePreviewLabel;
+  @FXML private Button replaceAllButton;
+  @FXML private CheckBox erpaCheckBox; // Enable "Replace All" checkbox
+  @FXML private VBox hintVBox;
+  @FXML private GridPane rootGrid;
   private List<String> fileEndingList;
   private boolean openArchives = false;
+  private GroupImporterListener listener;
 
-  public GroupImporterController(Stage stage) {
+  public GroupImporterController() {
     codeArea = new JavaCodeArea();
     codeArea.setEditable(false);
-    this.stage = stage;
+    codeArea.setShowCaret(ViewActions.CaretVisibility.AUTO);
   }
 
-  private static void removeItem(FeedbackTreeItem treeItem, Feedback feedback) {
+  public static void removeItem(FeedbackTreeItem treeItem, Feedback feedback) {
     File file = treeItem.getValue();
 
     if (file.isDirectory())
@@ -61,7 +65,7 @@ public class GroupImporterController {
     else feedback.removeFile(file.getName());
   }
 
-  private static void addItem(FeedbackTreeItem treeItem, Feedback feedback) {
+  public static void addItem(FeedbackTreeItem treeItem, Feedback feedback) {
     File file = treeItem.getValue();
 
     if (file.isDirectory())
@@ -79,15 +83,31 @@ public class GroupImporterController {
     node.setGraphic(iw);
   }
 
-  private void onGroupSelectionChanged() {
+  public void onReplaceAll() {
+    realManager.clear(); // Replace all content.
+    realManager.importFeedback(tmpManager.getFeedbackList(), true);
+    close(true);
+  }
+
+  public void onCancel() {
+    close(false);
+  }
+
+  public void onImport() {
+    tmpManager.removeFeedbackByGroup(realManager.getGroups()); // Don't overwrite existing content.
+    realManager.importFeedback(tmpManager.getFeedbackList(), true);
+    close(true);
+  }
+
+  public void onGroupSelectionChanged() {
     String group = (String) groupListView.getSelectionModel().getSelectedItem();
-    Feedback feedback = feedbackManager.getByGroup(group);
+    Feedback feedback = tmpManager.getByGroup(group);
     if (feedback != null) filesListView.getItems().setAll(feedback.getFiles().keySet());
   }
 
-  private void onFileSelectionChanged() {
+  public void onFileSelectionChanged() {
     String group = (String) groupListView.getSelectionModel().getSelectedItem();
-    Feedback feedback = feedbackManager.getByGroup(group);
+    Feedback feedback = tmpManager.getByGroup(group);
     if (feedback == null) return;
 
     String fileName = (String) filesListView.getSelectionModel().getSelectedItem();
@@ -95,7 +115,7 @@ public class GroupImporterController {
 
     String content = feedback.getFiles().get(fileName);
     codeArea.setText(content);
-    filePreviewLabel.setText(fileName + " (group " + group + ")");
+    filePreviewLabel.setText(fileName + " - \"" + group + "\"");
   }
 
   public void initialize() {
@@ -116,12 +136,19 @@ public class GroupImporterController {
     if (s != null && s.length() > 0) {
       filePatternsTextArea.setText(s);
     }
+
+    replaceAllButton.disableProperty().bind(erpaCheckBox.selectedProperty().not());
   }
 
   public void onChangeRootDirectory() {
     File dir = IO.showDirectoryChooser(null);
 
+    System.out.println("dir = " + dir);
     if (dir != null) {
+      hintVBox.setMouseTransparent(true);
+      hintVBox.setVisible(false);
+      rootGrid.getChildren().remove(hintVBox);
+
       try {
         groupListView.getItems().clear();
         filesListView.getItems().clear();
@@ -144,11 +171,10 @@ public class GroupImporterController {
   }
 
   public void saveFilePatterns() {
-    IO.printStringToFile(filePatternsTextArea.getText(), Tools.GROUP_IMPORT_FILE_PATTERNS);
-  }
-
-  public void onClose() {
-    stage.close();
+    updateFileEndingList();
+    StringBuilder sb = new StringBuilder();
+    for (String string : fileEndingList) sb.append(string + "\n");
+    IO.printStringToFile(sb.toString(), Tools.GROUP_IMPORT_FILE_PATTERNS);
   }
 
   private ContextMenu createTreeViewContextMenu() {
@@ -166,7 +192,7 @@ public class GroupImporterController {
     return contextMenu;
   }
 
-  private void removeItem() {
+  public void removeItem() {
     FeedbackTreeItem selectedItem =
         (FeedbackTreeItem) treeView.getSelectionModel().getSelectedItem();
     Feedback feedback = selectedItem.getFeedback();
@@ -176,7 +202,7 @@ public class GroupImporterController {
     update();
   }
 
-  private void addItem(boolean pickGroup) {
+  public void addItem(boolean pickGroup) {
     FeedbackTreeItem selectedItem =
         (FeedbackTreeItem) treeView.getSelectionModel().getSelectedItem();
     Feedback feedback = selectedItem.getFeedback();
@@ -195,30 +221,23 @@ public class GroupImporterController {
     update();
   }
 
-  private void update() {
+  public void update() {
     crawlNodeStatus((FeedbackTreeItem) treeView.getRoot(), 0, null);
     onGroupSelectionChanged();
   }
 
-  private void updateFileEndingList() throws IOException {
+  public void updateFileEndingList() {
     String text = filePatternsTextArea.getText();
-    fileEndingList = new ArrayList<>();
-
-    BufferedReader reader = new BufferedReader(new StringReader(text));
-
-    String line;
-    while ((line = reader.readLine()) != null) {
-      fileEndingList.add(line.toLowerCase());
-    }
+    fileEndingList = Tools.extractTokens(text);
   }
 
-  private FeedbackTreeItem crawl(File file, int level, Feedback feedback) throws Exception {
+  public FeedbackTreeItem crawl(File file, int level, Feedback feedback) throws Exception {
     if (level == 1 && file.isDirectory()) {
       String group = file.getName(); // .replaceAll("[^0-9]", "");
       feedback = new Feedback();
       feedback.setGroup(group);
       groupListView.getItems().add(feedback.getGroup());
-      feedbackManager.importFeedback(feedback);
+      tmpManager.importFeedback(feedback);
     }
     FeedbackTreeItem root = new FeedbackTreeItem(file, feedback);
 
@@ -231,7 +250,6 @@ public class GroupImporterController {
         FeedbackTreeItem child = new FeedbackTreeItem(dirFile, feedback);
         root.getChildren().add(child);
 
-        int len = dirFile.getName().length();
         String[] s = dirFile.getName().split("\\.");
         if (feedback != null && s.length > 1 && fileEndingList.contains(s[s.length - 1])) {
           String content = IO.getFileAsString(dirFile);
@@ -242,46 +260,63 @@ public class GroupImporterController {
     return root;
   }
 
-  private NodeStatus crawlNodeStatus(FeedbackTreeItem root, int level, Feedback feedback) {
-    NodeStatus nodeStatus;
+  private NodeColor crawlNodeStatus(FeedbackTreeItem root, int level, Feedback feedback) {
+    NodeColor nodeColor;
     if (level == 1) // level 1 => group root
     feedback = root.getFeedback();
 
     if (root.isLeaf()) { // leaf => file or empty folder
       if (feedback != null && feedback.getFiles().keySet().contains(root.getValue().getName()))
-        nodeStatus = NodeStatus.GREEN;
-      else nodeStatus = NodeStatus.RED;
+        nodeColor = NodeColor.GREEN;
+      else nodeColor = NodeColor.RED;
     } else {
       List<TreeItem<File>> children = root.getChildren();
-      NodeStatus[] childNodeStatus = new NodeStatus[children.size()];
+      NodeColor[] childNodeColors = new NodeColor[children.size()];
 
       for (int i = 0; i < children.size(); i++) {
         FeedbackTreeItem treeItem = (FeedbackTreeItem) children.get(i);
-        childNodeStatus[i] = crawlNodeStatus(treeItem, level + 1, feedback);
+        childNodeColors[i] = crawlNodeStatus(treeItem, level + 1, feedback);
       }
-      nodeStatus = NodeStatus.getCombinedStatus(childNodeStatus);
-      setNodeIcon(root, nodeStatus.getImageView());
+      nodeColor = NodeColor.getCombinedStatus(childNodeColors);
+      setNodeIcon(root, nodeColor.getImageView());
     }
-    setNodeIcon(root, nodeStatus.getImageView());
-    if (nodeStatus != NodeStatus.RED) root.setExpanded(true);
-    return nodeStatus;
+    setNodeIcon(root, nodeColor.getImageView());
+    if (nodeColor != NodeColor.RED) root.setExpanded(true);
+    return nodeColor;
   }
 
   public void onToggleOpenArchives(Event event) {
     openArchives = ((ToggleButton) event.getSource()).isSelected();
   }
 
-  public List<Feedback> getFeedback() {
-    return feedbackManager.getFeedbackList();
+  public void initialize(FeedbackManager feedbackManager) {
+    realManager = feedbackManager;
+    List<String> existingGroups = realManager.getGroups();
+    existingGroups.sort(String::compareToIgnoreCase);
+    String groups = existingGroups.toString();
+    currentGroupsTextField.setText(
+        groups.substring(1, groups.length() - 1)
+            + "    -    ("
+            + existingGroups.size()
+            + " total)");
   }
 
-  public enum NodeStatus {
+  public void setListener(GroupImporterListener listener) {
+    this.listener = listener;
+  }
+
+  private void close(boolean managerChanged) {
+    saveFilePatterns();
+    listener.close(managerChanged);
+  }
+
+  public enum NodeColor {
     RED,
     GREEN,
     BLUE;
 
-    public static NodeStatus getCombinedStatus(NodeStatus... status) {
-      NodeStatus status0 = status[0];
+    public static NodeColor getCombinedStatus(NodeColor... status) {
+      NodeColor status0 = status[0];
 
       if (status0 == RED || status0 == GREEN)
         for (int i = 1; i < status.length; i++) if (status[i] != status0) return BLUE;
@@ -305,6 +340,10 @@ public class GroupImporterController {
       }
       return new ImageView(new Image(getClass().getResourceAsStream(s)));
     }
+  }
+
+  public interface GroupImporterListener {
+    void close(boolean managerChanged);
   }
 
   public static class FeedbackTreeItem extends TreeItem<File> {

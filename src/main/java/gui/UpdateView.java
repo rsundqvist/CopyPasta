@@ -19,17 +19,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UpdateView {
-  private static final URL url = getUrl();
-
-  private static URL getUrl() {
-    try {
-      return new URL("https://raw.githubusercontent.com/whisp91/CopyPasta/master/VERSION");
-    } catch (MalformedURLException e) {
-      e.printStackTrace(); // Should never happen.
-    }
-    return null;
-  }
-
+  private static final URL version_url = getUrl(true);
+  private static final URL update_url = getUrl(false);
   private final Stage stage;
   private final UpdateViewController controller;
 
@@ -55,14 +46,22 @@ public class UpdateView {
 
     controller = fxmlLoader.getController();
     controller.setCurrentVersion(Tools.VERSION);
-    controller.setUrl(url);
+    controller.setUrl(update_url);
     controller.setStage(stage);
     controller.setCheckOnStartup(Settings.STARTUP_VERSION_CHECK);
   }
 
-  public void onCloseRequest() {
-    Settings.STARTUP_VERSION_CHECK = controller.getCheckOnStartup();
-    Settings.putValue(Settings.startup_version_check, "" + Settings.STARTUP_VERSION_CHECK);
+  private static URL getUrl(boolean plain) {
+    String url;
+    if (plain) url = "https://raw.githubusercontent.com/whisp91/CopyPasta/master/VERSION";
+    else url = "https://github.com/whisp91/CopyPasta/raw/master/CopyPasta.zip";
+
+    try {
+      return new URL(url);
+    } catch (MalformedURLException e) {
+      e.printStackTrace(); // Should never happen.
+    }
+    return null;
   }
 
   public static void checkUpdates(boolean showOnFalse) {
@@ -111,10 +110,15 @@ public class UpdateView {
   }
 
   private static List<String> getVersionLines() throws IOException {
-    BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
+    BufferedReader in = new BufferedReader(new InputStreamReader(version_url.openStream()));
     List<String> versionLines = new ArrayList<>();
     String inputLine;
     while ((inputLine = in.readLine()) != null) versionLines.add(inputLine);
     return versionLines;
+  }
+
+  public void onCloseRequest() {
+    Settings.STARTUP_VERSION_CHECK = controller.getCheckOnStartup();
+    Settings.putValue(Settings.startup_version_check, "" + Settings.STARTUP_VERSION_CHECK);
   }
 }

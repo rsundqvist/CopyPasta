@@ -21,7 +21,6 @@ import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.SeparatorMenuItem;
 import javafx.stage.Modality;
 import javafx.util.Duration;
-import model.Feedback;
 import model.IO;
 import model.Pasta;
 import model.UniqueArrayList;
@@ -41,7 +40,9 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
 
-public class Controller implements PastaViewController.PastaControllerListener {
+public class Controller
+    implements PastaViewController.PastaControllerListener,
+        GroupImporterController.GroupImporterListener {
 
   private static final UniqueArrayList<String> recentWorkspaces = new UniqueArrayList();
   @FXML private PastaViewController pastaViewController = null;
@@ -75,7 +76,7 @@ public class Controller implements PastaViewController.PastaControllerListener {
 
       if (i == recentWorkspaces.size() - 1) {
         javafx.scene.image.ImageView iw =
-            GroupImporterController.NodeStatus.BLUE.getImageView(); // Mark current directory
+            GroupImporterController.NodeColor.BLUE.getImageView(); // Mark current directory
         iw.setFitWidth(15);
         iw.setFitHeight(15);
         mi.setGraphic(iw);
@@ -253,28 +254,6 @@ public class Controller implements PastaViewController.PastaControllerListener {
     }
   }
 
-  public void openGroupImporter() {
-    GroupImporter groupImporter = new GroupImporter();
-    List<Feedback> feedbackList = groupImporter.showAndWait();
-
-    if (!feedbackList.isEmpty()) {
-      ButtonType bt1 = new ButtonType("Nothing");
-      ButtonType bt2 = new ButtonType("Replace ALL groups");
-      ButtonType bt3 = new ButtonType("Import new groups");
-
-      Alert alert =
-          new Alert(Alert.AlertType.CONFIRMATION, "What do you want to do?", bt1, bt2, bt3);
-      alert.setHeaderText("Finish Import");
-
-      Optional<ButtonType> result = alert.showAndWait();
-      if (result.isPresent())
-        if (result.get() == bt2)
-          workspaceViewController.importFeedback(feedbackList, true, true); // Replace all
-        else if (result.get() == bt3)
-          workspaceViewController.importFeedback(feedbackList, false, true); // Add new only
-    }
-  }
-
   public void about() {
     about_fxml();
   }
@@ -303,7 +282,7 @@ public class Controller implements PastaViewController.PastaControllerListener {
 
   public void onMail() {
     Desktop desktop;
-    if (Desktop.isDesktopSupported()
+    if (Tools.isDesktopSupported()
         && (desktop = Desktop.getDesktop()).isSupported(Desktop.Action.MAIL)) {
       try {
         desktop.mail(new URI("mailto:richard.sundqvist@live.se?subject=About%20CopyPasta"));
@@ -393,5 +372,17 @@ public class Controller implements PastaViewController.PastaControllerListener {
 
   public void toggleFeedbackDone() {
     workspaceViewController.toggleDoneTab();
+  }
+
+  public void openGroupImporter() {
+    new GroupImporter(workspaceViewController.getFeedbackManager(), this);
+  }
+
+  @Override
+  public void close(boolean managerChanged) {
+    if (managerChanged) {
+      workspaceViewController.initializeFeedback();
+      showRemaining();
+    }
   }
 }

@@ -11,7 +11,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import org.fxmisc.flowless.VirtualizedScrollPane;
 
-import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -39,7 +38,7 @@ public class FeedbackManager {
    * @param feedback The Feedback to preview.
    */
   public static void preview(Feedback feedback) {
-    if (Settings.USE_NATIVE_TXT_EDITOR && Desktop.isDesktopSupported())
+    if (Settings.USE_NATIVE_TXT_EDITOR && Tools.isDesktopSupported())
       previewFeedbackNative(feedback);
     else previewFeedbackJavaFX(feedback);
   }
@@ -175,7 +174,6 @@ public class FeedbackManager {
 
     javafx.scene.control.TextField textField2 = new TextField(digitsOnly);
     textField2.setEditable(false);
-    textField2.setDisable(true);
     GridPane.setHgrow(textField1, Priority.ALWAYS);
 
     GridPane gridPane = new GridPane();
@@ -199,7 +197,7 @@ public class FeedbackManager {
     return oldGroup.equals(newGroup);
   }
 
-  /** Clear all feedback from the manager. */
+  /** Clear all feedback from the manager. Template is not changed. */
   public void clear() {
     feedbackList.clear();
     notDoneFeedbackList.clear();
@@ -475,7 +473,8 @@ public class FeedbackManager {
 
   /**
    * Add a list of feedback to the manager. Will not accept feedback whose group collide with an
-   * existing member. Will not overwrite content.
+   * existing member. Equivalent to calling {@link #importFeedback(List feedbackList, boolean
+   * setTemplateContent)} with {@code setTemplateContent = false}.
    *
    * @param feedbackList The feedback added.
    */

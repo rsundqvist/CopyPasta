@@ -248,7 +248,6 @@ public class WorkspaceViewController implements FeedbackListener {
 
   public void importFeedback() {
     List<Feedback> feedbackList = feedbackManager.importFeedback();
-
     if (feedbackList != null) updateAfterFeedbackImport(feedbackList);
   }
 
@@ -275,17 +274,24 @@ public class WorkspaceViewController implements FeedbackListener {
     rootTabPane.getSelectionModel().select(groupViewsTab);
   }
 
+  public void initializeFeedback() {
+    List<Feedback> feedbackList = feedbackManager.getFeedbackList();
+    groupViewList.clear();
+    for (Feedback feedback : feedbackList) createFeedbackView(feedback);
+    update();
+  }
+
   public void initialize() {
     Feedback template = feedbackManager.importSavedTemplate();
     if (template == null) template = new Feedback();
     setFeedbackTemplate(template);
 
     // Feedback
-    List<Feedback> feedbackList = feedbackManager.importSavedFeedback();
-    if (feedbackList != null) for (Feedback feedback : feedbackList) createFeedbackView(feedback);
+    feedbackManager.importSavedFeedback();
+    List<Feedback> feedbackList = feedbackManager.getFeedbackList();
+    initializeFeedback();
 
-    if (feedbackManager.getFeedbackList().isEmpty())
-      rootTabPane.getSelectionModel().select(setupTab);
+    if (feedbackList.isEmpty()) rootTabPane.getSelectionModel().select(setupTab);
     statisticsViewController.initialize(feedbackManager, this);
     groupViewsTabPane.getTabs().addListener((InvalidationListener) event -> updateLockStatus());
 
@@ -428,6 +434,7 @@ public class WorkspaceViewController implements FeedbackListener {
     rootTabPane.getSelectionModel().select(i);
   }
 
+  /** Calls {@link #update(boolean updateTabs)} with {@code updateTabs = true}. */
   public void update() {
     update(true);
   }
@@ -481,6 +488,10 @@ public class WorkspaceViewController implements FeedbackListener {
   public void preview(List<Feedback> feedbackList) {
     updateTemplate();
     feedbackList.forEach(FeedbackManager::preview);
+  }
+
+  public FeedbackManager getFeedbackManager() {
+    return feedbackManager;
   }
 
   // endregion

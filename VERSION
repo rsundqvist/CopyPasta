@@ -1,4 +1,6 @@
-1.0.1
+1.0.2
 14-11-2017
-* Several GUI behaviour fixes.
-* Improved version handling.
+* Updated Group Importer. Should be safer to use.
+* Fix "Download .zip-file" link in version view.
+* Somehwat improved Linux support.
+* Other minor stuff that I didn't write down.

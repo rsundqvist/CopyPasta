@@ -21,9 +21,9 @@ public abstract class Settings {
   public static final String first_run = "first_run";
   public static final String indentation_style = "indentation_style";
   public static final String workspace_location = "workspace_location";
+  public static final String startup_version_check = "startup_version_check";
   private static final String use_native_txt_editor = "use_native_txt_editor";
   private static final String file_decoration_width = "file_decoration_width";
-  public static final String startup_version_check = "startup_version_check";
   /*
    * Settings. The assigned values are used as defaults if no properties entry is found.
    */
@@ -78,7 +78,7 @@ public abstract class Settings {
         first_run, // Key
         new String[] {
           "First Run", // Display name
-          "Indicates that the program is running for the first time, showing startup help and overriding previous settings. MAY CAUSE DATA LOSS!!",
+          "Indicates that the program is running for the first time. USE WITH CAUTION; MAY CAUSE DATA LOSS!!",
           Boolean.class.getCanonicalName() + ""
         });
 
@@ -86,8 +86,8 @@ public abstract class Settings {
         indentation_style, // Key
         new String[] {
           "Indentation Style", // Display name
-          "The type of indentation styles used when clicking \"Indent \" in the \"Student Files\" view."
-              + "Default is \"google\". Options: \"google\".",
+          "The style used when autoindenting files."
+              + " Default is \"google\".\nOptions: \"google\".",
           String.class.getCanonicalName() + ""
         });
 

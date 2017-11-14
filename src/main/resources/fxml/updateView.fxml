@@ -18,123 +18,146 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-
-<BorderPane prefHeight="400.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.UpdateViewController">
-   <left>
-      <ImageView fitHeight="200.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
-         <image>
-            <Image url="@../img/download.png" />
-         </image>
-         <BorderPane.margin>
-            <Insets right="15.0" />
-         </BorderPane.margin>
-      </ImageView>
-   </left>
-   <top>
-      <Label text="Version Thingy" BorderPane.alignment="CENTER">
-         <font>
-            <Font name="System Bold" size="36.0" />
-         </font>
-      </Label>
-   </top>
-   <center>
-      <VBox BorderPane.alignment="CENTER">
-         <children>
-            <GridPane>
-              <columnConstraints>
-                <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="140.0" />
-                  <ColumnConstraints fillWidth="false" halignment="CENTER" hgrow="NEVER" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="10.0" />
-                <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="115.0" />
-                  <ColumnConstraints halignment="RIGHT" hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="209.0" />
-              </columnConstraints>
-              <rowConstraints>
-                <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="25.0" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="25.0" vgrow="SOMETIMES" />
-              </rowConstraints>
-               <children>
-                  <Label text="Current version">
-                     <font>
-                        <Font name="System Bold" size="12.0" />
-                     </font>
-                  </Label>
-                  <Label text="Repository version" GridPane.rowIndex="1">
-                     <font>
-                        <Font name="System Bold" size="12.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="currentVersionLabel" text="?" GridPane.columnIndex="2" />
-                  <Label fx:id="repoVersionLabel" text="?" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                  <Label fx:id="updateLabel" text="New version available!" textFill="RED" GridPane.columnIndex="3" GridPane.rowIndex="1">
-                     <font>
-                        <Font name="System Bold Italic" size="12.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="upToDateLabel" text="Program is up-to-date." textFill="#123456" GridPane.columnIndex="3">
-                     <font>
-                        <Font name="System Bold Italic" size="12.0" />
-                     </font>
-                  </Label>
-                  <Separator orientation="VERTICAL" prefHeight="200.0" GridPane.columnIndex="1" GridPane.rowSpan="2147483647">
-                     <GridPane.margin>
-                        <Insets left="-4.0" />
-                     </GridPane.margin>
-                  </Separator>
-               </children>
-            </GridPane>
-            <VBox alignment="CENTER" VBox.vgrow="ALWAYS">
-               <children>
-                  <Label text="Patch Notes">
-                     <font>
-                        <Font name="System Bold" size="12.0" />
-                     </font>
-                     <padding>
-                        <Insets bottom="2.0" />
-                     </padding>
-                  </Label>
-                  <StackPane VBox.vgrow="ALWAYS">
-                     <children>
-                        <TextArea fx:id="changesTextArea" editable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="200.0" wrapText="true" StackPane.alignment="CENTER">
-                           <font>
-                              <Font name="Monospaced Regular" size="12.0" />
-                           </font></TextArea>
-                        <VBox fx:id="waitIndicator" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mouseTransparent="true" pickOnBounds="false">
-                           <children>
-                              <ProgressIndicator prefHeight="122.0" prefWidth="398.0" />
-                              <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="Working..." VBox.vgrow="ALWAYS" />
-                           </children>
-                        </VBox>
-                     </children>
-                  </StackPane>
-               </children>
-               <VBox.margin>
-                  <Insets top="10.0" />
-               </VBox.margin>
-            </VBox>
-         </children>
-      </VBox>
-   </center>
-   <padding>
-      <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
-   </padding>
-   <bottom>
-      <HBox BorderPane.alignment="CENTER">
-         <BorderPane.margin>
-            <Insets top="5.0" />
-         </BorderPane.margin>
-         <children>
-            <CheckBox fx:id="startupCheckCheckBox" alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" text="Look for updates on startup" />
-            <Pane HBox.hgrow="ALWAYS" />
-            <Button fx:id="downloadButton" alignment="CENTER" contentDisplay="RIGHT" defaultButton="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#onDownload" prefWidth="120.0" text="Download .zip-file">
-               <HBox.margin>
-                  <Insets right="2.0" />
-               </HBox.margin>
-            </Button>
-          <Button fx:id="closeButton" alignment="CENTER" cancelButton="true" contentDisplay="RIGHT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#onClose" prefWidth="120.0" text="Close Dialog">
-               <HBox.margin>
-                  <Insets left="2.0" />
-               </HBox.margin>
-            </Button>
-         </children>
-      </HBox>
-   </bottom>
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="400.0" prefWidth="700.0"
+            xmlns="http://javafx.com/javafx/9.0.1" fx:controller="gui.UpdateViewController">
+    <left>
+        <ImageView fitHeight="200.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true"
+                   BorderPane.alignment="CENTER">
+            <image>
+                <Image url="@../img/download.png"/>
+            </image>
+            <BorderPane.margin>
+                <Insets right="15.0"/>
+            </BorderPane.margin>
+        </ImageView>
+    </left>
+    <top>
+        <Label text="Version Thingy" BorderPane.alignment="CENTER">
+            <font>
+                <Font name="System Bold" size="36.0"/>
+            </font>
+        </Label>
+    </top>
+    <center>
+        <VBox BorderPane.alignment="CENTER">
+            <children>
+                <GridPane>
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0"
+                                           prefWidth="140.0"/>
+                        <ColumnConstraints fillWidth="false" halignment="CENTER" hgrow="NEVER" maxWidth="-Infinity"
+                                           minWidth="-Infinity" prefWidth="10.0"/>
+                        <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0"
+                                           prefWidth="115.0"/>
+                        <ColumnConstraints halignment="RIGHT" hgrow="ALWAYS" maxWidth="1.7976931348623157E308"
+                                           minWidth="10.0" prefWidth="209.0"/>
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="25.0"
+                                        vgrow="SOMETIMES"/>
+                        <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="25.0"
+                                        vgrow="SOMETIMES"/>
+                    </rowConstraints>
+                    <children>
+                        <Label text="Current version">
+                            <font>
+                                <Font name="System Bold" size="12.0"/>
+                            </font>
+                        </Label>
+                        <Label text="Repository version" GridPane.rowIndex="1">
+                            <font>
+                                <Font name="System Bold" size="12.0"/>
+                            </font>
+                        </Label>
+                        <Label fx:id="currentVersionLabel" text="?" GridPane.columnIndex="2"/>
+                        <Label fx:id="repoVersionLabel" text="?" GridPane.columnIndex="2" GridPane.rowIndex="1"/>
+                        <Label fx:id="updateLabel" text="New version available!" textFill="RED" GridPane.columnIndex="3"
+                               GridPane.rowIndex="1">
+                            <font>
+                                <Font name="System Bold Italic" size="12.0"/>
+                            </font>
+                        </Label>
+                        <Label fx:id="upToDateLabel" text="Program is up-to-date." textFill="#123456"
+                               GridPane.columnIndex="3">
+                            <font>
+                                <Font name="System Bold Italic" size="12.0"/>
+                            </font>
+                        </Label>
+                        <Separator orientation="VERTICAL" prefHeight="200.0" GridPane.columnIndex="1"
+                                   GridPane.rowSpan="2147483647">
+                            <GridPane.margin>
+                                <Insets left="-4.0"/>
+                            </GridPane.margin>
+                        </Separator>
+                    </children>
+                </GridPane>
+                <VBox alignment="CENTER" VBox.vgrow="ALWAYS">
+                    <children>
+                        <Label text="Patch Notes">
+                            <font>
+                                <Font name="System Bold" size="12.0"/>
+                            </font>
+                            <padding>
+                                <Insets bottom="2.0"/>
+                            </padding>
+                        </Label>
+                        <StackPane VBox.vgrow="ALWAYS">
+                            <children>
+                                <TextArea fx:id="changesTextArea" editable="false" maxHeight="1.7976931348623157E308"
+                                          maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="200.0"
+                                          wrapText="true" StackPane.alignment="CENTER">
+                                    <font>
+                                        <Font name="Monospaced Regular" size="12.0"/>
+                                    </font>
+                                </TextArea>
+                                <VBox fx:id="waitIndicator" alignment="CENTER" maxHeight="1.7976931348623157E308"
+                                      maxWidth="1.7976931348623157E308" mouseTransparent="true" pickOnBounds="false">
+                                    <children>
+                                        <ProgressIndicator prefHeight="122.0" prefWidth="398.0"/>
+                                        <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="Working..."
+                                               VBox.vgrow="ALWAYS"/>
+                                    </children>
+                                </VBox>
+                            </children>
+                        </StackPane>
+                    </children>
+                    <VBox.margin>
+                        <Insets top="10.0"/>
+                    </VBox.margin>
+                </VBox>
+            </children>
+        </VBox>
+    </center>
+    <padding>
+        <Insets bottom="15.0" left="15.0" right="15.0" top="15.0"/>
+    </padding>
+    <bottom>
+        <HBox BorderPane.alignment="CENTER">
+            <BorderPane.margin>
+                <Insets top="5.0"/>
+            </BorderPane.margin>
+            <children>
+                <CheckBox fx:id="startupCheckCheckBox" alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308"
+                          maxWidth="1.7976931348623157E308" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT"
+                          text="Look for updates on startup"/>
+                <Pane HBox.hgrow="ALWAYS"/>
+                <Button fx:id="downloadButton" alignment="CENTER" contentDisplay="RIGHT" defaultButton="true"
+                        maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+                        mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#onDownload" prefWidth="120.0"
+                        text="Download .zip-file">
+                    <HBox.margin>
+                        <Insets right="2.0"/>
+                    </HBox.margin>
+                </Button>
+                <Button fx:id="closeButton" alignment="CENTER" cancelButton="true" contentDisplay="RIGHT"
+                        maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+                        mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#onClose" prefWidth="120.0"
+                        text="Close Dialog">
+                    <HBox.margin>
+                        <Insets left="2.0"/>
+                    </HBox.margin>
+                </Button>
+            </children>
+        </HBox>
+    </bottom>
 </BorderPane>

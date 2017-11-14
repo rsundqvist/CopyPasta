@@ -22,6 +22,7 @@ public class FeedbackText extends BorderPane implements FileViewController.FileF
   private final CodeArea codeArea;
   // endregion
   private Feedback feedback;
+
   public FeedbackText() {
     codeArea = new CodeArea();
     codeArea.setParagraphGraphicFactory(LineNumberFactory.get(codeArea));

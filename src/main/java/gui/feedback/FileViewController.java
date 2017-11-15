@@ -9,6 +9,7 @@ import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.input.DragEvent;
@@ -31,7 +32,8 @@ public class FileViewController {
   @FXML private Label copiedLabel = null;
   private FileTab currentFileTab = null;
   private boolean feedbackLine = true, feedbackColumn = false;
-  private boolean editable = false;
+  private boolean editable = false, wrap = false;
+
   /**
    * Indent a String using Google-style1 java indentation.
    *
@@ -77,7 +79,12 @@ public class FileViewController {
   public void update() {
     sourceTabs.getTabs().clear();
     Map<String, String> files = feedback.getFiles();
-    for (String key : files.keySet()) sourceTabs.getTabs().add(new FileTab(key, files.get(key)));
+    for (String key : files.keySet()) {
+      FileTab fileTab = new FileTab(key, files.get(key));
+      fileTab.setEditable(editable);
+      fileTab.setWrap(wrap);
+      sourceTabs.getTabs().add(fileTab);
+    }
   }
 
   public void onFeedbackContext() {
@@ -107,6 +114,14 @@ public class FileViewController {
                   fileTab.setEditable(false);
                 });
       }
+    }
+  }
+
+  public void toggleWrap(Event e) {
+    wrap = ((ToggleButton) e.getSource()).isSelected();
+    for (Tab tab : sourceTabs.getTabs()) {
+      FileTab fileTab = (FileTab) tab;
+      fileTab.setWrap(wrap);
     }
   }
 
@@ -180,6 +195,7 @@ public class FileViewController {
     feedback.addFile(fileName, content);
     FileTab fileTab = new FileTab(fileName, content);
     fileTab.setEditable(editable);
+    fileTab.setWrap(wrap);
     sourceTabs.getTabs().add(fileTab);
   }
 

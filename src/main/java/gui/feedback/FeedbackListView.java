@@ -150,6 +150,8 @@ public class FeedbackListView extends ListView<Feedback> {
   }
 
   public void update() {
+    System.out.println("FeedbackListView.update");
+    System.out.println("feedbackList.size() = " + feedbackList.size());
     update(feedbackList);
   }
 

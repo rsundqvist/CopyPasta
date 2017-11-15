@@ -9,9 +9,9 @@ public interface FeedbackListener {
   /** Will not call {@link #listChanged()} also - this is implicit */
   void toggleDone(List<Feedback> feedbackList);
 
-  void preview(List<Feedback> feedback);
+  void preview(List<Feedback> feedbackList);
 
-  boolean exportFeedback(List<Feedback> feedback, boolean asTxt, boolean asJson);
+  boolean exportFeedback(List<Feedback> feedbackList, boolean asTxt, boolean asJson);
 
   /** Indicates that the list has changed (add/remove items usually) */
   void listChanged();

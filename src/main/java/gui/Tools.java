@@ -248,5 +248,13 @@ public abstract class Tools {
 
     return supported;
   }
+
+  public static void notSupportedInView() {
+    Alert alert = new Alert(Alert.AlertType.ERROR, "Not supported in this view.", ButtonType.CLOSE);
+    alert.setHeaderText("Not supported");
+    alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+    alert.getDialogPane().setMinWidth(Region.USE_PREF_SIZE);
+    alert.showAndWait();
+  }
   // endregion
 }

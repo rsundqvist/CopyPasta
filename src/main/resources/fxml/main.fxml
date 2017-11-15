@@ -15,8 +15,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<VBox xmlns:fx="http://javafx.com/fxml/1" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
-      minHeight="0.0"
+<VBox xmlns:fx="http://javafx.com/fxml/1" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0"
       minWidth="0.0" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/9.0.1"
       fx:controller="gui.Controller">
     <children>
@@ -105,13 +104,6 @@
                                 <MenuItem mnemonicParsing="false" onAction="#importTemplate" text="Import Template">
                                     <accelerator>
                                         <KeyCodeCombination alt="UP" code="I" control="DOWN" meta="UP" shift="DOWN"
-                                                            shortcut="UP"/>
-                                    </accelerator>
-                                </MenuItem>
-                                <SeparatorMenuItem mnemonicParsing="false"/>
-                                <MenuItem mnemonicParsing="false" onAction="#toggleFeedbackDone" text="Toggle done">
-                                    <accelerator>
-                                        <KeyCodeCombination alt="UP" code="D" control="DOWN" meta="UP" shift="UP"
                                                             shortcut="UP"/>
                                     </accelerator>
                                 </MenuItem>

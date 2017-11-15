@@ -53,8 +53,8 @@
                 <Insets bottom="2.0" left="2.0" right="2.0" top="2.0"/>
             </padding>
         </HBox>
-        <ListView fx:id="groupListView" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" minWidth="0.0"
-                  prefHeight="50.0" prefWidth="125.0" GridPane.rowIndex="3" GridPane.vgrow="ALWAYS"/>
+        <VBox fx:id="feedbackListContainer" maxHeight="1.7976931348623157E308" minWidth="-Infinity"
+              GridPane.rowIndex="3" GridPane.vgrow="ALWAYS"/>
         <Label text="Detected Groups" GridPane.rowIndex="2"/>
         <Label text="Files" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
         <ListView fx:id="filesListView" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" minWidth="0.0"

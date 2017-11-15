@@ -14,11 +14,12 @@ import model.Feedback;
 import model.FeedbackListener;
 import model.FeedbackManager;
 import model.Pasta;
+import org.fxmisc.flowless.VirtualizedScrollPane;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class GroupViewController implements FileViewController.FileFeedbackListener {
+public class GroupViewController implements FileViewController.FileViewListener {
   public static final boolean SWITCH_TO_FEEDBACK_ON_QUICKINSERT = false;
 
   @FXML
@@ -42,8 +43,8 @@ public class GroupViewController implements FileViewController.FileFeedbackListe
   }
 
   public void initialize() {
-    feedbackTab.setContent(feedbackText);
-    fileViewController.setListener(this);
+    feedbackTab.setContent(new VirtualizedScrollPane<>(feedbackText));
+    fileViewController.initialize(this);
     gradeChoiceBox.getItems().add(Feedback.GRADE_NOT_SET_OPTION);
     gradeChoiceBox.getSelectionModel().select(Feedback.GRADE_NOT_SET_OPTION);
     fileViewController
@@ -112,14 +113,14 @@ public class GroupViewController implements FileViewController.FileFeedbackListe
   }
 
   @Override
-  public void feedbackAt(String file, int caretLine, int caretColumn, int caretPosition) {
-    feedbackText.feedbackAt(file, caretLine, caretColumn, caretPosition);
+  public void feedbackAt(String file, int caretLine, int caretColumn) {
+    feedbackText.feedbackAt(file, caretLine, caretColumn);
     viewsPane.getSelectionModel().select(feedbackTab);
   }
 
-  public void feedbackAt(
-      String file, String content, int caretLine, int caretColumn, int caretPosition) {
-    feedbackText.feedbackAt(file, content, caretLine, caretColumn, caretPosition);
+  @Override
+  public void feedbackAt(String file, String content, int caretLine, int caretColumn) {
+    feedbackText.feedbackAt(file, content, caretLine, caretColumn);
     viewsPane.getSelectionModel().select(feedbackTab);
   }
 
@@ -135,8 +136,7 @@ public class GroupViewController implements FileViewController.FileFeedbackListe
           fileAndCaretPos.getKey(),
           pasta.getContent(),
           fileViewController.getCaretLine(),
-          fileViewController.getCaretColumn(),
-          -1);
+          fileViewController.getCaretColumn());
 
       fileViewController.flashCopiedlabel();
       if (SWITCH_TO_FEEDBACK_ON_QUICKINSERT) viewsPane.getSelectionModel().select(feedbackTab);

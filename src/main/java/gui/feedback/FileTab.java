@@ -1,5 +1,6 @@
 package gui.feedback;
 
+import gui.JavaCodeArea;
 import javafx.scene.control.Tab;
 import org.fxmisc.flowless.VirtualizedScrollPane;
 import org.fxmisc.richtext.model.TwoDimensional;
@@ -28,6 +29,8 @@ public class FileTab extends Tab {
     jca = new JavaCodeArea(content);
     jca.setEditable(false);
     setContent(new VirtualizedScrollPane<>(jca));
+    jca.moveTo(0);
+    jca.requestFollowCaret();
   }
 
   public void setContentText(String text) {
@@ -60,5 +63,9 @@ public class FileTab extends Tab {
 
   public void setEditable(boolean value) {
     jca.setEditable(value);
+  }
+
+  public boolean isTextFocused() {
+    return jca.isFocused();
   }
 }

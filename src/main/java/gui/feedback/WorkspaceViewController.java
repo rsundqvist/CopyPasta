@@ -20,6 +20,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import model.Feedback;
 import model.FeedbackListener;
@@ -89,6 +90,7 @@ public class WorkspaceViewController implements FeedbackListener {
               ButtonType.CANCEL);
       alert.setHeaderText("Overwrite existing groups?");
 
+      alert.getDialogPane().setPrefWidth(Region.USE_PREF_SIZE);
       Optional<ButtonType> result = alert.showAndWait();
       if (!result.isPresent() || result.get() == ButtonType.CANCEL) return;
 
@@ -115,6 +117,7 @@ public class WorkspaceViewController implements FeedbackListener {
   public void createFeedbackItems() {
     String str = studentGroupField.getText();
     List<String> groups = Tools.extractTokens(str);
+    if (groups.isEmpty()) groups.add("New group");
     createFeedbackItems(groups);
   }
 
@@ -380,6 +383,8 @@ public class WorkspaceViewController implements FeedbackListener {
         new Alert(Alert.AlertType.INFORMATION, contentText, ButtonType.YES, ButtonType.NO);
     alert.setHeaderText("All feedback done!");
 
+    alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+    alert.getDialogPane().setMinWidth(Region.USE_PREF_SIZE);
     Optional<ButtonType> result = alert.showAndWait();
     if (result.isPresent() && result.get() == ButtonType.YES) exportAllFeedback();
   }

@@ -33,8 +33,8 @@ public class SettingsEditorController {
       Label optionlabel = new Label(s[Settings.OPTION_INDEX]);
       TextFlow aboutText = new TextFlow(new Text(s[Settings.ABOUT_INDEX]));
       Label typeLabel = new Label(s[Settings.TYPE_INDEX]);
-      aboutText.setStyle("-fx-font-style: italic;");
-      typeLabel.setStyle("-fx-font-style: italic; -fox-font-weight: bold;");
+      aboutText.setStyle("-fx-font-style1: italic;");
+      typeLabel.setStyle("-fx-font-style1: italic; -fox-font-weight: bold;");
       optionsGrid.addRow(
           row++,
           optionlabel,

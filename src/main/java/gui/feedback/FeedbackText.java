@@ -1,81 +1,13 @@
 package gui.feedback;
 
+import gui.ContentText;
 import gui.Tools;
-import javafx.scene.layout.BorderPane;
 import model.Feedback;
-import org.fxmisc.flowless.VirtualizedScrollPane;
-import org.fxmisc.richtext.CodeArea;
-import org.fxmisc.richtext.LineNumberFactory;
-import org.fxmisc.richtext.model.StyleSpans;
-import org.fxmisc.richtext.model.StyleSpansBuilder;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-/** Created by Richard Sundqvist on 12/04/2017. */
-public class FeedbackText extends BorderPane implements FileViewController.FileFeedbackListener {
-  // region strings
-  private static final String TAG_PATTERN = createTagPattern(); // "\\%(.*?)\\%";
-  private static final Pattern PATTERN = Pattern.compile("(?<TAG>" + TAG_PATTERN + ")");
-  private final CodeArea codeArea;
-  // endregion
+public class FeedbackText extends ContentText implements FileViewController.FileViewListener {
+  protected static final String DONE_STYLE =
+      "-fx-font-family: monospaced regular; -fx-font-size: 11pt; -fx-background-color: #aaffaa;";
   private Feedback feedback;
-
-  public FeedbackText() {
-    codeArea = new CodeArea();
-    codeArea.setParagraphGraphicFactory(LineNumberFactory.get(codeArea));
-    codeArea
-        .textProperty()
-        .addListener(
-            event -> {
-              feedback.setContent(codeArea.getText());
-            });
-
-    codeArea
-        .richChanges()
-        .filter(ch -> !ch.getInserted().equals(ch.getRemoved()))
-        .subscribe(
-            change -> {
-              String text = codeArea.getText();
-              if (text != null && !text.isEmpty()) // Prevent exception
-              codeArea.setStyleSpans(0, computeHighlighting(text));
-            });
-    setCenter(new VirtualizedScrollPane<>(codeArea));
-  }
-
-  private static String createTagPattern() {
-    StringBuilder sb = new StringBuilder();
-
-    String[] s = {
-      Feedback.HEADER,
-      Feedback.FOOTER,
-      Feedback.GROUP,
-      Feedback.GRADE,
-      Feedback.MANUAL,
-      Feedback.SIGNATURE,
-      Feedback.FILE_REGEX
-    };
-    for (String regex : s) sb.append(regex + "|");
-
-    return sb.toString();
-  }
-
-  private static StyleSpans<Collection<String>> computeHighlighting(String text) {
-    Matcher matcher = PATTERN.matcher(text);
-    int lastKwEnd = 0;
-    StyleSpansBuilder<Collection<String>> spansBuilder = new StyleSpansBuilder<>();
-    while (matcher.find()) {
-      String styleClass = matcher.group("TAG") != null ? "tag" : null; /* never happens */
-      assert styleClass != null;
-      spansBuilder.add(Collections.emptyList(), matcher.start() - lastKwEnd);
-      spansBuilder.add(Collections.singleton(styleClass), matcher.end() - matcher.start());
-      lastKwEnd = matcher.end();
-    }
-    spansBuilder.add(Collections.emptyList(), text.length() - lastKwEnd);
-    return spansBuilder.create();
-  }
 
   private static String caretString(int caretLine, int caretColumn) {
     StringBuilder stringBuilder = new StringBuilder();
@@ -93,67 +25,39 @@ public class FeedbackText extends BorderPane implements FileViewController.FileF
     return Tools.getDecoratedHeadline(s) + "\n" + Feedback.getFileTag(s);
   }
 
-  public void setFeedback(Feedback feedback) {
-    this.feedback = feedback;
-    updateColor();
-    setText(feedback.getContent());
-  }
-
-  public String getText() {
-    return codeArea.getText();
-  }
-
-  public void setText(String text) {
-    codeArea.replaceText(0, 0, text);
-  }
-
   public void updateColor() {
-    if (feedback.isDone())
-      codeArea.setStyle(
-          "-fx-font-family: monospaced regular; -fx-font-size: 11pt; -fx-background-color: #55e055;");
-    else
-      codeArea.setStyle(
-          "-fx-font-family: monospaced regular; -fx-font-size: 11pt; -fx-background-color: #dddddd;");
+    setStyle(feedback.isDone() ? DONE_STYLE : PLAIN_STYLE);
   }
 
   @Override
-  public void feedbackAt(String file, int caretLine, int caretColumn, int caretPosition) {
-    int pos = feedback.getFileTagPosition(file);
-
-    String caretInfo = caretString(caretLine, caretColumn);
-    String text = "\nAt " + caretInfo + ":  \n";
-    if (pos < 0) { // No FILE-tag
-      pos = feedback.getContent().indexOf(Feedback.FOOTER) - 1; // Place above footer, if it exists.
-      if (pos < 0) // No footer - place at end of file.
-      pos = feedback.getContent().length();
-
-      text = getFileTagHeadline(file) + text;
-    }
-    insertText(pos, text);
+  public void feedbackAt(String file, int caretLine, int caretColumn) {
+    insertFeedback(file, "", caretLine, caretColumn);
   }
 
-  public void feedbackAt(
-      String file, String content, int caretLine, int caretColumn, int caretPosition) {
-    String text;
-    if (caretLine < 0 && caretColumn < 0) text = "\n";
-    else text = "\nAt " + caretString(caretLine, caretColumn) + ":\n";
-
-    int pos = feedback.getFileTagPosition(file);
-    if (pos < 0) { // No FILE-tag or footer present.
-      pos = feedback.getContent().indexOf(Feedback.FOOTER) - 1; // Place above footer, if it exists.
-      if (pos < 0) // No footer - place at end of file.
-      pos = feedback.getContent().length();
-
-      text = getFileTagHeadline(file) + text;
-    }
-    insertText(pos, text + content);
+  public void feedbackAt(String file, String content, int caretLine, int caretColumn) {
+    insertFeedback(file, content, caretLine, caretColumn);
   }
 
-  public void insertText(int pos, String s) {
-    codeArea.insertText(pos, s);
+  private void insertFeedback(String file, String text, int caretLine, int caretColumn) {
+    String posText = "\nAt " + caretString(caretLine, caretColumn) + ":\n";
+
+    int pos = feedback.getFileTagPosition(file);
+    if (pos < 0) { // File doesn't exist - look for footer
+      pos = feedback.getContent().indexOf(Feedback.FOOTER) - 1;
+      if (pos < 0) pos = feedback.getContent().length(); // Footer doesn't exist - place at end
+      text = getFileTagHeadline(file) + text;
+    }
+
+    insertText(pos, posText + text);
+    requestFollowCaret();
   }
 
   public void insertTextAtCaret(String s) {
-    insertText(codeArea.getCaretPosition(), s);
+    insertText(getCaretPosition(), s);
+  }
+
+  public void setFeedback(Feedback feedback) {
+    this.feedback = feedback;
+    setContent(feedback);
   }
 }

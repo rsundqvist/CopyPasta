@@ -19,9 +19,11 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.SeparatorMenuItem;
+import javafx.scene.layout.Region;
 import javafx.stage.Modality;
 import javafx.util.Duration;
 import model.IO;
+import model.ManagerListener;
 import model.Pasta;
 import model.UniqueArrayList;
 import zip.GroupImporter;
@@ -37,12 +39,9 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
-import java.util.List;
 import java.util.Optional;
 
-public class Controller
-    implements PastaViewController.PastaControllerListener,
-        GroupImporterController.GroupImporterListener {
+public class Controller implements PastaViewController.PastaControllerListener, ManagerListener {
 
   private static final UniqueArrayList<String> recentWorkspaces = new UniqueArrayList();
   @FXML private PastaViewController pastaViewController = null;
@@ -178,7 +177,7 @@ public class Controller
     workspaceViewController.quickInsert(pasta);
   }
 
-  public String getCurrentAssignment() {
+  public String getAssignment() {
     return workspaceViewController.getAssignment();
   }
 
@@ -232,26 +231,10 @@ public class Controller
   }
 
   public void openPastaEditor() {
-    UniqueArrayList<Pasta> pastaList = pastaViewController.getPastaList();
-
-    List<Pasta> copy = Pasta.copy(pastaList);
-    PastaEditor pastaEditor = new PastaEditor(copy, workspaceViewController.getAssignment());
-    UniqueArrayList<Pasta> editorPastaList = pastaEditor.showAndWait();
-
-    if (!editorPastaList.equals(pastaList)) {
-      pastaList = editorPastaList;
-      Alert alert =
-          new Alert(
-              Alert.AlertType.CONFIRMATION,
-              "Replace current Pasta with editor Pasta?",
-              ButtonType.YES,
-              ButtonType.NO);
-      alert.setHeaderText("Replace current pasta?");
-
-      Optional<ButtonType> result = alert.showAndWait();
-      if (result.isPresent() && result.get() == ButtonType.YES)
-        pastaViewController.setPastaList(pastaList);
-    }
+    new PastaEditor(
+        pastaViewController,
+        pastaViewController.getPastaManager(),
+        workspaceViewController.getAssignment());
   }
 
   public void about() {
@@ -309,6 +292,8 @@ public class Controller
     Alert alert = new Alert(Alert.AlertType.WARNING, contentText, bt2, bt);
     alert.setHeaderText("Current work will be lost");
 
+    alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+    alert.getDialogPane().setMinWidth(Region.USE_PREF_SIZE);
     Optional<ButtonType> result = alert.showAndWait();
 
     if (result.isPresent() && result.get() == bt) loadExample();

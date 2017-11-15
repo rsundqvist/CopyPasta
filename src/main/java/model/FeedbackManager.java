@@ -1,7 +1,7 @@
 package model;
 
+import gui.JavaCodeArea;
 import gui.Tools;
-import gui.feedback.JavaCodeArea;
 import gui.settings.Settings;
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
@@ -9,6 +9,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
 import org.fxmisc.flowless.VirtualizedScrollPane;
 
 import java.io.File;
@@ -65,6 +66,8 @@ public class FeedbackManager {
     alert.getDialogPane().setExpandableContent(new VirtualizedScrollPane<>(jca));
     alert.getDialogPane().setExpanded(true);
 
+    alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+    alert.getDialogPane().setMinWidth(Region.USE_PREF_SIZE);
     alert.showAndWait();
   }
 
@@ -128,6 +131,8 @@ public class FeedbackManager {
 
         alert.setHeaderText("Really delete feedback for group \"" + feedback.getGroup() + "\"?");
 
+        alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+        alert.getDialogPane().setMinWidth(Region.USE_PREF_SIZE);
         Optional<ButtonType> result = alert.showAndWait();
         if (!result.isPresent() || result.get() != ButtonType.OK) return false;
       }
@@ -183,6 +188,8 @@ public class FeedbackManager {
     alert.getDialogPane().setExpanded(true);
 
     Platform.runLater(() -> textField1.requestFocus());
+    alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+    alert.getDialogPane().setMinWidth(Region.USE_PREF_SIZE);
     Optional<ButtonType> result = alert.showAndWait();
     if (!result.isPresent() || result.get() == ButtonType.CANCEL) return false;
 

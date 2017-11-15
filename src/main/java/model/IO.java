@@ -8,6 +8,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 
@@ -40,6 +41,7 @@ import java.util.zip.ZipFile;
 public abstract class IO {
   public static final String ENCODING = "UTF-8";
   private static final Gson gson = build();
+  public static boolean SUPPRESS_FXML = true;
 
   private IO() {}
 
@@ -491,6 +493,7 @@ public abstract class IO {
    * @param ex The exception to show.
    */
   public static void showExceptionAlert(Exception ex) {
+    if (SUPPRESS_FXML) return;
     ex.printStackTrace();
 
     Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -522,7 +525,8 @@ public abstract class IO {
 
     // Set expandable Exception into the dialog pane.
     alert.getDialogPane().setExpandableContent(expContent);
-
+    alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+    alert.getDialogPane().setMinWidth(Region.USE_PREF_SIZE);
     alert.showAndWait();
   }
 

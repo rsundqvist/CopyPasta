@@ -9,18 +9,17 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.FeedbackManager;
 import model.IO;
+import model.ManagerListener;
 
 /** Created by Richard Sundqvist on 17/04/2017. */
-public class GroupImporter implements GroupImporterController.GroupImporterListener {
+public class GroupImporter implements ManagerListener {
   private final Stage stage;
   private final GroupImporterController controller;
-  private final GroupImporterController.GroupImporterListener listener;
+  private final ManagerListener listener;
 
-  public GroupImporter(
-      FeedbackManager feedbackManager, GroupImporterController.GroupImporterListener listener) {
+  public GroupImporter(FeedbackManager feedbackManager, ManagerListener listener) {
     this.listener = listener;
 
-    stage = new Stage();
     FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/groupImporter.fxml"));
     GridPane root = null;
     try {
@@ -30,9 +29,13 @@ public class GroupImporter implements GroupImporterController.GroupImporterListe
       e.printStackTrace();
     }
 
+    stage = new Stage();
     stage.setTitle("Group Importer \u00a9 Richard Sundqvist");
     stage.getIcons().add(new Image(PastaEditor.class.getResourceAsStream("/img/icon.png")));
+
     Scene scene = new Scene(root, root.getPrefWidth(), root.getPrefHeight());
+    stage.setMinWidth(root.getMinWidth());
+    stage.setMinHeight(root.getMinHeight());
     stage.setScene(scene);
     stage.initModality(Modality.APPLICATION_MODAL);
 

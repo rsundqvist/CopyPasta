@@ -21,8 +21,9 @@
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.text.TextFlow?>
 <GridPane xmlns:fx="http://javafx.com/fxml/1" fx:id="rootGrid" hgap="5.0" maxHeight="1.7976931348623157E308"
-          maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="600.0" prefWidth="1200.0"
-          xmlns="http://javafx.com/javafx/9.0.1" fx:controller="zip.GroupImporterController">
+          maxWidth="1.7976931348623157E308" minHeight="500.0" minWidth="900.0" prefHeight="600.0"
+          prefWidth="1200.0" xmlns="http://javafx.com/javafx/9.0.1"
+          fx:controller="zip.GroupImporterController">
     <columnConstraints>
         <ColumnConstraints hgrow="NEVER" minWidth="10.0" prefWidth="125.0"/>
         <ColumnConstraints hgrow="NEVER" minWidth="10.0" prefWidth="125.0"/>
@@ -152,8 +153,8 @@
                    GridPane.rowIndex="5">
             <buttons>
                 <Button fx:id="replaceAllButton" cancelButton="true" disable="true" maxWidth="-Infinity"
-                        minWidth="-Infinity" mnemonicParsing="false" onAction="#onReplaceAll" prefWidth="120.0"
-                        text="Replace All">
+                        minWidth="-Infinity" mnemonicParsing="false" onAction="#onReplaceAll" prefWidth="15.0"
+                        text="Replace">
                     <font>
                         <Font size="14.0"/>
                     </font>
@@ -168,7 +169,7 @@
                     </font>
                 </Button>
                 <Button defaultButton="true" maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false"
-                        onAction="#onImport" prefWidth="120.0" text="Import New">
+                        onAction="#onImport" prefWidth="120.0" text="Import">
                     <font>
                         <Font size="14.0"/>
                     </font>
@@ -179,7 +180,7 @@
             </buttons>
         </ButtonBar>
         <CheckBox fx:id="erpaCheckBox" maxWidth="1.7976931348623157E308" mnemonicParsing="false"
-                  text="Enable &quot;Replace All&quot; button" GridPane.columnSpan="2" GridPane.rowIndex="5">
+                  text="Enable &quot;Replace&quot; button" GridPane.columnSpan="2" GridPane.rowIndex="5">
             <tooltip>
                 <Tooltip text="Better safe than sorry."/>
             </tooltip>

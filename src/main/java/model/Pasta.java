@@ -7,7 +7,7 @@ import java.util.Date;
 import java.util.List;
 
 /** @author Richard Sundqvist */
-public class Pasta implements Comparable<Pasta>, Cloneable {
+public class Pasta implements Comparable<Pasta>, Cloneable, Content {
 
   // region Constant
   // ================================================================================= //
@@ -41,8 +41,8 @@ public class Pasta implements Comparable<Pasta>, Cloneable {
     contentTags = new UniqueArrayList<>();
     assignmentTags = new UniqueArrayList<>();
 
-    title = null;
-    content = null;
+    title = "";
+    content = "";
   }
 
   /**
@@ -53,12 +53,8 @@ public class Pasta implements Comparable<Pasta>, Cloneable {
   public Pasta(Pasta orig) {
     creationDate = orig.creationDate;
     lastModificationDate = orig.lastModificationDate;
-    contentTags = new UniqueArrayList<>();
-    contentTags.addAll(orig.contentTags);
-
-    assignmentTags = new UniqueArrayList<>();
-    assignmentTags.addAll(orig.assignmentTags);
-
+    contentTags = new UniqueArrayList<>(orig.contentTags);
+    assignmentTags = new UniqueArrayList<>(orig.assignmentTags);
     title = orig.title;
     content = orig.content;
   }
@@ -217,11 +213,13 @@ public class Pasta implements Comparable<Pasta>, Cloneable {
     if (other instanceof Pasta) { // "null instanceof class" evaluates to false
       Pasta rhs = (Pasta) other;
 
-      return (content == null && rhs.content == null
-              || content != null && content.equals(rhs.content))
-          && (title == null && rhs.title == null || title != null && title.equals(rhs.title))
-          && contentTags.equals(rhs.contentTags)
-          && assignmentTags.equals(rhs.assignmentTags);
+      boolean contentEqual =
+          (content == rhs.content) || (content != null && content.equals(rhs.content));
+      boolean titlesEqual = getTitle().equals(rhs.getTitle());
+      boolean listsEqual = // Equals for a list depends on order -- not what we want.
+          contentTags.containsAll(rhs.contentTags)
+              && assignmentTags.containsAll(rhs.assignmentTags);
+      return contentEqual && titlesEqual && listsEqual;
     }
 
     return false;
@@ -233,6 +231,7 @@ public class Pasta implements Comparable<Pasta>, Cloneable {
     return getTitle().compareTo(o.getTitle());
   }
 
+  @Override
   public Pasta clone() {
     return new Pasta(this);
   }

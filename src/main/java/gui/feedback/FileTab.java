@@ -65,6 +65,10 @@ public class FileTab extends Tab {
     jca.setEditable(value);
   }
 
+  public void setWrap(boolean value) {
+    jca.setWrapText(value);
+  }
+
   public boolean isTextFocused() {
     return jca.isFocused();
   }

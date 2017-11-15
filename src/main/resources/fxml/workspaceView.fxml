@@ -109,7 +109,7 @@
                                           prefWidth="200.0" textAlignment="CENTER" VBox.vgrow="NEVER">
                                     <children>
                                         <Text strokeType="OUTSIDE" strokeWidth="0.0"
-                                              text="Click a group to add it to the Workspace tab."
+                                              text="Select groups to add&#10;them your Workspace."
                                               textAlignment="CENTER" wrappingWidth="177.806640625">
                                             <font>
                                                 <Font name="System Italic" size="12.0"/>

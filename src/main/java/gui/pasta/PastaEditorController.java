@@ -1,6 +1,7 @@
 package gui.pasta;
 
 import gui.ContentText;
+import gui.Tools;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -248,12 +249,8 @@ public class PastaEditorController implements PastaViewController.PastaControlle
 
   @Override
   public void quickInsert(Pasta pasta) {
-    Alert alert = new Alert(Alert.AlertType.ERROR, "Not supported in this view.", ButtonType.CLOSE);
-    alert.setHeaderText("Not supported");
-    alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
-    alert.getDialogPane().setMinWidth(Region.USE_PREF_SIZE);
-    alert.showAndWait();
-  } // Do nothing
+    Tools.notSupportedInView();
+  }
 
   public String getAssignment() {
     return assignment;

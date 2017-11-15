@@ -2,6 +2,19 @@
 ___
 
 ## Patch Notes
+
+### Version `1.1.1`
+1.1.1
+17-11-2017
+* Added more controls to Group Importer: Delete/rename groups before import.
+
+### Version `1.1.0`
+15-11-2017
+* **MAJOR**: Fixed an issue which prevented proper export
+of feedback in some situations.
+* Fix remove feedback not done on toggle
+
+
 ### Version `1.0.4`
 15-11-2017
 * Fix and improve File feedback insert.

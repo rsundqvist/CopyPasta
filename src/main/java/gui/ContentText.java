@@ -25,7 +25,11 @@ public class ContentText extends CodeArea {
 
   public ContentText() {
     setParagraphGraphicFactory(LineNumberFactory.get(this));
-    textProperty().addListener(event -> content.setContent(getText()));
+    textProperty()
+        .addListener(
+            event -> {
+              if (content != null) content.setContent(getText());
+            });
 
     richChanges()
         .filter(ch -> !ch.getInserted().equals(ch.getRemoved()))

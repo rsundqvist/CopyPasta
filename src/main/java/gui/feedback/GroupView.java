@@ -2,6 +2,7 @@ package gui.feedback;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Tab;
+import javafx.scene.layout.Pane;
 import model.Feedback;
 import model.FeedbackListener;
 import model.FeedbackManager;
@@ -18,14 +19,17 @@ public class GroupView extends Tab {
     this.feedback = feedback;
 
     FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/groupView.fxml"));
+    Pane root;
     try {
-      setContent(fxmlLoader.load());
+      root = fxmlLoader.load();
+      setContent(root);
     } catch (Exception e) {
       IO.showExceptionAlert(e);
       e.printStackTrace();
     }
     controller = fxmlLoader.getController();
     controller.initialize(feedback, listener);
+
     update();
   }
 

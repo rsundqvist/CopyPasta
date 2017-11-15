@@ -6,6 +6,7 @@ import javafx.collections.ListChangeListener;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ContextMenu;
@@ -56,8 +57,8 @@ public class WorkspaceViewController implements FeedbackListener {
       templateFooterInput;
   @FXML private StatisticsViewController statisticsViewController;
   @FXML private VBox feedbackListViewContainer;
-  // endregion
   private boolean hideDoneItems = true;
+  // endregion
 
   public void createFeedbackItems(List<String> groups) {
     // Groups exist already? Modified?
@@ -77,9 +78,12 @@ public class WorkspaceViewController implements FeedbackListener {
               + "Groups without modified content (unchanged): \n\t"
               + FeedbackManager.getGroups(existingUnmodified);
 
-      ButtonType replaceAll = new ButtonType("Overwrite All (" + numClash + ")");
+      ButtonType replaceAll =
+          new ButtonType("Overwrite All (" + numClash + ")", ButtonBar.ButtonData.HELP_2);
       ButtonType replaceUnchanged =
-          new ButtonType("Overwrite Unchanged (" + existingUnmodified.size() + ")");
+          new ButtonType(
+              "Overwrite Unchanged (" + existingUnmodified.size() + ")",
+              ButtonBar.ButtonData.OK_DONE);
 
       Alert alert =
           new Alert(
@@ -107,9 +111,11 @@ public class WorkspaceViewController implements FeedbackListener {
     if (newFeedbackList != null) {
       for (Feedback feedback : newFeedbackList) createFeedbackView(feedback);
 
-      if (newFeedbackList.size() > 1) rootTabPane.getSelectionModel().select(groupViewsTab);
+      if (!newFeedbackList.isEmpty()) {
+        rootTabPane.getSelectionModel().select(groupViewsTab);
+        groupViewsTabPane.getSelectionModel().select(0);
+      }
     }
-
     update();
   }
 
@@ -131,6 +137,7 @@ public class WorkspaceViewController implements FeedbackListener {
 
   private void updateTemplate() {
     updateTemplateFromInput(feedbackManager.getTemplate());
+    feedbackManager.updateFeedback();
   }
 
   private void updateTemplateFromInput(Feedback template) {
@@ -159,7 +166,14 @@ public class WorkspaceViewController implements FeedbackListener {
 
     MenuItem toggleDone = new MenuItem("Toggle done");
     toggleDone.setAccelerator(new KeyCodeCombination(KeyCode.D, KeyCombination.CONTROL_DOWN));
-    toggleDone.setOnAction(event -> toggleDone(Arrays.asList(tab.getFeedback())));
+    toggleDone.setOnAction(
+        event -> {
+          if (groupViewsTabPane.isVisible()) {
+            toggleDone(Arrays.asList(tab.getFeedback()));
+          } else {
+            System.out.println("WorkspaceViewController.createFeedbackTabContextMenu");
+          }
+        });
 
     MenuItem preview = new MenuItem("Preview");
     preview.setOnAction(event -> preview(tab));
@@ -301,8 +315,11 @@ public class WorkspaceViewController implements FeedbackListener {
     feedbackListViewContainer.getChildren().add(feedbackListView);
     feedbackListViewContainer = null;
 
+    // Don't want to show nothing on startup if theres feedback present.
+    hideDoneItems = !feedbackManager.isAllFeedbackDone();
     update();
     updateLockStatus();
+    hideDoneItems = true;
 
     feedbackListView
         .getSelectionModel()
@@ -485,8 +502,14 @@ public class WorkspaceViewController implements FeedbackListener {
     for (Feedback feedback : feedbackList)
       feedbackManager.setDoneStatus(feedback, !feedback.isDone());
     checkFeedbackDone();
+
     update(false);
-    if (hideDoneItems) groupViewsTabPane.getTabs().removeAll(getFeedbackViews(feedbackList));
+
+    if (hideDoneItems) {
+      feedbackList = new ArrayList<>(feedbackList);
+      feedbackList.removeIf(feedback -> !feedback.isDone());
+      groupViewsTabPane.getTabs().removeAll(getFeedbackViews(feedbackList));
+    }
   }
 
   @Override

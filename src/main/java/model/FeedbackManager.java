@@ -1,7 +1,7 @@
 package model;
 
-import gui.JavaCodeArea;
 import gui.Tools;
+import gui.feedback.FeedbackText;
 import gui.settings.Settings;
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
@@ -54,16 +54,19 @@ public class FeedbackManager {
     alert.setHeaderText("Feedback preview for group \"" + feedback.getGroup() + "\"");
     alert.setContentText("Output when exporting as a .txt-file:");
 
-    JavaCodeArea jca = new JavaCodeArea(feedback.getStylizedContent());
-    jca.setEditable(false);
-    jca.setWrapText(true);
+    FeedbackText feedbackText = new FeedbackText();
+    feedbackText.setText(feedback.toString());
+    feedbackText.setEditable(false);
+    feedbackText.setWrapText(true);
 
-    jca.setPrefSize(800, 500);
-    jca.setMaxWidth(Double.MAX_VALUE);
-    jca.setMaxHeight(Double.MAX_VALUE);
+    feedbackText.setPrefSize(800, 500);
+    feedbackText.setMaxWidth(Double.MAX_VALUE);
+    feedbackText.setMaxHeight(Double.MAX_VALUE);
+    feedbackText.moveTo(0);
+    feedbackText.requestFollowCaret();
 
     // Set expandable Exception into the dialog pane.
-    alert.getDialogPane().setExpandableContent(new VirtualizedScrollPane<>(jca));
+    alert.getDialogPane().setExpandableContent(new VirtualizedScrollPane<>(feedbackText));
     alert.getDialogPane().setExpanded(true);
 
     alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);

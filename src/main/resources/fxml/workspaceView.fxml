@@ -16,8 +16,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.text.TextFlow?>
-<TabPane xmlns:fx="http://javafx.com/fxml/1" fx:id="rootTabPane" maxHeight="1.7976931348623157E308"
-         maxWidth="1.7976931348623157E308"
+<TabPane xmlns:fx="http://javafx.com/fxml/1" fx:id="rootTabPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
          minHeight="0.0" minWidth="0.0" prefHeight="800.0" prefWidth="1200.0"
          xmlns="http://javafx.com/javafx/9.0.1" fx:controller="gui.feedback.WorkspaceViewController">
     <tabs>
@@ -109,7 +108,7 @@
                                           prefWidth="200.0" textAlignment="CENTER" VBox.vgrow="NEVER">
                                     <children>
                                         <Text strokeType="OUTSIDE" strokeWidth="0.0"
-                                              text="Click a group to add it to the Workspace tab."
+                                              text="Select groups to add&#10;them your Workspace."
                                               textAlignment="CENTER" wrappingWidth="177.806640625">
                                             <font>
                                                 <Font name="System Italic" size="12.0"/>

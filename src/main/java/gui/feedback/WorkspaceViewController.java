@@ -131,6 +131,7 @@ public class WorkspaceViewController implements FeedbackListener {
 
   private void updateTemplate() {
     updateTemplateFromInput(feedbackManager.getTemplate());
+    feedbackManager.updateFeedback();
   }
 
   private void updateTemplateFromInput(Feedback template) {
@@ -485,8 +486,14 @@ public class WorkspaceViewController implements FeedbackListener {
     for (Feedback feedback : feedbackList)
       feedbackManager.setDoneStatus(feedback, !feedback.isDone());
     checkFeedbackDone();
+
     update(false);
-    if (hideDoneItems) groupViewsTabPane.getTabs().removeAll(getFeedbackViews(feedbackList));
+
+    if (hideDoneItems) {
+      feedbackList = new ArrayList<>(feedbackList);
+      feedbackList.removeIf(feedback -> !feedback.isDone());
+      groupViewsTabPane.getTabs().removeAll(getFeedbackViews(feedbackList));
+    }
   }
 
   @Override

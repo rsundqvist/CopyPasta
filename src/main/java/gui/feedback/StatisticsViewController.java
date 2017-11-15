@@ -158,7 +158,9 @@ public class StatisticsViewController implements FeedbackListener {
   }
 
   @Override
-  public void preview(List<Feedback> feedback) {}
+  public void preview(List<Feedback> feedback) {
+    // Do nothing - View will notify the listener
+  }
 
   @Override
   public boolean exportFeedback(List<Feedback> feedback, boolean asTxt, boolean asJson) {

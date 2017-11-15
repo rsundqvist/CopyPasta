@@ -144,7 +144,7 @@ public class GroupViewController implements FileViewController.FileViewListener 
   }
 
   public void onPreview() {
-    FeedbackManager.preview(feedback);
+    listener.preview(Arrays.asList(feedback));
   }
 
   public void update() {

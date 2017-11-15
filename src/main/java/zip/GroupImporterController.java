@@ -1,7 +1,7 @@
 package zip;
 
+import gui.JavaCodeArea;
 import gui.Tools;
-import gui.feedback.JavaCodeArea;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -22,10 +22,12 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import model.Feedback;
 import model.FeedbackManager;
 import model.IO;
+import model.ManagerListener;
 import org.fxmisc.richtext.ViewActions;
 
 import java.io.File;
@@ -41,13 +43,13 @@ public class GroupImporterController {
   @FXML private BorderPane previewContainer;
   @FXML private TextArea filePatternsTextArea;
   @FXML private Label filePreviewLabel;
-  @FXML private Button replaceAllButton;
+  @FXML private Button replaceAllButton, importButton;
   @FXML private CheckBox erpaCheckBox; // Enable "Replace All" checkbox
   @FXML private VBox hintVBox;
   @FXML private GridPane rootGrid;
   private List<String> fileEndingList;
   private boolean openArchives = false;
-  private GroupImporterListener listener;
+  private ManagerListener listener;
 
   public GroupImporterController() {
     codeArea = new JavaCodeArea();
@@ -143,11 +145,11 @@ public class GroupImporterController {
   public void onChangeRootDirectory() {
     File dir = IO.showDirectoryChooser(null);
 
-    System.out.println("dir = " + dir);
     if (dir != null) {
       hintVBox.setMouseTransparent(true);
       hintVBox.setVisible(false);
       rootGrid.getChildren().remove(hintVBox);
+      importButton.setDefaultButton(true);
 
       try {
         groupListView.getItems().clear();
@@ -213,7 +215,10 @@ public class GroupImporterController {
       alert.setHeaderText("No Associated Feedback");
       alert.setContentText(
           "Items must be located in a child folder to add. I might fix this in the future. Maybe.");
-      alert.show();
+
+      alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+      alert.getDialogPane().setMinWidth(Region.USE_PREF_SIZE);
+      alert.showAndWait();
       return;
     }
 
@@ -301,12 +306,13 @@ public class GroupImporterController {
             + " total)");
   }
 
-  public void setListener(GroupImporterListener listener) {
+  public void setListener(ManagerListener listener) {
     this.listener = listener;
   }
 
   private void close(boolean managerChanged) {
     saveFilePatterns();
+    managerChanged = managerChanged && !tmpManager.getFeedbackList().isEmpty();
     listener.close(managerChanged);
   }
 
@@ -340,10 +346,6 @@ public class GroupImporterController {
       }
       return new ImageView(new Image(getClass().getResourceAsStream(s)));
     }
-  }
-
-  public interface GroupImporterListener {
-    void close(boolean managerChanged);
   }
 
   public static class FeedbackTreeItem extends TreeItem<File> {

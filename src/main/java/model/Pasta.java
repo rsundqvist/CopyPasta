@@ -7,14 +7,15 @@ import java.util.Date;
 import java.util.List;
 
 /** @author Richard Sundqvist */
-public class Pasta implements Comparable<Pasta>, Cloneable {
+public class Pasta implements Comparable<Pasta>, Cloneable, Content {
 
   // region Constant
   // ================================================================================= //
   // Constant
   // ================================================================================= //
-
   public static final transient int CONTENT_SNIPPET_LENGTH = 45;
+  public static final transient String NO_CONTENT = "<No content>";
+
   // endregion
 
   // region Field
@@ -41,8 +42,8 @@ public class Pasta implements Comparable<Pasta>, Cloneable {
     contentTags = new UniqueArrayList<>();
     assignmentTags = new UniqueArrayList<>();
 
-    title = null;
-    content = null;
+    title = "";
+    content = "";
   }
 
   /**
@@ -53,12 +54,8 @@ public class Pasta implements Comparable<Pasta>, Cloneable {
   public Pasta(Pasta orig) {
     creationDate = orig.creationDate;
     lastModificationDate = orig.lastModificationDate;
-    contentTags = new UniqueArrayList<>();
-    contentTags.addAll(orig.contentTags);
-
-    assignmentTags = new UniqueArrayList<>();
-    assignmentTags.addAll(orig.assignmentTags);
-
+    contentTags = new UniqueArrayList<>(orig.contentTags);
+    assignmentTags = new UniqueArrayList<>(orig.assignmentTags);
     title = orig.title;
     content = orig.content;
   }
@@ -140,19 +137,20 @@ public class Pasta implements Comparable<Pasta>, Cloneable {
   }
 
   /**
-   * Returns the title string, or part of the content if there is no title.
+   * Returns the title string, or part of the content if there is no title. Returns {@link
+   * #NO_CONTENT} if there's nothing to show.
    *
    * @return The title string.
    */
   public String getTitle() {
     if (!isAutomaticTitle()) return title;
 
-    if (content != null && !content.isEmpty()) {
+    if (hasContent()) {
       String content = this.content;
       content = content.replaceAll("\n|\r", "").replaceAll("\\s+", " ").trim();
       return content.substring(0, Math.min(CONTENT_SNIPPET_LENGTH, Math.max(0, content.length())));
     } else {
-      return "<No content>";
+      return NO_CONTENT;
     }
   }
 
@@ -166,6 +164,15 @@ public class Pasta implements Comparable<Pasta>, Cloneable {
   }
 
   /**
+   * Returns true if there's content, false otherwise.
+   *
+   * @return {@code content != null && !content.trim().isEmpty()}
+   */
+  public boolean hasContent() {
+    return content != null && !content.trim().isEmpty();
+  }
+
+  /**
    * Returns the automatic title setting of this Pasta. Automatic content is enabled when the tittle
    * is null or empty.
    *
@@ -173,6 +180,15 @@ public class Pasta implements Comparable<Pasta>, Cloneable {
    */
   public boolean isAutomaticTitle() {
     return title == null || title.isEmpty();
+  }
+
+  /**
+   * Returns the title as-is.
+   *
+   * @return The title.
+   */
+  public String getRawTitle() {
+    return title;
   }
 
   /**
@@ -217,11 +233,13 @@ public class Pasta implements Comparable<Pasta>, Cloneable {
     if (other instanceof Pasta) { // "null instanceof class" evaluates to false
       Pasta rhs = (Pasta) other;
 
-      return (content == null && rhs.content == null
-              || content != null && content.equals(rhs.content))
-          && (title == null && rhs.title == null || title != null && title.equals(rhs.title))
-          && contentTags.equals(rhs.contentTags)
-          && assignmentTags.equals(rhs.assignmentTags);
+      boolean contentEqual =
+          (content == rhs.content) || (content != null && content.equals(rhs.content));
+      boolean titlesEqual = getTitle().equals(rhs.getTitle());
+      boolean listsEqual = // Equals for a list depends on order -- not what we want.
+          contentTags.containsAll(rhs.contentTags)
+              && assignmentTags.containsAll(rhs.assignmentTags);
+      return contentEqual && titlesEqual && listsEqual;
     }
 
     return false;
@@ -233,6 +251,7 @@ public class Pasta implements Comparable<Pasta>, Cloneable {
     return getTitle().compareTo(o.getTitle());
   }
 
+  @Override
   public Pasta clone() {
     return new Pasta(this);
   }

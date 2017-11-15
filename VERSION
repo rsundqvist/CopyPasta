@@ -1,6 +1,32 @@
+1.0.4
+15-11-2017
+* Fix and improve File feedback insert.
+* Added syntax highlighting to Pasta Editor.
+* A few GUI fixes and some improvements.
+
+1.0.3
+15-11-2017
+* Updates and bugfixes to the Pasta Editor.
+* Fixed some presentation issues in Linux.
+* More bugfixes
+* Added loading/splash screen.
+
 1.0.2
 14-11-2017
 * Updated Group Importer. Should be safer to use.
 * Fix "Download .zip-file" link in version view.
-* Somehwat improved Linux support.
+* Somewhat improved Linux support.
 * Other minor stuff that I didn't write down.
+
+1.0.1
+14-11-2017
+* Several GUI behaviour fixes.
+* Improved version handling.
+
+1.0.0
+14-11-2017
+* Initial release.
+
+0.0.0
+23-02-2016
+* Initial commit.

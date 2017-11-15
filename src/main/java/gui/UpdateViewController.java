@@ -60,7 +60,6 @@ public class UpdateViewController {
     upToDateLabel.setVisible(true);
     patchRetreived(newVersion, patchNotes);
     downloadButton.setDefaultButton(false);
-    closeButton.setDefaultButton(true);
   }
 
   public void patchRetreived(String newVersion, String patchNotes) {

@@ -24,7 +24,7 @@ import java.util.Map;
 
 /** Created by Richard Sundqvist on 26/03/2017. */
 public class FileViewController {
-  private FileFeedbackListener listener;
+  private FileViewListener listener;
   private Feedback feedback;
   @FXML private Label fileLabel = null;
   @FXML private TabPane sourceTabs = null;
@@ -32,9 +32,8 @@ public class FileViewController {
   private FileTab currentFileTab = null;
   private boolean feedbackLine = true, feedbackColumn = false;
   private boolean editable = false;
-
   /**
-   * Indent a String using Google-style java indentation.
+   * Indent a String using Google-style1 java indentation.
    *
    * @param javaSource The source to format.
    * @return Formatted source.
@@ -47,7 +46,7 @@ public class FileViewController {
         break;
       default:
         System.err.println(
-            "Unknown indentation style: \""
+            "Unknown indentation style1: \""
                 + Settings.INDENTATION_STYLE
                 + "\". Using default (\"google\").");
         javaSource = new Formatter().formatSource(javaSource);
@@ -81,13 +80,12 @@ public class FileViewController {
     for (String key : files.keySet()) sourceTabs.getTabs().add(new FileTab(key, files.get(key)));
   }
 
+  public void onFeedbackContext() {
+    if (currentFileTab != null && currentFileTab.isTextFocused()) onFeedback();
+  }
+
   public void onFeedback() {
-    if (currentFileTab != null) {
-      int line = getCaretLine();
-      int column = getCaretColumn();
-      int pos = currentFileTab.getCaretPosition();
-      listener.feedbackAt(currentFileTab.getText(), line, column, pos);
-    }
+    listener.feedbackAt(currentFileTab.getText(), getCaretLine(), getCaretColumn());
   }
 
   public void toggleEditable(Event e) {
@@ -200,15 +198,15 @@ public class FileViewController {
     update();
   }
 
-  public void setListener(FileFeedbackListener listener) {
+  public void initialize(FileViewListener listener) {
     this.listener = listener;
   }
 
-  public interface FileFeedbackListener {
+  public interface FileViewListener {
     /** Indicates the user wants enter feedback at the given position */
-    void feedbackAt(String file, int caretLine, int caretColumn, int caretPosition);
+    void feedbackAt(String file, int caretLine, int caretColumn);
 
     /** Insert content at the given position */
-    void feedbackAt(String file, String content, int caretLine, int caretColumn, int caretPosition);
+    void feedbackAt(String file, String content, int caretLine, int caretColumn);
   }
 }

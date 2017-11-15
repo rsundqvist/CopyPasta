@@ -55,7 +55,7 @@
                                     </HBox.margin>
                                     <tooltip>
                                         <Tooltip
-                                                text="Create feedback at the caret. The program will attempt to find the file in the feedback by looking for the %FILE:&lt;filename&gt;% tag."/>
+                                                text="Create content at the caret. The program will attempt to find the file in the content by looking for the %FILE:&lt;filename&gt;% tag."/>
                                     </tooltip>
                                 </Button>
                                 <VBox prefHeight="200.0">
@@ -107,7 +107,7 @@
                                         prefWidth="80.0" text="Delete">
                                     <tooltip>
                                         <Tooltip
-                                                text="Delete the file from the feedback. The original file will not be altered."/>
+                                                text="Delete the file from the content. The original file will not be altered."/>
                                     </tooltip>
                                 </Button>
                             </children>

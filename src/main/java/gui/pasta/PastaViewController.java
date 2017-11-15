@@ -14,17 +14,18 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.Region;
 import model.IO;
+import model.ManagerListener;
 import model.Pasta;
 import model.PastaManager;
-import model.UniqueArrayList;
 
 import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-public class PastaViewController {
+public class PastaViewController implements ManagerListener {
   // region Field
   // ================================================================================= //
   // Field
@@ -35,7 +36,7 @@ public class PastaViewController {
   @FXML private FlowPane filterFlowPane;
   @FXML private TextField searchField;
 
-  private PastaManager pastaManager = new PastaManager();
+  private PastaManager pastaManager = new PastaManager();;
   // endregion
 
   private static void exportPastaTXT(List<Pasta> pastaList) {
@@ -57,19 +58,21 @@ public class PastaViewController {
   }
 
   public void initialize(PastaControllerListener listener) {
-    setListener(listener);
-
-    List<Pasta> importedPastaList;
-    importedPastaList = pastaManager.importSavedPasta();
-
-    if (importedPastaList != null) {
-      listView.getItems().addAll(importedPastaList);
-      updateFilters();
-    }
+    initialize(listener, true);
   }
 
-  public void setListener(PastaControllerListener listener) {
+  public void initialize(PastaControllerListener listener, boolean importPasta) {
     this.listener = listener;
+
+    if (importPasta) {
+      List<Pasta> importedPastaList;
+      importedPastaList = pastaManager.importSavedPasta();
+
+      if (importedPastaList != null) {
+        listView.getItems().addAll(importedPastaList);
+        updateFilters();
+      }
+    }
   }
 
   public void quickInsert() {
@@ -82,10 +85,10 @@ public class PastaViewController {
     Pasta pasta = (Pasta) listView.getSelectionModel().getSelectedItem();
     if (pasta != null) {
       previewTextArea.setText(pasta.getContent());
-      if (listener != null) listener.select(pasta);
 
       if (event.getClickCount() > 1) preview();
     }
+    if (listener != null) listener.select(pasta);
   }
 
   public void copyItem() {
@@ -124,18 +127,8 @@ public class PastaViewController {
     pastaManager.exportSavedPasta();
   }
 
-  public UniqueArrayList<Pasta> getPastaList() {
-    return pastaManager.getPastaList();
-  }
-
-  public void setPastaList(UniqueArrayList<Pasta> pastaList) {
-    pastaManager.clear();
-    filterFlowPane.getChildren().clear();
-    listView.getItems().clear();
-
-    pastaManager.setPastaList(pastaList);
-    listView.getItems().clear();
-    listView.getItems().addAll(pastaList);
+  public void update() {
+    listView.getItems().setAll(pastaManager.getPastaList());
     updateFilters();
   }
 
@@ -208,12 +201,15 @@ public class PastaViewController {
           new Alert(Alert.AlertType.CONFIRMATION, contentText, ButtonType.OK, ButtonType.CANCEL);
       alert.setHeaderText("Really delete all selected Pasta?");
 
+      alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+      alert.getDialogPane().setMinWidth(Region.USE_PREF_SIZE);
       Optional<ButtonType> result = alert.showAndWait();
       if (!result.isPresent() || result.get() != ButtonType.OK) return;
     }
 
     pastaManager.removePasta(selectedItems);
     listView.getItems().removeAll(selectedItems);
+    listener.select(null);
   }
 
   public void preview() {
@@ -231,11 +227,15 @@ public class PastaViewController {
     return pastaManager;
   }
 
+  public void setPastaManager(PastaManager pastaManager) {
+    this.pastaManager = pastaManager;
+  }
+
   public void toggleCurrentAssignmentOnly(Event event) {
     ToggleButton toggleButton = (ToggleButton) event.getSource();
 
     if (toggleButton.isSelected()) {
-      String assignment = listener.getCurrentAssignment();
+      String assignment = listener.getAssignment();
       pastaManager.setAssignment(assignment);
     } else {
       pastaManager.setAssignment(null);
@@ -252,6 +252,11 @@ public class PastaViewController {
     return newPasta;
   }
 
+  @Override
+  public void close(boolean managerChanged) {
+    if (managerChanged) update();
+  }
+
   // ====================================================
   // Interface declaration
   // ====================================================
@@ -259,7 +264,7 @@ public class PastaViewController {
   /** FeedbackListListener interface for the controller. */
   public interface PastaControllerListener {
     /**
-     * Called when an item is selected.
+     * Called when an item is selected. May be null.
      *
      * @param pasta The selected item.
      */
@@ -277,6 +282,6 @@ public class PastaViewController {
      *
      * @return The assignment to filter for.
      */
-    String getCurrentAssignment();
+    String getAssignment();
   }
 }

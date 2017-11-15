@@ -2,6 +2,7 @@ package gui.settings;
 
 import gui.Tools;
 import javafx.scene.control.Alert;
+import javafx.scene.layout.Region;
 import model.IO;
 
 import java.io.FileOutputStream;
@@ -86,7 +87,7 @@ public abstract class Settings {
         indentation_style, // Key
         new String[] {
           "Indentation Style", // Display name
-          "The style used when autoindenting files."
+          "The style1 used when autoindenting files."
               + " Default is \"google\".\nOptions: \"google\".",
           String.class.getCanonicalName() + ""
         });
@@ -141,6 +142,8 @@ public abstract class Settings {
     Alert alert = new Alert(Alert.AlertType.INFORMATION);
     alert.setHeaderText("Settings saved");
     alert.setContentText("The new settings will take effect once you restart the program.");
+    alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+    alert.getDialogPane().setMinWidth(Region.USE_PREF_SIZE);
     alert.showAndWait();
   }
 

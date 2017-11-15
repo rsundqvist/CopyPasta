@@ -6,6 +6,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -17,7 +18,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /** @author Richard Sundqvist */
-public class Feedback implements Comparable<Feedback> {
+public class Feedback implements Comparable<Feedback>, Cloneable, Content {
 
   // region Constant
   // ================================================================================= //
@@ -190,6 +191,8 @@ public class Feedback implements Comparable<Feedback> {
     alert.getDialogPane().setExpandableContent(contentTagsHBox);
     alert.getDialogPane().setExpanded(true);
 
+    alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+    alert.getDialogPane().setMinWidth(Region.USE_PREF_SIZE);
     Optional<ButtonType> result = alert.showAndWait();
     return (!result.isPresent() // Default to assuming user wants to fix content.
         || result.get() != ButtonType.NO);
@@ -478,5 +481,10 @@ public class Feedback implements Comparable<Feedback> {
     String group = this.group;
     if (isDone()) group += " " + "\u2713";
     return group;
+  }
+
+  @Override
+  public Feedback clone() {
+    return new Feedback(this);
   }
 }

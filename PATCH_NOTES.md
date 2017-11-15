@@ -2,10 +2,23 @@
 ___
 
 ## Patch Notes
+### Version `1.0.4`
+15-11-2017
+* Fix and improve File feedback insert.
+* Added syntax highlighting to Pasta Editor.
+* A few GUI fixes and some improvements.
+
+### Version `1.0.3`
+15-11-2017
+* Updates and bugfixes to the PastaEditor.
+* Fixed some presentation issues in Linux.
+* More bugfixes.
+* Added loading/splash screen.
+
 ### Version `1.0.2`
 14-11-2017
-* Updated the Group Importer. Should be safer to use.
-* Fix "Download .zip-file" link in version view.
+* Updated Group Importer. Should be safer to use.
+* Fix Download link in version view.
 * Somewhat improved Linux support.
 * Other minor stuff that I didn't write down.
 

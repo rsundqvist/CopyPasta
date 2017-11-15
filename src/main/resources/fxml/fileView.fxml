@@ -50,13 +50,13 @@
                               GridPane.hgrow="ALWAYS" GridPane.rowIndex="1">
                             <children>
                                 <Button maxHeight="1.7976931348623157E308" mnemonicParsing="false"
-                                        onAction="#onFeedback" prefWidth="80.0" text="Feedback">
+                                        onAction="#onFeedback" prefWidth="120.0" text="Feedback">
                                     <HBox.margin>
                                         <Insets right="5.0"/>
                                     </HBox.margin>
                                     <tooltip>
                                         <Tooltip
-                                                text="Create feedback at the caret. The program will attempt to find the file in the feedback by looking for the %FILE:&lt;filename&gt;% tag."/>
+                                                text="Create content at the caret. The program will attempt to find the file in the content by looking for the %FILE:&lt;filename&gt;% tag."/>
                                     </tooltip>
                                 </Button>
                                 <VBox prefHeight="200.0">
@@ -108,7 +108,7 @@
                                         prefWidth="80.0" text="Delete">
                                     <tooltip>
                                         <Tooltip
-                                                text="Delete the file from the feedback. The original file will not be altered."/>
+                                                text="Delete the file from the content. The original file will not be altered."/>
                                     </tooltip>
                                 </Button>
                             </children>
@@ -146,7 +146,7 @@
             <contextMenu>
                 <ContextMenu>
                     <items>
-                        <MenuItem mnemonicParsing="false" onAction="#onFeedback" text="Feedback">
+                        <MenuItem mnemonicParsing="false" onAction="#onFeedbackContext" text="Feedback">
                             <accelerator>
                                 <KeyCodeCombination alt="UP" code="F" control="DOWN" meta="UP" shift="UP"
                                                     shortcut="UP"/>

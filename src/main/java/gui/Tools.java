@@ -7,6 +7,7 @@ import javafx.animation.ScaleTransition;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.layout.Region;
 import javafx.util.Duration;
 import model.Feedback;
 import model.IO;
@@ -35,12 +36,12 @@ public abstract class Tools {
   public static final File PREVIEW_FILE = Tools.create("CopyPasta/data", "preview.txt", false);
   public static final File RECENT_WORKSPACES_FILE =
       Tools.create("CopyPasta/data", "recent_workspaces.txt", false);
-  public static final String VERSION = "1.0.2";
+  public static final String VERSION = "1.0.4";
 
   // Work data
   public static File AUTO_SAVE_PASTA_FILE,
       AUTO_SAVE_TEMPLATE_FILE,
-      AUTO_SAVE_FEEDBACK_FILE; // Main workspace
+      AUTO_SAVE_FEEDBACK_FILE; // Main workspace files
   public static File GROUP_IMPORT_FILE_PATTERNS;
 
   private Tools() {}
@@ -171,6 +172,8 @@ public abstract class Tools {
         new Alert(Alert.AlertType.CONFIRMATION, contentText, ButtonType.OK, ButtonType.CANCEL);
     alert.setHeaderText("Really delete all selected items?");
 
+    alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+    alert.getDialogPane().setMinWidth(Region.USE_PREF_SIZE);
     Optional<ButtonType> result = alert.showAndWait();
     return result.isPresent() && result.get() == ButtonType.OK;
   }
@@ -238,6 +241,8 @@ public abstract class Tools {
               "The java Desktop class does not support this system :(.",
               ButtonType.CLOSE);
       alert.setHeaderText("Not supported");
+      alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+      alert.getDialogPane().setMinWidth(Region.USE_PREF_SIZE);
       alert.showAndWait();
     }
 

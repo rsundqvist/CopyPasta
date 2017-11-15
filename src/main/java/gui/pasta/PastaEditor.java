@@ -1,28 +1,26 @@
 package gui.pasta;
 
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Rectangle2D;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.SplitPane;
 import javafx.scene.image.Image;
 import javafx.stage.Modality;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
 import model.IO;
-import model.Pasta;
-import model.UniqueArrayList;
-
-import java.util.List;
+import model.ManagerListener;
+import model.PastaManager;
 
 /** Created by Richard Sundqvist on 20/02/2017. */
-public class PastaEditor {
+public class PastaEditor implements ManagerListener {
   private final Stage stage;
   private final PastaEditorController controller;
+  private final ManagerListener listener;
 
-  public PastaEditor(List<Pasta> pastaList, String assignment) {
+  public PastaEditor(ManagerListener listener, PastaManager pastaManager, String assignment) {
+    this.listener = listener;
 
     FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/pastaEditor.fxml"));
-    Parent root = null;
+    SplitPane root = null;
     try {
       root = fxmlLoader.load();
     } catch (Exception e) {
@@ -34,19 +32,26 @@ public class PastaEditor {
     stage.setTitle("Pasta Editor \u00a9 Richard Sundqvist");
     stage.getIcons().add(new Image(PastaEditor.class.getResourceAsStream("/img/icon.png")));
 
-    Rectangle2D screenSize = Screen.getPrimary().getVisualBounds();
-    double windowWidth = screenSize.getWidth() * .8;
-    double windowHeight = screenSize.getHeight() * .8;
-    Scene scene = new Scene(root, windowWidth, windowHeight);
+    Scene scene = new Scene(root, root.getPrefWidth(), root.getPrefHeight());
+    scene
+        .getStylesheets()
+        .add(
+            PastaEditor.class
+                .getResource("/highlighting.css")
+                .toExternalForm()); // Syntax highlighting
+    stage.setMinWidth(root.getMinWidth());
+    stage.setMinHeight(root.getMinHeight());
     stage.setScene(scene);
     stage.initModality(Modality.APPLICATION_MODAL);
 
     controller = fxmlLoader.getController();
-    controller.initialize(pastaList, assignment);
+    controller.initialize(this, pastaManager, assignment);
+    stage.showAndWait();
   }
 
-  public UniqueArrayList<Pasta> showAndWait() {
-    stage.showAndWait();
-    return controller.getPastaList();
+  @Override
+  public void close(boolean managerChanged) {
+    stage.close();
+    listener.close(managerChanged);
   }
 }

@@ -9,17 +9,26 @@
 <?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.input.KeyCodeCombination?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<VBox xmlns:fx="http://javafx.com/fxml/1" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
-      minHeight="0.0"
-      minWidth="0.0" prefHeight="300.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1"
+<VBox xmlns:fx="http://javafx.com/fxml/1" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0"
+      minWidth="0.0" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/9.0.1"
       fx:controller="gui.Controller">
     <children>
-        <StackPane>
+        <GridPane>
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0"/>
+                <ColumnConstraints fillWidth="false" halignment="RIGHT" hgrow="NEVER" minWidth="10.0"/>
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
+            </rowConstraints>
             <children>
-                <MenuBar>
+                <MenuBar GridPane.columnSpan="2147483647">
                     <menus>
                         <Menu mnemonicParsing="false" text="File">
                             <items>
@@ -111,7 +120,7 @@
                         </Menu>
                         <Menu mnemonicParsing="false" text="View">
                             <items>
-                                <MenuItem mnemonicParsing="false" onAction="#selectFeedback" text="Feedback">
+                                <MenuItem mnemonicParsing="false" onAction="#selectFeedback" text="Workspace">
                                     <accelerator>
                                         <KeyCodeCombination alt="UP" code="DIGIT1" control="DOWN" meta="UP" shift="UP"
                                                             shortcut="UP"/>
@@ -139,23 +148,31 @@
                                                             shortcut="UP"/>
                                     </accelerator>
                                 </MenuItem>
+                                <MenuItem mnemonicParsing="false" onAction="#onUpdate" text="Check for Updates"/>
+                                <SeparatorMenuItem mnemonicParsing="false"/>
                                 <MenuItem mnemonicParsing="false" onAction="#onLoadExample" text="Load Example"/>
                             </items>
                         </Menu>
                     </menus>
                 </MenuBar>
-                <StackPane mouseTransparent="true">
+                <StackPane maxWidth="-Infinity" minWidth="-Infinity" prefWidth="150.0"
+                           style="-fx-background-color: transparent;" GridPane.columnIndex="1">
                     <children>
-                        <Label fx:id="lastSaveTimestampLabel" alignment="CENTER_RIGHT" text="Not saved yet."
-                               StackPane.alignment="CENTER_RIGHT">
+                        <Label fx:id="lastSaveTimestampLabel" alignment="CENTER_RIGHT" contentDisplay="CENTER"
+                               maxWidth="1.7976931348623157E308" text="Not saved yet." StackPane.alignment="CENTER">
                             <padding>
                                 <Insets right="5.0"/>
                             </padding>
                             <font>
                                 <Font name="System Italic" size="12.0"/>
                             </font>
+                            <StackPane.margin>
+                                <Insets right="5.0"/>
+                            </StackPane.margin>
                         </Label>
-                        <Label fx:id="savedLabel" text="SAVED" textFill="RED" StackPane.alignment="CENTER_RIGHT">
+                        <Label fx:id="savedLabel" alignment="CENTER_RIGHT" contentDisplay="CENTER"
+                               maxWidth="1.7976931348623157E308" text="SAVED" textFill="RED"
+                               StackPane.alignment="CENTER">
                             <StackPane.margin>
                                 <Insets right="5.0"/>
                             </StackPane.margin>
@@ -169,7 +186,7 @@
                     </children>
                 </StackPane>
             </children>
-        </StackPane>
+        </GridPane>
         <SplitPane dividerPositions="0.8" prefHeight="160.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
             <items>
                 <fx:include fx:id="pastaView" source="pastaView.fxml"/>

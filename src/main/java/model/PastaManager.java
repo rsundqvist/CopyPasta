@@ -1,7 +1,7 @@
 package model;
 
+import gui.JavaCodeArea;
 import gui.Tools;
-import gui.feedback.JavaCodeArea;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
@@ -11,9 +11,11 @@ import javafx.scene.input.ClipboardContent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
 import org.fxmisc.flowless.VirtualizedScrollPane;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -125,6 +127,8 @@ public class PastaManager {
     alert.getDialogPane().setExpandableContent(expContent);
     alert.getDialogPane().setExpanded(true);
 
+    alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+    alert.getDialogPane().setMinWidth(Region.USE_PREF_SIZE);
     alert.showAndWait();
   }
 
@@ -395,18 +399,24 @@ public class PastaManager {
   }
 
   /**
-   * Create a new Pasta item.
+   * Create a new Pasta item and add it to the manager.
    *
    * @return A new Pasta item.
    */
   public Pasta createNew() {
     Pasta newPasta = new Pasta();
 
-    List<Pasta> newList = new ArrayList<>(1);
-    newList.add(newPasta);
+    boolean unique = true;
 
-    pastaList.remove(newPasta); // Ensure that the newly created item is the contained in pastaList
-    importPasta(newList);
+    for (Pasta pasta : pastaList) {
+      if (pasta.equals(newPasta)) {
+        unique = false;
+        newPasta = pasta;
+        break;
+      }
+    }
+
+    if (unique) importPasta(Arrays.asList(newPasta));
 
     return newPasta;
   }

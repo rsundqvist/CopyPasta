@@ -2,6 +2,12 @@
 ___
 
 ## Patch Notes
+### Version `1.0.4`
+15-11-2017
+* Fix and improve File feedback insert.
+* Added syntax highlighting to Pasta Editor.
+* A few GUI fixes and some improvements.
+
 ### Version `1.0.3`
 15-11-2017
 * Updates and bugfixes to the PastaEditor.

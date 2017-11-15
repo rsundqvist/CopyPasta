@@ -72,8 +72,7 @@
                             </children>
                         </HBox>
                         <TextField fx:id="titleField" editable="false" maxWidth="1.7976931348623157E308"
-                                   promptText="Enter a concise title." GridPane.columnSpan="2147483647"
-                                   GridPane.rowIndex="2"/>
+                                   GridPane.columnSpan="2147483647" GridPane.rowIndex="2"/>
                         <HBox fillHeight="false" maxHeight="1.7976931348623157E308" minHeight="0.0"
                               GridPane.columnSpan="2147483647" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3"
                               GridPane.vgrow="NEVER">

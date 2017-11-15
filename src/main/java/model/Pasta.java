@@ -13,8 +13,9 @@ public class Pasta implements Comparable<Pasta>, Cloneable, Content {
   // ================================================================================= //
   // Constant
   // ================================================================================= //
-
   public static final transient int CONTENT_SNIPPET_LENGTH = 45;
+  public static final transient String NO_CONTENT = "<No content>";
+
   // endregion
 
   // region Field
@@ -136,19 +137,20 @@ public class Pasta implements Comparable<Pasta>, Cloneable, Content {
   }
 
   /**
-   * Returns the title string, or part of the content if there is no title.
+   * Returns the title string, or part of the content if there is no title. Returns {@link
+   * #NO_CONTENT} if there's nothing to show.
    *
    * @return The title string.
    */
   public String getTitle() {
     if (!isAutomaticTitle()) return title;
 
-    if (content != null && !content.isEmpty()) {
+    if (hasContent()) {
       String content = this.content;
       content = content.replaceAll("\n|\r", "").replaceAll("\\s+", " ").trim();
       return content.substring(0, Math.min(CONTENT_SNIPPET_LENGTH, Math.max(0, content.length())));
     } else {
-      return "<No content>";
+      return NO_CONTENT;
     }
   }
 
@@ -162,6 +164,15 @@ public class Pasta implements Comparable<Pasta>, Cloneable, Content {
   }
 
   /**
+   * Returns true if there's content, false otherwise.
+   *
+   * @return {@code content != null && !content.trim().isEmpty()}
+   */
+  public boolean hasContent() {
+    return content != null && !content.trim().isEmpty();
+  }
+
+  /**
    * Returns the automatic title setting of this Pasta. Automatic content is enabled when the tittle
    * is null or empty.
    *
@@ -169,6 +180,15 @@ public class Pasta implements Comparable<Pasta>, Cloneable, Content {
    */
   public boolean isAutomaticTitle() {
     return title == null || title.isEmpty();
+  }
+
+  /**
+   * Returns the title as-is.
+   *
+   * @return The title.
+   */
+  public String getRawTitle() {
+    return title;
   }
 
   /**

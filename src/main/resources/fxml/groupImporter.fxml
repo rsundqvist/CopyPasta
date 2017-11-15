@@ -91,9 +91,9 @@
                         <Insets bottom="10.0" top="10.0"/>
                     </VBox.margin>
                 </TextFlow>
-                <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-                        mnemonicParsing="false" onAction="#onChangeRootDirectory" prefHeight="50.0" prefWidth="220.0"
-                        text="Select root directory" VBox.vgrow="NEVER">
+                <Button defaultButton="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+                        minWidth="-Infinity" mnemonicParsing="false" onAction="#onChangeRootDirectory" prefHeight="50.0"
+                        prefWidth="220.0" text="Select root directory" VBox.vgrow="NEVER">
                     <font>
                         <Font name="System Bold" size="14.0"/>
                     </font>
@@ -168,7 +168,7 @@
                         <Font size="14.0"/>
                     </font>
                 </Button>
-                <Button defaultButton="true" maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false"
+                <Button fx:id="importButton" maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false"
                         onAction="#onImport" prefWidth="120.0" text="Import">
                     <font>
                         <Font size="14.0"/>

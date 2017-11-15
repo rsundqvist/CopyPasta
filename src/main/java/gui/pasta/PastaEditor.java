@@ -33,6 +33,12 @@ public class PastaEditor implements ManagerListener {
     stage.getIcons().add(new Image(PastaEditor.class.getResourceAsStream("/img/icon.png")));
 
     Scene scene = new Scene(root, root.getPrefWidth(), root.getPrefHeight());
+    scene
+        .getStylesheets()
+        .add(
+            PastaEditor.class
+                .getResource("/highlighting.css")
+                .toExternalForm()); // Syntax highlighting
     stage.setMinWidth(root.getMinWidth());
     stage.setMinHeight(root.getMinHeight());
     stage.setScene(scene);

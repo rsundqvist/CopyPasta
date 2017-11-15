@@ -39,16 +39,22 @@ public class FeedbackText extends ContentText implements FileViewController.File
   }
 
   private void insertFeedback(String file, String text, int caretLine, int caretColumn) {
+    System.out.println("FeedbackText.insertFeedback");
     String posText = "\nAt " + caretString(caretLine, caretColumn) + ":\n";
+    String fileTag = "";
 
+    boolean usingFooter = false;
     int pos = feedback.getFileTagPosition(file);
     if (pos < 0) { // File doesn't exist - look for footer
       pos = feedback.getContent().indexOf(Feedback.FOOTER) - 1;
-      if (pos < 0) pos = feedback.getContent().length(); // Footer doesn't exist - place at end
-      text = getFileTagHeadline(file) + text;
+      usingFooter = pos >= 0;
+      if (!usingFooter) pos = feedback.getContent().length(); // Footer doesn't exist - place at end
+      fileTag = getFileTagHeadline(file);
     }
+    if (usingFooter) text += "\n";
+    insertText(pos, fileTag + posText + text);
+    if (usingFooter) moveTo(getCaretPosition() - 1);
 
-    insertText(pos, posText + text);
     requestFollowCaret();
   }
 

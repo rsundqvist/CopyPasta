@@ -25,6 +25,9 @@ import java.util.Optional;
 
 /** Created by Richard Sundqvist on 20/02/2017. */
 public class PastaEditorController implements PastaViewController.PastaControllerListener {
+  private static String manualTitlePromt = "Enter title.",
+      autoTitlePromt = "Enter content for automatic title.";
+
   @FXML private TextField titleField;
   @FXML
   private ListView currentContentTagView, allContentTagView, currentAssignTagView, allAssignTagView;
@@ -161,12 +164,7 @@ public class PastaEditorController implements PastaViewController.PastaControlle
   public void toggleAutoTitle(Event e) {
     CheckBox cb = (CheckBox) e.getSource();
     autoTitle = cb.isSelected();
-
-    titleField.setEditable(!autoTitle);
-    if (autoTitle) {
-      if (pasta != null) titleField.setText(pasta.getTitle());
-      else titleField.setText(null);
-    }
+    updateTitleField(pasta);
   }
 
   private void updateTagsLists() {
@@ -229,13 +227,23 @@ public class PastaEditorController implements PastaViewController.PastaControlle
     contentText.setContent(pasta);
 
     autoTitle = pasta.isAutomaticTitle();
-    titleField.setEditable(!autoTitle);
-    titleField.setText(pasta.getTitle());
+    updateTitleField(pasta);
 
     autoTitleCheckBox.setSelected(pasta.isAutomaticTitle());
 
     contentText.setText(pasta.getContent() + "");
     updateTagsLists();
+  }
+
+  private void updateTitleField(Pasta pasta) {
+    titleField.setEditable(!autoTitle);
+    titleField.setPromptText(autoTitle ? autoTitlePromt : manualTitlePromt);
+    if (autoTitle) {
+      if (pasta != null && pasta.hasContent()) titleField.setText(pasta.getTitle());
+      else titleField.setText(null);
+    } else {
+      titleField.setText(pasta == null ? pasta.getTitle() : null);
+    }
   }
 
   @Override

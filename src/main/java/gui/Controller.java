@@ -13,6 +13,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.Label;
@@ -284,8 +285,8 @@ public class Controller implements PastaViewController.PastaControllerListener, 
   }
 
   public void onLoadExample() {
-    ButtonType bt = new ButtonType("Load Example");
-    ButtonType bt2 = new ButtonType("Maybe Later");
+    ButtonType bt = new ButtonType("Load Example", ButtonBar.ButtonData.HELP_2);
+    ButtonType bt2 = new ButtonType("Maybe Later", ButtonBar.ButtonData.CANCEL_CLOSE);
 
     String contentText =
         "All current work (pasta, feedback, template) will be replaced! Are you sure?";

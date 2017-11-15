@@ -43,7 +43,7 @@ public class GroupImporterController {
   @FXML private BorderPane previewContainer;
   @FXML private TextArea filePatternsTextArea;
   @FXML private Label filePreviewLabel;
-  @FXML private Button replaceAllButton;
+  @FXML private Button replaceAllButton, importButton;
   @FXML private CheckBox erpaCheckBox; // Enable "Replace All" checkbox
   @FXML private VBox hintVBox;
   @FXML private GridPane rootGrid;
@@ -145,11 +145,11 @@ public class GroupImporterController {
   public void onChangeRootDirectory() {
     File dir = IO.showDirectoryChooser(null);
 
-    System.out.println("dir = " + dir);
     if (dir != null) {
       hintVBox.setMouseTransparent(true);
       hintVBox.setVisible(false);
       rootGrid.getChildren().remove(hintVBox);
+      importButton.setDefaultButton(true);
 
       try {
         groupListView.getItems().clear();
@@ -312,6 +312,7 @@ public class GroupImporterController {
 
   private void close(boolean managerChanged) {
     saveFilePatterns();
+    managerChanged = managerChanged && !tmpManager.getFeedbackList().isEmpty();
     listener.close(managerChanged);
   }
 

@@ -3,6 +3,10 @@ ___
 
 ## Patch Notes
 
+### Version `1.1.1`
+16-11-2017
+* Added more controls to Group Importer.
+
 ### Version `1.1.0`
 15-11-2017
 * **MAJOR**: Fixed an issue which prevented proper export

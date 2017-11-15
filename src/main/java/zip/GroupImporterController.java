@@ -363,6 +363,17 @@ public class GroupImporterController implements FeedbackListener {
     update();
   }
 
+  public void onChangeGroup() {
+    List<Feedback> feedbackList = groupListView.getSelectionModel().getSelectedItems();
+    changeGroup(feedbackList);
+  }
+
+  public void onDelete() {
+    List<Feedback> feedbackList = groupListView.getSelectionModel().getSelectedItems();
+    FeedbackManager.deleteFeedbackSafe(feedbackList, tmpManager);
+    listChanged();
+  }
+
   @Override
   public void toggleDone(List<Feedback> feedbackList) {
     Tools.notSupportedInView();

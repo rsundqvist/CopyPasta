@@ -356,6 +356,8 @@ public class GroupImporterController implements FeedbackListener {
 
   @Override
   public void changeGroup(List<Feedback> feedbackList) {
+    if (feedbackList.isEmpty()) return;
+
     feedbackList.forEach(
         feedback -> {
           tmpManager.changeFeedbackGroup(feedback);
@@ -370,8 +372,10 @@ public class GroupImporterController implements FeedbackListener {
 
   public void onDelete() {
     List<Feedback> feedbackList = groupListView.getSelectionModel().getSelectedItems();
-    FeedbackManager.deleteFeedbackSafe(feedbackList, tmpManager);
-    listChanged();
+    if (!feedbackList.isEmpty()) {
+      FeedbackManager.deleteFeedbackSafe(feedbackList, tmpManager);
+      listChanged();
+    }
   }
 
   @Override

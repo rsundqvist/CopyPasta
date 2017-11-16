@@ -1,11 +1,10 @@
 1.1.1
-16-11-2017
+17-11-2017
 * Added more controls to Group Importer.
 
 1.1.0
 15-11-2017
 * MAJOR: Fixed an issue which prevented proper export of feedback in some situations.
-* Fix remove feedback not done on toggle
 
 1.0.4
 15-11-2017

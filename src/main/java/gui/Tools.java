@@ -33,7 +33,7 @@ public abstract class Tools {
 
   public static final File IS_RUNNING_FILE = create("CopyPasta/data", "isrunning", false);
   public static final File SETTINGS_FILE = create("CopyPasta/data", "settings", false);
-  public static final File PREVIEW_FILE = Tools.create("CopyPasta/data", "preview.txt", false);
+  public static final File PREVIEW_FILE = create("CopyPasta/data", "preview.txt", false);
   public static final File RECENT_WORKSPACES_FILE =
       Tools.create("CopyPasta/data", "recent_workspaces.txt", false);
   public static final String VERSION = "1.1.1";

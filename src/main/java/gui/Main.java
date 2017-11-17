@@ -22,6 +22,7 @@ import java.util.Optional;
 
 public class Main extends Application {
 
+  private static final double splashFadeDuration = 0.75;
   private Controller controller;
   private boolean runningFileSet;
   private Stage splashStage;
@@ -78,8 +79,8 @@ public class Main extends Application {
     primaryStage.getIcons().add(new Image(Main.class.getResourceAsStream("/img/icon.png")));
 
     Rectangle2D screenSize = Screen.getPrimary().getVisualBounds();
-    double windowWidth = screenSize.getWidth() * .9;
-    double windowHeight = screenSize.getHeight() * .9;
+    double windowWidth = screenSize.getWidth() * .8;
+    double windowHeight = screenSize.getHeight() * .8;
     Scene scene = new Scene(root, windowWidth, windowHeight);
     scene
         .getStylesheets()
@@ -97,7 +98,7 @@ public class Main extends Application {
 
     splashStage.setAlwaysOnTop(true);
     FadeTransition fadeTransition =
-        new FadeTransition(Duration.seconds(0.75), splashStage.getScene().getRoot());
+        new FadeTransition(Duration.seconds(splashFadeDuration), splashStage.getScene().getRoot());
     fadeTransition.setOnFinished(event -> splashStage.close());
     fadeTransition.setFromValue(1);
     fadeTransition.setToValue(0);

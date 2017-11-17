@@ -14,7 +14,7 @@ import java.util.regex.Pattern;
 
 /** Created by Richard Sundqvist on 12/04/2017. */
 public class ContentText extends CodeArea {
-  protected static final String PLAIN_STYLE =
+  public static final String DEFAULT_STYLE =
       "-fx-font-family: monospaced regular; -fx-font-size: 11pt; -fx-background-color: #dcdcdc;";
 
   // region strings
@@ -40,7 +40,7 @@ public class ContentText extends CodeArea {
               setStyleSpans(0, computeHighlighting(text));
             });
 
-    setStyle(PLAIN_STYLE);
+    setStyle(DEFAULT_STYLE);
   }
 
   private static StyleSpans<Collection<String>> computeHighlighting(String text) {
@@ -59,8 +59,6 @@ public class ContentText extends CodeArea {
   }
 
   private static String createTagPattern() {
-    StringBuilder sb = new StringBuilder();
-
     String[] s = {
       Feedback.HEADER,
       Feedback.FOOTER,
@@ -70,8 +68,8 @@ public class ContentText extends CodeArea {
       Feedback.SIGNATURE,
       Feedback.FILE_REGEX
     };
+    StringBuilder sb = new StringBuilder();
     for (String regex : s) sb.append(regex + "|");
-
     return sb.toString();
   }
 

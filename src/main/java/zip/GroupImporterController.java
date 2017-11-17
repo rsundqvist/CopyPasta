@@ -30,6 +30,7 @@ import model.FeedbackListener;
 import model.FeedbackManager;
 import model.IO;
 import model.ManagerListener;
+import org.fxmisc.flowless.VirtualizedScrollPane;
 import org.fxmisc.richtext.ViewActions;
 
 import java.io.File;
@@ -40,7 +41,7 @@ import java.util.List;
 public class GroupImporterController implements FeedbackListener {
   private final JavaCodeArea codeArea;
   private FeedbackManager tmpManager = new FeedbackManager(), realManager;
-  @FXML private TextField rootDirectoryField, currentGroupsTextField;
+  @FXML private TextField rootDirectoryField, currentGroupsTextField, manualGroupsTextField;
   @FXML private ListView filesListView;
   @FXML private TreeView treeView;
   @FXML private BorderPane previewContainer;
@@ -56,6 +57,7 @@ public class GroupImporterController implements FeedbackListener {
   private boolean newCrawl = true;
 
   private FeedbackListView groupListView;
+  private Feedback feedback; // Selected item
 
   public GroupImporterController() {
     codeArea = new JavaCodeArea();
@@ -91,6 +93,25 @@ public class GroupImporterController implements FeedbackListener {
     node.setGraphic(iw);
   }
 
+  public static void showNoFeedbackAlert() {
+    Alert alert = new Alert(Alert.AlertType.ERROR);
+    alert.setHeaderText("No associated group");
+    alert.setContentText("Items must be located in a child folder to add.");
+
+    alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+    alert.getDialogPane().setMinWidth(Region.USE_PREF_SIZE);
+    alert.showAndWait();
+  }
+
+  public void onManual() {
+    List<String> groups = Tools.extractTokens(manualGroupsTextField.getText());
+    manualGroupsTextField.clear();
+    tmpManager.generateFeedback(groups);
+    onGroupSelectionChanged();
+    groupListView.update(tmpManager.getFeedbackList());
+    tmpManager.updateFeedback();
+  }
+
   public void onReplaceAll() {
     realManager.clear(); // Replace all content.
     realManager.importFeedback(tmpManager.getFeedbackList(), true);
@@ -108,8 +129,14 @@ public class GroupImporterController implements FeedbackListener {
   }
 
   public void onGroupSelectionChanged() {
-    Feedback feedback = groupListView.getSelectionModel().getSelectedItem();
+    feedback = groupListView.getSelectionModel().getSelectedItem();
+    updateFilesViews();
+  }
+
+  public void updateFilesViews() {
     if (feedback != null) filesListView.getItems().setAll(feedback.getFiles().keySet());
+    else filesListView.getItems().clear();
+    if (treeView.getRoot() != null) crawlNodeStatus((FeedbackTreeItem) treeView.getRoot(), 0, null);
   }
 
   public void onFileSelectionChanged() {
@@ -125,7 +152,7 @@ public class GroupImporterController implements FeedbackListener {
   }
 
   public void initialize() {
-    previewContainer.setCenter(codeArea);
+    previewContainer.setCenter(new VirtualizedScrollPane(codeArea));
     filesListView
         .getSelectionModel()
         .selectedIndexProperty()
@@ -139,6 +166,8 @@ public class GroupImporterController implements FeedbackListener {
     }
 
     replaceAllButton.disableProperty().bind(erpaCheckBox.selectedProperty().not());
+
+    treeView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
   }
 
   public void onChangeRootDirectory() {
@@ -150,12 +179,13 @@ public class GroupImporterController implements FeedbackListener {
       rootGrid.getChildren().remove(hintVBox);
       importButton.setDefaultButton(true);
       newCrawl = true;
+      groupListView.getItems().clear();
+      filesListView.getItems().clear();
+      tmpManager.clear();
+      updateFileEndingList();
+      feedback = null;
 
       try {
-        groupListView.getItems().clear();
-        filesListView.getItems().clear();
-        updateFileEndingList();
-
         rootDirectoryField.setText(dir.getCanonicalPath());
         FeedbackTreeItem root = crawl(dir, 0, null);
         crawlNodeStatus(root, 0, null);
@@ -163,7 +193,8 @@ public class GroupImporterController implements FeedbackListener {
         treeView.setRoot(root);
 
         treeView.setContextMenu(createTreeViewContextMenu());
-
+        tmpManager.updateFeedback();
+        updateFilesViews();
       } catch (Exception e) {
         IO.showExceptionAlert(e);
         e.printStackTrace();
@@ -184,47 +215,40 @@ public class GroupImporterController implements FeedbackListener {
     ContextMenu contextMenu = new ContextMenu();
 
     MenuItem add = new MenuItem("Add files");
-    add.setOnAction(event -> addItem());
-    // MenuItem addTo = new MenuItem("Add to group"); // TODO: Allow user to pick group.
-    // addTo.setOnAction(event -> addItem(true));
+    add.setOnAction(event -> addItems());
     MenuItem remove = new MenuItem("Remove files");
-    remove.setOnAction(event -> removeItem());
+    remove.setOnAction(event -> removeItems());
 
     contextMenu.getItems().addAll(add, new SeparatorMenuItem(), remove);
 
     return contextMenu;
   }
 
-  public void removeItem() {
-    FeedbackTreeItem selectedItem =
-        (FeedbackTreeItem) treeView.getSelectionModel().getSelectedItem();
-    Feedback feedback = selectedItem.getFeedback();
+  public void removeItems() {
+    List<FeedbackTreeItem> selectedItems = treeView.getSelectionModel().getSelectedItems();
 
-    if (feedback != null) removeItem(selectedItem, feedback);
-
-    update();
+    for (FeedbackTreeItem treeItem : selectedItems) {
+      Feedback feedback = treeItem.getFeedback();
+      if (feedback != null) removeItem(treeItem, feedback);
+    }
+    updateFilesViews();
   }
 
-  public void addItem() {
-    FeedbackTreeItem selectedItem =
-        (FeedbackTreeItem) treeView.getSelectionModel().getSelectedItem();
-    Feedback feedback = selectedItem.getFeedback();
+  public void addItems() {
+    List<FeedbackTreeItem> selectedItems = treeView.getSelectionModel().getSelectedItems();
 
-    if (feedback == null) {
-      Alert alert = new Alert(Alert.AlertType.ERROR);
-      alert.setTitle("No Associated Feedback");
-      alert.setHeaderText("No Associated Feedback");
-      alert.setContentText(
-          "Items must be located in a child folder to add. I might fix this in the future. Maybe.");
+    boolean alertShown = false;
+    for (FeedbackTreeItem treeItem : selectedItems) {
+      Feedback feedback = treeItem.getFeedback();
 
-      alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
-      alert.getDialogPane().setMinWidth(Region.USE_PREF_SIZE);
-      alert.showAndWait();
-      return;
+      if (!alertShown && feedback == null) {
+        showNoFeedbackAlert();
+        alertShown = true;
+      }
+
+      if (feedback != null) addItem(treeItem, feedback);
     }
-
-    addItem(selectedItem, feedback);
-    update();
+    updateFilesViews();
   }
 
   public void update() {
@@ -246,8 +270,6 @@ public class GroupImporterController implements FeedbackListener {
       FeedbackTreeItem treeItem = (FeedbackTreeItem) o;
       if (!existingFeedback.contains(treeItem.getFeedback())) removed.add(treeItem);
     }
-
-    System.out.println("removed = " + removed);
     treeView.getRoot().getChildren().removeAll(removed);
   }
 
@@ -259,12 +281,16 @@ public class GroupImporterController implements FeedbackListener {
   public FeedbackTreeItem crawl(File file, int level, Feedback feedback) throws Exception {
     boolean isRootNode = level == 1;
     if (isRootNode && file.isDirectory()) {
-      String group = file.getName(); // .replaceAll("[^0-9]", "");
-      feedback = new Feedback();
-      feedback.setGroup(group);
-      groupListView.getItems().add(feedback);
-      tmpManager.importFeedback(feedback);
-      feedback.setContent(tmpManager.getTemplate().getContent());
+      String group = file.getName();
+
+      feedback = tmpManager.getByGroup(group);
+
+      if (feedback == null) {
+        feedback = new Feedback();
+        feedback.setGroup(group);
+        groupListView.getItems().add(feedback);
+        tmpManager.importFeedback(feedback);
+      }
     }
     FeedbackTreeItem root = new FeedbackTreeItem(file, feedback, isRootNode);
 
@@ -330,11 +356,7 @@ public class GroupImporterController implements FeedbackListener {
     List<String> existingGroups = realManager.getGroups();
     existingGroups.sort(String::compareToIgnoreCase);
     String groups = existingGroups.toString();
-    currentGroupsTextField.setText(
-        groups.substring(1, groups.length() - 1)
-            + "    -    ("
-            + existingGroups.size()
-            + " total)");
+    currentGroupsTextField.setText(groups.substring(1, groups.length() - 1));
     tmpManager.setTemplate(realManager.getTemplate().copy());
     groupListView = new FeedbackListView(tmpManager.getFeedbackList(), tmpManager, this);
     groupListView

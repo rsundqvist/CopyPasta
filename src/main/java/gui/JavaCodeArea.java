@@ -110,7 +110,7 @@ public class JavaCodeArea extends CodeArea {
   }
 
   public JavaCodeArea(String initialContent) {
-    setStyle(ContentText.PLAIN_STYLE);
+    setStyle(ContentText.DEFAULT_STYLE);
     setShowCaret(ViewActions.CaretVisibility.ON);
     setParagraphGraphicFactory(LineNumberFactory.get(this));
 

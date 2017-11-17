@@ -27,7 +27,9 @@ import model.Feedback;
 import model.FeedbackListener;
 import model.FeedbackManager;
 import model.IO;
+import model.ManagerListener;
 import model.Pasta;
+import zip.GroupImporter;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -36,7 +38,7 @@ import java.util.List;
 import java.util.Optional;
 
 /** Created by Richard Sundqvist on 19/02/2017. */
-public class WorkspaceViewController implements FeedbackListener {
+public class WorkspaceViewController implements FeedbackListener, ManagerListener {
   private final FeedbackManager feedbackManager = new FeedbackManager();
   private final List<GroupView> groupViewList = new ArrayList<>();
   private final FeedbackListView feedbackListView =
@@ -46,7 +48,7 @@ public class WorkspaceViewController implements FeedbackListener {
   // Field
   // ================================================================================= //
   @FXML private Tab groupViewsTab, setupTab, statisticsTab;
-  @FXML private TextField studentGroupField, assignmentField;
+  @FXML private TextField assignmentField;
   @FXML private TabPane groupViewsTabPane, rootTabPane;
   @FXML private Label visibleCountLabel;
   @FXML
@@ -117,14 +119,6 @@ public class WorkspaceViewController implements FeedbackListener {
       }
     }
     update();
-  }
-
-  /** FXML onAction for "Create Feedback" button. */
-  public void createFeedbackItems() {
-    String str = studentGroupField.getText();
-    List<String> groups = Tools.extractTokens(str);
-    if (groups.isEmpty()) groups.add("New group");
-    createFeedbackItems(groups);
   }
 
   private List<GroupView> getFeedbackViews(List<Feedback> feedbackList) {
@@ -518,8 +512,16 @@ public class WorkspaceViewController implements FeedbackListener {
     feedbackList.forEach(FeedbackManager::preview);
   }
 
-  public FeedbackManager getFeedbackManager() {
-    return feedbackManager;
+  public void openGroupImporter() {
+    new GroupImporter(feedbackManager, this);
+  }
+
+  @Override
+  public void close(boolean managerChanged) {
+    if (managerChanged) {
+      initializeFeedback();
+      showIncompleteFeedback();
+    }
   }
 
   // endregion

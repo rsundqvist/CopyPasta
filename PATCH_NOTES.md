@@ -1,12 +1,18 @@
 # Copy Pasta: Version History
 ___
 
-## Patch Notes
+### Version `1.2.1`
+22-11-2017
+* Moved all Feedback creation to the Importer.
+* Various bugfixes and GUI improvements.
 
-### Version `1.1.1`
-1.1.1
+### Version `1.2.0`
+
 17-11-2017
+* **MAJOR**: Fixed an issue which caused improper shutdown, preventing the workspace from being saved.
 * Added more controls to Group Importer: Delete/rename groups before import.
+
+*(Version 1.2.0 was erroneously called 1.1.1 earlier)*
 
 ### Version `1.1.0`
 15-11-2017

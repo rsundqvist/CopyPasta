@@ -8,6 +8,7 @@ import gui.settings.SettingsEditor;
 import javafx.animation.FadeTransition;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -24,10 +25,8 @@ import javafx.scene.layout.Region;
 import javafx.stage.Modality;
 import javafx.util.Duration;
 import model.IO;
-import model.ManagerListener;
 import model.Pasta;
 import model.UniqueArrayList;
-import zip.GroupImporter;
 import zip.GroupImporterController;
 
 import java.awt.*;
@@ -42,7 +41,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Optional;
 
-public class Controller implements PastaViewController.PastaControllerListener, ManagerListener {
+public class Controller implements PastaViewController.PastaControllerListener {
 
   private static final UniqueArrayList<String> recentWorkspaces = new UniqueArrayList();
   @FXML private PastaViewController pastaViewController = null;
@@ -53,7 +52,7 @@ public class Controller implements PastaViewController.PastaControllerListener, 
   private boolean extremtFulLsng = false; // Todo proper import of About fxml.
 
   public void exit() {
-    System.exit(0);
+    Platform.exit(); // System.exit() prevents stop() call.
   }
 
   public void initialize() {
@@ -356,19 +355,7 @@ public class Controller implements PastaViewController.PastaControllerListener, 
     workspaceViewController.clear();
   }
 
-  public void toggleFeedbackDone() {
-    workspaceViewController.toggleDoneTab();
-  }
-
   public void openGroupImporter() {
-    new GroupImporter(workspaceViewController.getFeedbackManager(), this);
-  }
-
-  @Override
-  public void close(boolean managerChanged) {
-    if (managerChanged) {
-      workspaceViewController.initializeFeedback();
-      showRemaining();
-    }
+    workspaceViewController.openGroupImporter();
   }
 }

@@ -26,7 +26,7 @@ public class FeedbackText extends ContentText implements FileViewController.File
   }
 
   public void updateColor() {
-    setStyle(feedback.isDone() ? DONE_STYLE : PLAIN_STYLE);
+    setStyle(feedback.isDone() ? DONE_STYLE : DEFAULT_STYLE);
   }
 
   @Override
@@ -39,7 +39,6 @@ public class FeedbackText extends ContentText implements FileViewController.File
   }
 
   private void insertFeedback(String file, String text, int caretLine, int caretColumn) {
-    System.out.println("FeedbackText.insertFeedback");
     String posText = "\nAt " + caretString(caretLine, caretColumn) + ":\n";
     String fileTag = "";
 

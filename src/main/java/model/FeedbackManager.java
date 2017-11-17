@@ -223,9 +223,12 @@ public class FeedbackManager {
    */
   public List<Feedback> generateFeedback(List<String> groupList) {
     if (template == null) throw new IllegalStateException("Template not set.");
-    ArrayList<Feedback> newFeedbackList = new ArrayList<>(groupList.size());
+    List<Feedback> newFeedbackList = new ArrayList<>(groupList.size());
+    List<String> existingGroups = getGroups();
 
     for (String group : groupList) {
+      if (existingGroups.contains(group)) continue; // Skip duplicate.
+
       Feedback feedback = new Feedback(template);
       feedback.setGroup(group);
       newFeedbackList.add(feedback);

@@ -12,7 +12,7 @@ ___
 * **MAJOR**: Fixed an issue which caused improper shutdown, preventing the workspace from being saved.
 * Added more controls to Group Importer: Delete/rename groups before import.
 
-*(Version 1.2.0 was erroneously called 1.1.1 earlier)*
+*(Version 1.2.0 was erroneously called 1.1.1 earlier.)*
 
 ### Version `1.1.0`
 15-11-2017

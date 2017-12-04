@@ -19,13 +19,13 @@ On the "Setup" tab ***(Ctrl+2)***, enter the group numbers, "3 5, 6  9, potato" 
 
 Alternatively, groups can be created from a folder structure ***(Ctrl+I)***. In this case, a root folder containing a single folder per group is assumed. You may choose file types, such as .java-files, to include by default.
 
-### 3. Write content.  
+### 3. Write feedback 
 
 Commonly used phrases can be saved using the Pasta Editor ***(Ctrl-G)***, then exported ***(RMB -> Export)*** and shared. Pasta items can be categorized using tags. Tags are automatically converted to lower case, and any leading or trailing whitespace will be removed.
 
 From the File view, content may be added directly ***(Ctrl+F)*** with a reference to the file and caret position. Alternatively, a Pasta item may be selected from the list and inserted directly ***(Ctrl+Q)*** in an appropriate location.  If there is a %FILE:\<filename\>% tag present, the program will automatically insert the pasta there. If not, it will be appended at the end or above the %FOOTER% tag.
 
-### 4. Export the content
+### 4. Export feedback
 
 Under the "Setup" panel, click the "Export All" button ***(Ctrl-E)*** to select a target folder. All content items will be exported as individal .txt-files for each group in the list, and a single .json-file containing all of them (used for later import, or simply discarded).
 

@@ -20,216 +20,182 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.text.TextFlow?>
-<GridPane xmlns:fx="http://javafx.com/fxml/1" fx:id="rootGrid" hgap="5.0" maxHeight="1.7976931348623157E308"
-          maxWidth="1.7976931348623157E308" minHeight="500.0" minWidth="900.0" prefHeight="600.0"
-          prefWidth="1200.0" xmlns="http://javafx.com/javafx/9.0.1"
-          fx:controller="zip.GroupImporterController">
+
+<GridPane fx:id="rootGrid" hgap="5.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="500.0" minWidth="900.0" prefHeight="600.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="zip.GroupImporterController">
     <columnConstraints>
-        <ColumnConstraints hgrow="NEVER" minWidth="10.0" prefWidth="125.0"/>
-        <ColumnConstraints hgrow="NEVER" minWidth="10.0" prefWidth="125.0"/>
-        <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="125.0"/>
-        <ColumnConstraints hgrow="NEVER" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="255.0"/>
+        <ColumnConstraints hgrow="NEVER" minWidth="10.0" prefWidth="125.0" />
+        <ColumnConstraints hgrow="NEVER" minWidth="10.0" prefWidth="125.0" />
+        <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="125.0" />
+        <ColumnConstraints hgrow="NEVER" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="255.0" />
     </columnConstraints>
     <rowConstraints>
-        <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-        <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-        <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" vgrow="SOMETIMES"/>
-        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS"/>
-        <RowConstraints vgrow="NEVER"/>
-        <RowConstraints fillHeight="false" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="60.0" vgrow="NEVER"/>
-        <RowConstraints minHeight="10.0" prefHeight="30.0"/>
-        <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="40.0" vgrow="NEVER"/>
+        <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" vgrow="SOMETIMES" />
+        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
+        <RowConstraints vgrow="NEVER" />
+        <RowConstraints fillHeight="false" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="60.0" vgrow="NEVER" />
+        <RowConstraints minHeight="10.0" prefHeight="30.0" />
+        <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="40.0" vgrow="NEVER" />
     </rowConstraints>
     <children>
         <HBox maxWidth="1.7976931348623157E308" prefWidth="200.0" GridPane.columnIndex="2" GridPane.hgrow="ALWAYS">
             <children>
-                <Button mnemonicParsing="false" onAction="#onChangeRootDirectory" text="Change root directory"/>
-                <TextField fx:id="rootDirectoryField" editable="false" maxWidth="1.7976931348623157E308"
-                           promptText="No root directory selected." HBox.hgrow="ALWAYS">
+                <Button mnemonicParsing="false" onAction="#onChangeRootDirectory" text="Change root directory" />
+                <TextField fx:id="rootDirectoryField" editable="false" maxWidth="1.7976931348623157E308" promptText="No root directory selected." HBox.hgrow="ALWAYS">
                     <HBox.margin>
-                        <Insets left="3.0"/>
+                        <Insets left="3.0" />
                     </HBox.margin>
                 </TextField>
             </children>
             <padding>
-                <Insets bottom="2.0" top="2.0"/>
+                <Insets bottom="2.0" top="2.0" />
             </padding>
         </HBox>
-        <VBox fx:id="feedbackListContainer" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" minHeight="0.0"
-              minWidth="-Infinity" prefWidth="125.0" GridPane.hgrow="NEVER" GridPane.rowIndex="3"
-              GridPane.vgrow="ALWAYS"/>
+        <VBox fx:id="feedbackListContainer" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" minHeight="0.0" minWidth="-Infinity" prefWidth="125.0" GridPane.hgrow="NEVER" GridPane.rowIndex="3" GridPane.vgrow="ALWAYS" />
         <Label maxWidth="1.7976931348623157E308" text="Groups" GridPane.rowIndex="2">
             <font>
-                <Font name="System Bold" size="12.0"/>
+                <Font name="System Bold" size="12.0" />
             </font>
         </Label>
         <Label maxWidth="1.7976931348623157E308" text="Files" GridPane.columnIndex="1" GridPane.rowIndex="2">
             <font>
-                <Font name="System Bold" size="12.0"/>
+                <Font name="System Bold" size="12.0" />
             </font>
         </Label>
-        <ListView fx:id="filesListView" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" minWidth="0.0"
-                  prefHeight="50.0" prefWidth="125.0" GridPane.columnIndex="1" GridPane.rowIndex="3"
-                  GridPane.rowSpan="2"/>
-        <BorderPane fx:id="previewContainer" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
-                    minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="100.0"
-                    style="-fx-border-color: #123456; -fx-border-width: 2;" GridPane.columnIndex="2"
-                    GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.rowSpan="3" GridPane.vgrow="ALWAYS">
+        <ListView fx:id="filesListView" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" minWidth="0.0" prefHeight="50.0" prefWidth="125.0" GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.rowSpan="2" />
+        <BorderPane fx:id="previewContainer" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="100.0" style="-fx-border-color: #123456; -fx-border-width: 2;" GridPane.columnIndex="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.rowSpan="3" GridPane.vgrow="ALWAYS">
             <GridPane.margin>
-                <Insets/>
+                <Insets />
             </GridPane.margin>
         </BorderPane>
-        <VBox fx:id="hintVBox" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
-              nodeOrientation="LEFT_TO_RIGHT" GridPane.columnIndex="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3"
-              GridPane.rowSpan="3" GridPane.vgrow="ALWAYS">
+        <VBox fx:id="hintVBox" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" nodeOrientation="LEFT_TO_RIGHT" GridPane.columnIndex="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.rowSpan="3" GridPane.vgrow="ALWAYS">
             <children>
-                <ProgressIndicator maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-                                   prefHeight="150.0" prefWidth="150.0" VBox.vgrow="NEVER">
+                <ProgressIndicator maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="150.0" prefWidth="150.0" VBox.vgrow="NEVER">
                     <VBox.margin>
-                        <Insets bottom="5.0" top="5.0"/>
+                        <Insets bottom="5.0" top="5.0" />
                     </VBox.margin>
                 </ProgressIndicator>
-                <TextFlow maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-                          prefWidth="280.0" textAlignment="CENTER" VBox.vgrow="NEVER">
+                <TextFlow maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="280.0" textAlignment="CENTER" VBox.vgrow="NEVER">
                     <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0"
-                              text="Select a root directory from which to generate groups. A new group will be created for each top-level subfolder. Folder content, including subfolders, will be considered group property.">
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Select a root directory from which to generate groups. A new group will be created for each top-level subfolder. Folder content, including subfolders, will be considered group property.">
                             <font>
-                                <Font name="System Italic" size="12.0"/>
+                                <Font name="System Italic" size="12.0" />
                             </font>
                         </Text>
                     </children>
                     <VBox.margin>
-                        <Insets bottom="10.0" top="10.0"/>
+                        <Insets bottom="10.0" top="10.0" />
                     </VBox.margin>
                 </TextFlow>
-                <Button defaultButton="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
-                        minWidth="-Infinity" mnemonicParsing="false" onAction="#onChangeRootDirectory" prefHeight="50.0"
-                        prefWidth="220.0" text="Select root directory" VBox.vgrow="NEVER">
+                <Button defaultButton="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onChangeRootDirectory" prefHeight="50.0" prefWidth="220.0" text="Select root directory" VBox.vgrow="NEVER">
                     <font>
-                        <Font name="System Bold" size="14.0"/>
+                        <Font name="System Bold" size="14.0" />
                     </font>
                     <VBox.margin>
-                        <Insets bottom="5.0" top="5.0"/>
+                        <Insets bottom="5.0" top="5.0" />
                     </VBox.margin>
                 </Button>
             </children>
         </VBox>
         <HBox maxWidth="1.7976931348623157E308" GridPane.columnIndex="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2">
             <children>
-                <Label maxHeight="1.7976931348623157E308" text="File preview:" GridPane.columnIndex="2"
-                       HBox.hgrow="NEVER">
+                <Label maxHeight="1.7976931348623157E308" text="File preview:" GridPane.columnIndex="2" HBox.hgrow="NEVER">
                     <HBox.margin>
-                        <Insets right="5.0"/>
+                        <Insets right="5.0" />
                     </HBox.margin>
                     <font>
-                        <Font name="System Bold" size="12.0"/>
+                        <Font name="System Bold" size="12.0" />
                     </font>
                 </Label>
-                <Label fx:id="filePreviewLabel" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
-                       text="NULL" HBox.hgrow="ALWAYS">
+                <Label fx:id="filePreviewLabel" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="NULL" HBox.hgrow="ALWAYS">
                     <font>
-                        <Font name="System Italic" size="11.0"/>
+                        <Font name="System Italic" size="11.0" />
                     </font>
                 </Label>
             </children>
         </HBox>
-        <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="Import Items" GridPane.columnSpan="2"
-               GridPane.rowIndex="1">
+        <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="Import Items" GridPane.columnSpan="2" GridPane.rowIndex="1">
             <font>
-                <Font name="System Bold" size="14.0"/>
+                <Font name="System Bold" size="14.0" />
             </font>
         </Label>
-        <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="3" GridPane.hgrow="ALWAYS"
-              GridPane.rowIndex="3" GridPane.rowSpan="3" GridPane.vgrow="ALWAYS">
+        <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.rowSpan="3" GridPane.vgrow="ALWAYS">
             <children>
-                <TreeView fx:id="treeView" editable="true" maxHeight="1.7976931348623157E308"
-                          maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="150.0"
-                          prefWidth="200.0" VBox.vgrow="ALWAYS"/>
-                <CheckBox disable="true" maxWidth="1.7976931348623157E308" mnemonicParsing="false"
-                          onAction="#onToggleOpenArchives" text="Extract archives">
+                <TreeView fx:id="treeView" editable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="150.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
+                <CheckBox fx:id="toggleOpenArchivesCheckBox" maxWidth="1.7976931348623157E308" mnemonicParsing="false" selected="true" text="Extract archives (mouseover for types)">
                     <tooltip>
-                        <Tooltip text="Recursively open any archives encountered."/>
+                        <Tooltip text="Recursively open any archives encountered." />
                     </tooltip>
                     <VBox.margin>
-                        <Insets bottom="2.0" top="2.0"/>
+                        <Insets bottom="2.0" top="2.0" />
                     </VBox.margin>
                 </CheckBox>
                 <Label maxWidth="1.7976931348623157E308" text="File extensions">
                     <font>
-                        <Font name="System Bold" size="12.0"/>
+                        <Font name="System Bold" size="12.0" />
                     </font>
                 </Label>
-                <TextArea fx:id="filePatternsTextArea" maxHeight="-Infinity" maxWidth="1.7976931348623157E308"
-                          minHeight="-Infinity" minWidth="0.0" prefHeight="120.0" prefWidth="125.0"
-                          text="cpp&#10;c&#10;h&#10;cs&#10;java&#10;txt" VBox.vgrow="NEVER">
+                <TextArea fx:id="filePatternsTextArea" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="0.0" prefHeight="120.0" prefWidth="125.0" text="cpp&#10;c&#10;h&#10;cs&#10;java&#10;txt" VBox.vgrow="NEVER">
                     <tooltip>
-                        <Tooltip text="Don't include the dot! E.g.: Enter &quot;java&quot; not &quot;.java&quot;."/>
+                        <Tooltip text="Don't include the dot! E.g.: Enter &quot;java&quot; not &quot;.java&quot;." />
                     </tooltip>
                 </TextArea>
             </children>
         </VBox>
         <Label text="Hierarchy" GridPane.columnIndex="3" GridPane.rowIndex="2">
             <font>
-                <Font name="System Bold" size="12.0"/>
+                <Font name="System Bold" size="12.0" />
             </font>
         </Label>
-        <ButtonBar prefHeight="40.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.columnSpan="2147483647"
-                   GridPane.rowIndex="7">
+        <ButtonBar prefHeight="40.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.columnSpan="2147483647" GridPane.rowIndex="7">
             <buttons>
-                <Button fx:id="replaceAllButton" cancelButton="true" disable="true" maxWidth="-Infinity"
-                        minWidth="-Infinity" mnemonicParsing="false" onAction="#onReplaceAll" prefWidth="15.0"
-                        text="Replace">
+                <Button fx:id="replaceAllButton" cancelButton="true" disable="true" maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onReplaceAll" prefWidth="15.0" text="Replace">
                     <font>
-                        <Font size="14.0"/>
+                        <Font size="14.0" />
                     </font>
                     <tooltip>
-                        <Tooltip text="Clear all existing groups and import the new ones."/>
+                        <Tooltip text="Clear all existing groups and import the new ones." />
                     </tooltip>
                 </Button>
-                <Button cancelButton="true" maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false"
-                        onAction="#onCancel" prefWidth="120.0" text="Cancel">
+                <Button cancelButton="true" maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onCancel" prefWidth="120.0" text="Cancel">
                     <font>
-                        <Font size="14.0"/>
+                        <Font size="14.0" />
                     </font>
                 </Button>
-                <Button fx:id="importButton" maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false"
-                        onAction="#onImport" prefWidth="120.0" text="Import">
+                <Button fx:id="importButton" maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onImport" prefWidth="120.0" text="Import">
                     <font>
-                        <Font size="14.0"/>
+                        <Font size="14.0" />
                     </font>
                     <tooltip>
-                        <Tooltip text="Import new groups only. Any existing group will be left as-is."/>
+                        <Tooltip text="Import new groups only. Any existing group will be left as-is." />
                     </tooltip>
                 </Button>
             </buttons>
         </ButtonBar>
-        <CheckBox fx:id="erpaCheckBox" maxWidth="1.7976931348623157E308" mnemonicParsing="false"
-                  text="Enable &quot;Replace&quot; button" GridPane.columnSpan="2" GridPane.rowIndex="7">
+        <CheckBox fx:id="erpaCheckBox" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Enable &quot;Replace&quot; button" GridPane.columnSpan="2" GridPane.rowIndex="7">
             <tooltip>
-                <Tooltip text="Better safe than sorry."/>
+                <Tooltip text="Better safe than sorry." />
             </tooltip>
         </CheckBox>
-        <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="Options" GridPane.columnIndex="3"
-               GridPane.rowIndex="1">
+        <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="Options" GridPane.columnIndex="3" GridPane.rowIndex="1">
             <font>
-                <Font name="System Bold" size="14.0"/>
+                <Font name="System Bold" size="14.0" />
             </font>
         </Label>
         <HBox alignment="CENTER_LEFT" GridPane.columnSpan="2147483647" GridPane.rowIndex="6">
             <children>
                 <Label text="Existing groups:">
                     <font>
-                        <Font name="System Bold Italic" size="12.0"/>
+                        <Font name="System Bold Italic" size="12.0" />
                     </font>
                     <padding>
-                        <Insets right="15.0"/>
+                        <Insets right="15.0" />
                     </padding>
                 </Label>
-                <TextField fx:id="currentGroupsTextField" editable="false" maxWidth="1.7976931348623157E308"
-                           HBox.hgrow="ALWAYS">
+                <TextField fx:id="currentGroupsTextField" editable="false" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
                     <HBox.margin>
-                        <Insets left="5.0"/>
+                        <Insets left="5.0" />
                     </HBox.margin>
                 </TextField>
             </children>
@@ -238,11 +204,9 @@
             <children>
                 <TextFlow textAlignment="CENTER" VBox.vgrow="NEVER">
                     <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0"
-                              text="Use the controls on the right to select which files to include. You may also change the group names or delete them."
-                              textAlignment="CENTER">
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Use the controls on the right to select which files to include. You may also change the group names or delete them." textAlignment="CENTER">
                             <font>
-                                <Font name="System Italic" size="12.0"/>
+                                <Font name="System Italic" size="12.0" />
                             </font>
                         </Text>
                     </children>
@@ -251,53 +215,46 @@
         </VBox>
         <VBox spacing="5.0" GridPane.rowIndex="4" GridPane.vgrow="NEVER">
             <children>
-                <Button maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity"
-                        minWidth="-Infinity" mnemonicParsing="false" onAction="#onChangeGroup" prefHeight="30.0"
-                        prefWidth="100.0" text="Change group"/>
-                <Button maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity"
-                        minWidth="-Infinity" mnemonicParsing="false" onAction="#onDelete" prefHeight="30.0"
-                        prefWidth="100.0" text="Delete"/>
+                <Button maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onChangeGroup" prefHeight="30.0" prefWidth="100.0" text="Change group" />
+                <Button maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onDelete" prefHeight="30.0" prefWidth="100.0" text="Delete" />
             </children>
             <GridPane.margin>
-                <Insets top="5.0"/>
+                <Insets top="5.0" />
             </GridPane.margin>
         </VBox>
-        <HBox maxWidth="1.7976931348623157E308" spacing="5.0" GridPane.columnIndex="2" GridPane.hgrow="ALWAYS"
-              GridPane.rowIndex="1">
+        <HBox maxWidth="1.7976931348623157E308" spacing="5.0" GridPane.columnIndex="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1">
             <children>
                 <Label maxHeight="1.7976931348623157E308" text="Add manually:">
                     <font>
-                        <Font name="System Bold Italic" size="12.0"/>
+                        <Font name="System Bold Italic" size="12.0" />
                     </font>
                     <padding>
-                        <Insets right="15.0"/>
+                        <Insets right="15.0" />
                     </padding>
                 </Label>
-                <TextField fx:id="manualGroupsTextField" maxWidth="1.7976931348623157E308"
-                           promptText="Enter groups separated by comma or space." HBox.hgrow="ALWAYS">
+                <TextField fx:id="manualGroupsTextField" maxWidth="1.7976931348623157E308" promptText="Enter groups separated by comma or space." HBox.hgrow="ALWAYS">
                     <HBox.margin>
-                        <Insets right="2.0"/>
+                        <Insets right="2.0" />
                     </HBox.margin>
                 </TextField>
                 <Button mnemonicParsing="false" onAction="#onManual" prefWidth="100.0" text="Create">
                     <HBox.margin>
-                        <Insets right="2.0"/>
+                        <Insets right="2.0" />
                     </HBox.margin>
                     <tooltip>
-                        <Tooltip
-                                text="To mix manual and imported groups, use the import function first. Importing clears the current group list."/>
+                        <Tooltip text="To mix manual and imported groups, use the import function first. Importing clears the current group list." />
                     </tooltip>
                 </Button>
             </children>
             <GridPane.margin>
-                <Insets bottom="2.0"/>
+                <Insets bottom="2.0" />
             </GridPane.margin>
             <padding>
-                <Insets top="2.0"/>
+                <Insets top="2.0" />
             </padding>
         </HBox>
     </children>
     <padding>
-        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
     </padding>
 </GridPane>

@@ -1,6 +1,10 @@
 # Copy Pasta: Version History
 ___
 
+### Version `1.2.2`
+07-02-2018
+* Added automatic extraction of archives in Group Importer.
+
 ### Version `1.2.1`
 22-11-2017
 * Moved all Feedback creation to the Importer.

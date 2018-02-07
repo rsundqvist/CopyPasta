@@ -85,6 +85,19 @@
             <artifactId>richtextfx</artifactId>
             <version>0.7-M5</version>
         </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.codehaus.plexus/plexus-archiver -->
+        <dependency>
+            <groupId>org.codehaus.plexus</groupId>
+            <artifactId>plexus-archiver</artifactId>
+            <version>3.5</version>
+        </dependency>
+        <dependency>
+            <groupId>org.codehaus.plexus</groupId>
+            <artifactId>plexus-container-default</artifactId>
+            <version>1.5.5</version>
+        </dependency>
+
     </dependencies>
 
 

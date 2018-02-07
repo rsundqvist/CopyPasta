@@ -3,7 +3,6 @@ package zip;
 import gui.JavaCodeArea;
 import gui.Tools;
 import gui.feedback.FeedbackListView;
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -16,7 +15,7 @@ import javafx.scene.control.SelectionMode;
 import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleButton;
+import javafx.scene.control.Tooltip;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.image.Image;
@@ -25,6 +24,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 import model.Feedback;
 import model.FeedbackListener;
 import model.FeedbackManager;
@@ -35,6 +35,7 @@ import org.fxmisc.richtext.ViewActions;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /** Created by Richard Sundqvist on 17/04/2017. */
@@ -51,10 +52,11 @@ public class GroupImporterController implements FeedbackListener {
   @FXML private CheckBox erpaCheckBox; // Enable "Replace All" checkbox
   @FXML private VBox hintVBox, feedbackListContainer;
   @FXML private GridPane rootGrid;
+  @FXML private CheckBox toggleOpenArchivesCheckBox;
   private List<String> fileEndingList;
-  private boolean openArchives = false;
   private ManagerListener listener;
   private boolean newCrawl = true;
+  private boolean openArchives;
 
   private FeedbackListView groupListView;
   private Feedback feedback; // Selected item
@@ -168,6 +170,18 @@ public class GroupImporterController implements FeedbackListener {
     replaceAllButton.disableProperty().bind(erpaCheckBox.selectedProperty().not());
 
     treeView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+    treeView.setContextMenu(createTreeViewContextMenu());
+
+    // Tooltip for archive types
+    String archiveTypes = Arrays.toString(ArchiveHandler.ARCHIVE_TYPES);
+    archiveTypes = archiveTypes.substring(1, archiveTypes.length() - 1);
+    Tooltip tooltip = new Tooltip("Archive types: " + archiveTypes);
+    tooltip.setFont(new Font(15));
+    ImageView iw = NodeColor.GREEN.getImageView();
+    iw.setFitWidth(24);
+    iw.setFitHeight(24);
+    tooltip.setGraphic(iw);
+    toggleOpenArchivesCheckBox.setTooltip(tooltip);
   }
 
   public void onChangeRootDirectory() {
@@ -184,6 +198,7 @@ public class GroupImporterController implements FeedbackListener {
       tmpManager.clear();
       updateFileEndingList();
       feedback = null;
+      openArchives = toggleOpenArchivesCheckBox.isSelected();
 
       try {
         rootDirectoryField.setText(dir.getCanonicalPath());
@@ -191,8 +206,6 @@ public class GroupImporterController implements FeedbackListener {
         crawlNodeStatus(root, 0, null);
         newCrawl = false;
         treeView.setRoot(root);
-
-        treeView.setContextMenu(createTreeViewContextMenu());
         tmpManager.updateFeedback();
         updateFilesViews();
       } catch (Exception e) {
@@ -295,18 +308,38 @@ public class GroupImporterController implements FeedbackListener {
     FeedbackTreeItem root = new FeedbackTreeItem(file, feedback, isRootNode);
 
     for (File dirFile : file.listFiles()) {
+      // Directory
       if (dirFile.isDirectory()) {
         FeedbackTreeItem childDir = crawl(dirFile, level + 1, feedback);
         root.getChildren().add(childDir);
-
       } else {
-        FeedbackTreeItem child = new FeedbackTreeItem(dirFile, feedback);
-        root.getChildren().add(child);
+        // Archive
+        if (openArchives && ArchiveHandler.isArchive(dirFile)) {
+          String str = "CopyPasta/temp/" + file.getName().toString().replaceAll("\\.", "");
+          File extractionFolder = Tools.create(str, null, false);
+          boolean extract = ArchiveHandler.extractArchive(dirFile, extractionFolder, true);
+          if (!extract) {
+            Exception e =
+                new Exception(
+                    "\nExtraction of \""
+                        + dirFile.getName()
+                        + "\" didn't go as expected. CopyPasta tried its best, but the result might be a little iffy. "
+                        + "Stack Trace has been printed to the standard output stream.");
+            IO.showExceptionAlert(e);
+          }
 
-        String[] s = dirFile.getName().split("\\.");
-        if (feedback != null && s.length > 1 && fileEndingList.contains(s[s.length - 1])) {
-          String content = IO.getFileAsString(dirFile);
-          feedback.addFile(dirFile.getName(), content);
+          FeedbackTreeItem childDir = crawl(extractionFolder, level + 1, feedback);
+          root.getChildren().add(childDir);
+          // Regular file
+        } else {
+          FeedbackTreeItem child = new FeedbackTreeItem(dirFile, feedback);
+          root.getChildren().add(child);
+
+          String[] s = dirFile.getName().split("\\.");
+          if (feedback != null && s.length > 1 && fileEndingList.contains(s[s.length - 1])) {
+            String content = IO.getFileAsString(dirFile);
+            feedback.addFile(dirFile.getName(), content);
+          }
         }
       }
     }
@@ -345,10 +378,6 @@ public class GroupImporterController implements FeedbackListener {
     setNodeIcon(root, nodeColor.getImageView());
     if (newCrawl && nodeColor != NodeColor.RED) root.setExpanded(true);
     return nodeColor;
-  }
-
-  public void onToggleOpenArchives(Event event) {
-    openArchives = ((ToggleButton) event.getSource()).isSelected();
   }
 
   public void initialize(FeedbackManager feedbackManager) {

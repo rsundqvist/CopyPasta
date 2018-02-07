@@ -34,9 +34,10 @@ public abstract class Tools {
   public static final File IS_RUNNING_FILE = create("CopyPasta/data", "isrunning", false);
   public static final File SETTINGS_FILE = create("CopyPasta/data", "settings", false);
   public static final File PREVIEW_FILE = create("CopyPasta/data", "preview.txt", false);
+  public static final File TEMP_DIR = create("CopyPasta/temp", "", false, true);
   public static final File RECENT_WORKSPACES_FILE =
       Tools.create("CopyPasta/data", "recent_workspaces.txt", false);
-  public static final String VERSION = "1.2.1";
+  public static final String VERSION = "1.2.2";
 
   // Work data
   public static File AUTO_SAVE_PASTA_FILE,
@@ -73,6 +74,11 @@ public abstract class Tools {
   }
 
   public static File create(String dir, String file, boolean workspace) {
+    return create(dir, file, workspace, false);
+  }
+
+  public static File create(String dir, String file, boolean workspace, boolean clearRoot) {
+    if (file == null || file.isEmpty()) file = null;
     File baseDir;
 
     if (workspace
@@ -98,6 +104,8 @@ public abstract class Tools {
       }
       return f;
     } else {
+      if (clearRoot) clearDirectory(d, false);
+
       return d;
     }
   }
@@ -247,6 +255,21 @@ public abstract class Tools {
     }
 
     return supported;
+  }
+
+  public static void clearDirectory(File dir, boolean deleteRoot) {
+    if (!dir.isDirectory()) return;
+    File[] files = dir.listFiles();
+    if (files != null) { // some JVMs return null for empty dirs
+      for (File f : files) {
+        if (f.isDirectory()) {
+          clearDirectory(f, true);
+        } else {
+          f.delete();
+        }
+      }
+    }
+    if (deleteRoot) dir.delete();
   }
 
   public static void notSupportedInView() {

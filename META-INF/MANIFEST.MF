@@ -1,8 +1,4 @@
 Manifest-Version: 1.0
-Class-Path: libs/flowless-0.5.2.jar libs/j2objc-annotations-1.1.jar li
- bs/undofx-1.2.2.jar libs/google-java-format-1.5.jar libs/google-java-
- format-1.5-all-deps.jar libs/jsr305-1.3.9.jar libs/wellbehavedfx-0.3.
- jar libs/gson-2.8.0.jar libs/reactfx-2.0-M5.jar libs/guava-22.0.jar l
- ibs/richtextfx-0.7-M5.jar
+Class-Path: libs/snappy-0.4.jar libs/commons-compress-1.14.jar libs/plexus-classworlds-2.2.2.jar libs/plexus-container-default-1.5.5.jar libs/plexus-archiver-3.5.jar libs/plexus-utils-3.0.24.jar libs/plexus-io-3.0.0.jar libs/flowless-0.5.2.jar libs/j2objc-annotations-1.1.jar libs/undofx-1.2.2.jar libs/google-java-format-1.5.jar libs/google-java-format-1.5-all-deps.jar libs/jsr305-1.3.9.jar libs/wellbehavedfx-0.3.jar libs/gson-2.8.0.jar libs/reactfx-2.0-M5.jar libs/guava-22.0.jar libs/richtextfx-0.7-M5.jar
 Main-Class: gui.Main
 

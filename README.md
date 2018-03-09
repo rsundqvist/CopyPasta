@@ -1,3 +1,5 @@
+# Program has been deprecated
+
 # About Copy Pasta
 
 >Download "CopyPasta.zip" and run "CopyPasta.jar" to get started  [(link)](https://github.com/whisp91/CopyPasta/raw/master/CopyPasta.zip).

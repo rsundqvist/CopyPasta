@@ -1,6 +1,7 @@
 # Program has been deprecated
+CopyPasta is no longer being developed. May not run properly in Java 9 and up, as the program has dependencies which break in a Java 9 environment.
 
-# About Copy Pasta
+# About CopyPasta
 
 >Download "CopyPasta.zip" and run "CopyPasta.jar" to get started  [(link)](https://github.com/whisp91/CopyPasta/raw/master/CopyPasta.zip).
 
